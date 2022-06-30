@@ -2,15 +2,15 @@ package edu.howf.vo;
 
 import java.util.ArrayList;
 
-//Áö¿ª ÀÌº¥Æ®
+//ì§€ì—­ ì´ë²¤íŠ¸
 public class EventVO extends BoardVO{
-	private int ebidx;			//±Û ¹øÈ£
-	private String file;		//Áö¿ªÀÌº¥Æ® ¸®½ºÆ® ÆäÀÌÁö¿¡ º¸ÀÏ »çÁø
-	private String state;		//µµ
-	private String city;		//½Ã
-	private String tag;			//ÅÂ±×('#±ÛÀÚ'·Î ±¸¼ºµÈ ÅÂ±×µé)
-	private String startday;	//ÀÌº¥Æ® ½ÃÀÛ ³¯Â¥
-	private String endday;		//ÀÌº¥Æ® Á¾·á ³¯Â¥
+	private int ebidx;			//ê¸€ ë²ˆí˜¸
+	private String file;		//ì´ë²¤íŠ¸ ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€ ìŠ¬ë¼ì´ë“œì— ë“¤ì–´ê°ˆ ì‚¬ì§„
+	private String state;		//ë„
+	private String city;		//ì‹œ
+	private String tag;			//íƒœê·¸ë“¤. #ìœ¼ë¡œ êµ¬ë¶„ë¨
+	private String startday;	//ì´ë²¤íŠ¸ ì‹œì‘ë‚ ì§œ
+	private String endday;		//ì´ë²¤íŠ¸ ì¢…ë£Œë‚ ì§œ
 	
 	public int getEbidx() {
 		return ebidx;

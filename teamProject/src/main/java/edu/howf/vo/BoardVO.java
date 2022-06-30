@@ -1,6 +1,6 @@
 package edu.howf.vo;
 
-//°Ô½ÃÆÇµéÀÇ °øÅëµÈ ÄÃ·³ÀÌ Á¤ÀÇµÈ vo
+//ê²Œì‹œíŒ ê´€ë ¨ ê³µí†µëœ ì»¬ëŸ¼ë“¤ ì •ì˜í•œ VO
 public class BoardVO {
 	private String title;
 	private String content;

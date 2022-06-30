@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.howf.service.CSService;
 
-//사용하고 싶은 중간 url 쓰기
+//1:1臾몄쓽, FAQ
 @RequestMapping(value="/cs")
 @Controller
 public class CSController {

@@ -1,10 +1,10 @@
 package edu.howf.vo;
 
-//HOWF ÃßÃµ
+//HOWF ì¶”ì²œ
 public class HOWFVO extends BoardVO{
-	private int hbidx;		//±Û ¹øÈ£
-	private String file;	//¸ŞÀÎ È÷¾î·Î¿¡ µé¾î°¥ »çÁø
-	private String cate;	//Ä«Å×°í¸®(¿©ÇàÁö, ¸ÀÁı, ¼÷¹Ú)
+	private int hbidx;		//ê¸€ ë²ˆí˜¸
+	private String file;	//ë©”ì¸ í˜ì´ì§€ íˆì–´ë¡œì— ë“¤ì–´ê°ˆ ì‚¬ì§„
+	private String cate;	//ì¹´í…Œê³ ë¦¬(ì—¬í–‰ì§€, ë§›ì§‘, ìˆ™ë°•)
 	
 	public int getHbidx() {
 		return hbidx;

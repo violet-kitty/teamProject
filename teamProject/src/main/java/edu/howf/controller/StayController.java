@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.howf.service.StayService;
 
-//»ç¿ëÇÏ°í ½ÍÀº Áß°£ url ¾²±â
+//ìˆ™ë°•ì •ë³´
 @RequestMapping(value="/stay")
 @Controller
 public class StayController {

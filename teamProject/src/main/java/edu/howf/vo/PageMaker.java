@@ -4,13 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class PageMaker {
-	private int totalCount;		// ÀüÃ¼ µ¥ÀÌÅÍ ¼ö
-	private int startPage;		// ÇöÀç º¸¿©Áà¾ß ÇÒ ÆäÀÌÁöÀÇ ½ÃÀÛ ÆäÀÌÁö ¹øÈ£
-	private int endPage;		// ÇöÀç º¸¿©Áà¾ß ÇÒ ÆäÀÌÁöÀÇ ³¡ ÆäÀÌÁö ¹øÈ£
-	private boolean prev;		// ¢¸ ÀÖ¾î¾ßÇÏ´Â°¡
-	private boolean next;		// ¢º ÀÖ¾î¾ßÇÏ´Â°¡
-	private int displayPageNum = 10;	// < 1 2 3 4 5 6 7 8 9 10 > ÀÌ·¯ÇÑ Çü½ÄÀÇ ÆäÀÌÂ¡ ¹øÈ£ ¸¸µé±â À§ÇÑ º¯¼ö
-	private SearchVO search;	//ÇöÀç ÆäÀÌÁö, ÇÑ ÆäÀÌÁö¿¡¼­ º¸¿©Áà¾ßÇÒ °¹¼ö, °Ë»öÅ¸ÀÔ, °Ë»ö¾î ´ãÀº Å¬·¡½º
+	private int totalCount;		// ì „ì²´ ê¸€ ê°¯ìˆ˜
+	private int startPage;		// ì•„ë˜ í˜ì´ì§• ë²ˆí˜¸ê°€ ëª‡ë²ˆë¶€í„° ì‹œì‘í•´ì•¼ í•˜ëŠ”ì§€
+	private int endPage;		// ì•„ë˜ í˜ì´ì§• ë²ˆí˜¸ê°€ ëª‡ë²ˆìœ¼ë¡œ ëë‚˜ëŠ”ì§€
+	private boolean prev;		// ì´ì „ ë²„íŠ¼ ìƒì„± ì—¬ë¶€
+	private boolean next;		// ë‹¤ìŒ ë²„íŠ¼ ìƒì„± ì—¬ë¶€
+	private int displayPageNum = 10;	// < 1 2 3 4 5 6 7 8 9 10 > ë²ˆí˜¸ ë§Œë“¤ê¸° ìœ„í•œ ë³€ìˆ˜
+	private SearchVO search;	//í˜„ì¬ í˜ì´ì§€, í•œ í˜ì´ì§€ ë‚´ì˜ ê²Œì‹œë¬¼ ê°¯ìˆ˜, ê²€ìƒ‰íƒ€ì…, ê²€ìƒ‰ì–´
 	
 	public SearchVO getSearch() {
 		return search;
@@ -55,7 +55,7 @@ public class PageMaker {
 	public void setDisplayPageNum(int displayPageNum) {
 		this.displayPageNum = displayPageNum;
 	}
-	//ÆäÀÌÁö ¹øÈ£¸¦ ¸î°³±îÁö È­¸é¿¡ ³ªÅ¸³¾Áö Á¤ÇÏ´Â ¸Ş¼Òµå
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½î°³ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
 	public void calcData() {
 		endPage = (int)(Math.ceil(search.getPage()/(double)displayPageNum)*displayPageNum);
 		startPage = (endPage - displayPageNum)+1;
@@ -68,7 +68,7 @@ public class PageMaker {
 		prev = startPage == 1 ? false : true;
 		next = endPage*search.getPerPageNum() >= totalCount? false : true;
 	}
-	//°Ë»ö¾î·Î ÇÑ±ÛÀÌ µé¾î¿ÔÀ» ¶§ ±úÁöÁö ¾Êµµ·Ï ÀÎÄÚµùÇØÁÖ´Â ¸Ş¼Òµå
+	//ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ş¼Òµï¿½
 	public String encoding(String keyword) {
 		String str = "";
 		

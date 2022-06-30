@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.howf.service.NoticeService;
 
-//»ç¿ëÇÏ°í ½ÍÀº Áß°£ url ¾²±â
+//ê³µì§€ì‚¬í•­
 @RequestMapping(value="/notice")
 @Controller
 public class NoticeController {

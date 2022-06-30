@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.howf.service.StoryService;
 
-//»ç¿ëÇÏ°í ½ÍÀº Áß°£ url ¾²±â
+//ì—¬í–‰ì´ì•¼ê¸°
 @RequestMapping(value="/story")
 @Controller
 public class StoryController {
