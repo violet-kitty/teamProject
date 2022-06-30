@@ -15,7 +15,6 @@ public class CSVO extends BoardVO{
 	private String filename;
 	private String replyn;
 	
-	
 	public int getMidx() {
 		return midx;
 	}
