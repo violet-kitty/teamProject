@@ -52,4 +52,6 @@ public class CSVO extends BoardVO{
 		this.replyn = replyn;
 	}
 
+
+
 }
