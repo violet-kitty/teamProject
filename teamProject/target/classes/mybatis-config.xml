@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN"
+				"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<!-- mapper에서 사용할  vo의 별칭을 등록해두는 곳 -->
+		<!-- 반드시  vo가 존재하는 것들만 지정해야함. 미리 선언할 경우 오류가 남 -->
+        <!-- <typeAlias type="edu.howf.vo.BoardVO" alias="boardVO"/> -->
+        <typeAlias type="edu.howf.vo.BoardVO" alias="boardVO"/>
+        <typeAlias type="edu.howf.vo.UserVO" alias="userVO"/>
+        <typeAlias type="edu.howf.vo.CSVO" alias="csVO"/>
+        <typeAlias type="edu.howf.vo.EventVO" alias="eventVO"/>
+        <typeAlias type="edu.howf.vo.HOWFVO" alias="howfVO"/>
+        <typeAlias type="edu.howf.vo.NoticeVO" alias="noticeVO"/>
+        <typeAlias type="edu.howf.vo.SearchVO" alias="searchVO"/>
+        <typeAlias type="edu.howf.vo.StayVO" alias="stayVO"/>
+        <typeAlias type="edu.howf.vo.StoryVO" alias="storyVO"/>
+    </typeAliases>
+
+</configuration>
