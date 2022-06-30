@@ -8,22 +8,22 @@ public class CSVO extends BoardVO{
 //	private String wdate;
 //	private int cnt;
 //	private String delyn;
-	private int csidx;	//1:1 문의글 번호
-	private int ridx;
+	private int csbidx;	//1:1 문의글 번호
+	private int origincsbidx;
 	private String divsn;
 	private String filename;
-
-	public int getCsidx() {
-		return csidx;
+	
+	public int getCsbidx() {
+		return csbidx;
 	}
-	public void setCsidx(int csidx) {
-		this.csidx = csidx;
+	public void setCsbidx(int csbidx) {
+		this.csbidx = csbidx;
 	}
-	public int getRidx() {
-		return ridx;
+	public int getOrigincsbidx() {
+		return origincsbidx;
 	}
-	public void setRidx(int ridx) {
-		this.ridx = ridx;
+	public void setOrigincsbidx(int origincsbidx) {
+		this.origincsbidx = origincsbidx;
 	}
 	public String getDivsn() {
 		return divsn;
@@ -38,6 +38,8 @@ public class CSVO extends BoardVO{
 		this.filename = filename;
 	}
 
+	
+	
 
 
 }
