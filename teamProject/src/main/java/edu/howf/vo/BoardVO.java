@@ -4,7 +4,7 @@ package edu.howf.vo;
 public class BoardVO {
 	private String title;
 	private String content;
-	private String writer;
+	private String midx;
 	private String wdate;
 	private int cnt;
 	private String delyn;
@@ -21,11 +21,11 @@ public class BoardVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriter() {
-		return writer;
+	public String getMidx() {
+		return midx;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setMidx(String midx) {
+		this.midx = midx;
 	}
 	public String getWdate() {
 		return wdate;
