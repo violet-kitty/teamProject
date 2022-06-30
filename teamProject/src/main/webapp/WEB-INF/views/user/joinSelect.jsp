@@ -8,8 +8,8 @@
 </head>
 <body>
 	<div>
-		<button>일반 회원가입</button>
-		<button>사업자 회원가입</button>
+		<button onclick="location.href='normalJoin.do'">일반 회원가입</button>
+		<button onclick="location.href='businessJoin.do'">사업자 회원가입</button>
 	</div>
 </body>
 </html>

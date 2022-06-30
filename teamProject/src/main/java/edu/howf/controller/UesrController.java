@@ -17,26 +17,96 @@ public class UesrController {
 	@Autowired
 	UserService userService;
 	
+	//로그인 페이지로 이동
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}
 	
+	//로그인 액션
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public String login(UserVO vo,HttpServletRequest request, HttpSession session) {
+		UserVO login = userService.login(vo);
 		
-		return "";
+		if(login != null) {
+			session = request.getSession();
+			session.setAttribute("login", login);
+			
+			return "redirect:/";
+		}
+		else {
+			//만약 로그인에 실패할 경우
+			//추후 메시지 띄워주게 변경 혹은 ajax 사용
+			return "user/login";
+		}
 	}
 	
+	//카카오 로그인
 	@RequestMapping(value="/kakao.do")
-	public String kakao() {
+	public String kakao(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
+		int midx = userService.socialLogin(vo);
+		session = request.getSession();
+		vo.setMidx(midx);
+		session.setAttribute("login", vo);
+		session.setAttribute("token", accessToken);
 		
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="google.do")
-	public String google() {
+	//구글 로그인
+	@RequestMapping(value="/google.do")
+	public String google(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
+		int midx = userService.socialLogin(vo);
+		session = request.getSession();
+		vo.setMidx(midx);
+		
+		session.setAttribute("login", vo);
+		session.setAttribute("token", accessToken);
+		
+		UserVO login = (UserVO)session.getAttribute("login");
 		
 		return "redirect:/";
 	}
+	
+	//회원가입 - 회원 종류 선택 페이지로 이동
+	@RequestMapping(value="/join.do", method=RequestMethod.GET)
+	public String join() {
+		return "user/joinSelect";
+	}
+	
+	//일반 회원가입 이동
+	@RequestMapping(value="/normalJoin.do")
+	public String normalJoin() {
+		return "user/normalJoin";
+	}
+	
+	//사업자 회원가입 이동
+	@RequestMapping(value="/businessJoin.do")
+	public String businessJoin() {
+		return "user/businessJoin";
+	}
+	
+	//회원가입 액션
+	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	public String join(UserVO vo) {
+		int result = userService.userInsert(vo);
+		
+		//로그인 성공시
+		if(result >= 1) {
+			return "redirect:/";
+		}
+		else {//로그인 실패시
+			return "redirect:/user/login.do";
+		}
+	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout.do")
+	public String logout(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
 }
