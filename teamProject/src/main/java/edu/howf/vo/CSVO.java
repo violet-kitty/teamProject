@@ -15,6 +15,7 @@ public class CSVO extends BoardVO{
 	private String filename;
 	private String replyn;
 	
+	//CSVO 업데이트 확인용 주석
 	public int getMidx() {
 		return midx;
 	}
