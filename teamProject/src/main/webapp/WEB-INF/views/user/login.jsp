@@ -41,7 +41,17 @@
 </div>
 <script>
 	function loginFn(){
+		var id = $("#id");
+		var password = $("#password");
 		
+		if(id.val()==""){
+			
+			return;
+		}
+		else if(password.val()==""){
+			
+			return;
+		}
 	}
 	
 	//카카오 로그인을 위한 코드
