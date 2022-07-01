@@ -5,6 +5,81 @@
  
 <!-- 유저, 마이페이지, 로그인, 회원가입 -->
 <mapper namespace="edu.howf.mapper.userMapper">
+	<!-- 카카오,구글 최초 로그인시 회원가입 -->
+	<insert id="socialInsert" parameterType="userVO">
+		<![CDATA[
+		INSERT INTO usertable(
+			  name
+			, email
+		)
+		VALUES(
+			  #{name}
+			, #{email}
+		)
+		]]>
+		<selectKey resultType="int" keyProperty="midx" order="AFTER">
+			SELECT max(midx) FROM usertable
+		</selectKey>
+	</insert>
 	
+	<!-- 이메일 중복체크 -->
+	<select id="emailDup" parameterType="String" resultType="int">
+		SELECT COUNT(email)
+		  FROM usertable
+		 WHERE email = #{email}
+	</select>
+	
+	<!-- 일반회원, 사업자 회원가입 -->
+	<insert id="userInsert" parameterType="userVO">
+		INSERT INTO usertable(
+			  name
+			, email
+			, password
+			, nickname
+			, phone
+			, addr
+			, detailaddr
+			, jumin
+			, delyn
+			, joinyn
+		<if test="document != null">
+			, document
+		</if>
+		)
+		VALUES(
+			  #{name}
+			, #{email}
+			, #{password}
+			, #{nickname}
+			, #{phone}
+			, #{addr}
+			, #{detailaddr}
+			, #{jumin}
+			, 'N'
+		<if test="document == null">
+			, 'Y'
+		</if>
+		<if test="document != null">
+			, 'N'
+			, #{document}
+		</if>
+		)
+	</insert>
+	
+	<!-- 일반 로그인 -->
+	<select id="login" parameterType="userVO" resultType="userVO">
+		SELECT midx
+			, nickname
+		 FROM usertable
+		WHERE id = #{id}
+		  AND password = #{password}
+	</select>
+	
+	<!-- 소셜 로그인 -->
+	<select id="socialLogin" parameterType="userVO" resultType="int">
+		SELECT midx
+		FROM usertable
+		WHERE email = #{email}
+	</select>
 	
 </mapper>
