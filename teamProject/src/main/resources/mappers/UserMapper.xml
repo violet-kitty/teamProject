@@ -9,11 +9,11 @@
 	<insert id="socialInsert" parameterType="userVO">
 		<![CDATA[
 		INSERT INTO usertable(
-			  name
+			  nickname
 			, email
 		)
 		VALUES(
-			  #{name}
+			  #{nickname}
 			, #{email}
 		)
 		]]>
