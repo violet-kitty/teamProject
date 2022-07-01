@@ -5,5 +5,27 @@
 
 <!-- 1:1문의, FAQ -->
 <mapper namespace="edu.howf.mapper.csMapper">
+
+<!-- 		<select id=""> -->
+<!-- 			SELECT b.csbidx -->
+<!-- 				  ,b.origincsbidx -->
+<!-- 			      ,u.midx -->
+<!-- 			      ,b.divsn			       -->
+<!-- 			      ,b.title -->
+<!-- 			      ,b.content -->
+<!-- 			      ,b.filename -->
+<!-- 			      ,b.wdate -->
+<!-- 			      ,b.cnt -->
+<!-- 			      ,b.delyn -->
+<!-- 			FROM CS b, user u -->
+<!-- 			WHERE b.midx = u.midx -->
+<!-- 			AND b.delyn = 'N' -->
+<!-- 			<if test="searchType != null and searchType.equals('total')"> -->
+<!-- 				AND (b.title like '%'||#{searchValue}||'%' -->
+<!-- 				OR   b.content like '%'||#{searchValue}||'%' -->
+<!-- 				OR   u.midx) -->
+<!-- 			</if> -->
+<!-- 			ORDER BY b.bidx DESC -->
+<!-- 		</select> -->
 	
 </mapper>
