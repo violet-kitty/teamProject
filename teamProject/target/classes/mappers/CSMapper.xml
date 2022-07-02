@@ -5,27 +5,112 @@
 
 <!-- 1:1문의, FAQ -->
 <mapper namespace="edu.howf.mapper.csMapper">
-
-<!-- 		<select id=""> -->
-<!-- 			SELECT b.csbidx -->
-<!-- 				  ,b.origincsbidx -->
+		
+<!-- 		<insert id="CS_write" parameterType="csVO"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			INSERT INTO CStable{ -->
+<!-- 						csbidx -->
+<!-- 						,origincsbidx -->
+<!-- 						,midx -->
+<!-- 						,title -->
+<!-- 						,divsn -->
+<!-- 						,content -->
+<!-- 						,filename -->
+<!-- 						,wdate -->
+<!-- 						,cnt -->
+<!-- 						,delyn -->
+<!-- 						) -->
+<!-- 						VALUES( -->
+						
+<!-- 						,#{origincsbidx} -->
+<!-- 						,#{midx} -->
+<!-- 						,#{title} -->
+<!-- 						,#{divsn} -->
+<!-- 						,#{content} -->
+<!-- 						,#{filename} -->
+<!-- 						,#{wdate} -->
+<!-- 						,#{cnt} -->
+<!-- 						,#{delyn} -->
+<!-- 						) -->
+<!-- 		]]> -->
+<!-- 		<selectKey resultType="int" keyProperty="csbidx" order="AFTER"> -->
+<!-- 			SELECT max(csbidx) FROM CStable -->
+<!-- 		</selectKey> -->
+<!-- 		</insert> -->
+<!-- 		<update id="origincsbidx_update" parameterType="int"> -->
+<!-- 			UPDATE CStable -->
+<!-- 			SET    origincsbidx = #{csbidx} -->
+<!-- 			WHERE  csbidx = #{csbidx} -->
+<!-- 		</update> -->
+<!-- 		<select id="1v1_selectAll" parameterType="searchVO" resultType="csVO"> -->
+<!-- 			SELECT cs.csbidx -->
+<!-- 				  ,cs.origincsbidx -->
 <!-- 			      ,u.midx -->
-<!-- 			      ,b.divsn			       -->
-<!-- 			      ,b.title -->
-<!-- 			      ,b.content -->
-<!-- 			      ,b.filename -->
-<!-- 			      ,b.wdate -->
-<!-- 			      ,b.cnt -->
-<!-- 			      ,b.delyn -->
-<!-- 			FROM CS b, user u -->
-<!-- 			WHERE b.midx = u.midx -->
-<!-- 			AND b.delyn = 'N' -->
+<!-- 			      ,cs.divsn			       -->
+<!-- 			      ,cs.title -->
+<!-- 			      ,cs.content -->
+<!-- 			      ,cs.filename -->
+<!-- 			      ,cs.wdate -->
+<!-- 			      ,cs.cnt -->
+<!-- 			      ,cs.delyn -->
+<!-- 			FROM CS cs, usertable u -->
+<!-- 			WHERE cs.midx = u.midx -->
+<!-- 			AND cs.delyn = 'N' -->
 <!-- 			<if test="searchType != null and searchType.equals('total')"> -->
-<!-- 				AND (b.title like '%'||#{searchValue}||'%' -->
-<!-- 				OR   b.content like '%'||#{searchValue}||'%' -->
-<!-- 				OR   u.midx) -->
+<!-- 				AND (cs.title like concat('%', #{searchValue}, '%') -->
+<!-- 				OR   cs.content like concat('%', #{searchValue}, '%') -->
+<!-- 				OR   u.nickname like concat('%', #{searchValue}, '%')) -->
 <!-- 			</if> -->
-<!-- 			ORDER BY b.bidx DESC -->
+<!-- 			<if test="searchType != null and searchType.equals('title')"> -->
+<!-- 				AND (cs.title like concat('%', #{searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			<if test="searchType != null and searchType.equals('content')"> -->
+<!-- 				AND (cs.content like concat('%', #{searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			<if test="searchType != null and searchType.equals('nickname')"> -->
+<!-- 				And (u.nickname like concat('%', ${searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			ORDER BY cs.bidx DESC -->
 <!-- 		</select> -->
+<!-- 		<select id="countPage" parameterType="searchVo" resultType="int"> -->
+<!-- 			SELECT COUNT(cs.bidx) -->
+<!-- 			FROM   CStable cs, usertable u -->
+<!-- 			WHERE  cs.midx = u.midx -->
+<!-- 			AND    cs.delyn = 'N' -->
+<!-- 			<if test="searchType != null and searchType.equals('total')"> -->
+<!-- 				AND (cs.title like concat('%', #{searchValue}, '%') -->
+<!-- 				OR   cs.content like concat('%', #{searchValue}, '%') -->
+<!-- 				OR   u.nickname like concat('%', #{searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			<if test="searchType != null and searchType.equals('title')"> -->
+<!-- 				AND (cs.title like concat('%', #{searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			<if test="searchType != null and searchType.equals('content')"> -->
+<!-- 				AND (cs.content like concat('%', #{searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			<if test="searchType != null and searchType.equals('nickname')"> -->
+<!-- 				And (u.nickname like concat('%', ${searchValue}, '%')) -->
+<!-- 			</if> -->
+<!-- 			ORDER BY cs.bidx DESC -->
+<!-- 		</select> -->
+<!-- 		<select id="1v1_selectOne" parameterType="int" resultType="csVO"> -->
+<!-- 			SELECT cs.bidx -->
+<!-- 				  ,cs.origincsbidx -->
+<!-- 			      ,u.midx -->
+<!-- 			      ,cs.divsn			       -->
+<!-- 			      ,cs.title -->
+<!-- 			      ,cs.content -->
+<!-- 			      ,cs.filename -->
+<!-- 			      ,cs.wdate -->
+<!-- 			      ,cs.cnt -->
+<!-- 			      ,cs.delyn -->
+<!-- 			FROM CS cs, usertable u -->
+<!-- 			WHERE cs.midx = #{midx} -->
+<!-- 			AND cs.delyn = 'N'		 -->
+<!-- 		</select> -->
+		
+		
+		
+		
 	
 </mapper>
