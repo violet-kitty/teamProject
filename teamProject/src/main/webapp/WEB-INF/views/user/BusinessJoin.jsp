@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사업자회원가입</title>
+<title>사업자 회원가입</title>
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -223,6 +223,9 @@
 			$("#pwdOkTxt").text("비밀번호가 일치하지 않습니다");
 			passwordOk.focus();
 			return;
+		}
+		else if($("#document").val()==""){
+			alert("사업자 등록증을 등록해 주세요");
 		}
 		else {
 			$("#frm").submit();

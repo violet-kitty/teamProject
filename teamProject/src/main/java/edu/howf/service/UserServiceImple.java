@@ -7,7 +7,7 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.UserVO;
 
 @Service
-public class UserServiceImple implements UserService{
+public class UserServiceImple implements UserService{ 
 	@Autowired
 	UserDao userDao;
 
