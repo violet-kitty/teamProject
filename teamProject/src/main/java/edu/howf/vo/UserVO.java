@@ -8,8 +8,8 @@ public class UserVO {
 	private String nickname;	//닉네임
 	private String phone;		//전화번호
 	private String addr;		//도로명주소 or 지번주소
-	private String detailAddr;	//상세주소
-	private int birth;			//생년월일
+	private String detailaddr;	//상세주소
+	private String jumin;			//생년월일
 	private String role;		//회원종류(일반회원, 사업자, 관리자)
 	private String img;			//프로필사진
 	private String document;	//사업자일시 사업자 등록증
@@ -58,17 +58,17 @@ public class UserVO {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public String getDetailAddr() {
-		return detailAddr;
+	public String getDetailaddr() {
+		return detailaddr;
 	}
-	public void setDetailAddr(String detailAddr) {
-		this.detailAddr = detailAddr;
+	public void setDetailAddr(String detailaddr) {
+		this.detailaddr = detailaddr;
 	}
-	public int getBirth() {
-		return birth;
+	public String getJumin() {
+		return jumin;
 	}
-	public void setBirth(int birth) {
-		this.birth = birth;
+	public void setJumin(String jumin) {
+		this.jumin = jumin;
 	}
 	public String getRole() {
 		return role;

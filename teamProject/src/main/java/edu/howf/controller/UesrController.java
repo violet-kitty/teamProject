@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.howf.service.UserService;
 import edu.howf.vo.UserVO;
@@ -47,6 +48,8 @@ public class UesrController {
 		int midx = userService.socialLogin(vo);
 		session = request.getSession();
 		vo.setMidx(midx);
+		vo.setRole("normal");
+		
 		session.setAttribute("login", vo);
 		session.setAttribute("token", accessToken);
 		
@@ -59,6 +62,7 @@ public class UesrController {
 		int midx = userService.socialLogin(vo);
 		session = request.getSession();
 		vo.setMidx(midx);
+		vo.setRole("normal");
 		
 		session.setAttribute("login", vo);
 		session.setAttribute("token", accessToken);
@@ -68,8 +72,14 @@ public class UesrController {
 		return "redirect:/";
 	}
 	
+	//소셜 첫 로그인 시 닉네임 받기
+	@RequestMapping(value="/nicknameInsert.do")
+	public String nickname() {
+		return "redirect;/";
+	}
+	
 	//회원가입 - 회원 종류 선택 페이지로 이동
-	@RequestMapping(value="/join.do", method=RequestMethod.GET)
+	@RequestMapping(value="/joinSelect.do", method=RequestMethod.GET)
 	public String join() {
 		return "user/joinSelect";
 	}
@@ -86,9 +96,26 @@ public class UesrController {
 		return "user/businessJoin";
 	}
 	
+	//이메일 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
+	public int emailDup(String email) {
+		int result = userService.emailDup(email);
+		return result;
+	}
+	
+	//닉네임 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/nicknameDup.do", method=RequestMethod.POST)
+	public int nicknameDup(String nickname) {
+		int result = userService.nicknameDup(nickname);
+		return result;
+	}
+	
 	//회원가입 액션
-	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	@RequestMapping(value="/join.do")
 	public String join(UserVO vo) {
+		System.out.println("회원가입");
 		int result = userService.userInsert(vo);
 		
 		//로그인 성공시

@@ -23,6 +23,11 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"emailDup", email);
 	}
 	
+	//닉네임 중복체크
+	public int nicknameDup(String nickname) {
+		return sqlSession.selectOne(namespace+"nicknameDup", nickname);
+	}
+	
 	//일반회원, 사업자 회원가입
 	public int userInsert(UserVO vo) {
 		return sqlSession.insert(namespace+"userInsert", vo);
