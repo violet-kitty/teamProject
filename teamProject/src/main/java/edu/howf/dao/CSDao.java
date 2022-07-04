@@ -30,9 +30,9 @@ public class CSDao {
 			return sqlSession.selectList(namespace + ".1v1_selectAll", vo);
 	}
 	
-	public List<CSVO> CSListMy(){
+	public List<CSVO> CSListMy(int midx){
 
-		return sqlSession.selectList(namespace + ".1v1_selectMy");
+		return sqlSession.selectList(namespace + ".1v1_selectMy", midx);
 	}
 	
 	

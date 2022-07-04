@@ -10,7 +10,7 @@ import edu.howf.vo.SearchVO;
 
 public interface CSService {
 	
-	public List<CSVO> CSList(SearchVO vo, HttpServletRequest request, HttpSession session);
+	public List<CSVO> CSList(int midx, SearchVO vo, HttpServletRequest request, HttpSession session);
 	
 	public int countPage(SearchVO vo);
 	

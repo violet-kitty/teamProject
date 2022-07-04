@@ -70,11 +70,11 @@
 			<if test="searchType != null and searchType.equals('nickname')">
 				And (u.nickname like concat('%', ${searchValue}, '%'))
 			</if>
-			ORDER BY cs.bidx DESC
+			ORDER BY cs.csbidx DESC
 		</select>
 
 		<select id="countPage" parameterType="searchVo" resultType="int">
-			SELECT COUNT(cs.bidx)
+			SELECT COUNT(cs.csbidx)
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
 			AND    cs.delyn = 'N'
@@ -92,13 +92,14 @@
 			<if test="searchType != null and searchType.equals('nickname')">
 				And (u.nickname like concat('%', ${searchValue}, '%'))
 			</if>
-			ORDER BY cs.bidx DESC
+			ORDER BY cs.csbidx DESC
 		</select>
 
 		<select id="1v1_selectMy" parameterType="int" resultType="csVO">
-			SELECT cs.bidx
+			SELECT cs.csbidx
 				  ,cs.origincsbidx
 			      ,u.midx
+			      ,u.name
 			      ,cs.divsn			      
 			      ,cs.title
 			      ,cs.content
@@ -108,7 +109,8 @@
 			      ,cs.delyn
 			FROM CStable cs, usertable u
 			WHERE cs.midx = #{midx}
-			AND cs.delyn = 'N'		
+			AND cs.midx = u.midx
+			AND cs.delyn = 'N'	
 		</select>
 
 			
