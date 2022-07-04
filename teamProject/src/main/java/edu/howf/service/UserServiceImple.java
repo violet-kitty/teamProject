@@ -7,13 +7,18 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.UserVO;
 
 @Service
-public class UserServiceImple implements UserService{
+public class UserServiceImple implements UserService{ 
 	@Autowired
 	UserDao userDao;
 
 	@Override
 	public int emailDup(String email) {
 		return userDao.emailDup(email);
+	}
+	
+	@Override
+	public int nicknameDup(String nickname) {
+		return userDao.nicknameDup(nickname);
 	}
 
 	@Override

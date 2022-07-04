@@ -11,7 +11,7 @@ public class UserDao {
 	@Autowired
 	SqlSession sqlSession;
 	
-	String namespace = "edu.howf.mapper.userMapper.";
+	String namespace = "edu.howf.mapper.userMapper."; 
 	
 	//첫 소셜 로그인시 회원가입
 	public int socialInsert(UserVO vo) {
@@ -21,6 +21,11 @@ public class UserDao {
 	//이메일 중복체크
 	public int emailDup(String email) {
 		return sqlSession.selectOne(namespace+"emailDup", email);
+	}
+	
+	//닉네임 중복체크
+	public int nicknameDup(String nickname) {
+		return sqlSession.selectOne(namespace+"nicknameDup", nickname);
 	}
 	
 	//일반회원, 사업자 회원가입

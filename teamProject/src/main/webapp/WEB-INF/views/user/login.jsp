@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 구글 로그인 -->
@@ -16,10 +16,10 @@
 </head>
 <body>
 <div>
-	<form>
-		id : <input type="text" name="id" id="id"><br>
+	<form id="frm" action="login.do" method="post">
+		id : <input type="text" name="email" id="email"><br>
 		password : <input type="password" name="password" id="password"><br>
-		<button type="button" onclick="">로그인</button>
+		<button type="button" onclick="loginFn()">로그인</button>
 	</form>
 	
 	<a id="custom-login-btn" href="javascript:loginWithKakao()">
@@ -41,19 +41,19 @@
 </div>
 <script>
 	function loginFn(){
-		var id = $("#id");
+		var id = $("#email");
 		var password = $("#password");
 		
 		if(id.val()==""){
-			
+			id.focus();
 			return;
 		}
 		else if(password.val()==""){
-			
+			password.focus();
 			return;
 		}
 		else {
-			
+			$("#frm").submit();
 		}
 	}
 	
@@ -75,7 +75,7 @@
 						var name = response.kakao_account.profile.nickname;
 
 						location.href = "kakao.do?email=" + email
-								+ "&nickname=" + name + "&accessToken=" + accessToken;
+								+ "&name=" + name + "&accessToken=" + accessToken;
 					}
 				});
 			}
@@ -86,7 +86,7 @@
 	function handleCredentialResponse(response) {
 		const responsePayload = parseJwt(response.credential);
 	     
-	     location.href="google.do?nickname="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
+	     location.href="google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
 	}
 	function parseJwt(token){
 		var base64Url = token.split('.')[1];
