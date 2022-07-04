@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //지역 이벤트
 public class EventVO extends BoardVO{
 	private int ebidx;			//글 번호
-	private String file;		//이벤트 리스트 페이지 슬라이드에 들어갈 사진
+	private String filename;		//이벤트 리스트 페이지 슬라이드에 들어갈 사진
 	private String state;		//도
 	private String city;		//시
 	private String tag;			//태그들. #으로 구분됨
@@ -18,11 +18,11 @@ public class EventVO extends BoardVO{
 	public void setEbidx(int ebidx) {
 		this.ebidx = ebidx;
 	}
-	public String getFile() {
-		return file;
+	public String getFilename() {
+		return filename;
 	}
-	public void setFile(String file) {
-		this.file = file;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	public String getState() {
 		return state;
