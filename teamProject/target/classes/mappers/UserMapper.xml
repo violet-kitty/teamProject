@@ -101,10 +101,10 @@
 		SELECT midx
 			, nickname
 			, role
+			, joinyn
 		 FROM usertable
 		WHERE email = #{email}
 		  AND password = #{password}
-		  AND joinyn = 'Y'
 	</select>
 	
 	<!-- 소셜 로그인 -->

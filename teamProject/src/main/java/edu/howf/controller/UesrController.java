@@ -1,5 +1,9 @@
 package edu.howf.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.UserService;
 import edu.howf.vo.UserVO;
@@ -25,21 +30,31 @@ public class UesrController {
 	}
 	
 	//로그인 액션
-	//파일 받아오게 바꿔줘야함
+	@ResponseBody
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public String login(UserVO vo,HttpServletRequest request, HttpSession session) {
 		UserVO login = userService.login(vo);
 		
+		//로그인 정보 있다면
 		if(login != null) {
-			session = request.getSession();
-			session.setAttribute("login", login);
-			
-			return "redirect:/";
+			//만약 승인된 경우
+			if(login.getJoinyn().equals("Y")) {
+				System.out.println("승인된 회원");
+				session = request.getSession();
+				session.setAttribute("login", login);
+				
+				return "Y";
+			}
+			//승인이 되지 않은 경우
+			else {
+				System.out.println("승인되지 않은 회원");
+				return "N";
+			}
 		}
 		else {
-			//만약 로그인에 실패할 경우
-			//추후 메시지 띄워주게 변경 혹은 ajax 사용
-			return "user/login";
+			//로그인 실패(회원 존재하지 않음)
+			System.out.println("회원 정보 일치하지 않음");
+			return "FAIL";
 		}
 	}
 	
@@ -115,17 +130,35 @@ public class UesrController {
 		return result;
 	}
 	
-	//일반 회원가입 액션
+	//회원가입 액션
 	@RequestMapping(value="/join.do")
-	public String join(UserVO vo) {
-		System.out.println("회원가입");
+	public String join(MultipartFile file, UserVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
+		//파일 받아오는 처리
+		String path = request.getSession().getServletContext().getRealPath("/resources/image");
+		System.out.println("파일 저장 경로 : "+path);
+		File dir = new File(path);
+		
+		if(!dir.exists()) dir.mkdirs();
+		
+		if(!file.getOriginalFilename().isEmpty()) {
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+			file.transferTo(new File(path,fileName));
+			vo.setDocument(fileName);
+		}
+		else {
+			//일반회원은 파일이 없지
+			System.out.println("입력된 파일 없음");
+		}
+		
+		//DB에 저장
 		int result = userService.userInsert(vo);
 		
-		//로그인 성공시
+		//회원가입 성공시
 		if(result >= 1) {
 			return "redirect:/";
 		}
-		else {//로그인 실패시
+		else {//회원가입 실패시
 			return "redirect:/user/login.do";
 		}
 	}

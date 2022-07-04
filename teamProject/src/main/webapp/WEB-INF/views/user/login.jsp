@@ -35,7 +35,7 @@ var nicknameDup = false;
 </div>
 
 <div>
-	<form id="frm" action="login.do" method="post">
+	<form id="frm">
 		id : <input type="text" name="email" id="email"><br>
 		password : <input type="password" name="password" id="password"><br>
 		<button type="button" onclick="loginFn()">로그인</button>
@@ -73,7 +73,23 @@ var nicknameDup = false;
 			return;
 		}
 		else {
-			$("#frm").submit();
+			var frm = $("#frm").serialize();
+			$.ajax({
+				url:"login.do",
+				data:frm,
+				type:"post",
+				success:function(data){
+					if(data.trim() == "Y"){
+						location.href = "<%= request.getContextPath() %>/";
+					}
+					else if(data.trim() == "N"){
+						alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
+					}
+					else if(data == "FAIL"){
+						alert("존재하지 않는 회원이거나 아이디 혹은 비밀번호가 다릅니다.");
+					}
+				}
+			});
 		}
 	}
 	
