@@ -52,6 +52,9 @@
 			
 			return;
 		}
+		else {
+			
+		}
 	}
 	
 	//카카오 로그인을 위한 코드
@@ -71,8 +74,8 @@
 						var email = response.kakao_account.email;
 						var name = response.kakao_account.profile.nickname;
 
-						location.href = "user/kakao.do?email=" + email
-								+ "&name=" + name + "&accessToken=" + accessToken;
+						location.href = "kakao.do?email=" + email
+								+ "&nickname=" + name + "&accessToken=" + accessToken;
 					}
 				});
 			}
@@ -83,7 +86,7 @@
 	function handleCredentialResponse(response) {
 		const responsePayload = parseJwt(response.credential);
 	     
-	     location.href="user/google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
+	     location.href="google.do?nickname="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
 	}
 	function parseJwt(token){
 		var base64Url = token.split('.')[1];
