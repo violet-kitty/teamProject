@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.howf.service.NoticeService;
 
-//공지사항
+//怨듭��궗�빆
 @RequestMapping(value="/notice")
 @Controller
 public class NoticeController {
 	@Autowired
 	NoticeService noticeService;
+	
 }
