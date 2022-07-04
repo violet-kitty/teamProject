@@ -6,4 +6,5 @@
 <!-- 공지사항 -->
 <mapper namespace="edu.howf.mapper.noticeMapper">
 	
+	
 </mapper>
