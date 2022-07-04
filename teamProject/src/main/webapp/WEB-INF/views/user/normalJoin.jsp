@@ -32,7 +32,7 @@
 			<input type="text" id="phone" name="phone" placeholder="연락처"><br>
 			<input type="button" onclick="addrFn()" value="주소 찾기"><br>
 			<input type="text" id="address" name="addr" placeholder="주소" readOnly><br>
-			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소"><br>
+			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소" readOnly><br>
 			<button type="button" onclick="joinFn()">회원가입</button>
 		</form>
 	</div>
@@ -168,9 +168,10 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("address").value = addr;
+                $("#address").val(addr);
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("detailAddress").focus();
+                $("#detailAddress").removeAttr("readonly");
+                $("#detailAddress").focus();
             }
         }).open();
     }
