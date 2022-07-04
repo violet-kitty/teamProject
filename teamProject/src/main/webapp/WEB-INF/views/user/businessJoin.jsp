@@ -175,6 +175,19 @@
         }).open();
     }
 	
+	//파일 확장자 체크
+	$("#document").on("change",function(){
+		var fileName = $("#document").val();
+		
+		fileName = fileName.slice(fileName.indexOf(".")+1).toLowerCase();
+		
+		if(fileName != "jpg" && fileName != "jpeg" && fileName != "png" && fileName != "gif" && fileName != "bmp"){
+			alert("이미지 파일만 등록 가능합니다");
+			$("#document").val("");
+			return;
+		}
+	});
+	
 	//입력값 체크,이동
 	function joinFn(){
 		var name = $("#name");
