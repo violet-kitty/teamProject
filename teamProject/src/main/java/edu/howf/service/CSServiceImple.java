@@ -20,7 +20,7 @@ public class CSServiceImple implements CSService{
 	CSDao csDao;
 
 	@Override
-	public List<CSVO> CSList(int midx, SearchVO vo, HttpServletRequest request, HttpSession session) {
+	public List<CSVO> CSList(SearchVO vo, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
@@ -29,15 +29,19 @@ public class CSServiceImple implements CSService{
 			return csDao.CSListAll(vo);
 		}
 		else {
-			return csDao.CSListMy(midx);
+			return csDao.CSListMy(vo);
 		}
 		
 	}
 
 	@Override
-	public int countPage(SearchVO vo) {
-		
-		return csDao.countPage(vo);
+	public int countPage(SearchVO vo, String role) {
+		if(role.equals("admin")) {
+			return csDao.countPageAll(vo);
+		}
+		else {
+			return csDao.countPageMy(vo);
+		}
 	}
 
 	@Override

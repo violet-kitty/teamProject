@@ -73,7 +73,7 @@
 			ORDER BY cs.csbidx DESC
 		</select>
 
-		<select id="countPage" parameterType="searchVo" resultType="int">
+		<select id="countPageAll" parameterType="searchVO" resultType="int">
 			SELECT COUNT(cs.csbidx)
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
@@ -95,7 +95,7 @@
 			ORDER BY cs.csbidx DESC
 		</select>
 
-		<select id="1v1_selectMy" parameterType="int" resultType="csVO">
+		<select id="1v1_selectMy" parameterType="searchVO" resultType="csVO">
 			SELECT cs.csbidx
 				  ,cs.origincsbidx
 			      ,u.midx
@@ -110,7 +110,16 @@
 			FROM CStable cs, usertable u
 			WHERE cs.midx = #{midx}
 			AND cs.midx = u.midx
-			AND cs.delyn = 'N'	
+			AND cs.delyn = 'N'
+			LIMIT #{page},10
+		</select>
+		
+		<select id="countPageMy" parameterType="searchVO" resultType="int">
+			SELECT COUNT(cs.csbidx)				  
+			FROM CStable cs, usertable u
+			WHERE cs.midx = #{midx}
+			AND cs.midx = u.midx
+			AND cs.delyn = 'N'
 		</select>
 
 			

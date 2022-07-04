@@ -22,6 +22,10 @@ h3{
 	margin: 0 auto;
 	text-align: center;
 }
+.tb2{
+	margin: 0 auto;
+	text-align: center;	
+}
 </style>
 </head>
 <body>
@@ -52,19 +56,42 @@ h3{
 			</c:forEach>
 		</tbody>
 	</table>
+	<br>	
+	<table class="tb2">
+		<tbody>
+			<tr>
+				<td>
+					<c:if test="${pm.prev == true }">
+						<a href="csList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">◀</a>
+					</c:if>
+				</td>
+				<td>
+					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+						<a href="csList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
+					</c:forEach>
+				</td>
+				<td>
+					<c:if test="${pm.next && pm.endPage > 0}">
+						<a href="csList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">▶</a>
+					</c:if>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<c:if test="${login.role == 'admin'}">
-	<div class="div1">
-		<form action="csList.do" method="get" class="form1">
-			<select name="searchType">
-				<option value="total">전체</option>
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="nickname">닉네임</option>
-			</select>
-			<input type="text" name="searchValue">
-			<input type="submit" value="검색">
-		</form>
-	</div>
+		<br>
+		<div class="div1">
+			<form action="csList.do" method="get" class="form1">
+				<select name="searchType">
+					<option value="total">전체</option>
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+					<option value="nickname">닉네임</option>
+				</select>
+				<input type="text" name="searchValue">
+				<input type="submit" value="검색">
+			</form>
+		</div>
 	</c:if>
 </body>
 </html>

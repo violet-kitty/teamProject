@@ -35,19 +35,19 @@ public class CSController {
 			return "redirect:/user/login.do";
 		}
 		else {
-			List<CSVO> cv = csService.CSList(login.getMidx(), vo, request, session);
+			if(vo.getPage()<1) vo.setPage(1);
+			int page = vo.getPage();
+			vo.setMidx(login.getMidx());
+			List<CSVO> cv = csService.CSList(vo, request, session);
+			
 			model.addAttribute("login", login);
 			model.addAttribute("cv", cv);
 			
-			SearchVO sv = new SearchVO();
-			sv.setPage(vo.getPage());
-			sv.setSearchType(vo.getSearchType());
-			sv.setSearchValue(vo.getSearchValue());
-			
-			int cnt = csService.countPage(vo);
+			int cnt = csService.countPage(vo, login.getRole());
 			
 			PageMaker pm = new PageMaker();
-			pm.setSearch(sv);
+			vo.setPage(page);
+			pm.setSearch(vo);
 			pm.setTotalCount(cnt);
 			
 			model.addAttribute("pm", pm);

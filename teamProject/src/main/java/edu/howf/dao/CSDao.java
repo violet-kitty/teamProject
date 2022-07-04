@@ -30,15 +30,21 @@ public class CSDao {
 			return sqlSession.selectList(namespace + ".1v1_selectAll", vo);
 	}
 	
-	public List<CSVO> CSListMy(int midx){
-
-		return sqlSession.selectList(namespace + ".1v1_selectMy", midx);
+	public List<CSVO> CSListMy(SearchVO vo){
+		int page = (vo.getPage()-1)*10;
+		vo.setPage(page);
+		return sqlSession.selectList(namespace + ".1v1_selectMy", vo);
 	}
 	
 	
-	public int countPage(SearchVO vo) {
+	public int countPageAll(SearchVO vo) {
 		
-		return sqlSession.selectOne(namespace + ".countPage", vo);
+		return sqlSession.selectOne(namespace + ".countPageAll", vo);
+	}
+	
+	public int countPageMy(SearchVO vo) {
+		
+		return sqlSession.selectOne(namespace + ".countPageMy", vo);
 	}
 	
 
