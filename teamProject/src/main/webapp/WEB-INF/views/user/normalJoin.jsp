@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div>
-		<form id="frm" action="join.do" method="post">
+		<form id="frm" action="join.do" method="post" enctype="multipart/form-data">
 			<input type="text" name="name" id="name" placeholder="이름"><br>
 			<span id="nameTxt"></span><br>
 			<input type="text" name="nickname" id="nickname" placeholder="닉네임"><br>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +15,25 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <!-- jquery -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 CSS -->
+<link href="<%= request.getContextPath() %>/css/modal.css" rel="stylesheet">
+<script>
+var nicknameDup = false;
+</script>
 </head>
 <body>
+<!-- 닉네임 받는 모달 -->
+<div id="nicknameModal">
+	<div id="nicknamePopup">
+		<form id="modalFrm" action="nicknameInsert.do" method="post">
+			<p>HOWF에서 사용하실 닉네임을 입력해주세요</p>
+			<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><br>
+			<p id="nicknameTxt"></p><br>
+			<button type="button" class="modalBottomBtn" onclick="nicknameFn()">닉네임 입력</button>
+		</form>
+	</div>
+</div>
+
 <div>
 	<form id="frm" action="login.do" method="post">
 		id : <input type="text" name="email" id="email"><br>
@@ -39,6 +58,7 @@
 	</div>
 	
 </div>
+
 <script>
 	function loginFn(){
 		var id = $("#email");
@@ -73,9 +93,23 @@
 
 						var email = response.kakao_account.email;
 						var name = response.kakao_account.profile.nickname;
-
-						location.href = "kakao.do?email=" + email
-								+ "&name=" + name + "&accessToken=" + accessToken;
+						
+						$.ajax({
+							url:"socialLogin.do",
+							type:"post",
+							data:"email="+email+"&name="+name+"&accessToken="+accessToken,
+							success:function(data){
+								if(data == "0"){
+									//모달 띄우기
+									$("#nicknameModal").show();
+								}
+								else {
+									location.href = "<%= request.getContextPath() %>/";
+								}
+							}
+						});
+						
+						//location.href = "kakao.do?email=" + email + "&name=" + name + "&accessToken=" + accessToken;
 					}
 				});
 			}
@@ -85,8 +119,27 @@
 	//구글 로그인을 위한 코드
 	function handleCredentialResponse(response) {
 		const responsePayload = parseJwt(response.credential);
+		
+		var email = responsePayload.email;
+		var name = responsePayload.name;
+		var accessToken = response.credential;
+		
+		$.ajax({
+			url:"socialLogin.do",
+			type:"post",
+			data:"email="+email+"&name="+name+"&accessToken="+accessToken,
+			success:function(data){
+				if(data == "0"){
+					//모달 띄우기
+					$("#nicknameModal").show();
+				}
+				else {
+					location.href = "<%= request.getContextPath() %>/";
+				}
+			}
+		});
 	     
-	     location.href="google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
+	     //location.href="google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
 	}
 	function parseJwt(token){
 		var base64Url = token.split('.')[1];
@@ -108,6 +161,50 @@
 		} // customization attributes
 		);
 		google.accounts.id.prompt(); // also display the One Tap dialog
+	}
+	
+	//닉네임 입력시 중복 체크
+	$(function(){
+		$("#nickname").on("propertychange change keyup paste input",function(){
+			if($("#nickname").val()==""){
+				$("#nicknameTxt").text("닉네임을 입력해 주세요");
+				$("#nickname").focus();
+			}
+			else {
+				var nickname=$("#nickname").val();
+				$.ajax({
+					url:"nicknameDup.do",
+					data:"nickname="+nickname,
+					type:"post",
+					success:function(data){
+						if(data == 0){
+							$("#nicknameTxt").text("사용 가능한 닉네임 입니다");
+							nicknameDup = false;
+						}
+						else {
+							$("#nicknameTxt").text("이미 사용중인 닉네임 입니다");
+							nicknameDup = true;
+						}
+					}
+				});
+			}
+		});
+	});
+	
+	//소셜 로그인 후 닉네임 설정
+	function nicknameFn(){
+		if($("#nickname").val()==""){
+			$("#nicknameTxt").text("닉네임을 입력해 주세요");
+			return;
+		}
+		else if(nicknameDup == true){
+			$("#nicknameTxt").text("이미 사용중인 닉네임 입니다");
+			$("#nickname").focus();
+			return;
+		}
+		else {
+			$("#modalFrm").submit();
+		}
 	}
 </script>
 </body>

@@ -11,16 +11,36 @@
 		INSERT INTO usertable(
 			  name
 			, email
+			, role
+			, joinyn
+			, delyn
 		)
 		VALUES(
 			  #{name}
 			, #{email}
+			, 'normal'
+			, 'Y'
+			, 'N'
 		)
 		]]>
 		<selectKey resultType="int" keyProperty="midx" order="AFTER">
 			SELECT max(midx) FROM usertable
 		</selectKey>
 	</insert>
+	
+	<!-- 닉네임 등록 -->
+	<update id="nicknameInsert" parameterType="userVO">
+		UPDATE usertable
+		   SET nickname = #{nickname}
+		 WHERE email = #{email}
+	</update>
+	
+	<!-- 닉네임 가져오기 -->
+	<select id="nicknameSelect" parameterType="String" resultType="String">
+		SELECT nickname
+		  FROM usertable
+		 WHERE email = #{email}
+	</select>
 	
 	<!-- 이메일 중복체크 -->
 	<select id="emailDup" parameterType="String" resultType="int">
