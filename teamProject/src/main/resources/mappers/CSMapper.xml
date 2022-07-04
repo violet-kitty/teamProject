@@ -41,6 +41,7 @@
 <!-- 			SET    origincsbidx = #{csbidx} -->
 <!-- 			WHERE  csbidx = #{csbidx} -->
 <!-- 		</update> -->
+
 <!-- 		<select id="1v1_selectAll" parameterType="searchVO" resultType="csVO"> -->
 <!-- 			SELECT cs.csbidx -->
 <!-- 				  ,cs.origincsbidx -->
@@ -71,6 +72,7 @@
 <!-- 			</if> -->
 <!-- 			ORDER BY cs.bidx DESC -->
 <!-- 		</select> -->
+
 <!-- 		<select id="countPage" parameterType="searchVo" resultType="int"> -->
 <!-- 			SELECT COUNT(cs.bidx) -->
 <!-- 			FROM   CStable cs, usertable u -->
@@ -92,6 +94,7 @@
 <!-- 			</if> -->
 <!-- 			ORDER BY cs.bidx DESC -->
 <!-- 		</select> -->
+
 <!-- 		<select id="1v1_selectOne" parameterType="int" resultType="csVO"> -->
 <!-- 			SELECT cs.bidx -->
 <!-- 				  ,cs.origincsbidx -->
@@ -107,7 +110,8 @@
 <!-- 			WHERE cs.midx = #{midx} -->
 <!-- 			AND cs.delyn = 'N'		 -->
 <!-- 		</select> -->
-		
+			
+			
 		
 		
 		
