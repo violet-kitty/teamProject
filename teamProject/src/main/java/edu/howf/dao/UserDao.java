@@ -11,7 +11,7 @@ public class UserDao {
 	@Autowired
 	SqlSession sqlSession;
 	
-	String namespace = "edu.howf.mapper.userMapper."; 
+	String namespace = "edu.howf.mapper.userMapper.";
 	
 	//첫 소셜 로그인시 회원가입
 	public int socialInsert(UserVO vo) {

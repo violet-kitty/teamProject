@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <!-- 유저, 마이페이지, 로그인, 회원가입 -->
-<mapper namespace="edu.howf.mapper.userMapper"> 
+<mapper namespace="edu.howf.mapper.userMapper">
 	<!-- 카카오,구글 최초 로그인시 회원가입 -->
 	<insert id="socialInsert" parameterType="userVO">
 		<![CDATA[

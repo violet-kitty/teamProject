@@ -104,6 +104,7 @@ var nicknameDup = false;
 									$("#nicknameModal").show();
 								}
 								else {
+									//닉네임 있으면 바로 이동
 									location.href = "<%= request.getContextPath() %>/";
 								}
 							}

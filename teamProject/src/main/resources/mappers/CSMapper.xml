@@ -9,8 +9,7 @@
 <!-- 		<insert id="CS_write" parameterType="csVO"> -->
 <!-- 		<![CDATA[ -->
 <!-- 			INSERT INTO CStable{ -->
-<!-- 						csbidx -->
-<!-- 						,origincsbidx -->
+<!-- 						origincsbidx -->
 <!-- 						,midx -->
 <!-- 						,title -->
 <!-- 						,divsn -->
@@ -22,15 +21,15 @@
 <!-- 						) -->
 <!-- 						VALUES( -->
 						
-<!-- 						,#{origincsbidx} -->
+<!-- 						0 -->
 <!-- 						,#{midx} -->
 <!-- 						,#{title} -->
 <!-- 						,#{divsn} -->
 <!-- 						,#{content} -->
 <!-- 						,#{filename} -->
-<!-- 						,#{wdate} -->
-<!-- 						,#{cnt} -->
-<!-- 						,#{delyn} -->
+<!-- 						,now() -->
+<!-- 						,0 -->
+<!-- 						,'N' -->
 <!-- 						) -->
 <!-- 		]]> -->
 <!-- 		<selectKey resultType="int" keyProperty="csbidx" order="AFTER"> -->

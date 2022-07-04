@@ -73,6 +73,7 @@ public class UesrController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setEmail(login.getEmail());
 		
+		//닉네임 업데이트 해주기
 		int result = userService.nicknameInsert(vo);
 		login.setNickname(vo.getNickname());
 		session.setAttribute("login", login);
