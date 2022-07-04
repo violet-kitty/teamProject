@@ -21,8 +21,9 @@
 <p>현재 ${login.nickname}으로 로그인 됨</p><br>
 <c:if test="${login == null}">
 	<a href="user/login.do">로그인</a>
-	<a href="user/joinSelect.do">회원가입</a>
+	<br><a href="user/joinSelect.do">회원가입</a>	
 </c:if>
+<br><a href="csBoard/csList.do">CS게시판(임시)</a><br>
 <c:if test="${login != null}">
 	<a href="javascript:logoutFn()">로그아웃</a>
 </c:if>
