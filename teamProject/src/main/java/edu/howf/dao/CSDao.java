@@ -17,6 +17,14 @@ public class CSDao {
 	
 //	private static final String namespace = "edu.howf.mapper.csMapper";
 //	
+//	
+//	public int CS_write(CSVO vo) {
+//	
+//		int csbidx = sqlSession.insert(namespace + "CS_write", vo);
+//	
+//		return sqlSession.update(namespace + "origincsbidx_update", csbidx);
+//	}
+//	
 //	public List<CSVO> CSList(SearchVO vo){
 //		
 //		return sqlSession.selectList(namespace + ".1v1_selectAll", vo);
@@ -27,12 +35,7 @@ public class CSDao {
 //		return sqlSession.selectOne(namespace + ".countPage", vo);
 //	}
 //	
-//	public int CS_write(CSVO vo) {
-//		
-//		int csbidx = sqlSession.insert(namespace + "CS_write", vo);
-//		
-//		return sqlSession.update(namespace + "origincsbidx_update", csbidx);
-//	}
+
 	
 	
 }
