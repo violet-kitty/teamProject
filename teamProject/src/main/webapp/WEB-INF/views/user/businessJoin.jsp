@@ -39,7 +39,6 @@
 	</div>
 
 <script>
-	
 	$(function(){
 		//생년월일 입력 datePicker
 		$("#jumin").datepicker({
