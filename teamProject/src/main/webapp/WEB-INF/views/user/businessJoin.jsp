@@ -33,7 +33,7 @@
 			<input type="button" onclick="addrFn()" value="주소 찾기"><br>
 			<input type="text" id="address" name="addr" placeholder="주소" readOnly><br>
 			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소"><br>
-			<input type="file" id="document" name="document"><br>
+			<input type="file" id="document" name="file"><br>
 			<button type="button" onclick="joinFn()">회원가입</button>
 		</form>
 	</div>

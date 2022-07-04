@@ -32,7 +32,6 @@
 	<!--  spring-upload -->
 	<!-- 파일 업로드를 위한 multipartResolver를 쓰기 위한 코드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
-	<!--  spring-upload -->
 	
 	
 </beans:beans>
