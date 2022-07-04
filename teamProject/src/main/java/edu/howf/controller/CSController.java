@@ -15,6 +15,7 @@ import edu.howf.service.CSService;
 import edu.howf.vo.CSVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.UserVO;
 
 //1:1문의, FAQ
 @RequestMapping(value="/csBoard")
@@ -27,27 +28,34 @@ public class CSController {
 	@RequestMapping(value = "csList.do", method = RequestMethod.GET)
 	public String CSList(Model model, SearchVO vo, HttpServletRequest request, HttpSession session) {
 		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
 		
+		if(login == null) {
+			return "redirect:/user/login.do";
+		}
+		else {
+			List<CSVO> cv = csService.CSList(login.getMidx(), vo, request, session);
+			model.addAttribute("login", login);
+			model.addAttribute("cv", cv);
+			
+			SearchVO sv = new SearchVO();
+			sv.setPage(vo.getPage());
+			sv.setSearchType(vo.getSearchType());
+			sv.setSearchValue(vo.getSearchValue());
+			
+			int cnt = csService.countPage(vo);
+			
+			PageMaker pm = new PageMaker();
+			pm.setSearch(sv);
+			pm.setTotalCount(cnt);
+			
+			model.addAttribute("pm", pm);
+			
+			
+			return "csBoard/csList";
+		}
 		
-		List<CSVO> cv = csService.CSList(vo, request, session);
-		
-		model.addAttribute("cv", cv);
-		
-		SearchVO sv = new SearchVO();
-		sv.setPage(vo.getPage());
-		sv.setSearchType(vo.getSearchType());
-		sv.setSearchValue(vo.getSearchValue());
-		
-		int cnt = csService.countPage(vo);
-		
-		PageMaker pm = new PageMaker();
-		pm.setSearch(sv);
-		pm.setTotalCount(cnt);
-		
-		model.addAttribute("pm", pm);
-		
-		
-		return "csBoard/csList";
 	}
 	
 	

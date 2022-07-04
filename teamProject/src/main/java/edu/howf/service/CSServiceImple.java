@@ -20,7 +20,7 @@ public class CSServiceImple implements CSService{
 	CSDao csDao;
 
 	@Override
-	public List<CSVO> CSList(SearchVO vo, HttpServletRequest request, HttpSession session) {
+	public List<CSVO> CSList(int midx, SearchVO vo, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
@@ -29,7 +29,7 @@ public class CSServiceImple implements CSService{
 			return csDao.CSListAll(vo);
 		}
 		else {
-			return csDao.CSListMy();
+			return csDao.CSListMy(midx);
 		}
 		
 	}

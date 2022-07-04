@@ -8,14 +8,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+h3{
+	text-align: center;
+}
 .div1{
 	float: right;
 	text-align: center;
-	display: flex;
 }
 .form1{
-	justify-content: center;
-	align-items: center;
+
 }
 .tb1{
 	margin: 0 auto;
@@ -25,21 +26,9 @@
 </head>
 <body>
 	<h3>CS BOARD (임시)</h3>
-	<hr>
-	<div class="div1">
-		<form action="csList.do" method="get" class="form1">
-			<span class="span1">검색</span>
-			<select name="searchType">
-				<option value="total">전체</option>
-				<option value=title">제목</option>
-				<option value="content">내용</option>
-				<option value="nickname">닉네임</option>
-			</select>
-			<input type="text" name="searchValue">
-			<input type="submit" value="검색">
-		</form>
-	</div>
-	<hr>
+	<hr>	
+	<br>
+	<br>
 	<br>
 	<table border="1" class="tb1">
 		<tbody>
@@ -51,17 +40,31 @@
 				<td>조회수</td>
 				<td>작성일</td>				
 			</tr>
-			<c:forEach var="cv" items="${cv}">
+			<c:forEach var="c" items="${cv}">
 				<tr>
-					<td>${cv.csbidx}</td>
-					<td>${cv.divsn}</td>
-					<td>${cv.name}</td>
-					<td>${cv.title}</td>
-					<td>${cv.cnt}</td>
-					<td>${cv.wdate}</td>
+					<td>${c.csbidx}</td>
+					<td>${c.divsn}</td>
+					<td>${c.name}</td>
+					<td>${c.title}</td>
+					<td>${c.cnt}</td>
+					<td>${c.wdate}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<c:if test="${login.role == 'admin'}">
+	<div class="div1">
+		<form action="csList.do" method="get" class="form1">
+			<select name="searchType">
+				<option value="total">전체</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="nickname">닉네임</option>
+			</select>
+			<input type="text" name="searchValue">
+			<input type="submit" value="검색">
+		</form>
+	</div>
+	</c:if>
 </body>
 </html>
