@@ -17,7 +17,7 @@
 	</bean> -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<!-- 로컬 오라클 경로값 넣기 -->
+		<!-- 로컬 mysql 경로값 넣기 -->
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/mysql?useSSL=false&amp;serverTimezone=UTC"/>
 		<!-- user와 password 넣기 -->
 		<property name="username" value="root"/>
@@ -44,5 +44,5 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<!-- SqlSessionTemplate은 매개변수 하나 받는 생성자가 여러개라 name을 통해 어떤 매개변수 받을지 지정해줌 -->
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-	</bean>	
+	</bean>
 </beans>

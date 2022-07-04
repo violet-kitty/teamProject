@@ -2,7 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN"
 				"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
 	<typeAliases>
 		<!-- mapper에서 사용할  vo의 별칭을 등록해두는 곳 -->
 		<!-- 반드시  vo가 존재하는 것들만 지정해야함. 미리 선언할 경우 오류가 남 -->

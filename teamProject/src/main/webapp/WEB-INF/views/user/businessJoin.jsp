@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일반 회원가입</title>
+<title>사업자 회원가입</title>
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -32,13 +32,13 @@
 			<input type="text" id="phone" name="phone" placeholder="연락처"><br>
 			<input type="button" onclick="addrFn()" value="주소 찾기"><br>
 			<input type="text" id="address" name="addr" placeholder="주소" readOnly><br>
-			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소" readOnly><br>
+			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소"><br>
+			<input type="file" id="document" name="file"><br>
 			<button type="button" onclick="joinFn()">회원가입</button>
 		</form>
 	</div>
 
 <script>
-	
 	$(function(){
 		//생년월일 입력 datePicker
 		$("#jumin").datepicker({
@@ -168,13 +168,25 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $("#address").val(addr);
+                document.getElementById("address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                $("#detailAddress").removeAttr("readonly");
-                $("#detailAddress").focus();
+                document.getElementById("detailAddress").focus();
             }
         }).open();
     }
+	
+	//파일 확장자 체크
+	$("#document").on("change",function(){
+		var fileName = $("#document").val();
+		
+		fileName = fileName.slice(fileName.indexOf(".")+1).toLowerCase();
+		
+		if(fileName != "jpg" && fileName != "jpeg" && fileName != "png" && fileName != "gif" && fileName != "bmp"){
+			alert("이미지 파일만 등록 가능합니다");
+			$("#document").val("");
+			return;
+		}
+	});
 	
 	//입력값 체크,이동
 	function joinFn(){
@@ -223,6 +235,9 @@
 			$("#pwdOkTxt").text("비밀번호가 일치하지 않습니다");
 			passwordOk.focus();
 			return;
+		}
+		else if($("#document").val()==""){
+			alert("사업자 등록증을 등록해 주세요");
 		}
 		else {
 			$("#frm").submit();

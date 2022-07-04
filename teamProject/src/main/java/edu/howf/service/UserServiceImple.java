@@ -15,7 +15,22 @@ public class UserServiceImple implements UserService{
 	public int emailDup(String email) {
 		return userDao.emailDup(email);
 	}
+	
+	@Override
+	public int nicknameDup(String nickname) {
+		return userDao.nicknameDup(nickname);
+	}
 
+	@Override
+	public int nicknameInsert(UserVO vo) {
+		return userDao.nicknameInsert(vo);
+	}
+	
+	@Override
+	public String nicknameSelect(String email) {
+		return userDao.nicknameSelect(email);
+	}
+	
 	@Override
 	public int userInsert(UserVO vo) {
 		return userDao.userInsert(vo);

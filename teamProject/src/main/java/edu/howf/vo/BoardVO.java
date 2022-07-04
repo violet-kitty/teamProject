@@ -1,10 +1,9 @@
 package edu.howf.vo;
 
 //게시판 관련 공통된 컬럼들 정의한 VO
-public class BoardVO {
+public class BoardVO extends UserVO{
 	private String title;
 	private String content;
-	private String midx;
 	private String wdate;
 	private int cnt;
 	private String delyn;
@@ -20,12 +19,6 @@ public class BoardVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public String getMidx() {
-		return midx;
-	}
-	public void setMidx(String midx) {
-		this.midx = midx;
 	}
 	public String getWdate() {
 		return wdate;
