@@ -7,7 +7,7 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.UserVO;
 
 @Service
-public class UserServiceImple implements UserService{ 
+public class UserServiceImple implements UserService{
 	@Autowired
 	UserDao userDao;
 
@@ -21,6 +21,16 @@ public class UserServiceImple implements UserService{
 		return userDao.nicknameDup(nickname);
 	}
 
+	@Override
+	public int nicknameInsert(UserVO vo) {
+		return userDao.nicknameInsert(vo);
+	}
+	
+	@Override
+	public String nicknameSelect(String email) {
+		return userDao.nicknameSelect(email);
+	}
+	
 	@Override
 	public int userInsert(UserVO vo) {
 		return userDao.userInsert(vo);

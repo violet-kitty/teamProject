@@ -25,6 +25,7 @@ public class UesrController {
 	}
 	
 	//로그인 액션
+	//파일 받아오게 바꿔줘야함
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public String login(UserVO vo,HttpServletRequest request, HttpSession session) {
 		UserVO login = userService.login(vo);
@@ -42,40 +43,42 @@ public class UesrController {
 		}
 	}
 	
-	//카카오 로그인
-	@RequestMapping(value="/kakao.do")
-	public String kakao(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
+	//소셜 로그인
+	@ResponseBody
+	@RequestMapping(value="/socialLogin.do")
+	public String social(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
 		int midx = userService.socialLogin(vo);
 		session = request.getSession();
 		vo.setMidx(midx);
 		vo.setRole("normal");
 		
-		session.setAttribute("login", vo);
 		session.setAttribute("token", accessToken);
 		
-		return "redirect:/";
-	}
-	
-	//구글 로그인
-	@RequestMapping(value="/google.do")
-	public String google(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
-		int midx = userService.socialLogin(vo);
-		session = request.getSession();
-		vo.setMidx(midx);
-		vo.setRole("normal");
-		
-		session.setAttribute("login", vo);
-		session.setAttribute("token", accessToken);
-		
-		UserVO login = (UserVO)session.getAttribute("login");
-		
-		return "redirect:/";
+		String nickname = userService.nicknameSelect(vo.getEmail());
+		if(nickname == null) {
+			session.setAttribute("login", vo);
+			return "0";
+		}
+		else {
+			vo.setNickname(nickname);
+			session.setAttribute("login", vo);
+			return "1";
+		}
 	}
 	
 	//소셜 첫 로그인 시 닉네임 받기
 	@RequestMapping(value="/nicknameInsert.do")
-	public String nickname() {
-		return "redirect;/";
+	public String nickname(UserVO vo, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setEmail(login.getEmail());
+		
+		//닉네임 업데이트 해주기
+		int result = userService.nicknameInsert(vo);
+		login.setNickname(vo.getNickname());
+		session.setAttribute("login", login);
+		
+		return "redirect:/";
 	}
 	
 	//회원가입 - 회원 종류 선택 페이지로 이동
@@ -112,7 +115,7 @@ public class UesrController {
 		return result;
 	}
 	
-	//회원가입 액션
+	//일반 회원가입 액션
 	@RequestMapping(value="/join.do")
 	public String join(UserVO vo) {
 		System.out.println("회원가입");

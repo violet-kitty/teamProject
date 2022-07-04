@@ -4,23 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <!-- 유저, 마이페이지, 로그인, 회원가입 -->
-<mapper namespace="edu.howf.mapper.userMapper"> 
+<mapper namespace="edu.howf.mapper.userMapper">
 	<!-- 카카오,구글 최초 로그인시 회원가입 -->
 	<insert id="socialInsert" parameterType="userVO">
 		<![CDATA[
 		INSERT INTO usertable(
 			  name
 			, email
+			, role
+			, joinyn
+			, delyn
 		)
 		VALUES(
 			  #{name}
 			, #{email}
+			, 'normal'
+			, 'Y'
+			, 'N'
 		)
 		]]>
 		<selectKey resultType="int" keyProperty="midx" order="AFTER">
 			SELECT max(midx) FROM usertable
 		</selectKey>
 	</insert>
+	
+	<!-- 닉네임 등록 -->
+	<update id="nicknameInsert" parameterType="userVO">
+		UPDATE usertable
+		   SET nickname = #{nickname}
+		 WHERE email = #{email}
+	</update>
+	
+	<!-- 닉네임 가져오기 -->
+	<select id="nicknameSelect" parameterType="String" resultType="String">
+		SELECT nickname
+		  FROM usertable
+		 WHERE email = #{email}
+	</select>
 	
 	<!-- 이메일 중복체크 -->
 	<select id="emailDup" parameterType="String" resultType="int">
