@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.howf.service.CSService;
 import edu.howf.vo.CSVO;
@@ -26,7 +27,7 @@ public class CSController {
 	CSService csService;
 	
 	@RequestMapping(value = "csList.do", method = RequestMethod.GET)
-	public String CSList(Model model, SearchVO vo, HttpServletRequest request, HttpSession session) {
+	public String csList(Model model, SearchVO vo, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
@@ -57,6 +58,51 @@ public class CSController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "cs_write.do", method = RequestMethod.GET)
+	public String cs_write() {
+		
+		return "csBoard/cs_write";
+	}
+	
+	@RequestMapping(value = "cs_write.do", method = RequestMethod.POST)
+	public String cs_write(CSVO vo, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		
+		UserVO uv = (UserVO)session.getAttribute("login");
+		
+		vo.setMidx(uv.getMidx());
+		
+		int result = csService.CS_write(vo);
+		
+		return "redirect:/csBoard/csList.do";
+	}
+	
+	@RequestMapping(value = "csList_view.do", method = RequestMethod.GET)
+	public String csListView(int bidx, Model model) {
+		
+		CSVO cv = csService.csList_view(bidx);
+		
+		System.out.println(cv);
+		model.addAttribute("cv", cv);
+				
+		return "csBoard/csList_view";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "csList_reply.do")
+	public int csListReply(CSVO vo) {
+		
+		return csService.csList_reply(vo);
+	}
+	
+	@RequestMapping(value = "csList_modify.do", method = RequestMethod.GET)
+	public String csListModify() {
+		
+		return "";
+	}
+
 	
 	
 }

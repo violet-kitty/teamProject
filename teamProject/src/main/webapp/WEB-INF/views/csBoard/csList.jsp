@@ -12,6 +12,15 @@ h3{
 	text-align: center;
 }
 .div1{
+	margin-top: 5px;
+	margin-right: 30%;	
+}
+.btn1{
+	float: right;
+	width: 100px;
+	height: 30px;
+}
+.div2{
 	float: right;
 	text-align: center;
 }
@@ -49,13 +58,16 @@ h3{
 					<td>${c.csbidx}</td>
 					<td>${c.divsn}</td>
 					<td>${c.name}</td>
-					<td>${c.title}</td>
+					<td><a href="csList_view.do?bidx=${c.csbidx}">${c.title}</a></td>
 					<td>${c.cnt}</td>
 					<td>${c.wdate}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<div class="div1">
+		<input type="button" value="등록" onclick="location.href='cs_write.do'" class="btn1">
+	</div>
 	<br>	
 	<table class="tb2">
 		<tbody>
@@ -80,7 +92,7 @@ h3{
 	</table>
 	<c:if test="${login.role == 'admin'}">
 		<br>
-		<div class="div1">
+		<div class="div2">
 			<form action="csList.do" method="get" class="form1">
 				<select name="searchType">
 					<option value="total">전체</option>
