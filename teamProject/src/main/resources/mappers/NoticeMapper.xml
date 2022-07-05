@@ -5,6 +5,51 @@
 
 <!-- 공지사항 -->
 <mapper namespace="edu.howf.mapper.noticeMapper">
+	<insert id="insertnotice" parameterType="noticeVO">
+		INSERT INTO notice(
+					title
+					,content
+					,writer
+					,midx
+					,wdate
+					)
+		VALUES	(
+					#{title}
+					,#{content}
+					,#{writer}
+					,#{midx}
+					,now()
+		)						
+	</insert>
 	
+	 <select id="selectAll" resultType="noticeVO" parameterType="searchVO">
+			select n.nbidx
+					,n.title
+					,n.content
+					,n.wdate
+					,u.email
+					,u.name
+			FROM notice n , usertable u
+			WHERE n.midx = u.midx
+			<if test='searchType != null and searchType.equals("title")'>
+		 	 AND n.title like concat('%',#{searchValue},'%')
+		 	</if>
+			 <if test='searchType != null and searchType.equals("contentWriter")'>
+		  	 AND n.content like concat('%',#{searchValue},'%')
+		   	 OR u.name like concat('%',#{searchType},'%')
+			 </if>
+	</select>
+	
+	<select id="selectone" resultType="noticeVO" parameterType="int">
+			SELECT	n.nbidx
+					,n.title
+					,n.content
+					,n.wdate
+					,u.email
+					,u.name
+			FROM notice n , usertable u
+			WHERE n.midx = u.midx
+			AND   n.nbidx = #{nbidx}
+	</select>
 	
 </mapper>

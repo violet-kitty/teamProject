@@ -27,7 +27,7 @@
 <c:if test="${login != null}">
 	<a href="javascript:logoutFn()">로그아웃</a>
 </c:if>
-
+<a href="notice/notice.do">공지사항(notice)</a>
 <script>
 	function logoutFn(){
 		//카카오톡 로그아웃
