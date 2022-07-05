@@ -27,6 +27,9 @@
 <c:if test="${login != null}">
 	<a href="javascript:logoutFn()">로그아웃</a>
 </c:if>
+<br><br>
+<a href="howf/howfList.do">howf 추천</a><br>
+
 
 <script>
 	function logoutFn(){
