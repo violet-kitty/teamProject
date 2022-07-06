@@ -8,16 +8,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HOWF 추천</title>
-<!-- Bootstrap core CSS -->
+<!-- jquery -->
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap core CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
-<!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/css/howf.css"
-	rel="stylesheet">
+<!-- css -->
+<link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 
 <style>
 .bd-placeholder-img {
@@ -114,10 +114,26 @@
 		<div class="container marketing">
 			<div class="album py-5 bg-light">
 				<div class="container">
-
+					
+					<!-- 
+					
+					
+					테스트를 위한 글쓰기 버튼
+					
+					
+					 -->
+					 <c:if test="${login!=null && login.role=='admin'}">
+					 <div class="row">
+					 	<div class="col">
+					 		<button class="btn btn-success" onclick="location.href='howfWrite.do'">글 쓰기</button>
+					 	</div>
+					 </div>
+					 </c:if>
+					
 					<!-- sort 버튼 -->
 					<div class="row">
 						<div class="col d-flex justify-content-end">
+							<!-- searchVO에 sortType food, stay, travel, good, new 넘김 -->
 							<button>맛집추천</button>
 							<button>숙박추천</button>
 							<button>여행지추천</button>
@@ -148,24 +164,33 @@
 					<!-- content 시작 -->
 					
 					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-						<c:forEach var="i" begin="0" end="8" step="1">
-						<div class="col-md-6 col-lg-4">
-							<div class="card shadow-sm">
+						<c:forEach var="v" items="${vo}">
+						<div class="col-sm-12 col-md-12 col-lg-4">
+							<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
 								<img class="card-img-top"
 									src="<%=request.getContextPath()%>/image/eventTest.png">
 								<div class="card-body">
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
-											<span
-												style="background: #54ACA8; border-radius: 5px; color: white;">숙박추천</span>
-											<span class="ms-1">2000-00-00</span>
+											<c:if test="${v.cate=='숙박추천'}">
+												<span style="background: #54ACA8; border-radius: 5px; color: white;">${v.cate}</span>
+											</c:if>
+											<c:if test="${v.cate=='여행지추천'}">
+												<span style="background: #85A548; border-radius: 5px; color: white;">${v.cate}</span>
+											</c:if>
+											<c:if test="${v.cate=='맛집추천'}">
+												<span style="background: #DE8889; border-radius: 5px; color: white;">${v.cate}</span>
+											</c:if>
+											<span class="ms-1">${v.wdate}</span>
 										</div>
 										<small class="text-muted"><img
 											src="<%=request.getContextPath()%>/image/redheart.png"
-											width="30" height="30"><span class="ms-1">0</span></small>
+											width="30" height="30"><span class="ms-1">${v.heart}</span></small>
 									</div>
 									<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-										<p style="margin-left: 0; margin-right: 0;width:100%;">제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 </p>
+										<p style="margin-left: 0; margin-right: 0;width:100%;">${v.title}</p>
+										<!-- 허유진 220705 왜 제목 줄이는건 되는데 ...이 안나올까...  -->
+										<!-- 허유진 220705 제목 두줄은 나오게 해야될듯... -->
 									</div>
 								</div><!-- card-body end -->
 							</div>
