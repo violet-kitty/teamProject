@@ -62,7 +62,7 @@ h3{
 					<td>${c.csbidx}</td>
 					<td>${c.divsn}</td>
 					<td>${c.name}</td>
-					<td><a href="csList_view.do?bidx=${c.csbidx}&origincsbidx=${c.origincsbidx}">${c.title}</a></td>
+					<td><a href="csList_view.do?csbidx=${c.csbidx}">${c.title}</a></td>
 					<td>${c.cnt}</td>
 					<td>${c.wdate}</td>
 				</tr>

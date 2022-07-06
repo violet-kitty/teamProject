@@ -190,7 +190,7 @@
 		<update id="csList_modify" parameterType="csVO">
 			UPDATE CStable
 			SET    divsn = #{divsn}
-				   title = #{title}
+				   ,title = #{title}
 				   ,content = #{content}
 				   ,filename = #{filename}
 			WHERE  csbidx = #{csbidx}

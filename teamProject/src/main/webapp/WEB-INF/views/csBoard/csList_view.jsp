@@ -129,12 +129,12 @@ h3{
 			</tbody>
 		</table>
 		<div class="div2">
-			<c:if test="${login.role == 'admin' }">
+			<c:if test="${login.role == 'admin'}">
 				<input id="reply_btn" type="button" value="답변" class="btn1">
 			</c:if>
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
 			<c:if test="${login.midx == cv.midx}">				
-				<input type="button" value="수정" onclick="location.href='csList_modify.do?bidx=${cv.csbidx}&csbidx=${cv.csbidx}'" class="btn2">
+				<input type="button" value="수정" onclick="location.href='csList_modify.do?csbidx=${cv.csbidx}'" class="btn2">
 				<input type="button" value="삭제" onclick="location.href='csList_delete.do?csbidx=${cv.csbidx}'" class="btn2">
 			</c:if>
 		</div>

@@ -81,11 +81,11 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_view.do", method = RequestMethod.GET)
-	public String csListView(int bidx, int origincsbidx, Model model) {
+	public String csListView(int csbidx, Model model) {
 		
-		CSVO cv = csService.csList_view(bidx);
+		CSVO cv = csService.csList_view(csbidx);
 		
-		List<CSVO> cvr = csService.csList_reply_view(origincsbidx);
+		List<CSVO> cvr = csService.csList_reply_view(csbidx);
 		
 		model.addAttribute("cv", cv);
 		model.addAttribute("cvr", cvr);
@@ -111,11 +111,15 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_modify.do", method = RequestMethod.POST)
-	public String csListModify(int csbidx) {
+	public String csListModify(CSVO vo, HttpServletRequest request, HttpSession session) {
 		
-		int result = csService.csList_modify(csbidx);
+		session = request.getSession();
+		UserVO uv = (UserVO)session.getAttribute("login");
+		vo.setMidx(uv.getMidx());
 		
-		return "csBoard/csList_view";
+		int result = csService.csList_modify(vo);
+		
+		return "redirect:/csBoard/csList_view.do?csbidx="+vo.getCsbidx();
 	}
 	
 	@RequestMapping(value = "csList_delete.do", method = RequestMethod.GET)

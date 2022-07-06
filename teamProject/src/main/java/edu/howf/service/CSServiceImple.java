@@ -71,9 +71,9 @@ public class CSServiceImple implements CSService{
 	}
 	
 	@Override
-	public int csList_modify(int csbidx) {
+	public int csList_modify(CSVO vo) {
 		
-		return csDao.csList_modify(csbidx);
+		return csDao.csList_modify(vo);
 	}
 	
 	@Override
