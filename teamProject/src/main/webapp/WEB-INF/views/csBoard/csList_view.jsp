@@ -24,6 +24,7 @@ h3{
 	margin-right: 10%;
 }
 .tb_category{
+	width: 10%;
 	background-color: lightgray;
 	font-weight: bold;
 }
@@ -64,6 +65,35 @@ h3{
 	margin-left: 10%;
 	margin-right: 10%;
 }
+.replies{
+	margin-top: 50px;
+}
+.tb2{	
+	text-align: center;
+	width: 80%;	
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.reply_category{
+	width: 10%;
+	color: black;
+	background-color: #b2ffb5;
+	font-weight: bold;
+}
+.reply_category_title{
+	border-top: 2px solid #27c6be;
+	border-bottom: 2px solid #27c6be;
+}
+.reply_content{
+	text-align: left;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-left: 10px;
+	width: 100%;
+	height: 500px;
+	border-top: 2px solid #27c6be;
+	border-bottom: 2px solid #27c6be;
+}
 </style>
 </head>
 <body>
@@ -77,7 +107,7 @@ h3{
 				<tr>
 					<td class="tb_category">글번호</td>
 					<td>${cv.csbidx}</td>
-					<td class="tb_category">구분</td>
+					<td class="tb_category">문의유형</td>
 					<td>${cv.divsn}</td>
 					<td class="tb_category">작성자</td>
 					<td>${cv.nickname}</td>
@@ -99,13 +129,13 @@ h3{
 			</tbody>
 		</table>
 		<div class="div2">
-			<c:if test="${login.role != 'admin' }">
+			<c:if test="${login.role == 'admin' }">
 				<input id="reply_btn" type="button" value="답변" class="btn1">
 			</c:if>
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
-			<c:if test="${login.midx == cv.midx }">				
-				<input type="button" value="수정" onclick="location.href='csList_modify.do?bidx=${cv.csbidx}'" class="btn2">
-				<input type="button" value="삭제" onclick="location.href='csList_delete.do?bidx=${cv.csbidx}'" class="btn2">
+			<c:if test="${login.midx == cv.midx}">				
+				<input type="button" value="수정" onclick="location.href='csList_modify.do?bidx=${cv.csbidx}&csbidx=${cv.csbidx}'" class="btn2">
+				<input type="button" value="삭제" onclick="location.href='csList_delete.do?csbidx=${cv.csbidx}'" class="btn2">
 			</c:if>
 		</div>
 	</div>
@@ -121,9 +151,30 @@ h3{
 			<input type="button" id="reply_btn2" value="답변 등록">
 		</form>
 	</div>
-	<div class="replies">
-	
-	</div>
+	<c:forEach var="cvr" items="${cvr}">
+		<div class="replies">
+			<table class="tb2">
+				<tbody>
+					<tr>
+						<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
+					</tr>				
+					<tr>
+						<td class="reply_category">작성자</td>
+						<td>${cvr.nickname}</td>
+						<td class="reply_category">제목</td>
+						<td>${cvr.title}</td>
+						<td class="reply_category">작성일</td>
+						<td>${cvr.wdate}</td>
+					</tr>
+					<tr>
+						<td class="reply_category" style="border-top: 2px solid #27c6be; border-bottom: 2px solid #27c6be;">내용</td>
+						<td class="reply_content" colspan="5">${cvr.content}</td>
+					</tr>
+				
+				</tbody>
+			</table>
+		</div>
+	</c:forEach>
 	<script>
 		$("#reply_btn").click(function(){
 			$("#reply").show();
@@ -137,8 +188,7 @@ h3{
 				data: frm,
 				success: function(data){
 					if(data == 1){
-						alert("글이 등록되었습니다.");
-						$(".replies").html(data);
+						alert("글이 등록되었습니다.");						
 						location.reload();
 					}
 					

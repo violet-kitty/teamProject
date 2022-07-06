@@ -8,7 +8,7 @@
 		
 		<insert id="CS_write" parameterType="csVO">
 		<![CDATA[
- 			INSERT INTO CStable{
+ 			INSERT INTO CStable(
 	 						origincsbidx
 	 						,midx
 	 						,title
@@ -46,6 +46,7 @@
 			SELECT cs.csbidx
 				  ,cs.origincsbidx
 			      ,u.midx
+			      ,u.name
 			      ,cs.divsn			      
 			      ,cs.title
 			      ,cs.content
@@ -56,10 +57,14 @@
 			FROM CStable cs, usertable u
 			WHERE cs.midx = u.midx
 			AND cs.delyn = 'N'
+			AND cs.csbidx = cs.origincsbidx
 			<if test="searchType != null and searchType.equals('total')">
 				AND (cs.title like concat('%', #{searchValue}, '%')
 				OR   cs.content like concat('%', #{searchValue}, '%')
 				OR   u.nickname like concat('%', #{searchValue}, '%'))
+			</if>
+			<if test="searchType != null and searchType.equals('divsn')">
+				AND (cs.divsn like concat('%',#{searchValue},'%'))
 			</if>
 			<if test="searchType != null and searchType.equals('title')">
 				AND (cs.title like concat('%', #{searchValue}, '%'))
@@ -71,6 +76,7 @@
 				And (u.nickname like concat('%', ${searchValue}, '%'))
 			</if>
 			ORDER BY cs.csbidx DESC
+			LIMIT #{page},#{perPageNum}
 		</select>
 
 		<select id="countPageAll" parameterType="searchVO" resultType="int">
@@ -82,6 +88,9 @@
 				AND (cs.title like concat('%', #{searchValue}, '%')
 				OR   cs.content like concat('%', #{searchValue}, '%')
 				OR   u.nickname like concat('%', #{searchValue}, '%'))
+			</if>
+			<if test="searchType != null and searchType.equals('divsn')">
+				AND (cs.divsn like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('title')">
 				AND (cs.title like concat('%', #{searchValue}, '%'))
@@ -137,7 +146,7 @@
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
 			AND    cs.csbidx = #{bidx}
-		</select>
+		</select>		
 		
 		<insert id="csList_reply" parameterType="csVO">		
 			INSERT INTO CStable(
@@ -159,6 +168,39 @@
 							,'N'						
 						)			
 		</insert>
+		
+		<select id="csList_reply_view" parameterType="int" resultType="csVO">
+			SELECT cs.csbidx
+				   ,cs.origincsbidx
+				   ,cs.midx
+				   ,u.nickname
+				   ,cs.divsn
+				   ,cs.title
+				   ,cs.content
+				   ,cs.filename
+				   ,cs.wdate
+				   ,cs.cnt
+				   ,cs.delyn				   
+			FROM   CStable cs, usertable u
+			WHERE  cs.midx = u.midx
+			AND    cs.csbidx != cs.origincsbidx
+			AND    cs.origincsbidx = #{cs.origincsbidx}
+		</select>
+		
+		<update id="csList_modify" parameterType="csVO">
+			UPDATE CStable
+			SET    divsn = #{divsn}
+				   title = #{title}
+				   ,content = #{content}
+				   ,filename = #{filename}
+			WHERE  csbidx = #{csbidx}
+		</update>
+		
+		<update id="csList_delete" parameterType="int">
+			UPDATE CStable
+			SET    delyn='Y'
+			WHERE  csbidx = #{csbidx}
+		</update>
 		
 		
 

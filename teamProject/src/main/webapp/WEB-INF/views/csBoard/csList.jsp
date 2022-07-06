@@ -13,7 +13,7 @@ h3{
 }
 .div1{
 	margin-top: 5px;
-	margin-right: 30%;	
+	margin-right: 10%;	
 }
 .btn1{
 	float: right;
@@ -23,16 +23,20 @@ h3{
 .div2{
 	float: right;
 	text-align: center;
+	margin-right: 10%;
 }
 .form1{
 
 }
 .tb1{
+	width: 80%;
 	margin: 0 auto;
 	text-align: center;
 }
 .tb2{
-	margin: 0 auto;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
 	text-align: center;	
 }
 </style>
@@ -47,7 +51,7 @@ h3{
 		<tbody>
 			<tr>
 				<td>글번호</td>
-				<td>구분</td>
+				<td>문의유형</td>
 				<td>작성자</td>
 				<td>제목</td>
 				<td>조회수</td>
@@ -58,7 +62,7 @@ h3{
 					<td>${c.csbidx}</td>
 					<td>${c.divsn}</td>
 					<td>${c.name}</td>
-					<td><a href="csList_view.do?bidx=${c.csbidx}">${c.title}</a></td>
+					<td><a href="csList_view.do?bidx=${c.csbidx}&origincsbidx=${c.origincsbidx}">${c.title}</a></td>
 					<td>${c.cnt}</td>
 					<td>${c.wdate}</td>
 				</tr>
@@ -96,6 +100,7 @@ h3{
 			<form action="csList.do" method="get" class="form1">
 				<select name="searchType">
 					<option value="total">전체</option>
+					<option value="divsn">문의유형</option>
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="nickname">닉네임</option>
