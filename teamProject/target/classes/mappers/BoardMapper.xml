@@ -5,5 +5,101 @@
  
 <!-- HOWF 추천, 지역 이벤트 -->
 <mapper namespace="edu.howf.mapper.boardMapper">
+	<!-- HOWF 리스트 -->
+	<select id="howfSelectAll" parameterType="searchVO" resultType="howfVO">
+		SELECT *
+		FROM
+		(SELECT h.hbidx
+			, h.midx
+			, u.nickname
+			, h.title
+			, h.content
+			, h.wdate
+			, h.cnt
+			, h.filename
+			, h.cate
+			, h.tag
+		FROM howf h, usertable u
+		WHERE h.midx = u.midx
+		AND h.delyn = 'N') a
+		LEFT OUTER JOIN
+		(SELECT bidx
+			, COUNT(hidx) as heart
+		FROM heart
+		WHERE type='howf'
+		GROUP BY bidx) b
+		on a.hbidx = b.bidx
+	</select>
+	<!-- HOWF 전체 글 수 세기 -->
+	<select id="howfCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(h.hbidx)
+		FROM howf h, usertable u
+		WHERE h.midx = u.midx
+		AND h.delyn = 'N'
+	</select>
+	
+	<!-- HOWF 글 보기 -->
+	<select id="howfView" parameterType="int" resultType="howfVO">
+		SELECT a.hbidx
+			, a.midx
+			, a.title
+			, a.content
+			, a.wdate
+			, a.cnt
+			, a.filename
+			, a.cate
+			, a.tag
+			, b.heart
+		 FROM howf a
+		 LEFT OUTER JOIN
+		 (SELECT bidx
+		 	, COUNT(hidx) as heart
+		 FROM heart
+		 WHERE type='howf'
+		 GROUP BY bidx) b
+		 on a.hbidx = b.bidx
+		WHERE a.hbidx = #{hbidx}
+	</select>
+	
+	<!-- HOWF 글 작성 -->
+	<insert id="howfWrite" parameterType="howfVO">
+		INSERT INTO howf(
+			  midx
+			, title
+			, content
+			, wdate
+			, cnt
+			, filename
+			, cate
+			, tag
+			, delyn
+		)
+		VALUES(
+			#{midx}
+			, #{title}
+			, #{content}
+			, now()
+			, 0
+			, #{filename}
+			, #{cate}
+			, #{tag}
+			, 'N'
+		)
+	</insert>
+	<!-- HOWF 글 수정 -->
+	
+	<!-- HOWF 글 삭제 -->
+	
+	<!-- 지역 이벤트 리스트 -->
+	
+	<!-- 지역 이벤트 전체 글 수 세기 -->
+	
+	<!-- 지역 이벤트 글 보기 -->
+	
+	<!-- 지역 이벤트 글 작성 -->
+	
+	<!-- 지역 이벤트 글 수정 -->
+	
+	<!-- 지역 이벤트 글 삭제 -->
 	
 </mapper>

@@ -3,6 +3,7 @@ package edu.howf.vo;
 public class SearchVO extends Criteria{
 	private String searchType;
 	private String searchValue;
+	private String sortType;
 	
 	public String getSearchType() {
 		return searchType;
@@ -15,5 +16,11 @@ public class SearchVO extends Criteria{
 	}
 	public void setSearchValue(String searchValue) {
 		this.searchValue = searchValue;
+	}
+	public String getSortType() {
+		return sortType;
+	}
+	public void setSortType(String sortType) {
+		this.sortType = sortType;
 	}
 }
