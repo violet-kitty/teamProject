@@ -27,7 +27,14 @@
 <c:if test="${login != null}">
 	<a href="javascript:logoutFn()">로그아웃</a>
 </c:if>
+<<<<<<< HEAD
+<a href="notice/notice.do">공지사항(notice)</a>
+=======
+<br><br>
+<a href="howf/howfList.do">howf 추천</a><br>
 
+
+>>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 <script>
 	function logoutFn(){
 		//카카오톡 로그아웃
