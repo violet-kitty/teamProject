@@ -50,5 +50,18 @@ public class CSServiceImple implements CSService{
 		return csDao.CS_write(vo);
 	}
 	
+	@Override
+	public CSVO csList_view(int bidx) {
+		
+		System.out.println(bidx);
+		return csDao.csList_view(bidx);
+	}
+
+	@Override
+	public int csList_reply(CSVO vo) {
+		
+		return csDao.csList_reply(vo);
+	}
+	
 	
 }

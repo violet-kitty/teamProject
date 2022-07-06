@@ -111,7 +111,7 @@
 			WHERE cs.midx = #{midx}
 			AND cs.midx = u.midx
 			AND cs.delyn = 'N'
-			LIMIT #{page},10
+			LIMIT #{page},#{perPageNum}
 		</select>
 		
 		<select id="countPageMy" parameterType="searchVO" resultType="int">
@@ -121,6 +121,46 @@
 			AND cs.midx = u.midx
 			AND cs.delyn = 'N'
 		</select>
+		
+		<select id="csList_view" parameterType="int" resultType="csVO">
+			SELECT cs.csbidx
+				   ,cs.origincsbidx
+				   ,cs.midx
+				   ,u.nickname
+				   ,cs.divsn
+				   ,cs.title
+				   ,cs.content
+				   ,cs.filename
+				   ,cs.wdate
+				   ,cs.cnt
+				   ,cs.delyn				   
+			FROM   CStable cs, usertable u
+			WHERE  cs.midx = u.midx
+			AND    cs.csbidx = #{bidx}
+		</select>
+		
+		<insert id="csList_reply" parameterType="csVO">		
+			INSERT INTO CStable(
+							origincsbidx
+							,midx
+							,title
+							,content
+							,wdate
+							,cnt
+							,delyn						
+						)
+						VALUES(
+							#{origincsbidx}
+							,#{midx}
+							,#{title}
+							,#{content}
+							,now()
+							,0
+							,'N'						
+						)			
+		</insert>
+		
+		
 
 			
 			

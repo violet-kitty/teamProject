@@ -20,9 +20,9 @@ public class CSDao {
 	
 	public int CS_write(CSVO vo) {
 	
-		int csbidx = sqlSession.insert(namespace + "CS_write", vo);
+		int csbidx = sqlSession.insert(namespace + ".CS_write", vo);
 	
-		return sqlSession.update(namespace + "origincsbidx_update", csbidx);
+		return sqlSession.update(namespace + ".origincsbidx_update", csbidx);
 	}
 	
 	public List<CSVO> CSListAll(SearchVO vo){
@@ -45,6 +45,16 @@ public class CSDao {
 	public int countPageMy(SearchVO vo) {
 		
 		return sqlSession.selectOne(namespace + ".countPageMy", vo);
+	}
+	
+	public CSVO csList_view(int bidx) {
+		
+		return sqlSession.selectOne(namespace + ".csList_view", bidx);
+	}
+	
+	public int csList_reply(CSVO vo) {
+		
+		return sqlSession.insert(namespace + ".csList_reply", vo);
 	}
 	
 

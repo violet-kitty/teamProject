@@ -15,5 +15,9 @@ public interface CSService {
 	public int countPage(SearchVO vo, String role);
 	
 	public int CS_write(CSVO vo);
+	
+	public CSVO csList_view(int bidx);
+	
+	public int csList_reply(CSVO vo);
 
 }
