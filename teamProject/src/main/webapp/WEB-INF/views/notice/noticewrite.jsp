@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="noticewrite.do" method="post">
+<form action="noticewrite.do" method="post" enctype="multipart/form-data">
 <table>
  <tr>
   <td>
@@ -21,15 +21,17 @@
    <table>
    
     <tr>
-     <td>제목</td>
-     <td><input name="title" size="50" maxlength="100"></td>
+    	<td>제목</td>
+    	<td><input name="title" size="50" maxlength="100"></td>
     </tr>
     <tr>
-     <td>내용</td>
-     <td><textarea name="content" cols="50" rows="13"></textarea></td>
+    	<td>내용</td>
+    	<td><textarea name="content" cols="50" rows="13"></textarea></td>
     </tr>
+    
    </table>
-
+   
+		<input type="file" name="fileupload" />
    <table>
     <tr>
      <td><button>저장</button></td>
