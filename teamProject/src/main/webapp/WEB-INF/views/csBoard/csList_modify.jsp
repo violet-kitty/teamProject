@@ -94,7 +94,7 @@ h3{
 			</table>
 			<div class="div2">
 				<input type="submit" value="수정" class="btn1">
-				<input type="button" value="취소" onclick="location.href='csList_view.do?bidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}'" class="btn1">
+				<input type="button" value="취소" onclick="location.href='csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}'" class="btn1">
 			</div>			
 		</form>		
 	</div>

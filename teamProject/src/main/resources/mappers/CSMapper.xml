@@ -145,7 +145,7 @@
 				   ,cs.delyn				   
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
-			AND    cs.csbidx = #{bidx}
+			AND    cs.csbidx = #{csbidx}
 		</select>		
 		
 		<insert id="csList_reply" parameterType="csVO">		

@@ -16,7 +16,7 @@ public interface CSService {
 	
 	public int CS_write(CSVO vo);
 	
-	public CSVO csList_view(int bidx);
+	public CSVO csList_view(int csbidx);
 	
 	public int csList_reply(CSVO vo);
 	

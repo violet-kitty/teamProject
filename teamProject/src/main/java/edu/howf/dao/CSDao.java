@@ -51,9 +51,9 @@ public class CSDao {
 		return sqlSession.selectOne(namespace + ".countPageMy", vo);
 	}
 	
-	public CSVO csList_view(int bidx) {
+	public CSVO csList_view(int csbidx) {
 		
-		return sqlSession.selectOne(namespace + ".csList_view", bidx);
+		return sqlSession.selectOne(namespace + ".csList_view", csbidx);
 	}
 	
 	public int csList_reply(CSVO vo) {
