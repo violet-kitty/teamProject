@@ -46,6 +46,7 @@ public class CSController {
 			
 			int cnt = csService.countPage(vo, login.getRole());
 			
+			
 			PageMaker pm = new PageMaker();
 			vo.setPage(page);
 			pm.setSearch(vo);
@@ -80,12 +81,14 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_view.do", method = RequestMethod.GET)
-	public String csListView(int bidx, Model model) {
+	public String csListView(int csbidx, Model model) {
 		
-		CSVO cv = csService.csList_view(bidx);
+		CSVO cv = csService.csList_view(csbidx);
 		
-		System.out.println(cv);
+		List<CSVO> cvr = csService.csList_reply_view(csbidx);
+		
 		model.addAttribute("cv", cv);
+		model.addAttribute("cvr", cvr);
 				
 		return "csBoard/csList_view";
 	}
@@ -98,9 +101,33 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_modify.do", method = RequestMethod.GET)
-	public String csListModify() {
+	public String csListModify(int bidx, Model model) {
 		
-		return "";
+		CSVO cv = csService.csList_view(bidx);
+		
+		model.addAttribute("cv", cv);
+		
+		return "csBoard/csList_modify";
+	}
+	
+	@RequestMapping(value = "csList_modify.do", method = RequestMethod.POST)
+	public String csListModify(CSVO vo, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO uv = (UserVO)session.getAttribute("login");
+		vo.setMidx(uv.getMidx());
+		
+		int result = csService.csList_modify(vo);
+		
+		return "redirect:/csBoard/csList_view.do?csbidx="+vo.getCsbidx();
+	}
+	
+	@RequestMapping(value = "csList_delete.do", method = RequestMethod.GET)
+	public String csListDelete(int csbidx) {
+		
+		int reseult = csService.csList_delete(csbidx);
+		
+		return "redirect:/csBoard/csList.do";
 	}
 
 	

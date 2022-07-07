@@ -36,6 +36,7 @@ public class CSServiceImple implements CSService{
 
 	@Override
 	public int countPage(SearchVO vo, String role) {
+		
 		if(role.equals("admin")) {
 			return csDao.countPageAll(vo);
 		}
@@ -53,7 +54,7 @@ public class CSServiceImple implements CSService{
 	@Override
 	public CSVO csList_view(int bidx) {
 		
-		System.out.println(bidx);
+		
 		return csDao.csList_view(bidx);
 	}
 
@@ -61,6 +62,24 @@ public class CSServiceImple implements CSService{
 	public int csList_reply(CSVO vo) {
 		
 		return csDao.csList_reply(vo);
+	}
+
+	@Override
+	public List<CSVO> csList_reply_view(int origincsbidx) {
+		
+		return csDao.csList_reply_view(origincsbidx);
+	}
+	
+	@Override
+	public int csList_modify(CSVO vo) {
+		
+		return csDao.csList_modify(vo);
+	}
+	
+	@Override
+	public int csList_delete(int csbidx) {
+		
+		return csDao.csList_delete(csbidx);
 	}
 	
 	

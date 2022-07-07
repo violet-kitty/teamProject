@@ -23,6 +23,11 @@
 		font-size:1.5em;
 		font-weight:bold; 
 	}
+	@media ( max-width : 980px) {
+	#ind{
+		display:none;
+	}
+}
 </style>
 <script>
 var heartDup = false;
@@ -38,6 +43,8 @@ else {
 </head>
 <body>
 <main>
+	<!-- 글 제목 목록 -->
+	<div id="ind" style="border:1px solid red;position:fixed;width:200px;right:0;top:200px;"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col">
@@ -47,9 +54,9 @@ else {
 		
 		<!-- 썸네일 이미지 -->
 		<div class="row">
-			<div class="col">
+			<div class="col d-flex justify-content-center">
 				<c:if test="${howf.filename != null}">
-					<img src="/img/${howf.filename}" height="500px">
+					<img src="/img/${howf.filename}" style="max-height:500px;max-width:600px;">
 				</c:if>
 			</div>
 		</div>
@@ -103,7 +110,7 @@ else {
 		
 		<!-- 글 내용 -->
 		<div class="row">
-			<div class="col">
+			<div class="col" id="howfContent">
 				${howf.content}
 			</div>
 		</div>
@@ -111,9 +118,9 @@ else {
 		<div class="row">
 			<div class="col-lg-6 d-flex justify-content-start">
 				<c:if test="${login.role=='admin'}">
-				<button>x</button>
-				<button>w</button>
-				<button>p</button>
+				<button onclick="">삭제</button>
+				<button onclick="">수정</button>
+				<button onclick="">글쓰기</button>
 			</c:if>
 			</div>
 			<div class="col-lg-6 d-flex justify-content-end">
@@ -185,6 +192,35 @@ else {
 			}
 		});
 		
+		//h1 태그 가진 텍스트로 제목 만들기
+		var titleIndex = [];
+		var num = 0;
+		$("#howfContent h1").each(function(i,e){
+			var offset = $(this).offset();
+			titleIndex[i] = offset.top;
+			$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
+			$("#index"+num).on("click",function(){
+				$('html, body').animate({scrollTop : offset.top}, 400);
+			});
+			num++;
+		});
+		
+		$(window).scroll(function(){
+			var height = $(document).scrollTop();
+			
+			for(var i=0;i<titleIndex.length;i++){
+				if(titleIndex[i]-20 <= height){
+					$("#ind p").css("font-size","1em");
+					$("#index"+i).css("font-size","1.5em");
+				}
+			}
+		});
+		
+		//사진 크기 조절
+		$("img").each(function(index, item){
+			$(item).css("max-width",600);
+			$(item).css("max-height",500);
+		});
 	});
 </script>
 
