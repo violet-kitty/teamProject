@@ -18,6 +18,9 @@
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- tagify -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -28,12 +31,14 @@
 			</div>
 		</div><!-- row end -->
 		
-		<form method="post">
+		<form method="post" enctype="multipart/form-data">
 			<!-- 파일 첨부, 이미지 미리보기 -->
 			<div class="row">
 				<div class="col">
-					<div>
-						파일 첨부
+					<div style="background:gray;height:200px;cursor:pointer;" id="imageAttach"></div>
+					<input type="file" name="file" id="file" style="display:none">
+					<div id="imageArea" style="display:none">
+						<img width="300px" height="300px" id="image">
 					</div>
 				</div>
 			</div><!-- row end -->
@@ -56,7 +61,8 @@
 			<!-- 태그 입력 -->
 			<div class="row">
 				<div class="col">
-					<input class="form-control" type="text" name="tag" id="tag" placeholder="태그를 나열해주세요&#13;&#10;태그는 최대 20개까지 나열 가능합니다">
+					<p>태그를 나열해주세요&#13;&#10;&#35;과 &#44;를 이용해 태그를 작성할 수 있습니다</p>
+					<input class="form-control" name="tag" id="tag" size="40">
 				</div>
 			</div><!-- row end -->
 			
@@ -83,6 +89,7 @@
 		</form>
 	</div><!-- container end -->
 <script>
+	//에디터
 	$(function(){
 		$("#summernote").summernote({
 			height:300,
@@ -107,7 +114,45 @@
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 			styleTags: ['h1']
 		});
+		
+		//tagify
+		var input = document.querySelector("#tag");
+		new Tagify(input);
+		
+		//파일 첨부(썸네일)
+		$("#imageAttach").click(function(){
+			$("#file").click();
+		});
+		
+		//썸네일 이미지 미리보기
+		$("#file").on("change",upload);
+		
+		function upload(e){
+			console.log("file name : ",e.value);
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;//이미지 확장자만 받음
+			
+			filesArr.forEach(function(f){
+				if(!f.type.match(reg)){
+					alert("이미지 파일만 등록 가능합니다");
+					return;
+				}
+				
+				sel_file = f;
+				
+				var reader = new FileReader();
+				$("#imageAttach").css("display","none");
+				$("#imageArea").css("display","block");
+				reader.onload = function(e){
+					$("#image").attr("src",e.target.result);//이미지 변경
+				}
+				reader.readAsDataURL(f);
+			});
+		}
 	});
+	
+	
 </script>
 <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

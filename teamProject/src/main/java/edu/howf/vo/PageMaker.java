@@ -17,7 +17,6 @@ public class PageMaker {
 	}
 	public void setSearch(SearchVO search) {
 		this.search = search;
-		System.out.println("seachvo page : "+search.getPage());
 	}
 	public int getTotalCount() {
 		return totalCount;

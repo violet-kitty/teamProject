@@ -19,9 +19,9 @@
 			, h.filename
 			, h.cate
 			, h.tag
+			, h.delyn
 		FROM howf h, usertable u
-		WHERE h.midx = u.midx
-		AND h.delyn = 'N') a
+		WHERE h.midx = u.midx) a
 		LEFT OUTER JOIN
 		(SELECT bidx
 			, COUNT(hidx) as heart
@@ -29,13 +29,98 @@
 		WHERE type='howf'
 		GROUP BY bidx) b
 		on a.hbidx = b.bidx
+		WHERE a.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.title like CONCAT('%',#{searchValue},'%')
+		OR a.tag like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND a.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+		<!-- sort -->
+		<if test='sortType == null or sortType.equals("new")'>
+		ORDER BY a.wdate desc
+		</if>
+		<if test='sortType.equals("heart")'>
+		ORDER BY b.heart desc, a.wdate desc
+		</if>
+		<if test='sortType.equals("food")'>
+		AND a.cate = '맛집추천'
+		ORDER BY a.wdate desc
+		</if>
+		<if test='sortType.equals("stay")'>
+		AND a.cate = '숙박추천'
+		ORDER BY a.wdate desc
+		</if>
+		<if test='sortType.equals("travel")'>
+		AND a.cate = '여행지추천'
+		ORDER BY a.wdate desc
+		</if>
+		LIMIT #{page}, #{perPageNum}
 	</select>
+	
 	<!-- HOWF 전체 글 수 세기 -->
 	<select id="howfCountAll" parameterType="searchVO" resultType="int">
 		SELECT COUNT(h.hbidx)
 		FROM howf h, usertable u
 		WHERE h.midx = u.midx
 		AND h.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (h.title like CONCAT('%',#{searchValue},'%')
+		OR h.tag like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND h.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND h.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='sortType.equals("food")'>
+		AND h.cate = '맛집추천'
+		</if>
+		<if test='sortType.equals("stay")'>
+		AND h.cate = '숙박추천'
+		</if>
+		<if test='sortType.equals("travel")'>
+		AND h.cate = '여행지추천'
+		</if>
+	</select>
+	
+	<!-- HOWF 히어로 용 카테고리 별 글 1개씩 -->
+	<select id="howfHeroStay" resultType="howfVO">
+		SELECT hbidx
+			, title
+			, filename
+			, cate
+		FROM howf
+		WHERE cate = '숙박추천'
+		ORDER BY wdate desc
+		LIMIT 0,1
+	</select>
+	<select id="howfHeroTravel" resultType="howfVO">
+		SELECT hbidx
+			, title
+			, filename
+			, cate
+		FROM howf
+		WHERE cate = '여행지추천'
+		ORDER BY wdate desc
+		LIMIT 0,1
+	</select>
+	<select id="howfHeroFood" resultType="howfVO">
+		SELECT hbidx
+			, title
+			, filename
+			, cate
+		FROM howf
+		WHERE cate = '맛집추천'
+		ORDER BY wdate desc
+		LIMIT 0,1
 	</select>
 	
 	<!-- HOWF 글 보기 -->
@@ -90,6 +175,8 @@
 	
 	<!-- HOWF 글 삭제 -->
 	
+	
+	
 	<!-- 지역 이벤트 리스트 -->
 	
 	<!-- 지역 이벤트 전체 글 수 세기 -->
@@ -101,5 +188,39 @@
 	<!-- 지역 이벤트 글 수정 -->
 	
 	<!-- 지역 이벤트 글 삭제 -->
+	
+	
+	
+	
+	<!-- 찜 추가 -->
+	<insert id="heartInsert" parameterType="heartVO">
+		INSERT INTO heart(
+			  type
+			, bidx
+			, midx
+		)
+		VALUES(
+			  #{type}
+			, #{bidx}
+			, #{midx}
+		)
+	</insert>
+	
+	<!-- 찜 삭제 -->
+	<delete id="heartDelete" parameterType="heartVO">
+		DELETE FROM heart
+		WHERE type = #{type}
+		  AND bidx = #{bidx}
+		  AND midx = #{midx}
+	</delete>
+	
+	<!-- 찜 여부 -->
+	<select id="heartDup" parameterType="heartVO" resultType="int">
+		SELECT COUNT(hidx)
+		 FROM heart
+		WHERE type = #{type}
+		  AND bidx = #{bidx}
+		  AND midx = #{midx}
+	</select>
 	
 </mapper>
