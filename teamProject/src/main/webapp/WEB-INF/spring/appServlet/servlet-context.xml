@@ -25,6 +25,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="uploadPath" class="java.lang.String">
+	<beans:constructor-arg value="C:/upload/" />	
+	</beans:bean>
+	
+	
 	<context:component-scan base-package="edu.howf.controller" />
 	<context:component-scan base-package="edu.howf.dao"/>
 	<context:component-scan base-package="edu.howf.service"/>

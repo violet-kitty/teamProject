@@ -56,7 +56,7 @@ else {
 		<div class="row">
 			<div class="col d-flex justify-content-center">
 				<c:if test="${howf.filename != null}">
-					<img src="/img/${howf.filename}" style="max-height:500px;max-width:600px;">
+					<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" style="max-height:500px;max-width:600px;">
 				</c:if>
 			</div>
 		</div>

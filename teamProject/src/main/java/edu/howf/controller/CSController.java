@@ -101,9 +101,9 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_modify.do", method = RequestMethod.GET)
-	public String csListModify(int bidx, Model model) {
+	public String csListModify(int csbidx, Model model) {
 		
-		CSVO cv = csService.csList_view(bidx);
+		CSVO cv = csService.csList_view(csbidx);
 		
 		model.addAttribute("cv", cv);
 		
