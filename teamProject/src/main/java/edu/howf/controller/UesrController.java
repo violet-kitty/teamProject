@@ -23,6 +23,8 @@ public class UesrController {
 	@Autowired
 	UserService userService;
 	
+	String path = "C:\\upload";
+	
 	//로그인 페이지로 이동
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String login() {
@@ -135,16 +137,14 @@ public class UesrController {
 	public String join(MultipartFile file, UserVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
 		//파일 받아오는 처리
 		if(file != null) {
-			String path = request.getSession().getServletContext().getRealPath("/resources/image");
-			System.out.println("파일 저장 경로 : "+path);
-			File dir = new File(path);
+			File dir = new File(path+"\\document");
 			
 			if(!dir.exists()) dir.mkdirs();
 			
 			if(!file.getOriginalFilename().isEmpty()) {
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
-				file.transferTo(new File(path,fileName));
+				file.transferTo(new File(path+"\\document",fileName));
 				vo.setDocument(fileName);
 			}
 			else {

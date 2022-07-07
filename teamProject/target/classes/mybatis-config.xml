@@ -18,6 +18,7 @@
         <typeAlias type="edu.howf.vo.SearchVO" alias="searchVO"/>
         <typeAlias type="edu.howf.vo.StayVO" alias="stayVO"/>
         <typeAlias type="edu.howf.vo.StoryVO" alias="storyVO"/>
+        <typeAlias type="edu.howf.vo.HeartVO" alias="heartVO"/>
     </typeAliases>
 
 </configuration>

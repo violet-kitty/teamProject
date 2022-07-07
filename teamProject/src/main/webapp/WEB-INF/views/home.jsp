@@ -15,24 +15,20 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>
-	Hello world!  하이d
-</h1>
-<p>현재 ${login.nickname}으로 로그인 됨</p><br>
-<c:if test="${login == null}">
-	<a href="user/login.do">로그인</a>
-	<br><a href="user/joinSelect.do">회원가입</a>	
-</c:if>
-<br><a href="csBoard/csList.do">CS게시판(임시)</a><br>
-<c:if test="${login != null}">
-	<a href="javascript:logoutFn()">로그아웃</a>
-</c:if>
-
-<a href="notice/notice.do">공지사항(notice)</a>
-
-<br><br>
-<a href="howf/howfList.do">howf 추천</a><br>
-
+	<h1>
+		Hello world!  하이d
+	</h1>
+	<br><p>현재 ${login.nickname}으로 로그인 됨</p><br>
+	<c:if test="${login == null}">
+		<br><a href="user/login.do">로그인</a><br>
+		<br><a href="user/joinSelect.do">회원가입</a><br>
+	</c:if>
+	<br><a href="csBoard/csList.do">CS게시판(임시)</a><br>
+	<c:if test="${login != null}">
+		<br><a href="javascript:logoutFn()">로그아웃</a><br>
+	</c:if>
+	<br><a href="notice/notice.do">공지사항(notice)</a><br>
+	<br><a href="howf/howfList.do">howf 추천</a><br>
 <script>
 	function logoutFn(){
 		//카카오톡 로그아웃

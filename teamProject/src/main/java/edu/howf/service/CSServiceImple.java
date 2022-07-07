@@ -52,10 +52,10 @@ public class CSServiceImple implements CSService{
 	}
 	
 	@Override
-	public CSVO csList_view(int bidx) {
+	public CSVO csList_view(int csbidx) {
 		
 		
-		return csDao.csList_view(bidx);
+		return csDao.csList_view(csbidx);
 	}
 
 	@Override
