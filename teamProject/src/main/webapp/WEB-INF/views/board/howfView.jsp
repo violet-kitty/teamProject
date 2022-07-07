@@ -200,7 +200,7 @@ else {
 			titleIndex[i] = offset.top;
 			$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
 			$("#index"+num).on("click",function(){
-				$('html, body').animate({scrollTop : offset.top}, 400);
+				$('html, body').animate({scrollTop : offset.top}, 200);
 			});
 			num++;
 		});
@@ -209,7 +209,7 @@ else {
 			var height = $(document).scrollTop();
 			
 			for(var i=0;i<titleIndex.length;i++){
-				if(titleIndex[i]-20 <= height){
+				if(titleIndex[i]-10 <= height){
 					$("#ind p").css("font-size","1em");
 					$("#index"+i).css("font-size","1.5em");
 				}
