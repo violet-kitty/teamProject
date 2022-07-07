@@ -55,43 +55,34 @@
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
+					<img class="d-block w-100" src="/img/${hero[0].filename}">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>Example headline.</h1>
-							<p>Some representative placeholder content for the first
-								slide of the carousel.</p>
+							<h1>${hero[0].title}</h1>
 							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
+								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[0].hbidx}">자세히 보기</a>
 							</p>
 						</div>
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
+					<img class="d-block w-100" src="/img/${hero[1].filename}">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>Another example headline.</h1>
-							<p>Some representative placeholder content for the second
-								slide of the carousel.</p>
+							<h1>${hero[1].title}</h1>
 							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
+								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[1].hbidx}">자세히 보기</a>
 							</p>
 						</div>
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
+					<img class="d-block w-100" src="/img/${hero[2].filename}">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>One more for good measure.</h1>
-							<p>Some representative placeholder content for the third
-								slide of this carousel.</p>
+							<h1>${hero[2].title}</h1>
 							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
+								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[2].hbidx}">자세히 보기</a>
 							</p>
 						</div>
 					</div>
@@ -134,11 +125,11 @@
 					<div class="row">
 						<div class="col d-flex justify-content-end">
 							<!-- searchVO에 sortType food, stay, travel, good, new 넘김 -->
-							<button>맛집추천</button>
-							<button>숙박추천</button>
-							<button>여행지추천</button>
-							<button>좋아요순</button>
-							<button>최신순</button>
+							<button onclick="location.href='howfList.do?sortType=food'">맛집추천</button>
+							<button onclick="location.href='howfList.do?sortType=stay'">숙박추천</button>
+							<button onclick="location.href='howfList.do?sortType=travel'">여행지추천</button>
+							<button onclick="location.href='howfList.do?sortType=heart'">좋아요순</button>
+							<button onclick="location.href='howfList.do?sortType=new'">최신순</button>
 						</div>
 					</div>
 					<br>
@@ -148,13 +139,13 @@
 							<h3>HOWF 추천</h3>
 						</div>
 						<div class="col-md-8 d-flex justify-content-end">
-							<form class="d-flex input-group">
-								<select class="form-select" id="searchType">
-									<option selected>전체</option>
-									<option>제목 검색</option>
-									<option>태그 검색</option>
+							<form class="d-flex input-group" action="howfList.do" method="post">
+								<select class="form-select" name="searchType">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
 								</select>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" name="searchValue">
 								<button class="btn btn-dark">검색</button>
 							</form>
 						</div>
@@ -164,11 +155,12 @@
 					<!-- content 시작 -->
 					
 					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-						<c:forEach var="v" items="${vo}">
+						<c:forEach var="v" items="${howf}">
 						<div class="col-sm-12 col-md-12 col-lg-4">
 							<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
-								<img class="card-img-top"
-									src="<%=request.getContextPath()%>/image/eventTest.png">
+								<c:if test="${v.filename != null}">
+									<img class="card-img-top" src="/img/${v.filename}">
+								</c:if>
 								<div class="card-body">
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
@@ -189,8 +181,6 @@
 									</div>
 									<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
 										<p style="margin-left: 0; margin-right: 0;width:100%;">${v.title}</p>
-										<!-- 허유진 220705 왜 제목 줄이는건 되는데 ...이 안나올까...  -->
-										<!-- 허유진 220705 제목 두줄은 나오게 해야될듯... -->
 									</div>
 								</div><!-- card-body end -->
 							</div>
@@ -199,7 +189,17 @@
 					</div><!-- row end -->
 
 					<div class="row">
-						<div class="col d-flex justify-content-center">페이징 번호</div>
+						<div class="col d-flex justify-content-center">
+							<c:if test="${pm.prev == true}">
+								<a href="howfList.do?page=${pm.startPage-1}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}">◀</a>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<a href="howfList.do?page=${i}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}" class="mx-1">${i}</a>
+							</c:forEach>
+							<c:if test="${pm.next == true}">
+								<a href="howfList.do?page=${pm.endPage+1}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}">▶</a>
+							</c:if>
+						</div>
 					</div>
 
 				</div>
