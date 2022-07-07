@@ -50,7 +50,7 @@ public class CSController {
 			PageMaker pm = new PageMaker();
 			vo.setPage(page);
 			pm.setSearch(vo);
-			pm.setTotalCount(cnt);
+			pm.setTotalCount(cnt);	
 			
 			model.addAttribute("pm", pm);
 			
@@ -125,7 +125,7 @@ public class CSController {
 	@RequestMapping(value = "csList_delete.do", method = RequestMethod.GET)
 	public String csListDelete(int csbidx) {
 		
-		int reseult = csService.csList_delete(csbidx);
+		int result = csService.csList_delete(csbidx);
 		
 		return "redirect:/csBoard/csList.do";
 	}
