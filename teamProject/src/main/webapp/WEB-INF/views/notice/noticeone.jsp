@@ -35,11 +35,15 @@
 				<th align="right">내용</th>
 				<td>${vo.content}</td>
 			</tr>
+			<c:if test="${vo.filename != ''}">
 			<tr>
 				<th align="right">첨부파일</th>
-				<td>${vo.filename }</td>
+				<td>
+				<img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}"><br>
+				<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1">${vo.filename}</a>
+				</td>
 			</tr>
-			
+			</c:if>
 		</tbody>
 	</table>
 	<c:if test="${login == null }">

@@ -98,7 +98,7 @@
 			SET title = #{title}
 				,content = #{content}
 				,filename = #{filename}
-				,wdate = now() 
+				 
 			WHERE nbidx = #{nbidx}
 	
 	</update>
@@ -117,6 +117,15 @@
 	<update id="fileupload">
 	
 	</update>
+	
+	<select id="filedown" parameterType="String" resultType="noticeVO">
+		select	nbidx
+				,filename
+		FROM	notice
+		WHERE	nbidx = #{nbidx}
+		AND		filename = #{filename}
+	
+	</select>
 
 	
 </mapper>

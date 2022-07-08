@@ -1,7 +1,9 @@
 package edu.howf.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.UUID;
@@ -10,16 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import edu.howf.service.NoticeService;
+import edu.howf.util.MediaUtils;
 import edu.howf.vo.Criteria;
 import edu.howf.vo.NoticeVO;
 import edu.howf.vo.PageMaker;
@@ -33,6 +42,9 @@ public class NoticeController {
 	
 	@Autowired
 	NoticeService noticeService;
+	
+	@Autowired
+	String uploadPath;
 	
 	//경로
 	@RequestMapping(value = "noticewrite.do", method = RequestMethod.GET)
@@ -50,8 +62,7 @@ public class NoticeController {
 		vo.setMidx(login.getMidx());
 		System.out.println("midx:"+vo.getMidx());
 		
-		String path = request.getSession().getServletContext().getRealPath("/resources/image");
-		File dir = new File(path);
+		File dir = new File(uploadPath);
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -59,7 +70,7 @@ public class NoticeController {
 		if(fileupload!=null) {
 			if(!fileupload.getOriginalFilename().isEmpty()) {
 				System.out.println("된다!");
-				fileupload.transferTo(new File(path,fileupload.getOriginalFilename()));
+				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
 				vo.setFilename(fileupload.getOriginalFilename());
 			}else {
 				System.out.println("하하하하하하");
@@ -104,12 +115,16 @@ public class NoticeController {
 	}
 	
 	//공지사항 상세보기
-	@RequestMapping(value = "noticeone.do")
+	@RequestMapping(value = "noticeone.do", method = RequestMethod.GET)
 	public String selectone(Model model,int nbidx) {
 		
 		NoticeVO vo = noticeService.selectone(nbidx);
 		model.addAttribute("vo",vo);
 		
+		return "notice/noticeone";
+	}
+	public String filedown(HttpServletResponse response)  {
+		String path = "";
 		return "notice/noticeone";
 	}
 	//수정 경로
@@ -136,21 +151,53 @@ public class NoticeController {
 		return "redirect:/notice/notice.do";
 	}
 	
-	/*
-	 * @RequestMapping(value = "fileupload.do", method = RequestMethod.POST) public
-	 * String upload (MultipartFile fileupload,NoticeVO vo, HttpServletRequest
-	 * request) throws IllegalStateException, IOException {
-	 * 
-	 * String path =
-	 * request.getSession().getServletContext().getRealPath("/resources/image");
-	 * System.out.println("fileupload:"+fileupload); File dir = new File(path);
-	 * if(!dir.exists()) { dir.mkdirs(); }
-	 * if(!fileupload.getOriginalFilename().isEmpty()) { fileupload.transferTo(new
-	 * File(path,fileupload.getOriginalFilename()));
-	 * 
-	 * vo.setFilename(filename); noticeService.insertnotice(vo); }else {
-	 * System.out.println("하하하하하하"); }
-	 * 
-	 * return "redirect:/notice/noticewrite.do"; }
-	 */
+	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> displayFile(@RequestParam("filename") String filename,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
+		
+		System.out.println("fileName:"+filename);
+		
+		InputStream in = null;		
+		ResponseEntity<byte[]> entity = null;
+		
+		try{
+			String formatName = filename.substring(filename.lastIndexOf(".")+1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+			
+			HttpHeaders headers = new HttpHeaders();		
+			 
+			in = new FileInputStream(uploadPath+filename);
+			
+			
+			if(mType != null){
+				
+				if (down==1) {
+					filename = filename.substring(filename.indexOf("_")+1);
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+					headers.add("Content-Disposition", "attachment; filename=\""+
+							new String(filename.getBytes("UTF-8"),"ISO-8859-1")+"\"");
+					
+				}else {
+					headers.setContentType(mType);	
+				}
+				
+			}else{
+				
+				filename = filename.substring(filename.indexOf("_")+1);
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition", "attachment; filename=\""+
+						new String(filename.getBytes("UTF-8"),"ISO-8859-1")+"\"");				
+			}
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,
+					HttpStatus.CREATED);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally{
+			in.close();
+		}
+		return entity;
+	} 
+	
 }

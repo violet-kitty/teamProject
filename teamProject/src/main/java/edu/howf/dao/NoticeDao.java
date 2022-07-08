@@ -58,6 +58,5 @@ public class NoticeDao {
 		return sqlSession.selectOne(namespace+"pagecount",searchVO);
 	}
 	
-	
 
 }

@@ -36,7 +36,6 @@
 			<th>NO.</th>
 			<th>작성자</th>
 			<th>제목</th>
-			<th>내용이다</th>
 			<th>작성일</th>
 			<th>조회수</th>
 		</tr>
@@ -54,7 +53,6 @@
 					<td>${i}</td>
 					<td>${vo.name} </td>
 					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title }</a></td>
-					<td>${vo.content }</td>
 					<td>${vo.wdate }</td>
 					<td>${vo.cnt}</td>
 					<c:set var="i" value="${i+1}"/>
