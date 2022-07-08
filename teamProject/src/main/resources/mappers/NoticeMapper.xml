@@ -6,24 +6,32 @@
 <!-- 공지사항 -->
 <mapper namespace="edu.howf.mapper.noticeMapper">
 	<insert id="insertnotice" parameterType="noticeVO">
-		INSERT INTO notice(
+		<![CDATA[INSERT INTO notice(
 					title
 					,content
 					,writer
 					,midx
+					,filename
 					,wdate
+					,delyn
 					)
 		VALUES	(
 					#{title}
 					,#{content}
 					,#{writer}
 					,#{midx}
+					,#{filename}
 					,now()
-		)						
+					,'N'
+		)
+		]]>
+	<selectKey resultType="int" keyProperty="nbidx" order="AFTER">
+		SELECT max(nbidx) FROM notice
+	</selectKey>						
 	</insert>
 	
 	 <select id="selectAll" resultType="noticeVO" parameterType="searchVO">
-			select n.nbidx
+			select	 n.nbidx
 					,n.title
 					,n.content
 					,n.wdate
@@ -31,6 +39,7 @@
 					,u.name
 			FROM notice n , usertable u
 			WHERE n.midx = u.midx
+			AND 	n.delyn = 'N'
 			<if test='searchType != null and searchType.equals("title")'>
 		 	 AND n.title like concat('%',#{searchValue},'%')
 		 	</if>
@@ -38,18 +47,85 @@
 		  	 AND n.content like concat('%',#{searchValue},'%')
 		   	 OR u.name like concat('%',#{searchType},'%')
 			 </if>
+			LIMIT #{page}, #{perPageNum}
 	</select>
+	
+	<select id="pagecount" resultType="int" parameterType="noticeVO">
+			
+			SELECT	count(n.nbidx)		
+			FROM	notice n , usertable u
+			WHERE	n.midx = u.midx
+			AND		n.delyn = 'N'
+	
+		<if test='searchType != null and searchType.equals("title")'>
+		 	 AND n.title like concat('%',#{searchValue},'%')
+		 	</if>
+			 <if test='searchType != null and searchType.equals("contentWriter")'>
+		  	 AND n.content like concat('%',#{searchValue},'%')
+		   	 OR u.name like concat('%',#{searchType},'%')
+			 </if>
+			
+			 
+	</select>
+	
+
+	
+	
+	
+	<!-- <select id="selectAllpage" parameterType="hashmap" resultType="noticeVO">
+			SELECT	nbidx
+			FROM	notice
+			ORDER by nbidx desc
+			LIMIT #{search},#{displayPageNum}
+	
+	</select> -->
 	
 	<select id="selectone" resultType="noticeVO" parameterType="int">
 			SELECT	n.nbidx
 					,n.title
 					,n.content
 					,n.wdate
+					,n.filename
 					,u.email
 					,u.name
 			FROM notice n , usertable u
 			WHERE n.midx = u.midx
 			AND   n.nbidx = #{nbidx}
 	</select>
+	
+	<update id="noticemodify" parameterType="noticeVO">
+			update notice
+			SET title = #{title}
+				,content = #{content}
+				,filename = #{filename}
+				 
+			WHERE nbidx = #{nbidx}
+	
+	</update>
+	
+<!-- 	<delete id="noticedelete" parameterType="int" >
+			delete FROM
+					notice
+			WHERE nbidx = #{nbidx}
+	</delete> -->
+	<update id="noticedelete" parameterType="int">
+			update notice
+		SET delyn = 'Y'
+		WHERE nbidx = #{nbidx}
+	</update>
+	
+	<update id="fileupload">
+	
+	</update>
+	
+	<select id="filedown" parameterType="String" resultType="noticeVO">
+		select	nbidx
+				,filename
+		FROM	notice
+		WHERE	nbidx = #{nbidx}
+		AND		filename = #{filename}
+	
+	</select>
+
 	
 </mapper>

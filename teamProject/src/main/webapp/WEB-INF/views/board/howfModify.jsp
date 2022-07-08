@@ -31,14 +31,13 @@
 			</div>
 		</div><!-- row end -->
 		
-		<form method="post" enctype="multipart/form-data">
+		<form method="post" enctype="multipart/form-data" id="frm">
 			<!-- 파일 첨부, 이미지 미리보기 -->
 			<div class="row">
 				<div class="col">
-					<div style="background:gray;height:200px;cursor:pointer;" id="imageAttach"></div>
 					<input type="file" name="file" id="file" style="display:none">
-					<div id="imageArea" style="display:none">
-						<img width="300px" height="300px" id="image">
+					<div id="imageArea">
+						<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" width="300px" height="300px" id="image" style="cursor:pointer">
 					</div>
 				</div>
 			</div><!-- row end -->
@@ -46,15 +45,14 @@
 			<!-- 카테고리 선택, 제목 입력 -->
 			<div class="row">
 				<div class="col-lg-4">
-					<select class="form-control form-select" name="cate">
-						<option value="여행지추천" selected>카테고리 선택</option>
+					<select class="form-control form-select" name="cate" id="cate">
 						<option value="여행지추천">여행지추천</option>
 						<option value="숙박추천">숙박추천</option>
 						<option value="맛집추천">맛집추천</option>
 					</select>
 				</div>
 				<div class="col-lg-8">
-					<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
+					<input class="form-control" type="text" name="title" id="title" value="${howf.title}">
 				</div>
 			</div><!-- row end -->
 			
@@ -71,7 +69,7 @@
 			<!-- 에디터 -->
 			<div class="row">
 				<div class="col">
-					<textarea id="summernote" name="content"></textarea>
+					<textarea id="summernote" name="content">${howf.content}</textarea>
 				</div>
 			</div><!-- row end -->
 			
@@ -83,7 +81,7 @@
 					<a href="howfList.do">&lt;목록으로 돌아가기</a>
 				</div>
 				<div class="col-lg-6 d-flex justify-content-end">
-					<button>글 작성 완료</button>
+					<button type="button" onclick="modifyFn()">글 작성 완료</button>
 				</div>
 			</div><!-- row end -->
 		</form>
@@ -120,7 +118,7 @@
 		new Tagify(input);
 		
 		//파일 첨부(썸네일)
-		$("#imageAttach").click(function(){
+		$("#imageArea").click(function(){
 			$("#file").click();
 		});
 		
@@ -142,17 +140,55 @@
 				sel_file = f;
 				
 				var reader = new FileReader();
-				$("#imageAttach").css("display","none");
-				$("#imageArea").css("display","block");
 				reader.onload = function(e){
 					$("#image").attr("src",e.target.result);//이미지 변경
 				}
 				reader.readAsDataURL(f);
 			});
 		}
+		
+		//태그 값 넣기
+		var json = '${howf.tag}';
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"];
+		})
+		
+		var tags = tagData.split("#");
+		
+		$("#tag").val(tags);
+		
 	});
 	
+	//카테고리 선택 변경
+	var cate = "${howf.cate}";
+	$("#cate").val(cate).prop("selected",true);
 	
+	function modifyFn(){
+		var title = $("#title");
+		var content = $("#summernote");
+		var tag = $("#tag");
+		
+		if(title.val()==""){
+			alert("제목을 입력해 주세요");
+			title.focus();
+			return;
+		}
+		else if(content.val()==""){
+			alert("내용을 입력해 주세요");
+			content.focus();
+			return;
+		}
+		else if(tag.val()==""){
+			alert("태그를 입력해 주세요");
+			tag.focus();
+			return;
+		}
+		else {
+			$("#frm").submit();
+		}
+	}
 </script>
 <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

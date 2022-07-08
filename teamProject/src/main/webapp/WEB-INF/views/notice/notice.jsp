@@ -14,6 +14,7 @@
 <h1>사 사 사 사 사 사 사 사</h1>
 <h1>항 항 항 항 항 항 항 항</h1>
 <h1> 4대 명검 말고는 안 올라오는 곳</h1>
+<img src="<%= request.getContextPath() %>/image/4대명검.jpg">
 <div>
 <button id="push">
 아무의미없는공지사항버튼
@@ -35,7 +36,6 @@
 			<th>NO.</th>
 			<th>작성자</th>
 			<th>제목</th>
-			<th>내용이다</th>
 			<th>작성일</th>
 			<th>조회수</th>
 		</tr>
@@ -47,20 +47,34 @@
 			</tr>
 			</c:if>
 		<c:if test="${list.size() > 0 }">
+			<c:set var="i" value="1"/>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-					<td>${vo.nbidx }</td>
+					<td>${i}</td>
 					<td>${vo.name} </td>
 					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title }</a></td>
-					<td>${vo.content }</td>
 					<td>${vo.wdate }</td>
 					<td>${vo.cnt}</td>
+					<c:set var="i" value="${i+1}"/>
 			</c:forEach>
 		</c:if>
 	</tbody>
 </table>
+<div>
+		<c:if test="${pageMaker.prev == true} ">
+			<a href="notice.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">이전</a>
+		</c:if>
+		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx" step="1">
+    		<a href="notice.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
+    	</c:forEach>
+    	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+    		<a href="notice.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">다음</a>
+    	</c:if> 
+
+</div>
 
 <button id="btn2" onclick="location.href='noticewrite.do'">글 쓸꺼얌</button>
+<button id="btn2" onclick="location.href='../'">메인화면</button>
 
 
 

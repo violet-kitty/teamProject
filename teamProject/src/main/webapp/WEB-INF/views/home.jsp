@@ -5,6 +5,7 @@
 <html>
 <head>
 	<title>Home</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 구글 로그인 -->
@@ -15,6 +16,7 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+ 
 	<h1>
 		Hello world!  하이d
 	</h1>
@@ -50,5 +52,10 @@
 		location.href="<%= request.getContextPath() %>/user/logout.do";
 	}
 </script>
+
+<br>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
