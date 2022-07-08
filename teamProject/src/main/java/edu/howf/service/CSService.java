@@ -18,7 +18,7 @@ public interface CSService {
 	
 	public CSVO csList_view(int csbidx);
 	
-	public int csList_reply(CSVO vo);
+	public int csReply_write(CSVO vo);
 	
 	public List<CSVO> csList_reply_view(int origincsbidx);
 	
@@ -27,5 +27,7 @@ public interface CSService {
 	public int csList_delete(int csbidx);
 	
 	public int csReply_modify(CSVO vo);
+	
+	public int csReply_delete(CSVO vo);
 
 }
