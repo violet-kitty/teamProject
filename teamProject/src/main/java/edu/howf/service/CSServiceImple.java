@@ -59,9 +59,9 @@ public class CSServiceImple implements CSService{
 	}
 
 	@Override
-	public int csList_reply(CSVO vo) {
+	public int csReply_write(CSVO vo) {
 		
-		return csDao.csList_reply(vo);
+		return csDao.csReply_write(vo);
 	}
 
 	@Override
@@ -86,6 +86,12 @@ public class CSServiceImple implements CSService{
 	public int csReply_modify(CSVO vo) {
 		
 		return csDao.csReply_modify(vo);
+	}
+
+	@Override
+	public int csReply_delete(CSVO vo) {
+		
+		return csDao.csReply_delete(vo);
 	}
 	
 	

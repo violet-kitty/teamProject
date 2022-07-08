@@ -93,6 +93,16 @@ h3{
 	border-top: 2px solid #27c6be;
 	border-bottom: 2px solid #27c6be;
 }
+.btn_td{
+	border-bottom: 2px solid #27c6be;
+}
+.btn3{
+	width: 100px;
+	height: 30px;
+	margin-left: 1%;
+	background-color: #b2ffb5;
+	border: 0.5px solid gray;
+}
 </style>
 </head>
 <body>
@@ -129,10 +139,10 @@ h3{
 		</table>
 		<div class="div2">
 			<c:if test="${login.role == 'admin'}">
-				<input id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
+				<input id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='csReply_write.do?csbidx=${cv.csbidx}'">
 			</c:if>
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
-			<c:if test="${login.midx == cv.midx}">				
+			<c:if test="${login.midx == cv.midx || login.role == 'admin'}">				
 				<input type="button" value="수정" onclick="location.href='csList_modify.do?csbidx=${cv.csbidx}'" class="btn2">
 				<input type="button" value="삭제" onclick="location.href='csList_delete.do?csbidx=${cv.csbidx}'" class="btn2">
 			</c:if>
@@ -157,7 +167,16 @@ h3{
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be; border-bottom: 2px solid #27c6be;">내용</td>
 						<td class="reply_content" colspan="5">${cvr.content}</td>
-					</tr>				
+					</tr>
+					<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
+						<tr>
+							<td class="btn_td" colspan="6">
+							
+								<input type="button" value="삭제" class="btn3" onclick="location.href='csReply_delete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx }'">
+								<input type="button" value="수정" class="btn3" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
+							</td>									
+						</tr>	
+					</c:if>		
 				</tbody>
 			</table>
 		</div>
@@ -167,21 +186,21 @@ h3{
 // 			$("#reply").show();
 // 		});
 		
-		$("#reply_btn2").click(function(){
-			var frm = $("#reply_form").serialize();
-			$.ajax({
-				url: 'csList_reply.do',
-				type: "post",
-				data: frm,
-				success: function(data){
-					if(data == 1){
-						alert("글이 등록되었습니다.");						
-						location.reload();
-					}
+// 		$("#reply_btn2").click(function(){
+// 			var frm = $("#reply_form").serialize();
+// 			$.ajax({
+// 				url: 'csList_reply.do',
+// 				type: "post",
+// 				data: frm,
+// 				success: function(data){
+// 					if(data == 1){
+// 						alert("글이 등록되었습니다.");						
+// 						location.reload();
+// 					}
 					
-				}
-			});
-		});
+// 				}
+// 			});
+// 		});
 	</script>
 </body>
 </html>
