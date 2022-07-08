@@ -16,15 +16,15 @@
 <!-- jquery -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- 모달 CSS -->
-<link href="<%= request.getContextPath() %>/css/modal.css" rel="stylesheet">
+<link href="<%= request.getContextPath() %>/css/modal.css?ver0.1" rel="stylesheet">
 <script>
 var nicknameDup = false;
 </script>
 </head>
 <body>
 <!-- 닉네임 받는 모달 -->
-<div id="nicknameModal">
-	<div id="nicknamePopup">
+<div id="modalDiv" style="display:none">
+	<div id="popupDiv">
 		<form id="modalFrm" action="nicknameInsert.do" method="post">
 			<p>HOWF에서 사용하실 닉네임을 입력해주세요</p>
 			<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><br>
@@ -117,7 +117,7 @@ var nicknameDup = false;
 							success:function(data){
 								if(data == "0"){
 									//모달 띄우기
-									$("#nicknameModal").show();
+									$("#modalDiv").show();
 								}
 								else {
 									//닉네임 있으면 바로 이동
@@ -148,7 +148,7 @@ var nicknameDup = false;
 			success:function(data){
 				if(data == "0"){
 					//모달 띄우기
-					$("#nicknameModal").show();
+					$("#modalDiv").show();
 				}
 				else {
 					location.href = "<%= request.getContextPath() %>/";

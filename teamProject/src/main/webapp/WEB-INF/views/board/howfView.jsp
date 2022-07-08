@@ -18,6 +18,7 @@
 	crossorigin="anonymous">
 <!-- css -->
 <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
 <style>
 	h1{
 		font-size:1.5em;
@@ -118,9 +119,9 @@ else {
 		<div class="row">
 			<div class="col-lg-6 d-flex justify-content-start">
 				<c:if test="${login.role=='admin'}">
-				<button onclick="">삭제</button>
-				<button onclick="">수정</button>
-				<button onclick="">글쓰기</button>
+				<button onclick="delOk()">삭제</button>
+				<button onclick="location.href='howfModify.do?hbidx=${howf.hbidx}'">수정</button>
+				<button onclick="location.href='howfWrite.do'">글쓰기</button>
 			</c:if>
 			</div>
 			<div class="col-lg-6 d-flex justify-content-end">
@@ -137,6 +138,17 @@ else {
 		</div><!-- row end -->
 	</div><!-- container end -->
 </main>
+
+<!-- 글 삭제 모달 -->
+<div id="modalDiv">
+	<div id="popupDiv">
+		<h1>게시글  삭제</h1>
+		<p>정말로 게시글을 삭제하시겠습니까?</p>
+		<p>삭제된 게시글은 복구가 되지 않습니다.</p>
+		<button type="button" onclick="delFn('ok')">삭제하기</button>
+		<button type="button" onclick="delFn('cancel')">취소</button>
+	</div>
+</div>
 
 <script>
 	$(function(){
@@ -195,33 +207,63 @@ else {
 		//h1 태그 가진 텍스트로 제목 만들기
 		var titleIndex = [];
 		var num = 0;
-		$("#howfContent h1").each(function(i,e){
-			var offset = $(this).offset();
-			titleIndex[i] = offset.top;
-			$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
-			$("#index"+num).on("click",function(){
-				$('html, body').animate({scrollTop : offset.top}, 400);
+		if($("#howfContent h1").length == 0) $("#ind").css("display","none");
+		else {
+			$("#howfContent h1").each(function(i,e){
+				var offset = $(this).offset();
+				titleIndex[i] = offset.top;
+				$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
+				$("#index"+num).on("click",function(){
+					$('html, body').animate({scrollTop : offset.top}, 200);
+				});
+				num++;
 			});
-			num++;
-		});
-		
-		$(window).scroll(function(){
-			var height = $(document).scrollTop();
 			
-			for(var i=0;i<titleIndex.length;i++){
-				if(titleIndex[i]-20 <= height){
-					$("#ind p").css("font-size","1em");
-					$("#index"+i).css("font-size","1.5em");
+			$(window).scroll(function(){
+				var height = $(document).scrollTop();
+				
+				for(var i=0;i<titleIndex.length;i++){
+					if(titleIndex[i]-10 <= height){
+						$("#ind p").css("font-size","1em");
+						$("#index"+i).css("font-size","1.5em");
+					}
 				}
-			}
-		});
+			});
+		}
 		
 		//사진 크기 조절
 		$("img").each(function(index, item){
 			$(item).css("max-width",600);
 			$(item).css("max-height",500);
 		});
+		
 	});
+	
+	//글 삭제
+	function delOk(){
+		//모달창 띄우기
+		$("#modalDiv").show();
+	}
+	
+	function delFn(e){
+		if(e == 'ok'){
+			var hbidx = "${howf.hbidx}";
+			$.ajax({
+				url:"howfDelete.do",
+				data:"hbidx="+hbidx,
+				type:"post",
+				success:function(data){
+					if(data == 1){
+						alert("글이 삭제되었습니다.");
+						location.href="howfList.do";
+					}
+				}
+			});
+		}
+		else if(e == 'cancel'){
+			$("#modalDiv").hide();
+		}
+	}
 </script>
 
 <script

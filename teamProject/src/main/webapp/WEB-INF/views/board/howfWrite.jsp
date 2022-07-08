@@ -31,7 +31,7 @@
 			</div>
 		</div><!-- row end -->
 		
-		<form method="post" enctype="multipart/form-data">
+		<form method="post" enctype="multipart/form-data" id="frm">
 			<!-- 파일 첨부, 이미지 미리보기 -->
 			<div class="row">
 				<div class="col">
@@ -83,7 +83,7 @@
 					<a href="howfList.do">&lt;목록으로 돌아가기</a>
 				</div>
 				<div class="col-lg-6 d-flex justify-content-end">
-					<button>글 작성 완료</button>
+					<button type="button" onclick="writeFn()">글 작성 완료</button>
 				</div>
 			</div><!-- row end -->
 		</form>
@@ -152,7 +152,35 @@
 		}
 	});
 	
-	
+	function writeFn(){
+		var title = $("#title");
+		var content = $("#summernote");
+		var tag = $("#tag");
+		var file = $("#file");
+		
+		if(title.val()==""){
+			alert("제목을 입력해 주세요");
+			title.focus();
+			return;
+		}
+		else if(content.val()==""){
+			alert("내용을 입력해 주세요");
+			content.focus();
+			return;
+		}
+		else if(tag.val()==""){
+			alert("태그를 입력해 주세요");
+			tag.focus();
+			return;
+		}
+		else if(file.val()==""){
+			alert("썸네일을 등록해 주세요");
+			return;
+		}
+		else {
+			$("#frm").submit();
+		}
+	}
 </script>
 <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

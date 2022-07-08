@@ -12,6 +12,8 @@ public interface BoardService {
 	public int howfWrite(HOWFVO vo);
 	public HOWFVO howfView(int hbidx);
 	public List<HOWFVO> howfHero();
+	public int howfModify(HOWFVO vo);
+	public int howfDelete(int hbidx);
 	public int heartInsert(HeartVO vo);
 	public int heartDelete(HeartVO vo);
 	public int heartDup(HeartVO vo);
