@@ -145,7 +145,7 @@
 				   ,cs.delyn				   
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
-			AND    cs.csbidx = #{bidx}
+			AND    cs.csbidx = #{csbidx}
 		</select>		
 		
 		<insert id="csList_reply" parameterType="csVO">		
@@ -199,6 +199,14 @@
 		<update id="csList_delete" parameterType="int">
 			UPDATE CStable
 			SET    delyn='Y'
+			WHERE  csbidx = #{csbidx}
+		</update>
+		
+		<update id="csReply_modify" parameterType="csVO">
+			UPDATE CStable
+			SET    title = #{title}
+				   ,content = #{content}
+				   wdate = now()
 			WHERE  csbidx = #{csbidx}
 		</update>
 		

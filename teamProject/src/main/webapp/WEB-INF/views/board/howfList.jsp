@@ -55,7 +55,7 @@
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="d-block w-100" src="/img/${hero[0].filename}">
+					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[0].filename}">
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>${hero[0].title}</h1>
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="d-block w-100" src="/img/${hero[1].filename}">
+					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[1].filename}">
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>${hero[1].title}</h1>
@@ -77,7 +77,7 @@
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img class="d-block w-100" src="/img/${hero[2].filename}">
+					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[2].filename}">
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>${hero[2].title}</h1>
@@ -159,7 +159,7 @@
 						<div class="col-sm-12 col-md-12 col-lg-4">
 							<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
 								<c:if test="${v.filename != null}">
-									<img class="card-img-top" src="/img/${v.filename}">
+									<img class="card-img-top" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename}">
 								</c:if>
 								<div class="card-body">
 									<div class="d-flex justify-content-between align-items-center">

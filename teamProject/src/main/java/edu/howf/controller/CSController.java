@@ -101,9 +101,9 @@ public class CSController {
 	}
 	
 	@RequestMapping(value = "csList_modify.do", method = RequestMethod.GET)
-	public String csListModify(int bidx, Model model) {
+	public String csListModify(int csbidx, Model model) {
 		
-		CSVO cv = csService.csList_view(bidx);
+		CSVO cv = csService.csList_view(csbidx);
 		
 		model.addAttribute("cv", cv);
 		
@@ -130,6 +130,22 @@ public class CSController {
 		return "redirect:/csBoard/csList.do";
 	}
 
+	@RequestMapping(value = "csReply_modify.do", method = RequestMethod.GET)
+	public String csReply_modify(int csbidx, Model model) {
+		
+		CSVO cv = csService.csList_view(csbidx);
+		
+		model.addAttribute("cv", cv);
+		
+		return "csBoard/csReply_modify";
+	}
 	
+	@RequestMapping(value = "csReply_modify.do", method = RequestMethod.POST)
+	public String csReply_modify(CSVO vo, HttpServletRequest request, HttpSession session) {
+		
+		int result = csService.csReply_modify(vo);
+		
+		return "redirect:/csBoard/csList_view.do?csbidx="+vo.getCsbidx();
+	}
 	
 }
