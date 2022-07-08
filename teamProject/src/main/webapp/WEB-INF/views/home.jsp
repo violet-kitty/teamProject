@@ -16,7 +16,6 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
- 
 	<h1>
 		Hello world!  하이d
 	</h1>

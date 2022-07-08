@@ -133,7 +133,7 @@ h3{
 				</tr>
 				<tr>
 					<td class="tb_category">첨부파일</td>
-					<td colspan="11" class="tb_filename">${cv.filename}</td>
+					<td colspan="11" class="tb_filename"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img src="displayFile.do?fileName=${cv.filename}"></a></td>
 				</tr>
 			</tbody>
 		</table>

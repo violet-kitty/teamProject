@@ -53,6 +53,8 @@ public class CSDao {
 	
 	public CSVO csList_view(int csbidx) {
 		
+		sqlSession.update(namespace + "count_cnt", csbidx);
+		
 		return sqlSession.selectOne(namespace + "csList_view", csbidx);
 	}
 	

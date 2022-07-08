@@ -55,6 +55,15 @@ h3{
 	height: 30px;
 	margin-left: 1%;
 }
+.file_btn{
+	
+}
+#img{
+	min-width: 500px;
+	min-height: 300px;
+	max-width: 500px;
+	max-height: 300px;"
+}
 </style>
 </head>
 <body>
@@ -63,7 +72,7 @@ h3{
 	<br>
 	<br>
 	<div class="div1">
-		<form action="csList_modify.do?csbidx=${cv.csbidx}" method="post">
+		<form action="csList_modify.do?csbidx=${cv.csbidx}" method="post" enctype="multipart/form-data">
 			<table class="tb1">
 				<tbody>
 					<tr>			
@@ -84,11 +93,11 @@ h3{
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
-						<td><textarea class="tb_textarea" rows="30" name="content">${cv.content}</textarea></td>
+						<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;">${cv.content}</textarea></td>
 					</tr>
 					<tr>
 						<td class="tb_category">첨부파일</td>
-						<td class="tb_filename"><input type="file" name="filename" accept="image/png, image/jpg, image/jpeg" value="${cv.filename}"></td>
+						<td class="tb_filename"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a><label><br><br><input type="file" name="file" id="file" class="file_btn"></label></td>
 					</tr>
 				</tbody>
 			</table>
@@ -98,5 +107,33 @@ h3{
 			</div>			
 		</form>		
 	</div>
+<script>
+	$(function(){
+		$("#file").on("change",upload);
+	      
+	      function upload(e){
+	         console.log("file name : ",e.value);
+	         var files = e.target.files;
+	         var filesArr = Array.prototype.slice.call(files);
+	         var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;//이미지 확장자만 받음
+	         
+	         filesArr.forEach(function(f){
+	            if(!f.type.match(reg)){
+	               alert("이미지 파일만 등록 가능합니다");
+	               return;
+	            }
+	            
+	            sel_file = f;
+	            
+	            var reader = new FileReader();
+	            reader.onload = function(e){
+	               $("#img").attr("src",e.target.result);//이미지 변경
+	            }
+	            reader.readAsDataURL(f);
+	         });
+	      }
+		
+	});
+</script>
 </body>
 </html>

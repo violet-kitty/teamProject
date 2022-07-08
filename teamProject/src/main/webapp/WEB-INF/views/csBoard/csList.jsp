@@ -33,6 +33,10 @@ h3{
 	margin: 0 auto;
 	text-align: center;
 }
+.tb_category{
+	font-weight: bold;
+	background-color: lightgray;
+}
 .tb2{
 	width: 80%;
 	margin-left: 10%;
@@ -50,13 +54,18 @@ h3{
 	<table border="1" class="tb1">
 		<tbody>
 			<tr>
-				<td>글번호</td>
-				<td>문의유형</td>
-				<td>작성자</td>
-				<td>제목</td>
-				<td>조회수</td>
-				<td>작성일</td>				
+				<th class="tb_category">글번호</th>
+				<th class="tb_category">문의유형</th>
+				<th class="tb_category">작성자</th>
+				<th class="tb_category">제목</th>
+				<th class="tb_category">조회수</th>
+				<th class="tb_category">작성일</th>				
 			</tr>
+			<c:if test="${cv.size() == 0 }">
+				<tr>
+					<td colspan="6">등록된 게시글이 없습니다.</td>
+				</tr>
+			</c:if>
 			<c:forEach var="c" items="${cv}">
 				<tr>
 					<td>${c.csbidx}</td>

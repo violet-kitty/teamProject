@@ -62,7 +62,7 @@ h3{
 	<br>
 	<br>
 	<div class="div1">
-		<form action="cs_write.do" method="post" enctype="multipart/form-data">
+		<form action="cs_write1.do" method="post" enctype="multipart/form-data">
 			<table class="tb1">
 				<tbody>
 					<tr>			
@@ -88,7 +88,7 @@ h3{
 					</tr>
 					<tr>
 						<td class="tb_category">첨부파일</td>
-						<td class="tb_filename"><input type="file" name="filename" multiple accept="image/png, image/jpg, image/jpeg"></td>
+						<td class="tb_filename"><label><input type="file" name="file"></label></td>
 					</tr>
 				</tbody>
 			</table>
