@@ -42,7 +42,7 @@
 		AND a.tag like CONCAT('%',#{searchValue},'%')
 		</if>
 		<!-- sort -->
-		<if test='sortType == null or sortType.equals("new")'>
+		<if test='sortType == "" or sortType.equals("new")'>
 		ORDER BY a.wdate desc
 		</if>
 		<if test='sortType.equals("heart")'>
@@ -148,6 +148,7 @@
 	
 	<!-- HOWF 글 작성 -->
 	<insert id="howfWrite" parameterType="howfVO">
+	<![CDATA[
 		INSERT INTO howf(
 			  midx
 			, title
@@ -170,11 +171,38 @@
 			, #{tag}
 			, 'N'
 		)
+	]]>
+	<selectKey resultType="int" keyProperty="hbidx" order="AFTER">
+		SELECT max(hbidx) FROM howf
+	</selectKey>
 	</insert>
+	
 	<!-- HOWF 글 수정 -->
+	<update id="howfModify" parameterType="howfVO">
+		UPDATE howf
+		   SET    title = #{title}
+				, content = #{content}
+				, cate = #{cate}
+				, tag = #{tag}
+				<if test="filename != null">
+				, filename = #{filename}
+				</if>
+		 WHERE hbidx = #{hbidx}
+	</update>
 	
 	<!-- HOWF 글 삭제 -->
+	<update id="howfDelete" parameterType="int">
+		UPDATE howf
+		   SET delyn = 'Y'
+		 WHERE hbidx = #{hbidx}
+	</update>
 	
+	<!-- 글 삭제시 찜 목록에서도 삭제 -->
+	<delete id="howfHeartDelete" parameterType="heartVO">
+		DELETE FROM heart
+		 WHERE type = #{type}
+		   AND bidx = #{bidx}
+	</delete>
 	
 	
 	<!-- 지역 이벤트 리스트 -->

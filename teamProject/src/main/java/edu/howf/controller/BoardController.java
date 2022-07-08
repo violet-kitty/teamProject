@@ -42,8 +42,6 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	String path = "C:\\upload";
-	
 	@Autowired
 	String uploadPath;
 	
@@ -86,15 +84,15 @@ public class BoardController {
 	@RequestMapping(value="/howfWrite.do", method=RequestMethod.POST)
 	public String howfWrite(MultipartFile file, HOWFVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
 		//파일 업로드
-		File dir = new File(path);
+		File dir = new File(uploadPath);
 		
 		if(!dir.exists()) dir.mkdirs();
 		
 		if(!file.getOriginalFilename().isEmpty()) {
-			System.out.println("파일 저장 경로 : "+path);
+			System.out.println("파일 저장 경로 : "+uploadPath);
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString()+"_"+file.getOriginalFilename();
-			file.transferTo(new File(path,fileName));
+			file.transferTo(new File(uploadPath,fileName));
 			vo.setFilename(fileName);
 		}
 		else {
@@ -107,7 +105,7 @@ public class BoardController {
 		
 		int result = boardService.howfWrite(vo);
 		
-		return "redirect:/howf/howfList.do";
+		return "redirect:/howf/howfViewdo?hbidx="+vo.getHbidx();
 	}
 	
 	@RequestMapping(value="/howfView.do")
@@ -132,6 +130,46 @@ public class BoardController {
 		return "board/howfView";
 	}
 	
+	@RequestMapping(value="/howfModify.do", method=RequestMethod.GET)
+	public String howffModify(int hbidx, Model model) {
+		HOWFVO vo = boardService.howfView(hbidx);
+		
+		model.addAttribute("howf", vo);
+		
+		return "board/howfModify";
+	}
+	
+	@RequestMapping(value="/howfModify.do", method=RequestMethod.POST)
+	public String howfModify(MultipartFile file, HOWFVO vo) throws IllegalStateException, IOException {
+		if(!file.isEmpty()) {
+			//파일 업로드
+			File dir = new File(uploadPath);
+			
+			if(!dir.exists()) dir.mkdirs();
+			
+			if(!file.getOriginalFilename().isEmpty()) {
+				System.out.println("파일 저장 경로 : "+uploadPath);
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+				file.transferTo(new File(uploadPath,fileName));
+				vo.setFilename(fileName);
+			}
+			else {
+				System.out.println("업로드된 파일 없음");
+			}
+		}
+		int result = boardService.howfModify(vo);
+		System.out.println("수정 : "+result);
+		
+		return "redirect:/howf/howfView.do?hbidx="+vo.getHbidx();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/howfDelete.do")
+	public int howfDelete(int hbidx) {
+		return boardService.howfDelete(hbidx);
+	}
+	
 	
 	//찜
 	@ResponseBody
@@ -154,6 +192,7 @@ public class BoardController {
 		return boardService.heartDelete(vo);
 	}
 	
+	//사진 보여주기 위한 코드
 //	@ResponseBody
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
@@ -163,19 +202,20 @@ public class BoardController {
 		InputStream in = null;		
 		ResponseEntity<byte[]> entity = null;
 		
-	//	logger.info("FILE NAME :"+fileName);
-		
 		try{
+			//파일 타입 체크
 			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
 			MediaType mType = MediaUtils.getMediaType(formatName);
 			
 			HttpHeaders headers = new HttpHeaders();		
-			 
+			
+			//bean에 주입한 물리경로 uploadPath
 			in = new FileInputStream(uploadPath+fileName);
 			
-			
+			//파일 확장자가 있다면
 			if(mType != null){
 				
+				//만약 다운로드를 하고 싶다면 매개변수 down에 1을 넘겨줘서 호출하면 됨
 				if (down==1) {
 					fileName = fileName.substring(fileName.indexOf("_")+1);
 					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -183,11 +223,11 @@ public class BoardController {
 							new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");	
 					
 				}else {
-					headers.setContentType(mType);	
+					//down에 1이 넘어오지 않았다면 사진 보여주기
+					headers.setContentType(mType);
 				}
 				
-			}else{
-				
+			}else{//파일 확장자가 없다면
 				fileName = fileName.substring(fileName.indexOf("_")+1);
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 				headers.add("Content-Disposition", "attachment; filename=\""+
@@ -204,12 +244,7 @@ public class BoardController {
 			in.close();
 		}
 		return entity;
-	} 
-	
-	
-	
-	
-	
+	}
 	
 	
 }

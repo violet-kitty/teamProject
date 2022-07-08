@@ -39,6 +39,17 @@ public class BoardServiceImple implements BoardService{
 	public List<HOWFVO> howfHero() {
 		return boardDao.howfHero();
 	}
+	
+	@Override
+	public int howfModify(HOWFVO vo) {
+		return boardDao.howfModify(vo);
+	}
+	
+	@Override
+	public int howfDelete(int hbidx) {
+		return boardDao.howfDelete(hbidx);
+	}
+	
 
 	@Override
 	public int heartInsert(HeartVO vo) {

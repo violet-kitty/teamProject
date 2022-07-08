@@ -44,6 +44,18 @@ public class BoardDao {
 		return list;
 	}
 	
+	public int howfModify(HOWFVO vo) {
+		return sqlSession.update(namespace+"howfModify", vo);
+	}
+	
+	public int howfDelete(int hbidx) {
+		HeartVO vo = new HeartVO();
+		vo.setBidx(hbidx);
+		vo.setType("howf");
+		sqlSession.delete(namespace+"howfHeartDelete", vo);
+		return sqlSession.update(namespace+"howfDelete", hbidx);
+	}
+	
 	public int heartInsert(HeartVO vo) {
 		return sqlSession.insert(namespace+"heartInsert", vo);
 	}
