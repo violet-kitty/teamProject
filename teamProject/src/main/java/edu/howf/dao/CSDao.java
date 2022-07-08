@@ -76,6 +76,11 @@ public class CSDao {
 		return sqlSession.update(namespace + ".csList_delete", csbidx);
 	}
 	
+	public int csReply_modify(CSVO vo) {
+		
+		return sqlSession.update(namespace + ".csReply_modify", vo);
+	}
+	
 
 	
 	

@@ -81,6 +81,12 @@ public class CSServiceImple implements CSService{
 		
 		return csDao.csList_delete(csbidx);
 	}
+
+	@Override
+	public int csReply_modify(CSVO vo) {
+		
+		return csDao.csReply_modify(vo);
+	}
 	
 	
 }

@@ -202,6 +202,14 @@
 			WHERE  csbidx = #{csbidx}
 		</update>
 		
+		<update id="csReply_modify" parameterType="csVO">
+			UPDATE CStable
+			SET    title = #{title}
+				   ,content = #{content}
+				   wdate = now()
+			WHERE  csbidx = #{csbidx}
+		</update>
+		
 		
 
 			

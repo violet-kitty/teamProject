@@ -60,7 +60,6 @@ h3{
 	margin-left: 1%;
 }
 #reply{
-	display: none;
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
@@ -130,7 +129,7 @@ h3{
 		</table>
 		<div class="div2">
 			<c:if test="${login.role == 'admin'}">
-				<input id="reply_btn" type="button" value="답변" class="btn1">
+				<input id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
 			</c:if>
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
 			<c:if test="${login.midx == cv.midx}">				
@@ -140,17 +139,6 @@ h3{
 		</div>
 	</div>
 	<br>
-	<div id="reply">
-		<h4>답변</h4>
-		<hr>
-		<form action="csList_view.do" method="post" id="reply_form">
-			<input type="text" name="content">
-			<input type="hidden" name="origincsbidx" value="${cv.origincsbidx}">
-			<input type="hidden" name="title" value="${cv.title}">
-			<input type="hidden" name="midx" value="${login.midx}">
-			<input type="button" id="reply_btn2" value="답변 등록">
-		</form>
-	</div>
 	<c:forEach var="cvr" items="${cvr}">
 		<div class="replies">
 			<table class="tb2">
@@ -169,16 +157,15 @@ h3{
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be; border-bottom: 2px solid #27c6be;">내용</td>
 						<td class="reply_content" colspan="5">${cvr.content}</td>
-					</tr>
-				
+					</tr>				
 				</tbody>
 			</table>
 		</div>
 	</c:forEach>
 	<script>
-		$("#reply_btn").click(function(){
-			$("#reply").show();
-		});
+// 		$("#reply_btn").click(function(){
+// 			$("#reply").show();
+// 		});
 		
 		$("#reply_btn2").click(function(){
 			var frm = $("#reply_form").serialize();
