@@ -64,7 +64,7 @@ h3{
 	<h3>1:1 문의 답변 글 수정</h3>
 	<hr>
 	<div class="replies">
-		<form action="csReply_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
+		<form id="form1" action="csReply_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
 			<table class="tb2">
 				<tbody>
 					<tr>
@@ -80,11 +80,11 @@ h3{
 					</tr>
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용</td>
-						<td class="reply_content" colspan="5"><textarea name="content" class="content_input_box" style="resize: none;">${cv.content}</textarea></td>
+						<td class="reply_content" colspan="5"><textarea id="content" name="content" class="content_input_box" style="resize: none;">${cv.content}</textarea></td>
 					</tr>
 					<tr>
 						<td class="btn_td" colspan="6">
-							<input type="submit" class="btn1" value="수정">
+							<input type="button" class="btn1" value="수정" onclick="checkFn()">
 							<input type="button" class="btn1" value="취소" onclick="javascript:history.back()">
 						</td>
 					</tr>			
@@ -92,5 +92,18 @@ h3{
 			</table>
 		</form>
 	</div>
+<script>
+	function checkFn(){
+		var content = $("#content");
+		if(content.val() == ""){
+			alert("내용을 입력해주세요");
+			content.focus();
+			return;
+		}
+		else {
+			$("#form1").submit();
+		}
+	};
+</script>
 </body>
 </html>
