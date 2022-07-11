@@ -259,21 +259,24 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/eventModify.do", method=RequestMethod.GET)
-	public String eventModify(int ebidx) {
+	public String eventModify(int ebidx, Model model) {
+		EventVO event = boardService.eventView(ebidx);
+		
+		model.addAttribute("event", event);
 		
 		return "board/eventModify";
 	}
 	
 	@RequestMapping(value="/eventModify.do", method=RequestMethod.POST)
 	public String eventModify(MultipartFile file, EventVO vo) {
-		
+		int result = boardService.eventModify(vo);
 		return "redirect:/event/eventView.do?ebidx="+vo.getEbidx();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/eventDelete.do")
 	public int eventDelete(int ebidx) {
-		return 0;
+		return boardService.eventDelete(ebidx);
 	}
 	
 	

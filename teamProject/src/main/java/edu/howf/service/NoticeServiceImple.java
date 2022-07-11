@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.NoticeDao;
+import edu.howf.vo.Criteria;
 import edu.howf.vo.NoticeVO;
 import edu.howf.vo.SearchVO;
 
@@ -31,4 +32,29 @@ public class NoticeServiceImple implements NoticeService{
 		// TODO Auto-generated method stub
 		return noticeDao.selectone(nbidx);
 	}
+
+	@Override
+	public int noticemodify(NoticeVO vo) {
+		
+		return noticeDao.noticemodify(vo);
+	}
+
+	@Override
+	public int noticedelete(int nbidx) {
+		
+		return noticeDao.noticedelete(nbidx);
+	}
+
+	@Override
+	public int pagecount(SearchVO searchVO) {
+		
+		
+		return noticeDao.pagecount(searchVO);
+	}
+
+
+	
+
+
+
 }

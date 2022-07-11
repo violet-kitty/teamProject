@@ -35,10 +35,9 @@
 			<!-- 파일 첨부, 이미지 미리보기 -->
 			<div class="row">
 				<div class="col">
-					<div style="background:gray;height:200px;cursor:pointer;" id="imageAttach"></div>
 					<input type="file" name="file" id="file" style="display:none">
-					<div id="imageArea" style="display:none">
-						<img width="100%" height="300px" id="image">
+					<div id="imageArea">
+						<img src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.filename}" style="cursor:pointer" width="100%" height="300px" id="image">
 					</div>
 				</div>
 			</div><!-- row end -->
@@ -48,9 +47,9 @@
 					<span>이벤트 주최 기간</span>
 				</div>
 				<div class="col-lg-10 d-flex">
-					<input type="date" class="form-control me-1" id="startday" name="startday" placeholder="시작 날짜">
+					<input type="date" class="form-control me-1" id="startday" name="startday" placeholder="시작 날짜" value="${event.startday}">
 					<span>~</span>
-					<input type="date" class="form-control ms-1" id="endday" name="endday" placeholder="종료 날짜">
+					<input type="date" class="form-control ms-1" id="endday" name="endday" placeholder="종료 날짜" value="${event.endday}">
 				</div>
 			</div><!-- /row -->
 			
@@ -84,7 +83,7 @@
 					</select>
 				</div>
 				<div class="col-lg-6">
-					<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
+					<input class="form-control" type="text" name="title" id="title" value="${event.title}" placeholder="제목을 작성해주세요" >
 				</div>
 			</div><!-- row end -->
 			
@@ -101,7 +100,7 @@
 			<!-- 에디터 -->
 			<div class="row">
 				<div class="col">
-					<textarea id="summernote" name="content"></textarea>
+					<textarea id="summernote" name="content">${event.content}</textarea>
 				</div>
 			</div><!-- row end -->
 			
@@ -150,10 +149,6 @@
 		new Tagify(input);
 		
 		//파일 첨부(썸네일)
-		$("#imageAttach").click(function(){
-			$("#file").click();
-		});
-		
 		$("#image").click(function(){
 			$("#file").click();
 		});
@@ -186,15 +181,41 @@
 		}
 		
 		//종료일이 시작일보다 빠르지 않게
+		$("#endday").attr("min",$("#startday").val());
 		$("#startday").on("change",function(){
 			var startday = $("#startday").val();
 			$("#endday").attr("min",startday);
 		});
 		//시작일이 종료일보다 나중이 되지 않게
+		$("#startday").attr("max",$("#endday").val());
 		$("#endday").on("change",function(){
 			var endday = $("#endday").val();
 			$("#startday").attr("max",endday);
 		});
+		
+		
+		//태그 값 넣기
+		var json = '${event.tag}';
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"];
+		})
+		
+		var tags = tagData.split("#");
+		
+		for(var i=0;i<tags.length;i++){
+			tags[i] = "#"+tags[i];
+			console.log(tags[i]);
+		}
+		
+		$("#tag").val(tags.slice(1));
+		
+		//카테고리 선택 변경
+		var state = "${event.state}";
+		var city = "${event.city}";
+		$("#state").val(state).trigger("change");
+		$("#city").val(city).prop("selected",true);
 		
 	});
 	
@@ -287,7 +308,6 @@
 		var title = $("#title");
 		var content = $("#summernote");
 		var tag = $("#tag");
-		var file = $("#file");
 		var startday = $("#startday");
 		var endday = $("#endday");
 		var state = $("#state");
@@ -319,10 +339,6 @@
 		else if(tag.val()==""){
 			alert("태그를 입력해 주세요");
 			tag.focus();
-			return;
-		}
-		else if(file.val()==""){
-			alert("썸네일을 등록해 주세요");
 			return;
 		}
 		else if(content.val()==""){

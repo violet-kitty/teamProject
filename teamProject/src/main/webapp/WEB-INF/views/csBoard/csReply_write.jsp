@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->        
+<%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <style>
 body{
 	font-size: 16px;
@@ -36,16 +35,18 @@ h3{
 }
 .reply_content{
 	text-align: left;
-	vertical-align: top;
+	vertical-align: middle;
 	width: 100%;
 	height: 500px;
 	border-top: 2px solid #27c6be;
 }
 .content_input_box{
-	border: none;
+	border: 1px solid black;
 	width: 100%;
 	height: 500px;
-	text-align: left;
+	box-sizing: border-box;
+	margin-right: 1px;
+	margin-top: 3px;
 }
 .btn_td{
 	border-top: 2px solid #27c6be;
@@ -58,33 +59,36 @@ h3{
 	background-color: #b2ffb5;
 	border: 0.5px solid gray;
 }
+.title_td{
+	width: 100%;
+	box-sizing: border-box;
+	margin-right: 2px;
+}
 </style>
 </head>
 <body>
-	<h3>1:1 문의 답변 글 수정</h3>
+	<h3>1:1 문의 답변 글 작성</h3>
 	<hr>
 	<div class="replies">
-		<form action="csReply_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
+		<form action="csReply_write.do?origincsbidx=${cv.origincsbidx}" method="post">
 			<table class="tb2">
 				<tbody>
 					<tr>
-						<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
+						<td class="reply_category reply_category_title" colspan="6">1:1 문의 답변</td>
 					</tr>				
 					<tr>
 						<td class="reply_category">작성자</td>
-						<td>${cv.nickname}</td>
+						<td>${login.nickname}<input type="hidden" name="origincsbidx" value="${cv.csbidx}"></td>
 						<td class="reply_category">제목</td>
-						<td>${cv.title}</td>
-						<td class="reply_category">작성일</td>
-						<td>${cv.wdate}</td>
+						<td><input type="text" name="title" class="title_td" placeholder="제목을 입력해주세요."></td>
 					</tr>
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용</td>
-						<td class="reply_content" colspan="5"><textarea name="content" class="content_input_box" style="resize: none;">${cv.content}</textarea></td>
+						<td class="reply_content" colspan="3"><textarea name="content" class="content_input_box" style="resize: none;" placeholder="내용을 입력해주세요."></textarea></td>
 					</tr>
 					<tr>
-						<td class="btn_td" colspan="6">
-							<input type="submit" class="btn1" value="수정">
+						<td class="btn_td" colspan="4">
+							<input type="submit" class="btn1" value="등록">
 							<input type="button" class="btn1" value="취소" onclick="javascript:history.back()">
 						</td>
 					</tr>			
