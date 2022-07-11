@@ -42,7 +42,7 @@
 </head>
 <body>
 	<main>
-		<!-- 리스트 페이지 히어로? -->
+		<!-- 리스트 페이지 히어로 -->
 		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#myCarousel"
@@ -59,6 +59,8 @@
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>${hero[0].title}</h1>
+							<p>${hero[0].cate}</p>
+							<p id="tagArea0"></p>
 							<p>
 								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[0].hbidx}">자세히 보기</a>
 							</p>
@@ -70,6 +72,8 @@
 					<div class="container">
 						<div class="carousel-caption">
 							<h1>${hero[1].title}</h1>
+							<p>${hero[1].cate}</p>
+							<p id="tagArea1"></p>
 							<p>
 								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[1].hbidx}">자세히 보기</a>
 							</p>
@@ -79,8 +83,10 @@
 				<div class="carousel-item">
 					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[2].filename}">
 					<div class="container">
-						<div class="carousel-caption">
+						<div class="carousel-caption" style="background:rgba(0,0,0,0.3)">
 							<h1>${hero[2].title}</h1>
+							<p>${hero[2].cate}</p>
+							<p id="tagArea2"></p>
 							<p>
 								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[2].hbidx}">자세히 보기</a>
 							</p>
@@ -124,7 +130,7 @@
 					<!-- sort 버튼 -->
 					<div class="row">
 						<div class="col d-flex justify-content-end">
-							<!-- searchVO에 sortType food, stay, travel, good, new 넘김 -->
+							<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
 							<button onclick="location.href='howfList.do?sortType=food'">맛집추천</button>
 							<button onclick="location.href='howfList.do?sortType=stay'">숙박추천</button>
 							<button onclick="location.href='howfList.do?sortType=travel'">여행지추천</button>
@@ -145,7 +151,7 @@
 									<option value="title">제목 검색</option>
 									<option value="tag">태그 검색</option>
 								</select>
-								<input type="text" class="form-control" name="searchValue">
+								<input type="text" class="form-control" name="searchValue" value="${search.searchValue}">
 								<button class="btn btn-dark">검색</button>
 							</form>
 						</div>
@@ -191,13 +197,13 @@
 					<div class="row">
 						<div class="col d-flex justify-content-center">
 							<c:if test="${pm.prev == true}">
-								<a href="howfList.do?page=${pm.startPage-1}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}">◀</a>
+								<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
 							</c:if>
 							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-								<a href="howfList.do?page=${i}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}" class="mx-1">${i}</a>
+								<a href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
 							</c:forEach>
 							<c:if test="${pm.next == true}">
-								<a href="howfList.do?page=${pm.endPage+1}&sortType=${vo.sortType}&searchType=${vo.searchType}&searchValue=${vo.searchValue}">▶</a>
+								<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
 							</c:if>
 						</div>
 					</div>
@@ -285,6 +291,35 @@
 			</p>
 		</footer>
 	</main>
+	<script>
+		$(function(){
+			//태그 파싱
+			var json0 = '${hero[0].tag}';
+			var json1 = '${hero[1].tag}';
+			var json2 = '${hero[2].tag}';
+			
+			var jsonParse = JSON.parse(json0);
+			var tags = "";
+			$.each(jsonParse,function(idx){
+				tags = tags+jsonParse[idx]["value"]+" ";
+			})
+			$("#tagArea0").text(tags);
+			
+			var jsonParse = JSON.parse(json1);
+			var tags = "";
+			$.each(jsonParse,function(idx){
+				tags = tags+jsonParse[idx]["value"]+" ";
+			})
+			$("#tagArea1").text(tags);
+			
+			var jsonParse = JSON.parse(json2);
+			var tags = "";
+			$.each(jsonParse,function(idx){
+				tags = tags+jsonParse[idx]["value"]+" ";
+			})
+			$("#tagArea2").text(tags);
+		});
+	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

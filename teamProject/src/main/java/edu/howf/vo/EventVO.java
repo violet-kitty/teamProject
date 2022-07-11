@@ -11,6 +11,7 @@ public class EventVO extends BoardVO{
 	private String tag;			//태그들. #으로 구분됨
 	private String startday;	//이벤트 시작날짜
 	private String endday;		//이벤트 종료날짜
+	private int heart;		//찜 받은 수
 	
 	public int getEbidx() {
 		return ebidx;
@@ -58,5 +59,11 @@ public class EventVO extends BoardVO{
 	}
 	public void setEndday(String endday) {
 		this.endday = endday;
+	}
+	public int getHeart() {
+		return heart;
+	}
+	public void setHeart(int heart) {
+		this.heart = heart;
 	}
 }

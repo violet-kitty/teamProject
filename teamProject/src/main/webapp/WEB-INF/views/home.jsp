@@ -29,6 +29,7 @@
 	</c:if>
 	<br><a href="notice/notice.do">공지사항(notice)</a><br>
 	<br><a href="howf/howfList.do">howf 추천</a><br>
+	<br><a href="event/eventList.do">지역 이벤트</a>
 <script>
 	function logoutFn(){
 		//카카오톡 로그아웃

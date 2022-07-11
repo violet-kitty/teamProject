@@ -1,5 +1,9 @@
 package edu.howf.vo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 //게시판 관련 공통된 컬럼들 정의한 VO
 public class BoardVO extends UserVO{
 	private String title;
@@ -24,6 +28,15 @@ public class BoardVO extends UserVO{
 		return wdate;
 	}
 	public void setWdate(String wdate) {
+		try {
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date formatData = dtFormat.parse(wdate);
+			this.wdate = newDtFormat.format(formatData);
+			System.out.println(this.wdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		this.wdate = wdate;
 	}
 	public int getCnt() {
