@@ -276,7 +276,7 @@ else {
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
-		var snsTitle = "${event.title}";
+		var snsTitle = "${howf.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -287,14 +287,14 @@ else {
 		}
 		else if(sns=='kakao'){
 			Kakao.init('35c7c8bf307063859390df8e61188fbf');
-			Kakao.isInitialized();
+			//Kakao.isInitialized();
 			
 			Kakao.Link.createDefaultButton({
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
-					title:'${event.title}',
-					description:'${event.title}',
+					title:'${howf.title}',
+					description:'${howf.title}',
 					imageUrl:thisUrl,
 					link:{
 						mobileWebUrl:thisUrl,
