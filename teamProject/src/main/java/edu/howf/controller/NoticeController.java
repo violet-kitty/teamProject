@@ -161,7 +161,6 @@ public class NoticeController {
 				System.out.println("되는걸까?");
 				UUID uuid = UUID.randomUUID();
 				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
-				
 				fileupload.transferTo(new File(uploadPath,filename));
 				vo.setFilename(filename);
 			}else {
