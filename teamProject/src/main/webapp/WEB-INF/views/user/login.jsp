@@ -61,6 +61,9 @@ var nicknameDup = false;
 		data-logo_alignment="left">
 	</div>
 </div>
+<br><br>
+<a href="">이메일 찾기</a>
+<a href="">비밀번호 찾기</a>
 
 <script>
 	function loginFn(){
