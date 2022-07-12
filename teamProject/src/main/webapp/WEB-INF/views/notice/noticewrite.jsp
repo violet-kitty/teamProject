@@ -10,9 +10,15 @@
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<script type="text/javascript">
+	
+
+
+</script>
+
 </head>
 <body>
-<form action="noticewrite.do" method="post" enctype="multipart/form-data">
+<form id="check" action="noticewrite.do" method="post" enctype="multipart/form-data">
 <table>
  <tr>
   <td>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,13 +46,20 @@ public class CSController {
 	String uploadPath;
 
 	@RequestMapping(value = "/csList.do", method = RequestMethod.GET)
-	public String csList(Model model, SearchVO vo, HttpServletRequest request, HttpSession session) {
+	public String csList(Model model, SearchVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 
 		session = request.getSession();
 		UserVO login = (UserVO) session.getAttribute("login");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=utf-8");
 
 		if (login == null) {
+			
+			out.append("<script>alert('로그인이 필요합니다.'); history.go(-1);</script>");
+			out.flush();
+			
 			return "redirect:/user/login.do";
+			
 		} else {
 			if (vo.getPage() < 1)
 				vo.setPage(1);
@@ -117,8 +125,35 @@ public class CSController {
 	
 
 	@RequestMapping(value = "/csList_view.do", method = RequestMethod.GET)
-	public String csListView(int csbidx, Model model) {
-
+	public String csListView(int csbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Cookie[] cookies = request.getCookies();
+		int visitor = 0;
+				
+		for(Cookie cookie : cookies) {
+			System.out.println(cookie.getName());
+			if(cookie.getName().equals("visit")) {
+				visitor = 1;
+				
+				System.out.println("visit 통과");
+				
+				if(cookie.getValue().contains(request.getParameter("csbidx"))) {
+					System.out.println("visit if 통과");
+				}
+				else {
+					cookie.setValue(cookie.getValue() + "_" + request.getParameter("csbidx"));
+					response.addCookie(cookie);
+					int result = csService.csList_cnt(csbidx);
+				}
+			}
+		}
+		if(visitor == 0) {
+			System.out.println("visitor 0 ");
+			Cookie cookie1 = new Cookie("visit", request.getParameter("csbidx"));
+			response.addCookie(cookie1);
+			
+			int result = csService.csList_cnt(csbidx);
+		}
+		
 		CSVO cv = csService.csList_view(csbidx);
 
 		List<CSVO> cvr = csService.csList_reply_view(csbidx);

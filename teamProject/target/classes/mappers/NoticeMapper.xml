@@ -86,21 +86,24 @@
 					,n.content
 					,n.wdate
 					,n.filename
+					,n.midx
 					,u.email
 					,u.name
+					,u.midx
 			FROM notice n , usertable u
 			WHERE n.midx = u.midx
 			AND   n.nbidx = #{nbidx}
 	</select>
 	
 	<update id="noticemodify" parameterType="noticeVO">
+		<![CDATA[
 			update notice
 			SET title = #{title}
 				,content = #{content}
 				,filename = #{filename}
 				 
 			WHERE nbidx = #{nbidx}
-	
+		]]>
 	</update>
 	
 <!-- 	<delete id="noticedelete" parameterType="int" >

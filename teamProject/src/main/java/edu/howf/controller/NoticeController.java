@@ -61,6 +61,7 @@ public class NoticeController {
 		 
 		vo.setMidx(login.getMidx());
 		System.out.println("midx:"+vo.getMidx());
+		 
 		
 		File dir = new File(uploadPath);
 		if(!dir.exists()) {
@@ -70,6 +71,7 @@ public class NoticeController {
 		if(fileupload!=null) {
 			if(!fileupload.getOriginalFilename().isEmpty()) {
 				System.out.println("된다!");
+				
 				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
 				vo.setFilename(fileupload.getOriginalFilename());
 			}else {
@@ -129,14 +131,38 @@ public class NoticeController {
 	}
 	//수정 경로
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.GET)
-	public String noticemodify(Model model,NoticeVO vo) {
+	public String noticemodify(Model model,int nbidx ) {
+		NoticeVO vo = noticeService.selectone(nbidx);
 		model.addAttribute("vo",vo);
+		
 		return "notice/noticemodify";
 	}
 	//수정하기
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.POST)
-	public String noticemodify(NoticeVO vo) throws IOException {
+	public String noticemodify(MultipartFile fileupload, NoticeVO vo,HttpServletResponse response, HttpServletRequest request ,HttpSession session) throws IOException {
+		
 		System.out.println(vo.getNbidx());
+		
+		
+		session = request.getSession();
+		UserVO login = (UserVO) session.getAttribute("login");
+		
+		
+		File dir = new File(uploadPath);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		if(fileupload!=null) {
+			if(!fileupload.getOriginalFilename().isEmpty()) {
+				System.out.println("되는걸까?");
+				
+				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
+				vo.setFilename(fileupload.getOriginalFilename());
+			}else {
+				System.out.println("하하하하하하");
+			}
+		}
 		int result = noticeService.noticemodify(vo);
 		
 		return "redirect:/notice/noticeone.do?nbidx="+vo.getNbidx();
