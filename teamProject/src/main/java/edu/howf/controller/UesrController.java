@@ -72,7 +72,7 @@ public class UesrController {
 					session.setAttribute("login", login);
 					
 					//만약 자동로그인 체크했다면
-					if(autoLogin.equals("autoLogin")) {
+					if(autoLogin != null && autoLogin.equals("autoLogin")) {
 						
 					}
 					
