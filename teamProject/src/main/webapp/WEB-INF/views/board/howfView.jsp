@@ -19,6 +19,8 @@
 <!-- css -->
 <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
+<!-- kakao -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 	h1{
 		font-size:1.5em;
