@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +57,7 @@ public class CSController {
 
 		if (login == null) {
 			
-			out.append("<script>alert('로그인이 필요합니다.'); history.go(-1);</script>");
+			out.append("<script>alert('로그인이 필요합니다.'); location.href='../user/login.do';</script>");
 			out.flush();
 			
 			return "redirect:/user/login.do";
@@ -320,5 +322,34 @@ public class CSController {
 		}
 		return entity;
 	}
+	
+//	@PostMapping(value = "/cs_write_summernote.do", produces = "application/json")
+//	@ResponseBody
+//	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+//		
+//		JsonObject jsonObject new JsonObject();
+//		
+//		String fileRoot = "C:\\upload";
+//		String originalFileName = multipartFile.getOriginalFilename();
+//		String extension = originalFileName.substring(originalFileName.indexOf("."));
+//		
+//		String savedFileName = UUID.randomUUID() + extension;
+//		
+//		File targatFile = new File(fileRoot + savedFileName);
+//		
+//		try {
+//			InputStream filestream = multipartFile.getInputStream();
+//			FileUtils.copyInputStreamToFile(filestream, targatFile);
+//			jsonObject.addProperty("url", "/summernoteImage/" + savedFileName);
+//			jsonObject.addProperty("responseCode", "success");
+//			
+//		} catch(IOException e){
+//			FileUtils.deleteQuietly(targatFile);
+//			jsonObject.addProperty("responseCode", "error");
+//			e.printStackTrace();
+//		}
+//		
+//		return JsonObject;
+//	}
 
 }
