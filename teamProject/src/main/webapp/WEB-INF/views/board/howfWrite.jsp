@@ -38,7 +38,7 @@
 					<div style="background:gray;height:200px;cursor:pointer;" id="imageAttach"></div>
 					<input type="file" name="file" id="file" style="display:none">
 					<div id="imageArea" style="display:none">
-						<img width="300px" height="300px" id="image">
+						<img width="100%" height="300px" id="image">
 					</div>
 				</div>
 			</div><!-- row end -->

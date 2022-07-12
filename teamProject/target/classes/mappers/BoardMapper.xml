@@ -355,6 +355,7 @@
 	
 	<!-- 지역 이벤트 글 작성 -->
 	<insert id="eventWrite">
+	<![CDATA[
 		INSERT INTO event(
 			  midx
 			, title
@@ -383,6 +384,10 @@
 			, #{endday}
 			, 'N'
 		)
+		]]>
+		<selectKey resultType="int" keyProperty="ebidx" order="AFTER">
+			SELECT max(ebidx) FROM event
+		</selectKey>
 	</insert>
 	
 	<!-- 지역 이벤트 글 수정 -->

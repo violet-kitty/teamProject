@@ -3,11 +3,13 @@ package edu.howf.service;
 import edu.howf.vo.UserVO;
 
 public interface UserService {
-	int emailDup(String email);
-	int nicknameDup(String nickname);
-	int nicknameInsert(UserVO vo);
-	String nicknameSelect(String email);
-	int userInsert(UserVO vo);
-	UserVO login(UserVO vo);
-	int socialLogin(UserVO vo);
+	public int emailDup(String email);
+	public int nicknameDup(String nickname);
+	public int nicknameInsert(UserVO vo);
+	public String nicknameSelect(String email);
+	public int userInsert(UserVO vo);
+	public UserVO login(UserVO vo);
+	public int socialLogin(UserVO vo);
+	public String nameToEmail(UserVO vo);
+	public int pwdModify(UserVO vo);
 }

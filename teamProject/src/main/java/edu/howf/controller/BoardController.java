@@ -215,7 +215,7 @@ public class BoardController {
 			//만약 로그인 된 상태라면 찜한 여부 가져오기
 			HeartVO heart = new HeartVO();
 			heart.setMidx(login.getMidx());
-			heart.setBidx(event.getEbidx());
+			heart.setBidx(ebidx);
 			heart.setType("event");
 			int result = boardService.heartDup(heart);
 			model.addAttribute("heart", result);
@@ -302,7 +302,6 @@ public class BoardController {
 	}
 	
 	//사진 보여주기 위한 코드
-//	@ResponseBody
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
 		

@@ -102,9 +102,9 @@
 			, nickname
 			, role
 			, joinyn
+			, password
 		 FROM usertable
 		WHERE email = #{email}
-		  AND password = #{password}
 	</select>
 	
 	<!-- 소셜 로그인 -->
@@ -113,5 +113,20 @@
 		FROM usertable
 		WHERE email = #{email}
 	</select>
+	
+	<!-- 이름, 닉네임 받아 있으면 이메일 반환 -->
+	<select id="nameToEmail" parameterType="userVO" resultType="String">
+		SELECT email
+		  FROM usertable
+		 WHERE name = #{name}
+		   AND nickname = #{nickname}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="pwdModify" parameterType="userVO">
+		UPDATE usertable
+		   SET password = #{password}
+		 WHERE email = #{email}
+	</update>
 	
 </mapper>

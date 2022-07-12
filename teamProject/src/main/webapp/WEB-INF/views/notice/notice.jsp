@@ -7,6 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+  table, th, td {
+    border: 1px solid #00FF00;
+    background-color : #191970;
+    color : #F0F8FF;
+  }
+  table {
+    width: 600px;
+  }
+</style>
 </head>
 <body>
 <h1>공 공 공 공 공 공 공 공</h1>
@@ -19,6 +29,8 @@
 <button id="push">
 아무의미없는공지사항버튼
 </button>
+
+<br><p>현재 ${login.nickname}으로 로그인 됨</p>
 </div>
 <form method="get" action="notice.do">
 		<select name="searchType">
@@ -30,9 +42,9 @@
 </form>
 
 <table border="1">
+
 	<thead>
 		<tr>
-			
 			<th>NO.</th>
 			<th>작성자</th>
 			<th>제목</th>
@@ -50,6 +62,7 @@
 			<c:set var="i" value="1"/>
 			<c:forEach var="vo" items="${list }">
 				<tr>
+
 					<td>${i}</td>
 					<td>${vo.name} </td>
 					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title }</a></td>

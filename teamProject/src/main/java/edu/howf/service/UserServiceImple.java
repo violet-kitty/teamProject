@@ -48,4 +48,14 @@ public class UserServiceImple implements UserService{
 		}
 		return userDao.socialLogin(vo);
 	}
+
+	@Override
+	public String nameToEmail(UserVO vo) {
+		return userDao.nameToEmail(vo);
+	}
+
+	@Override
+	public int pwdModify(UserVO vo) {
+		return userDao.pwdModify(vo);
+	}
 }

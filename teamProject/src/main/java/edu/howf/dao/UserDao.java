@@ -52,4 +52,14 @@ public class UserDao {
 	public int socialLogin(UserVO vo) {
 		return sqlSession.selectOne(namespace+"socialLogin", vo);
 	}
+	
+	//이름, 닉네임 받아 이메일 반환
+	public String nameToEmail(UserVO vo) {
+		return sqlSession.selectOne(namespace+"nameToEmail", vo);
+	}
+	
+	//비밀번호 변경
+	public int pwdModify(UserVO vo) {
+		return sqlSession.update(namespace+"pwdModify", vo);
+	}
 }

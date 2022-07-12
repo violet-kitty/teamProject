@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,6 +62,7 @@ public class NoticeController {
 		 
 		vo.setMidx(login.getMidx());
 		System.out.println("midx:"+vo.getMidx());
+		 
 		
 		File dir = new File(uploadPath);
 		if(!dir.exists()) {
@@ -70,8 +72,10 @@ public class NoticeController {
 		if(fileupload!=null) {
 			if(!fileupload.getOriginalFilename().isEmpty()) {
 				System.out.println("된다!");
-				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
-				vo.setFilename(fileupload.getOriginalFilename());
+				UUID uuid = UUID.randomUUID();
+				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
+				fileupload.transferTo(new File(uploadPath,filename));
+				vo.setFilename(filename);
 			}else {
 				System.out.println("하하하하하하");
 			}
@@ -95,6 +99,7 @@ public class NoticeController {
 				pw.close();
 			}
 	}
+
 	//공지사항 리스트
 	@RequestMapping(value = "notice.do")
 	public String list(Model model ,SearchVO searchVO ,  HttpServletRequest request ,HttpSession session ,HttpServletResponse response) throws IOException {
@@ -129,14 +134,39 @@ public class NoticeController {
 	}
 	//수정 경로
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.GET)
-	public String noticemodify(Model model,NoticeVO vo) {
+	public String noticemodify(Model model,int nbidx ) {
+		NoticeVO vo = noticeService.selectone(nbidx);
 		model.addAttribute("vo",vo);
+		
 		return "notice/noticemodify";
 	}
 	//수정하기
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.POST)
-	public String noticemodify(NoticeVO vo) throws IOException {
+	public String noticemodify(MultipartFile fileupload, NoticeVO vo,HttpServletResponse response, HttpServletRequest request ,HttpSession session) throws IOException {
+		
 		System.out.println(vo.getNbidx());
+		
+		
+		session = request.getSession();
+		UserVO login = (UserVO) session.getAttribute("login");
+		
+		
+		File dir = new File(uploadPath);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		if(fileupload!=null) {
+			if(!fileupload.getOriginalFilename().isEmpty()) {
+				System.out.println("되는걸까?");
+				UUID uuid = UUID.randomUUID();
+				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
+				fileupload.transferTo(new File(uploadPath,filename));
+				vo.setFilename(filename);
+			}else {
+				System.out.println("하하하하하하");
+			}
+		}
 		int result = noticeService.noticemodify(vo);
 		
 		return "redirect:/notice/noticeone.do?nbidx="+vo.getNbidx();

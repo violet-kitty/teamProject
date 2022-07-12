@@ -14,6 +14,7 @@
 <h1>그냥 4대명검 말고는 없습니다</h1>
 
 <table border="1">
+
 		<tbody>
 			<tr>
 				<th align="right">글번호</th>
@@ -35,7 +36,7 @@
 				<th align="right">내용</th>
 				<td>${vo.content}</td>
 			</tr>
-			<c:if test="${vo.filename != ''}">
+			<c:if test="${vo.filename != null}">
 			<tr>
 				<th align="right">첨부파일</th>
 				<td>
@@ -45,15 +46,17 @@
 			</tr>
 			</c:if>
 		</tbody>
+	
 	</table>
 	<c:if test="${login == null }">
 		<a href="notice.do">목록으로</a>
 		<a href="../user/login.do">로그인하려가기</a>
 	</c:if>
-	<c:if test="${login != null }">
+	<c:if test="${login.midx == vo.midx }">
 		<a href="noticemodify.do?nbidx=${vo.nbidx }">수정</a>
 		<a href="noticedelete.do?nbidx=${vo.nbidx }">없어져라!</a>
 	</c:if>
+	
 	<button id="btn1" onclick="location.href='notice.do'"> 리스트</button><br>
 	<a href="../user/login.do">로그인하려가기</a><br>
 </body>

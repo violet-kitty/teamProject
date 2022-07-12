@@ -1,18 +1,22 @@
 package edu.howf.vo;
 
-import java.util.ArrayList;
-
-public class StayVO {
+public class RoomVO{
+	private int ridx;
 	private int sidx;
 	private String name;
-	private String addr;
-	private String detailaddr;
-	private String content;
+	private int price;
 	private String tag;
+	private int people;
 	private String photo;
+	private String bed;
 	private String delyn;
-	private ArrayList<RoomVO> room;
 	
+	public int getRidx() {
+		return ridx;
+	}
+	public void setRidx(int ridx) {
+		this.ridx = ridx;
+	}
 	public int getSidx() {
 		return sidx;
 	}
@@ -25,23 +29,11 @@ public class StayVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddr() {
-		return addr;
+	public int getPrice() {
+		return price;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-	public String getDetailaddr() {
-		return detailaddr;
-	}
-	public void setDetailaddr(String detailaddr) {
-		this.detailaddr = detailaddr;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	public String getTag() {
 		return tag;
@@ -49,22 +41,28 @@ public class StayVO {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+	public int getPeople() {
+		return people;
+	}
+	public void setPeople(int people) {
+		this.people = people;
+	}
 	public String getPhoto() {
 		return photo;
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	public String getBed() {
+		return bed;
+	}
+	public void setBed(String bed) {
+		this.bed = bed;
+	}
 	public String getDelyn() {
 		return delyn;
 	}
 	public void setDelyn(String delyn) {
 		this.delyn = delyn;
-	}
-	public ArrayList<RoomVO> getRoom() {
-		return room;
-	}
-	public void setRoom(ArrayList<RoomVO> room) {
-		this.room = room;
 	}
 }
