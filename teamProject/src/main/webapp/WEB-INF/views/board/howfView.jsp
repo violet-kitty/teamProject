@@ -19,6 +19,8 @@
 <!-- css -->
 <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
+<!-- kakao -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 	h1{
 		font-size:1.5em;
@@ -125,9 +127,15 @@ else {
 			</c:if>
 			</div>
 			<div class="col-lg-6 d-flex justify-content-end">
-				<button>x</button>
-				<button>w</button>
-				<button>p</button>
+				<button onclick="shareSNS('facebook')">
+					<img src="<%=request.getContextPath()%>/image/facebook.png" width="30" height="30" style="border-radius:5px;">
+				</button>
+				<button onclick="shareSNS('twitter')">
+					<img src="<%=request.getContextPath()%>/image/twitter.png" width="30" height="30" style="border-radius:5px;">
+				</button>
+				<button onclick="shareSNS('kakao')" id="kakaoBtn">
+					<img src="<%=request.getContextPath()%>/image/kakao.png" width="30" height="30" style="border-radius:5px;">
+				</button>
 			</div>
 		</div>
 		
@@ -262,6 +270,38 @@ else {
 		}
 		else if(e == 'cancel'){
 			$("#modalDiv").hide();
+		}
+	}
+	
+	function shareSNS(sns){
+		var thisUrl = document.URL;
+		console.log(thisUrl);
+		var snsTitle = "${howf.title}";
+		if(sns=='facebook'){
+			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
+	        window.open(url, "", "width=486, height=286");
+		}
+		else if(sns=='twitter'){
+			var url = "http://twitter.com/share?url="+encodeURIComponent(thisUrl)+"&text="+encodeURIComponent(snsTitle);
+	        window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+		}
+		else if(sns=='kakao'){
+			Kakao.init('35c7c8bf307063859390df8e61188fbf');
+			//Kakao.isInitialized();
+			
+			Kakao.Link.createDefaultButton({
+				container:'#kakaoBtn',
+				objectType:'feed',
+				content:{
+					title:'${howf.title}',
+					description:'${howf.title}',
+					imageUrl:thisUrl,
+					link:{
+						mobileWebUrl:thisUrl,
+						webUrl:thisUrl
+					}
+				}
+			});
 		}
 	}
 </script>

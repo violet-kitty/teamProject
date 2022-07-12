@@ -178,8 +178,8 @@
 											src="<%=request.getContextPath()%>/image/redheart.png"
 											width="30" height="30"><span class="ms-1">${v.heart}</span></small>
 									</div>
-									<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-										<p style="margin-left: 0; margin-right: 0;width:100%;">${v.title}</p>
+									<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap; text-align:left;">
+										<p style="margin-left: 0; margin-right: 0;width:100%;">&lt;${v.state}&gt;${v.title}</p>
 									</div>
 								</div><!-- card-body end -->
 							</div>
