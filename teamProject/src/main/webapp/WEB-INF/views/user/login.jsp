@@ -30,9 +30,14 @@ var nicknameDup = false;
 			<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><br>
 			<p id="nicknameTxt"></p><br>
 			<button type="button" class="modalBottomBtn" onclick="nicknameFn()">닉네임 입력</button>
+			<input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">자동 로그인</label>
 		</form>
 	</div>
 </div>
+
+<form id="logout" action="/logout" method="POST">
+   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+</form>
 
 <div>
 	<form id="frm">
@@ -62,8 +67,8 @@ var nicknameDup = false;
 	</div>
 </div>
 <br><br>
-<a href="">이메일 찾기</a>
-<a href="">비밀번호 찾기</a>
+<a href="emailFind.do">이메일 찾기</a>
+<a href="pwdFind.do">비밀번호 찾기</a>
 
 <script>
 	function loginFn(){
@@ -85,14 +90,14 @@ var nicknameDup = false;
 				data:frm,
 				type:"post",
 				success:function(data){
-					if(data.trim() == "Y"){
-						location.href = "<%= request.getContextPath() %>/";
-					}
-					else if(data.trim() == "N"){
+					if(data.trim() == "N"){
 						alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
 					}
 					else if(data == "FAIL"){
 						alert("존재하지 않는 회원이거나 아이디 혹은 비밀번호가 다릅니다.");
+					}
+					else {
+						location.href = "<%= request.getContextPath() %>/";
 					}
 				}
 			});
