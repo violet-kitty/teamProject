@@ -50,6 +50,10 @@
 			google.accounts.id.disableAutoSelect();
 		}
 		
+		//자동 로그인 쿠키 만료
+		document.cookie = 'autoLoginMidx=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		document.cookie = 'autoLoginToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		
 		location.href="<%= request.getContextPath() %>/user/logout.do";
 	}
 </script>

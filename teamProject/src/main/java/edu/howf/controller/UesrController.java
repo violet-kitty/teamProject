@@ -226,14 +226,6 @@ public class UesrController {
 		session = request.getSession();
 		session.invalidate();
 		
-		//자동로그인 쿠키 만료
-		Cookie cookie = new Cookie("autoLoginMidx",null);
-		cookie.setMaxAge(0);
-		response.addCookie(cookie);
-		Cookie cookie2 = new Cookie("autoLoginToken",null);
-		cookie2.setMaxAge(0);
-		response.addCookie(cookie2);
-		
 		return "redirect:/";
 	}
 	
