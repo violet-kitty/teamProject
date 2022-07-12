@@ -27,9 +27,9 @@
 
 	<form action="noticemodify.do" name="noticemodify" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="nbidx" value="${vo.nbidx }">
-		title : <input type="text" name="title" value="${nv.title }"> <br>
-		content : <textarea name="content" id="summernote" cols="50" rows="13">${nv.content}</textarea> <br>
-		<input type="file" name="fileupload" />
+		title : <input type="text" name="title" value="${vo.title }"> <br>
+		content : <textarea name="content" id="summernote" cols="50" rows="13">${vo.content}</textarea> <br>
+		<input type="file" name="fileupload" value="${vo.filename }"/> 
 		
 		
 		<button>저장</button>

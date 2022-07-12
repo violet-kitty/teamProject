@@ -132,8 +132,8 @@ public class NoticeController {
 	//수정 경로
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.GET)
 	public String noticemodify(Model model,int nbidx ) {
-		NoticeVO nv = noticeService.selectone(nbidx);
-		model.addAttribute("nv",nv);
+		NoticeVO vo = noticeService.selectone(nbidx);
+		model.addAttribute("vo",vo);
 		
 		return "notice/noticemodify";
 	}
