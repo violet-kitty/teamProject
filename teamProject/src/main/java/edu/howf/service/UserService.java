@@ -1,5 +1,6 @@
 package edu.howf.service;
 
+import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 public interface UserService {
@@ -12,4 +13,7 @@ public interface UserService {
 	public int socialLogin(UserVO vo);
 	public String nameToEmail(UserVO vo);
 	public int pwdModify(UserVO vo);
+	public int autoLoginInsert(AutoVO vo);
+	public int autoLogin(AutoVO vo);
+	public UserVO autoLogin(int midx);
 }

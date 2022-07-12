@@ -129,4 +129,35 @@
 		 WHERE email = #{email}
 	</update>
 	
+	<!-- 자동로그인 정보 넣기 -->
+	<insert id="autoLoginInsert" parameterType="autoVO">
+		INSERT INTO autologin(
+			  midx
+			, token
+		)
+		VALUES(
+			  #{midx}
+			, #{token}
+		)
+	</insert>
+	
+	<!-- 자동로그인 여부 -->
+	<select id="autoLogin" parameterType="autoVO" resultType="int">
+		SELECT COUNT(midx)
+		  FROM autologin
+		 WHERE midx = #{midx}
+		   AND token = #{token}
+	</select>
+	
+	<!-- midx로 회원정보 가져오기 -->
+	<select id="autoLoginSelectOne" parameterType="int" resultType="userVO">
+		SELECT midx
+			, nickname
+			, role
+			, joinyn
+			, password
+		 FROM usertable
+		 WHERE midx = #{midx}
+	</select>
+	
 </mapper>

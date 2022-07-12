@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.util.SMTP;
+import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -54,7 +55,7 @@ public class UesrController {
 	//로그인 액션
 	@ResponseBody
 	@RequestMapping(value="/login.do",method=RequestMethod.POST)
-	public String login(String autoLogin, UserVO vo,HttpServletRequest request, HttpSession session) {
+	public String login(String autoLogin, UserVO vo,HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		UserVO login = userService.login(vo);
 		
 		//로그인 정보 있다면
@@ -71,12 +72,27 @@ public class UesrController {
 					session = request.getSession();
 					session.setAttribute("login", login);
 					
-					//만약 자동로그인 체크했다면
+					//만약 자동로그인 체크했다면 쿠키에 정보 저장
 					if(autoLogin != null && autoLogin.equals("autoLogin")) {
+						Cookie cookie = new Cookie("autoLoginMidx", Integer.toString(login.getMidx()));//회원번호를 쿠키에 저장
+						cookie.setPath(request.getContextPath());
+						cookie.setMaxAge(3600*24*30);
+						response.addCookie(cookie);
 						
+						String token = passwordEncoder.encode(vo.getPassword());
+						
+						Cookie cookie2 = new Cookie("autoLoginToken", token);//회원번호를 쿠키에 저장
+						cookie2.setPath(request.getContextPath());
+						cookie2.setMaxAge(3600*24*30);
+						response.addCookie(cookie2);
+						
+						AutoVO auto = new AutoVO();
+						auto.setMidx(login.getMidx());
+						auto.setToken(token);
+						int result = userService.autoLoginInsert(auto);
 					}
 					
-					return vo.getPassword();
+					return "Y";
 				}
 				else {
 					return "FAIL";
@@ -206,9 +222,17 @@ public class UesrController {
 	
 	//로그아웃
 	@RequestMapping(value="/logout.do")
-	public String logout(HttpServletRequest request, HttpSession session) {
+	public String logout(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		session = request.getSession();
 		session.invalidate();
+		
+		//자동로그인 쿠키 만료
+		Cookie cookie = new Cookie("autoLoginMidx",null);
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		Cookie cookie2 = new Cookie("autoLoginToken",null);
+		cookie2.setMaxAge(0);
+		response.addCookie(cookie2);
 		
 		return "redirect:/";
 	}
@@ -288,6 +312,7 @@ public class UesrController {
 	@ResponseBody
 	@RequestMapping(value="/pwdFindComplete.do", method=RequestMethod.POST)
 	public int pwdFind2(UserVO vo) {
+		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 		return userService.pwdModify(vo);
 	}
 	

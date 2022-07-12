@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 @Repository
@@ -61,5 +62,20 @@ public class UserDao {
 	//비밀번호 변경
 	public int pwdModify(UserVO vo) {
 		return sqlSession.update(namespace+"pwdModify", vo);
+	}
+	
+	//자동 로그인 추가
+	public int autoLoginInsert(AutoVO vo) {
+		return sqlSession.insert(namespace+"autoLoginInsert", vo);
+	}
+	
+	//자동 로그인 여부
+	public int autoLogin(AutoVO vo) {
+		return sqlSession.selectOne(namespace+"autoLogin", vo);
+	}
+	
+	//midx로 로그인
+	public UserVO autoLogin(int midx) {
+		return sqlSession.selectOne(namespace+"autoLoginSelectOne", midx);
 	}
 }

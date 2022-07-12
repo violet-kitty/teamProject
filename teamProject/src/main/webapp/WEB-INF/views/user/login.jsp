@@ -30,7 +30,6 @@ var nicknameDup = false;
 			<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><br>
 			<p id="nicknameTxt"></p><br>
 			<button type="button" class="modalBottomBtn" onclick="nicknameFn()">닉네임 입력</button>
-			<input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">자동 로그인</label>
 		</form>
 	</div>
 </div>
@@ -43,6 +42,7 @@ var nicknameDup = false;
 	<form id="frm">
 		<label>ID : <input type="text" name="email" id="email"></label><br>
 		<label>PASSWORD : <input type="password" name="password" id="password"></label><br>
+		<input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">자동 로그인</label><br>
 		<label><button type="button" onclick="loginFn()">로그인</button></label>
 	</form>
 	<br>

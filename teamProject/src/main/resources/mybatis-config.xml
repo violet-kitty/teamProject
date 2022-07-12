@@ -19,6 +19,7 @@
         <typeAlias type="edu.howf.vo.StayVO" alias="stayVO"/>
         <typeAlias type="edu.howf.vo.StoryVO" alias="storyVO"/>
         <typeAlias type="edu.howf.vo.HeartVO" alias="heartVO"/>
+        <typeAlias type="edu.howf.vo.AutoVO" alias="autoVO"/>
     </typeAliases>
 
 </configuration>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.UserDao;
+import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 @Service
@@ -57,5 +58,20 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int pwdModify(UserVO vo) {
 		return userDao.pwdModify(vo);
+	}
+
+	@Override
+	public int autoLoginInsert(AutoVO vo) {
+		return userDao.autoLoginInsert(vo);
+	}
+	
+	@Override
+	public int autoLogin(AutoVO vo) {
+		return userDao.autoLogin(vo);
+	}
+
+	@Override
+	public UserVO autoLogin(int midx) {
+		return userDao.autoLogin(midx);
 	}
 }
