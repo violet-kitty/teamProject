@@ -1,20 +1,29 @@
 package edu.howf.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.UserService;
+import edu.howf.util.MediaUtils;
 import edu.howf.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -23,7 +32,8 @@ public class UesrController {
 	@Autowired
 	UserService userService;
 	
-	String path = "C:\\upload";
+	@Autowired
+	String uploadPath;
 	
 	//로그인 페이지로 이동
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
@@ -137,14 +147,14 @@ public class UesrController {
 	public String join(MultipartFile file, UserVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
 		//파일 받아오는 처리
 		if(file != null) {
-			File dir = new File(path+"\\document");
+			File dir = new File(uploadPath+"\\document");
 			
 			if(!dir.exists()) dir.mkdirs();
 			
 			if(!file.getOriginalFilename().isEmpty()) {
 				UUID uuid = UUID.randomUUID();
 				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
-				file.transferTo(new File(path+"\\document",fileName));
+				file.transferTo(new File(uploadPath+"\\document",fileName));
 				vo.setDocument(fileName);
 			}
 			else {
@@ -174,4 +184,56 @@ public class UesrController {
 		return "redirect:/";
 	}
 	
+	//사진 보여주기 위한 코드
+	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
+				
+		System.out.println("fileName:"+fileName);
+				
+		InputStream in = null;		
+		ResponseEntity<byte[]> entity = null;
+				
+		try{
+			//파일 타입 체크
+			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+					
+			HttpHeaders headers = new HttpHeaders();		
+					
+			//bean에 주입한 물리경로 uploadPath
+			in = new FileInputStream(uploadPath+fileName);
+					
+			//파일 확장자가 있다면
+			if(mType != null){
+						
+				//만약 다운로드를 하고 싶다면 매개변수 down에 1을 넘겨줘서 호출하면 됨
+				if (down==1) {
+					fileName = fileName.substring(fileName.indexOf("_")+1);
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+					headers.add("Content-Disposition", "attachment; filename=\""+
+							new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");	
+							
+				}else {
+					//down에 1이 넘어오지 않았다면 사진 보여주기
+					headers.setContentType(mType);
+				}
+						
+			}else{//파일 확장자가 없다면
+				fileName = fileName.substring(fileName.indexOf("_")+1);
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition", "attachment; filename=\""+
+						new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");				
+			}
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,
+					HttpStatus.CREATED);
+					
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally{
+			in.close();
+		}
+		return entity;
+	}	
 }

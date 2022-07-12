@@ -38,6 +38,7 @@
 					<input type="file" name="file" id="file" style="display:none">
 					<div id="imageArea">
 						<img src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.filename}" style="cursor:pointer" width="100%" height="300px" id="image">
+						<input type="hidden" name="ebidx" value="${event.ebidx}">
 					</div>
 				</div>
 			</div><!-- row end -->

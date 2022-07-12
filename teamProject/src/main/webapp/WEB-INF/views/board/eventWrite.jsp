@@ -202,7 +202,7 @@
 	function visible(select){
 		var s1 = ["서울특별시"];
 		var s2 = ["인천광역시"];
-		var s3 = [""];
+		var s3 = ["고양시","과천시","광명시","광주시","구리시"];
 		var s4 = [""];
 		var s5 = [""];
 		var s6 = [""];

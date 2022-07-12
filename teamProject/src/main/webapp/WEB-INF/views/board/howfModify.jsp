@@ -38,6 +38,7 @@
 					<input type="file" name="file" id="file" style="display:none">
 					<div id="imageArea">
 						<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" width="300px" height="300px" id="image" style="cursor:pointer">
+						<input type="hidden" name="hbidx" value="${howf.hbidx}">
 					</div>
 				</div>
 			</div><!-- row end -->
