@@ -11,14 +11,58 @@
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
 <script type="text/javascript">
+ 	function check() {
+		
+		var title = $("#title");
+		var content = $("#summernote");
+		
+		if (title.val() == ""){
+			alert("제목을 입력하세요");
+			title.focus();
+			return ;			
+		}else if (content.val() == ""){
+			alert("내용을 입력하세요");
+			content.focus();
+			return ;
+		}else {
+			$("#form").submit();
+		}
+	}
+/* 	function check() {
+		alert("wwww");
+		var is = filter([
+				{ target : 'title' ,filter : 'empty' ,title : '제목'},
+				{ target : 'content' ,filter : 'empty' ,title : '내용'}
+		]);
+		
+	} */
+	function filter(options) {
+		var is = true;
+		
+		jQuery(options).each(function(){
+			var item = this;
+			
+			switch (item.filter){
+			case 'empty' :
+				var val = jQuery(item.target).val();
+				if (val == ''){
+					alert(item.title + '을(를) 입력하세요');
+					jQuery(item.target).focus();
+					is = false;
+				}
+				
+			}
+			
+		});
+		return is;
+	}
 	
-
 
 </script>
 
 </head>
 <body>
-<form id="check" action="noticewrite.do" method="post" enctype="multipart/form-data">
+<form id="form" action="noticewrite.do" method="post" enctype="multipart/form-data">
 <table>
  <tr>
   <td>
@@ -33,11 +77,11 @@
    
     <tr>
     	<td>제목</td>
-    	<td><input name="title" size="50" maxlength="100"></td>
+    	<td><input name="title" id="title" size="50" maxlength="100"></td>
     </tr>
     <tr>
     	<td>내용</td>
-    	<td><textarea name="content" id="summernote" cols="50" rows="13"></textarea></td>
+    	<td><textarea name="content" id="summernote" cols="80" rows="20"></textarea></td>
     </tr>
     
    </table>
@@ -45,7 +89,7 @@
 		<input type="file" name="fileupload" />
    <table>
     <tr>
-     <td><button>저장</button></td>
+     <td><button type="button" onclick="check()">저장</button></td>
      <td><a href="notice.do">취소</a></td>
     </tr>
    </table>

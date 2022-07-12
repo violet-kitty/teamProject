@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,9 +72,10 @@ public class NoticeController {
 		if(fileupload!=null) {
 			if(!fileupload.getOriginalFilename().isEmpty()) {
 				System.out.println("된다!");
-				
-				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
-				vo.setFilename(fileupload.getOriginalFilename());
+				UUID uuid = UUID.randomUUID();
+				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
+				fileupload.transferTo(new File(uploadPath,filename));
+				vo.setFilename(filename);
 			}else {
 				System.out.println("하하하하하하");
 			}
@@ -97,6 +99,7 @@ public class NoticeController {
 				pw.close();
 			}
 	}
+
 	//공지사항 리스트
 	@RequestMapping(value = "notice.do")
 	public String list(Model model ,SearchVO searchVO ,  HttpServletRequest request ,HttpSession session ,HttpServletResponse response) throws IOException {
@@ -156,9 +159,11 @@ public class NoticeController {
 		if(fileupload!=null) {
 			if(!fileupload.getOriginalFilename().isEmpty()) {
 				System.out.println("되는걸까?");
+				UUID uuid = UUID.randomUUID();
+				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
 				
-				fileupload.transferTo(new File(uploadPath,fileupload.getOriginalFilename()));
-				vo.setFilename(fileupload.getOriginalFilename());
+				fileupload.transferTo(new File(uploadPath,filename));
+				vo.setFilename(filename);
 			}else {
 				System.out.println("하하하하하하");
 			}
