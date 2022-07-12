@@ -111,6 +111,7 @@ h3{
 			return;
 		}
 		else {
+			alert("글이 등록되었습니다.");
 			$("#form1").submit();
 		}
 	};

@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- summernote -->
 <style>
 h3{
 	text-align: center;
@@ -82,6 +87,8 @@ h3{
 								<option value="환불">환불</option>
 								<option value="신고">신고</option>
 								<option value="계정">계정</option>
+								<option value="건의">건의</option>
+								<option value="기타">기타</option>
 							</select>
 						</td>
 					</tr>
@@ -91,10 +98,10 @@ h3{
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
-						<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;" id="content">${cv.content}</textarea></td>
+						<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;" id="summernote">${cv.content}</textarea></td>
 					</tr>
 					<tr>
-						<td class="tb_category">첨부파일</td>
+						<td class="tb_category">첨부 이미지 파일</td>
 						<td class="tb_filename">						
 							<a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a>
 							<br><br><label><input type="file" name="file" id="file" class="file_btn"></label>
@@ -110,6 +117,30 @@ h3{
 	</div>
 <script>
 	$(function(){
+		$("#summernote").summernote({
+			height:300,
+			minHeight:null,
+			maxHeight:null,
+			focus:true,
+			lang:"ko-KR",
+			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
+			toolbar: [
+				['style',['style']],
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			styleTags: ['h1']
+		});
+		
 		$("#file").on("change",upload);
 	      
 	      function upload(e){
@@ -121,6 +152,9 @@ h3{
 	         filesArr.forEach(function(f){
 	            if(!f.type.match(reg)){
 	               alert("이미지 파일만 등록 가능합니다");
+	               var clone = $("#file").clone();
+ 	               clone.val("");
+	               $("#file").replaceWith(clone);
 	               return;
 	            }
 	            
@@ -150,6 +184,10 @@ h3{
 			return;
 		}
 		else {
+			if(!confirm("정말로 수정하시겠습니까?")){
+				return false;
+			}
+			alert("글이 수정되었습니다.");
 			$("#form1").submit();
 		}
 	};
