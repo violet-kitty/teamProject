@@ -12,6 +12,46 @@
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<script type="text/javascript">
+	function check() {
+	
+		var title = $("#title");
+		var content = $("#summernote");
+	
+		if (title.val() == ""){
+			alert("제목을 입력하세요");
+			title.focus();
+			return ;			
+		}else if (content.val() == ""){
+			alert("내용을 입력하세요");
+			content.focus();
+			return ;
+		}else {
+			$("#form").submit();
+		}
+}
+	function filter(options) {
+		var is = true;
+		
+		jQuery(options).each(function(){
+			var item = this;
+			
+			switch (item.filter){
+			case 'empty' :
+				var val = jQuery(item.target).val();
+				if (val == ''){
+					alert(item.title + '을(를) 입력하세요');
+					jQuery(item.target).focus();
+					is = false;
+				}
+				
+			}
+			
+		});
+		return is;
+	}
+
+</script>
 </head>
 <h1>수정</h1>
 <body>
@@ -25,14 +65,14 @@
 </c:if> --%>
 
 
-	<form action="noticemodify.do" name="noticemodify" method="post" enctype="multipart/form-data">
+	<form id="form" action="noticemodify.do" name="noticemodify" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="nbidx" value="${vo.nbidx }">
-		title : <input type="text" name="title" value="${vo.title }"> <br>
+		title : <input type="text"  name="title" id="title" value="${vo.title }"> <br>
 		content : <textarea name="content" id="summernote" cols="50" rows="13">${vo.content}</textarea> <br>
 		<input type="file" name="fileupload" value="${vo.filename }"/> 
 		
 		
-		<button>저장</button>
+		<button type="button" onclick="check()">수정</button>
 		<input type="reset" value="다시작성">
     </form>
     
