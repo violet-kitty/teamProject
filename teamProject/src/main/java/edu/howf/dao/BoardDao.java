@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.howf.vo.EventVO;
 import edu.howf.vo.HOWFVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
@@ -27,14 +28,6 @@ public class BoardDao {
 		return sqlSession.selectOne(namespace+"howfCountAll", vo);
 	}
 	
-	public int howfWrite(HOWFVO vo) {
-		return sqlSession.insert(namespace+"howfWrite", vo);
-	}
-	
-	public HOWFVO howfView(int hbidx) {
-		return sqlSession.selectOne(namespace+"howfView", hbidx);
-	}
-	
 	public ArrayList<HOWFVO> howfHero(){
 		ArrayList<HOWFVO> list = new ArrayList<HOWFVO>();
 		list.add(sqlSession.selectOne(namespace+"howfHeroStay"));
@@ -42,6 +35,14 @@ public class BoardDao {
 		list.add(sqlSession.selectOne(namespace+"howfHeroFood"));
 		
 		return list;
+	}
+	
+	public HOWFVO howfView(int hbidx) {
+		return sqlSession.selectOne(namespace+"howfView", hbidx);
+	}
+	
+	public int howfWrite(HOWFVO vo) {
+		return sqlSession.insert(namespace+"howfWrite", vo);
 	}
 	
 	public int howfModify(HOWFVO vo) {
@@ -55,6 +56,41 @@ public class BoardDao {
 		sqlSession.delete(namespace+"howfHeartDelete", vo);
 		return sqlSession.update(namespace+"howfDelete", hbidx);
 	}
+	
+	
+	public List<EventVO> eventSelectAll(SearchVO vo){
+		return sqlSession.selectList(namespace+"eventSelectAll", vo);
+	}
+	
+	public int eventCountAll(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"eventCountAll", vo);
+	}
+	
+	public List<EventVO> eventHero(){
+		return sqlSession.selectList(namespace+"eventHero");
+	}
+	
+	public EventVO eventView(int ebidx) {
+		return sqlSession.selectOne(namespace+"eventView", ebidx);
+	}
+	
+	public int eventWrite(EventVO vo) {
+		return sqlSession.insert(namespace+"eventWrite", vo);
+	}
+	
+	public int eventModify(EventVO vo) {
+		return sqlSession.update(namespace+"eventModify", vo);
+	}
+	
+	public int eventDelete(int ebidx) {
+		HeartVO vo = new HeartVO();
+		vo.setBidx(ebidx);
+		vo.setType("event");
+		sqlSession.delete(namespace+"eventHeartDelete", vo);
+		return sqlSession.update(namespace+"eventDelete",ebidx);
+	}
+	
+	
 	
 	public int heartInsert(HeartVO vo) {
 		return sqlSession.insert(namespace+"heartInsert", vo);

@@ -30,6 +30,7 @@ import org.apache.commons.io.IOUtils;
 
 import edu.howf.service.BoardService;
 import edu.howf.util.MediaUtils;
+import edu.howf.vo.EventVO;
 import edu.howf.vo.HOWFVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
@@ -45,6 +46,7 @@ public class BoardController {
 	@Autowired
 	String uploadPath;
 	
+	/* howf 추천 */
 	@RequestMapping(value="/howfList.do")
 	public String howfList(SearchVO vo, Model model) {
 		//히어로
@@ -105,7 +107,7 @@ public class BoardController {
 		
 		int result = boardService.howfWrite(vo);
 		
-		return "redirect:/howf/howfViewdo?hbidx="+vo.getHbidx();
+		return "redirect:/howf/howfView.do?hbidx="+vo.getHbidx();
 	}
 	
 	@RequestMapping(value="/howfView.do")
@@ -168,6 +170,113 @@ public class BoardController {
 	@RequestMapping(value="/howfDelete.do")
 	public int howfDelete(int hbidx) {
 		return boardService.howfDelete(hbidx);
+	}
+	
+	
+	/* 지역 이벤트 */
+	@RequestMapping(value="/eventList.do")
+	public String eventList(SearchVO vo, Model model) {
+		//히어로
+		List<EventVO> hero = boardService.eventHero();
+		
+		//sort 방식
+		if(vo.getSortType()==null) {
+			vo.setSortType("new");
+		}
+		  
+		//페이징
+		int page = vo.getPage();
+		int cnt = boardService.eventCountAll(vo);
+		vo.setPerPageNum(9);
+		  
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		  
+		List<EventVO> event = boardService.eventSelectAll(vo);
+		vo.setPage(page);
+		  
+		model.addAttribute("event",event);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm", pm);
+		model.addAttribute("hero", hero);
+		 
+		return "board/eventList";
+	}
+	
+	@RequestMapping(value="/eventView.do")
+	public String eventView(int ebidx, Model model, HttpServletRequest request, HttpSession session) {
+		EventVO event = boardService.eventView(ebidx);
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		if(login != null) {
+			//만약 로그인 된 상태라면 찜한 여부 가져오기
+			HeartVO heart = new HeartVO();
+			heart.setMidx(login.getMidx());
+			heart.setBidx(event.getEbidx());
+			heart.setType("event");
+			int result = boardService.heartDup(heart);
+			model.addAttribute("heart", result);
+		}
+		
+		model.addAttribute("event", event);
+		
+		return "board/eventView";
+	}
+	
+	@RequestMapping(value="/eventWrite.do", method=RequestMethod.GET)
+	public String eventWrite() {
+		return "board/eventWrite";
+	}
+	
+	@RequestMapping(value="/eventWrite.do", method=RequestMethod.POST)
+	public String eventWrite(MultipartFile file, EventVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+		//파일 업로드
+		File dir = new File(uploadPath);
+				
+		if(!dir.exists()) dir.mkdirs();
+				
+		if(!file.getOriginalFilename().isEmpty()) {
+			System.out.println("파일 저장 경로 : "+uploadPath);
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+			file.transferTo(new File(uploadPath,fileName));
+			vo.setFilename(fileName);
+		}
+		else {
+			System.out.println("업로드된 파일 없음");
+		}
+				
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+				
+		int result = boardService.eventWrite(vo);
+		
+		return "redirect:/event/eventView.do?ebidx="+vo.getEbidx();
+	}
+	
+	@RequestMapping(value="/eventModify.do", method=RequestMethod.GET)
+	public String eventModify(int ebidx, Model model) {
+		EventVO event = boardService.eventView(ebidx);
+		
+		model.addAttribute("event", event);
+		
+		return "board/eventModify";
+	}
+	
+	@RequestMapping(value="/eventModify.do", method=RequestMethod.POST)
+	public String eventModify(MultipartFile file, EventVO vo) {
+		int result = boardService.eventModify(vo);
+		return "redirect:/event/eventView.do?ebidx="+vo.getEbidx();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/eventDelete.do")
+	public int eventDelete(int ebidx) {
+		return boardService.eventDelete(ebidx);
 	}
 	
 	

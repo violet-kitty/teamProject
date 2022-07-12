@@ -149,7 +149,13 @@
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
 			AND    cs.csbidx = #{csbidx}
-		</select>		
+		</select>
+		
+		<update id="count_cnt" >
+			UPDATE CStable
+			SET	   cnt = cnt + 1
+			WHERE  csbidx = #{csbidx}
+		</update>	
 		
 		<insert id="csReply_write" parameterType="csVO">		
 			INSERT INTO CStable(

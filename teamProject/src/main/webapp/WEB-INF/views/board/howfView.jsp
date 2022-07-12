@@ -57,7 +57,7 @@ else {
 		<div class="row">
 			<div class="col d-flex justify-content-center">
 				<c:if test="${howf.filename != null}">
-					<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" style="max-height:500px;max-width:600px;">
+					<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" style="max-height:500px;width:100%;">
 				</c:if>
 			</div>
 		</div>
@@ -233,7 +233,7 @@ else {
 		
 		//사진 크기 조절
 		$("img").each(function(index, item){
-			$(item).css("max-width",600);
+			$(item).css("max-width","100%");
 			$(item).css("max-height",500);
 		});
 		

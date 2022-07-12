@@ -16,7 +16,6 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
- 
 	<h1>
 		Hello world!  하이d
 	</h1>
@@ -31,6 +30,8 @@
 	</c:if>
 	<br><a href="notice/notice.do">공지사항(notice)</a><br>
 	<br><a href="howf/howfList.do">howf 추천</a><br>
+	<br><a href="event/eventList.do">지역 이벤트</a>
+	<br><a href="stay/stayList.do">숙박정보</a>
 <script>
 	function logoutFn(){
 		//카카오톡 로그아웃

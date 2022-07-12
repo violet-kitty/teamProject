@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -62,41 +63,61 @@ h3{
 	<br>
 	<br>
 	<div class="div1">
-		<form action="cs_write.do" method="post" enctype="multipart/form-data">
+		<form id="form1" action="cs_write1.do" method="post" enctype="multipart/form-data">
 			<table class="tb1">
 				<tbody>
 					<tr>			
 						<td class="tb_category">문의유형</td>
 						<td>
 							<select id="divsn" name="divsn">
-								<option value="">문의유형 선택</option>
+								<option value="질문">문의유형 선택</option>
 								<option value="질문">질문</option>
 								<option value="환불">환불</option>
 								<option value="신고">신고</option>
 								<option value="계정">계정</option>
 								<option value="건의">건의</option>
+								<option value="기타">기타</option>
 							</select>
 						</td>
 					</tr>
 					<tr>				
 						<td class="tb_category">제목</td>
-						<td><input type="text" name="title"></td>					
+						<td><input type="text" name="title" id="title"></td>					
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
-						<td><textarea class="tb_textarea" rows="30" name="content"></textarea></td>
+						<td><textarea class="tb_textarea" rows="30" name="content" id="content"></textarea></td>
 					</tr>
 					<tr>
 						<td class="tb_category">첨부파일</td>
-						<td class="tb_filename"><input type="file" name="filename" multiple accept="image/png, image/jpg, image/jpeg"></td>
+						<td class="tb_filename"><label><input type="file" name="file"></label></td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="div2">
-				<input type="submit" value="등록" class="btn1">
+				<input type="button" onclick="checkFn()" value="등록" class="btn1">
 				<input type="button" value="취소" onclick="location.href='csList.do'" class="btn1">
 			</div>			
 		</form>		
 	</div>
+<script>
+	function checkFn(){
+		var title = $("#title");
+		var content = $("#content");
+		if(title.val() == ""){
+			alert("제목을 입력해주세요");
+			title.focus();
+			return;
+		}
+		else if(content.val() == ""){
+			alert("내용을 입력해주세요");
+			content.focus();
+			return;
+		}
+		else {
+			$("#form1").submit();
+		}
+	}
+</script>
 </body>
 </html>

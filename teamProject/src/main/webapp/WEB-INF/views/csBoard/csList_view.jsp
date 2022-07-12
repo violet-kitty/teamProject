@@ -30,7 +30,6 @@ h3{
 }
 .tb_content{
 	border-top: 2px solid black;
-	border-bottom: 2px solid black;
 	height: 500px;
 }
 .tb_content_fill{	
@@ -38,6 +37,9 @@ h3{
 	vertical-align: top;
 	padding-top: 10px;
 	padding-left: 10px;
+}
+.td_file{
+	border-top: 2px solid black;
 }
 .tb_filename{
 	text-align: left;
@@ -103,6 +105,10 @@ h3{
 	background-color: #b2ffb5;
 	border: 0.5px solid gray;
 }
+#img{
+	max-width: 500px;
+	max-height: 300px;
+}
 </style>
 </head>
 <body>
@@ -131,10 +137,12 @@ h3{
 					<td class="tb_category tb_content">내용</td>
 					<td colspan="11" class="tb_content tb_content_fill">${cv.content}</td>				
 				</tr>
+			<c:if test="${cv.filename != null}">
 				<tr>
-					<td class="tb_category">첨부파일</td>
-					<td colspan="11" class="tb_filename">${cv.filename}</td>
+					<td class="tb_category td_file">첨부파일</td>
+					<td colspan="11" class="tb_filename td_file"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a></td>
 				</tr>
+			</c:if>
 			</tbody>
 		</table>
 		<div class="div2">
@@ -170,8 +178,7 @@ h3{
 					</tr>
 					<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
 						<tr>
-							<td class="btn_td" colspan="6">
-							
+							<td class="btn_td" colspan="6">							
 								<input type="button" value="삭제" class="btn3" onclick="location.href='csReply_delete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx }'">
 								<input type="button" value="수정" class="btn3" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
 							</td>									
@@ -181,7 +188,7 @@ h3{
 			</table>
 		</div>
 	</c:forEach>
-	<script>
+<script>
 // 		$("#reply_btn").click(function(){
 // 			$("#reply").show();
 // 		});
@@ -201,6 +208,6 @@ h3{
 // 				}
 // 			});
 // 		});
-	</script>
+</script>
 </body>
 </html>

@@ -36,27 +36,30 @@ var nicknameDup = false;
 
 <div>
 	<form id="frm">
-		id : <input type="text" name="email" id="email"><br>
-		password : <input type="password" name="password" id="password"><br>
-		<button type="button" onclick="loginFn()">로그인</button>
+		<label>ID : <input type="text" name="email" id="email"></label><br>
+		<label>PASSWORD : <input type="password" name="password" id="password"></label><br>
+		<label><button type="button" onclick="loginFn()">로그인</button></label>
 	</form>
-	
+	<br>
+	<br>	
 	<a id="custom-login-btn" href="javascript:loginWithKakao()">
 		<img
 			src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
 			width="222"
 			alt="카카오 로그인 버튼"
 		/>
-	</a><br>
+	</a>
+	<br>
+	<br>
 	<div id="g_id_onload"
 		data-client_id="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com"
 		data-callback="handleCredentialResponse"
-		data-auto_prompt="false"></div>
+		data-auto_prompt="false">
+	</div>
 	<div class="g_id_signin" data-type="standard" data-size="large"
 		data-theme="outline" data-text="sign_in_with" data-shape="rectangular"
 		data-logo_alignment="left">
 	</div>
-	
 </div>
 
 <script>

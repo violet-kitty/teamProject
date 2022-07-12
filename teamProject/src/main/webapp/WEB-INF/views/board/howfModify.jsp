@@ -122,6 +122,10 @@
 			$("#file").click();
 		});
 		
+		$("#image").click(function(){
+			$("#file").click();
+		});
+		
 		//썸네일 이미지 미리보기
 		$("#file").on("change",upload);
 		
@@ -157,7 +161,12 @@
 		
 		var tags = tagData.split("#");
 		
-		$("#tag").val(tags);
+		for(var i=0;i<tags.length;i++){
+			tags[i] = "#"+tags[i];
+			console.log(tags[i]);
+		}
+		
+		$("#tag").val(tags.slice(1));
 		
 	});
 	
