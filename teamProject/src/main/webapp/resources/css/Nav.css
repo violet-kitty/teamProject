@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.navmenu {z-index:5000; width:100%;}
+.navmenu .row {max-width:1100px; margin:auto;}
+.navmenu img {max-width:75px;}
+@media all and (max-width: 576px) {
+	.navmenu{position:fixed; bottom:0px;}
+	.navmenu img {max-width:16vw;}
+}

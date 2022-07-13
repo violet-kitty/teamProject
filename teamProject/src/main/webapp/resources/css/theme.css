@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+/* CSS 초기화 */
+@import "reset.css";
+
+/* GoogleFont - NotoSans */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*
+반응형 기준 기록
+	아주작은(xs)  576px 미만	  스마트폰 세로
+	작은(sm) 	  576px 이상	  스마트폰 가로
+	중간(md)	  768px 이상	  타블렛
+	큰(lg)   	  992px 이상	  데스크탑
+	아주큰(xl)	  1200px 이상	  큰 데스크탑
+*/
+
+/* 부트스트랩 5 resetting */
+.row {--bs-gutter-x: 0;}
+a {text-decoration:none;}
+
+/* body 세팅 */
+body {font-family: 'Noto Sans', sans-serif; max-width: 1800px;}
+
+/* 태그 세팅 */
+p {line-height:22px;}
+
+/* 태그 반응 세팅 */
+input:focus { outline: none; }
+
+/* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
+#wrap {max-width:100%;} 
+
+
+/* 아이디 container 세팅 */  /* #header, #navmenu, #footer 제외된 container만 해당 */
+#container {background:white; max-width:100%;}
+
+/* whitebox 세팅 */
+.whitebox {background:white; border:2px solid #3E3E3E; box-shadow: 8px 8px 0px rgba(0,0,0,0.1); padding:65px 60px;}
+
+/* 클래스 contents 세팅 */ /* 넓이 : 100% */
+.contents {max-width:100%; background:green;  margin:auto;}
+
+/* 클래스 container 세팅 */ /* 넓이 : 1100% */
+.container {width: 1100px; margin: auto; padding: 80px 0px; position:relative;}
+/*  모바일 세팅 : 클래스 container */
+@media all and (max-width: 1200px) {
+	.container {width: 100%; margin: auto; padding:5%;}
+}
+
+/* background color theme */
+.hbg-blue {background-color:#54ACA8;}
+.hbg-pink {background-color:#DE8889;}
+.hbg-green {background-color:#A4C266;}
+.hbg-white {background-color:white;}
+.hbg-whitegray {background-color:#FBFBFB;}
+.hbg-lightgray {background-color:#EBEBEB;}
+.hbg-gray {background-color:#C1C1C1;}
+.hbg-darkgray {background-color:#848484;}
+.hbg-blackgray {background-color:#3D3D3D;}
+.hbg-black {background-color:black;}
+
+/* font color theme */
+.hfc-blue {color:#54ACA8;}
+.hfc-pink {color:#DE8889;}
+.hfc-green {color:#A4C266;}
+.hfc-white {color:white;}
+.hfc-whitegray {color:#FBFBFB;}
+.hfc-lightgray {color:#EBEBEB;}
+.hfc-gray {color:#C1C1C1;}
+.hfc-darkgray {color:#848484;}
+.hfc-blackgray {color:#3D3D3D;}
+.hfc-black {color:black;}
+
+/* font weight theme */
+.hfc-thin {font-weight:100;}
+.hfc-light {font-weight:300;}
+.hfc-regular {font-weight:400;}
+.hfc-medium {font-weight:500;}
+.hfc-semibold {font-weight:600;}
+.hfc-bold {font-weight:700;}
+.hfc-black {font-weight:900;}
+
+/* shadow */
+.shadow {box-shadow: 8px 8px 0px #0000001A;}
+
+/* button */
+.graybtn {color:white; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #9B9B9B; background-color:#9B9B9B;}
+.bluebtn {color:white; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #54ACA8; background-color:#54ACA8;}
+.pinkbtn {color:white; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #DE8889; background-color:#DE8889;}
+.greenbtn {color:white; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #A4C266; background-color:#A4C266;}
+.graylinebtn {color:#9B9B9B; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #9B9B9B; background-color:white;}
+.bluelinebtn {color:#54ACA8; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #54ACA8; background-color:white;}
+.pinklinebtn {color:#DE8889; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #DE8889; background-color:white;}
+.greenlinebtn {color:#A4C266; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #A4C266; background-color:white;}
+.roundbtn {padding: 16px 45px 16px 45px; border-radius:25px;}
+@media all and (max-width: 576px) {
+
+}
+
+.onlypc {display:block;}
+.onlypc-inline {display:inline-block;}
+/* tablet 사이즈 이상에서만 보이기*/
+@media all and (max-width: 576px) {
+	.onlypc {display:none!important;}
+	.onlypc-inline {display:none!important;}
+}
+
+/* 모바일에서만 보이기 */
+.onlymobile {display:none;}
+.onlymobile-inline {display:none;}
+@media all and (max-width: 576px) {
+	.mobile {display:block!important;}
+	.mobile-inline {display:inline-block!important;}
+}

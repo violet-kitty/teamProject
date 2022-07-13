@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/* home 세팅 */
+
+/* content 01 */
+.back {height: 100%; width: 100%; border: 1px solid black; position: absolute; top: 0px; background: rgba(0, 0, 0, 0.5);}
+.carousel{height:677px;}
+.carousel-dark .carousel-indicators [data-bs-target]{background-color:white;}
+.carousel-inner {position: relative;width: 100%;max-height: 665px;overflow: hidden;}
+.carousel-caption {position: absolute;top: 1.25rem;left: 15%;padding-top: 1.25rem;padding-bottom: 1.25rem;color: #fff;text-align: center;}
+.carousel-control-next-icon {background-image: none;}
+.carousel-control-prev-icon {background-image: none;}
+.carousel-caption h5 {font-size:2rem; margin-bottom:25px; margin-top:150px; line-height:42px;}
+.carousel-caption p {color:#d6d6d6;font-size: 16px; line-height:22px; margin-bottom:60px;} 
+   			    
+/* hero */
+.hero {position:relative; height:665px; }
+.hero-caption {position: absolute;z-index:1000;right: 15%;bottom: 15rem;left: 15%;padding-top: 1.25rem;color: #fff;text-align: center;}
+.hero-caption h5 {font-size: 2rem;margin-bottom: 25px;margin-top: 150px;line-height: 42px;}
+
+@media all and (max-width: 992px) {
+	.hero{height:25rem;}
+	.hero-caption{bottom:7.25rem;}
+	.hero-caption h5 {margin-top:0px;}
+}

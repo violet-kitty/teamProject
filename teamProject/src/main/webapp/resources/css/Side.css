@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.right-container {position: fixed; top: 0px; right: 8%; height: 100%; z-index: 1000;}
+
+.right-container .docctrl {position:absolute;top:35%;}
+.right-container .docctrl img {display:block; width:56px;}
+.right-container .docctrl img:hover {width:60px;}
+.right-container .docctrl button{margin-bottom: 20px; background: none; border: none; padding: 0px;}
+
+
+.right-container .gotop {position:absolute; bottom:3%;display:block; width:56px;}
+.right-container .gotop:hover {width:60px;}
+
