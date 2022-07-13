@@ -224,6 +224,12 @@ public class UesrController {
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		//자동 로그인 테이블에서 제거
+		userService.autoLoginDelete(login.getMidx());
+		
+		//세션 만료
 		session.invalidate();
 		
 		return "redirect:/";

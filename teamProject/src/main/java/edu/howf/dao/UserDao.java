@@ -69,6 +69,11 @@ public class UserDao {
 		return sqlSession.insert(namespace+"autoLoginInsert", vo);
 	}
 	
+	//자동 로그인 제거
+	public int autoLoginDelete(int midx) {
+		return sqlSession.delete(namespace+"autoLoginDelete", midx);
+	}
+	
 	//자동 로그인 여부
 	public int autoLogin(AutoVO vo) {
 		return sqlSession.selectOne(namespace+"autoLogin", vo);

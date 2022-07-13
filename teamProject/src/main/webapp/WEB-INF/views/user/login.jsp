@@ -13,6 +13,8 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- 네이버 로그인 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- jquery -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- 모달 CSS -->
@@ -34,10 +36,6 @@ var nicknameDup = false;
 	</div>
 </div>
 
-<form id="logout" action="/logout" method="POST">
-   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-</form>
-
 <div>
 	<form id="frm">
 		<label>ID : <input type="text" name="email" id="email"></label><br>
@@ -46,7 +44,8 @@ var nicknameDup = false;
 		<label><button type="button" onclick="loginFn()">로그인</button></label>
 	</form>
 	<br>
-	<br>	
+	<br>
+	<!-- 카카오 -->
 	<a id="custom-login-btn" href="javascript:loginWithKakao()">
 		<img
 			src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
@@ -56,6 +55,7 @@ var nicknameDup = false;
 	</a>
 	<br>
 	<br>
+	<!-- 구글 -->
 	<div id="g_id_onload"
 		data-client_id="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com"
 		data-callback="handleCredentialResponse"
@@ -65,6 +65,10 @@ var nicknameDup = false;
 		data-theme="outline" data-text="sign_in_with" data-shape="rectangular"
 		data-logo_alignment="left">
 	</div>
+	<br>
+	<br>
+	<!-- 네이버 -->
+	<div id="naver_id_login"></div>
 </div>
 <br><br>
 <a href="emailFind.do">이메일 찾기</a>
@@ -190,6 +194,36 @@ var nicknameDup = false;
 		);
 		google.accounts.id.prompt(); // also display the One Tap dialog
 	}
+	
+	//네이버 로그인을 위한 코드
+	var naver_id_login = new naver_id_login("IHtlK9KcDJ2d11Y4vWJ3","http://localhost/controller/user/login.do");
+	var state = naver_id_login.getUniqState();
+	naver_id_login.setButton("white", 2,40);
+  	naver_id_login.setDomain("http://localhost");
+  	naver_id_login.setState(state);
+  	naver_id_login.setPopup();
+  	naver_id_login.init_naver_id_login();
+  	
+  	var email = naver_id_login.getProfileData('email');
+  	var name = naver_id_login.getProfileData('name');
+  	var accessToken = naver_id_login.oauthParams.access_token;
+  	
+  	if(email!=null){
+  		$.ajax({
+  			url:"socialLogin.do",
+  			type:"post",
+  			data:"email="+email+"&name="+name+"&accessToken="+accessToken,
+  			success:function(data){
+  				if(data == "0"){
+  					//모달 띄우기
+  					$("#modalDiv").show();
+  				}
+  				else {
+  					location.href = "<%= request.getContextPath() %>/";
+  				}
+  			}
+  		});
+  	}
 	
 	//닉네임 입력시 중복 체크
 	$(function(){

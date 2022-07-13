@@ -35,10 +35,7 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter{
 			vo.setToken(token);
 			int result = userService.autoLogin(vo);
 			
-			if(result == 0) {
-				
-			}
-			else {
+			if(result!=0) {
 				//회원정보 가져오기
 				UserVO login = userService.autoLogin(Integer.parseInt(midx));
 				

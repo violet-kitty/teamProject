@@ -141,6 +141,12 @@
 		)
 	</insert>
 	
+	<!-- 자동 로그인 삭제 -->
+	<delete id="autoLoginDelete" parameterType="int">
+		DELETE FROM autologin
+		WHERE midx = #{midx}
+	</delete>
+	
 	<!-- 자동로그인 여부 -->
 	<select id="autoLogin" parameterType="autoVO" resultType="int">
 		SELECT COUNT(midx)

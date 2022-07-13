@@ -14,6 +14,7 @@ public interface UserService {
 	public String nameToEmail(UserVO vo);
 	public int pwdModify(UserVO vo);
 	public int autoLoginInsert(AutoVO vo);
+	public int autoLoginDelete(int midx);
 	public int autoLogin(AutoVO vo);
 	public UserVO autoLogin(int midx);
 }

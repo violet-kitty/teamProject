@@ -66,6 +66,11 @@ public class UserServiceImple implements UserService{
 	}
 	
 	@Override
+	public int autoLoginDelete(int midx) {
+		return userDao.autoLoginDelete(midx);
+	}
+	
+	@Override
 	public int autoLogin(AutoVO vo) {
 		return userDao.autoLogin(vo);
 	}
@@ -74,4 +79,5 @@ public class UserServiceImple implements UserService{
 	public UserVO autoLogin(int midx) {
 		return userDao.autoLogin(midx);
 	}
+	
 }
