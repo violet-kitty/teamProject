@@ -67,8 +67,6 @@ var nicknameDup = false;
 	</div>
 	<br>
 	<br>
-	<!-- 네이버 -->
-	<div id="naver_id_login"></div>
 </div>
 <br><br>
 <a href="emailFind.do">이메일 찾기</a>
@@ -194,36 +192,6 @@ var nicknameDup = false;
 		);
 		google.accounts.id.prompt(); // also display the One Tap dialog
 	}
-	
-	//네이버 로그인을 위한 코드
-	var naver_id_login = new naver_id_login("IHtlK9KcDJ2d11Y4vWJ3","http://localhost/controller/user/login.do");
-	var state = naver_id_login.getUniqState();
-	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost");
-  	naver_id_login.setState(state);
-  	naver_id_login.setPopup();
-  	naver_id_login.init_naver_id_login();
-  	
-  	var email = naver_id_login.getProfileData('email');
-  	var name = naver_id_login.getProfileData('name');
-  	var accessToken = naver_id_login.oauthParams.access_token;
-  	
-  	if(email!=null){
-  		$.ajax({
-  			url:"socialLogin.do",
-  			type:"post",
-  			data:"email="+email+"&name="+name+"&accessToken="+accessToken,
-  			success:function(data){
-  				if(data == "0"){
-  					//모달 띄우기
-  					$("#modalDiv").show();
-  				}
-  				else {
-  					location.href = "<%= request.getContextPath() %>/";
-  				}
-  			}
-  		});
-  	}
 	
 	//닉네임 입력시 중복 체크
 	$(function(){
