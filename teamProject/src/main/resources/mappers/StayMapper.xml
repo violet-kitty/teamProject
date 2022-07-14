@@ -5,5 +5,127 @@
  
  <!-- 숙박정보 -->
 <mapper namespace="edu.howf.mapper.stayMapper">
+	<!-- 리스트 보기 -->
+	<select id="staySelectAll" parameterType="searchVO" resultType="stayVO">
+		SELECT e.*
+			, f.star
+		FROM
+		(SELECT c.*
+			, d.heart
+		FROM
+		(SELECT a.sidx
+			, a.midx
+			, a.name
+			, a.addr
+			, a.tag
+			, a.photo
+			, a.delyn
+			, min(b.price) as min
+			, max(b.price) as max
+		FROM stay a
+		LEFT OUTER JOIN
+		room b
+		ON a.sidx = b.sidx
+		WHERE b.delyn = 'N') c
+		LEFT OUTER JOIN
+		(SELECT COUNT(hidx) as heart
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		GROUP BY bidx) d
+		ON c.sidx = d.bidx) e
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
+		GROUP BY bidx) f
+		ON e.sidx = f.bidx
+		WHERE e.delyn = 'N'
+	</select>
+	
+	<!-- 전체 수 세기 -->
+	<select id="stayCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(sidx)
+		FROM stay
+		WHERE delyn = 'N'
+	</select>
+	
+	
+	<!-- 숙박정보 가져오기 -->
+	
+	<!-- 방 정보 가져오기 -->
+	
+	<!-- 리뷰 가져오기 -->
+	
+	<!-- 숙박시설 등록 -->
+	<insert id="stayInsert" parameterType="stayVO">
+	<![CDATA[
+		INSERT INTO stay(
+			midx
+			, name
+			, addr
+			, detailaddr
+			, content
+			, tag
+			, photo
+			, service
+			, delyn
+		)
+		VALUES(
+			#{midx}
+			, #{name}
+			, #{addr}
+			, #{detailaddr}
+			, #{contents}
+			, #{tag}
+			, #{photo}
+			, #{services}
+			, 'N'
+		)
+	]]>
+	<selectKey resultType="int" keyProperty="sidx" order="AFTER">
+		SELECT max(sidx) FROM stay
+	</selectKey>
+	</insert>
+	
+	<!-- 방 등록 -->
+	<insert id="roomInsert" parameterType="roomVO">
+		INSERT INTO room(
+			sidx
+			, name
+			, price
+			, tag
+			, people
+			, square
+			, photo
+			, bed
+			, delyn
+		)
+		VALUES(
+			#{sidx}
+			, #{name}
+			, #{price}
+			, #{tags}
+			, #{people}
+			, #{square}
+			, #{photo}
+			, #{bed}
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 숙박시설 정보 수정 -->
+	
+	
+	<!-- 방 정보 수정 -->
+	
+	
+	<!-- 숙박시설 삭제 -->
+	
+	
+	<!-- 방 삭제 -->
+	
+	
 	
 </mapper>

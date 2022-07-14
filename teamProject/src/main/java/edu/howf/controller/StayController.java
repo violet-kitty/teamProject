@@ -1,7 +1,14 @@
 package edu.howf.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +21,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.StayService;
 import edu.howf.util.MediaUtils;
+import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StayVO;
+import edu.howf.vo.UserVO;
 
 //숙박정보
 @RequestMapping(value="/stay")
@@ -31,9 +42,85 @@ public class StayController {
 	
 	@RequestMapping(value="/stayList.do")
 	public String stayList(SearchVO vo, Model model) {
+		List<StayVO> stay = stayService.staySelectAll(vo);
+		
+		if(stay != null) {
+			model.addAttribute("stay", stay);
+		}
+		
+		
 		return "stay/stayList";
 	}
 	
+	@RequestMapping(value="/stayWrite.do", method=RequestMethod.GET)
+	public String stayWrite() {
+		return "stay/stayWrite";
+	}
+	
+	@RequestMapping(value="/stayWrite.do", method=RequestMethod.POST)
+	public String stayWrite(MultipartFile[] btnAtt, @RequestParam("roomFile")MultipartFile[] roomFile, StayVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+		//파일 업로드
+		File dir = new File(uploadPath);
+				
+		if(!dir.exists()) dir.mkdirs();
+		
+		StringBuilder photos = new StringBuilder("");
+		
+		//숙박시설의 이미지 받기
+		if(btnAtt.length != 0) {
+			for(MultipartFile f : btnAtt) {
+				if(!f.getOriginalFilename().isEmpty()) {
+					System.out.println("파일 저장 경로 : "+uploadPath);
+					UUID uuid = UUID.randomUUID();
+					String fileName = uuid.toString()+"_"+f.getOriginalFilename();
+					f.transferTo(new File(uploadPath,fileName));
+					
+					photos.append(fileName+",");
+				}
+				else {
+					System.out.println("업로드된 파일 없음");
+				}
+			}
+			
+			String photo = photos.toString();
+			vo.setPhoto(photo.substring(0,photo.length()-1));
+		}
+		
+		//방 이미지 받기
+		if(roomFile.length != 0) {
+			int i = 0;
+			for(MultipartFile f : roomFile) {
+				if(!f.getOriginalFilename().isEmpty()) {
+					System.out.println("파일 저장 경로 : "+uploadPath);
+					UUID uuid = UUID.randomUUID();
+					String fileName = uuid.toString()+"_"+f.getOriginalFilename();
+					f.transferTo(new File(uploadPath,fileName));
+					vo.getRoom().get(i).setPhoto(fileName);
+					
+					i++;
+				}
+				else {
+					System.out.println("업로드된 파일 없음");
+				}
+			}
+		}
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		int result = stayService.stayInsert(vo);
+		
+		return "redirect:/stay/stayList.do";
+	}
+	
+	@RequestMapping(value="/stayView.do")
+	public String stayView(int sidx, Model model) {
+		
+		
+		
+		return "stay/stayView";
+	}
 	
 	
 	

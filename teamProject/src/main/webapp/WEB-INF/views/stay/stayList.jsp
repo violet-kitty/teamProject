@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,7 +139,7 @@
 						
 						<span>인원</span><br>
 						<button type="button">-</button>
-				        <input type="text" name="people" id="people" value="1" size="1" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');">
+				        <input type="text" name="people" id="people" value="1" size="1" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');">
 				        <button type="button">+</button><br>
 				        
 				        <span>가격</span><br>
@@ -280,32 +282,32 @@
 		    
 		    <!-- content -->
 		    <div class="col-9" style="background:gray">
-		    
-		    	<div class="col-sm-12 col-md-12 col-lg-4">
-			    	<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='eventView.do?ebidx=${v.ebidx}'">
-						<c:if test="${v.filename != null}">
-							<img class="card-img-top" src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${v.filename}">
-						</c:if>
-						<div class="card-body">
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<span>지역</span>
+		    	<c:forEach var="v" items="${stay}">
+		    		<div class="col-sm-12 col-md-12 col-lg-4">
+				    	<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='stayView.do?sidx=${v.sidx}'">
+							<c:if test="${v.photo != null}">
+								<img class="card-img-top" src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(v.photo,',')[0]}">
+							</c:if>
+							<div class="card-body">
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<span>${fn:split(v.addr,' ')[0]} ${fn:split(v.addr,' ')[1]}</span>
+									</div>
+									<small class="text-muted">
+										<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
+										<span class="ms-1">${v.star}</span>
+										<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
+										<span class="ms-1">${v.heart}</span>
+									</small>
 								</div>
-								<small class="text-muted">
-									<img src="<%=request.getContextPath()%>/image/star.png"
-									width="30" height="30">
-									<span class="ms-1">${v.star}</span>
-									<img src="<%=request.getContextPath()%>/image/redheart.png"
-									width="30" height="30">
-									<span class="ms-1">${v.heart}</span>
-								</small>
-							</div>
-							<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-								<p style="margin-left: 0; margin-right: 0;width:100%;">${v.title}</p>
-							</div>
-						</div><!-- card-body end -->
+								<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+									<p style="margin-left: 0; margin-right: 0;width:100%;">${v.name}</p>
+								</div>
+							</div><!-- card-body end -->
+						</div>
 					</div>
-				</div>
+		    	</c:forEach>
+		    	
 		    </div>
 		    
 		    <!-- 페이징 -->
