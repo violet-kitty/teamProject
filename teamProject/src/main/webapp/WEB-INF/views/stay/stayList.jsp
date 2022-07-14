@@ -119,7 +119,7 @@
 				<form class="d-flex input-group" action="stayList.do" method="post">
 					<select class="form-select" name="searchType">
 						<option value="total" selected>전체</option>
-						<option value="title">제목 검색</option>
+						<option value="name">이름 검색</option>
 						<option value="area">지역 검색</option>
 					</select>
 					<input type="text" class="form-control" name="searchValue" value="${search.searchValue}">
@@ -133,148 +133,148 @@
 		
 			<!-- 사이드 필터 -->
 			<div class="col-3 bd-sidebar">
-				<form action="stayList.do" method="post">
+				<form action="stayList.do" method="get" id="filterFrm">
 					<div>
 						<span>필터검색</span><br>
 						
 						<span>인원</span><br>
-						<button type="button">-</button>
-				        <input type="text" name="people" id="people" value="1" size="1" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');">
-				        <button type="button">+</button><br>
+						<button type="button" id="peopleMinus">-</button>
+				        <input type="text" name="filter.people" id="people" value="1" size="1" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');">
+				        <button type="button" id="peoplePlus">+</button><br>
 				        
 				        <span>가격</span><br>
-				        <input type="text" name="min-price" id="minPrice" value="10,000" size="8">~
-				        <input type="text" name="max-price" id="maxPrice" value="10,000" size="8"><br>
+				        <input type="text" name="filter.min" id="minPrice" value="10,000" maxlength="9" oninput="this.value = this.value.replace(/[^,0-9.]/g,'').replace(/(\..*)\./g,'$1');">~
+				        <input type="text" name="filter.max" id="maxPrice" value="10,000" maxlength="9" oninput="this.value = this.value.replace(/[^,0-9.]/g,'').replace(/(\..*)\./g,'$1');"><br>
 				        
 				        <span>옵션</span><br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag1" value="싱글베드">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag1" value="싱글베드">
 				        	<label class="form-check-label" for="tag1">싱글베드</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag2" value="더블베드">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag2" value="더블베드">
 				        	<label class="form-check-label" for="tag2">더블베드</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag3" value="퀸베드">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag3" value="퀸베드">
 				        	<label class="form-check-label" for="tag3">퀸베드</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag4" value="킹베드">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag4" value="킹베드">
 				        	<label class="form-check-label" for="tag4">킹베드</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag5" value="원룸">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag5" value="원룸">
 				        	<label class="form-check-label" for="tag5">원룸</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag6" value="분리형원룸">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag6" value="분리형원룸">
 				        	<label class="form-check-label" for="tag6">분리형원룸</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag7" value="투룸">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag7" value="투룸">
 				        	<label class="form-check-label" for="tag7">투룸</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag8" value="쓰리룸">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag8" value="쓰리룸">
 				        	<label class="form-check-label" for="tag8">쓰리룸</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag9" value="포룸">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag9" value="포룸">
 				        	<label class="form-check-label" for="tag9">포룸</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag10" value="방5개이상">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag10" value="방5개이상">
 				        	<label class="form-check-label" for="tag10">방5개이상</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag11" value="주방/식당">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag11" value="주방/식당">
 				        	<label class="form-check-label" for="tag11">주방/식당</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag12" value="욕실">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag12" value="욕실">
 				        	<label class="form-check-label" for="tag12">욕실</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag13" value="욕조">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag13" value="욕조">
 				        	<label class="form-check-label" for="tag13">욕조</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag14" value="욕실용품">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag14" value="욕실용품">
 				        	<label class="form-check-label" for="tag14">욕실용품</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag15" value="드라이기">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag15" value="드라이기">
 				        	<label class="form-check-label" for="tag15">드라이기</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag16" value="에어컨">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag16" value="에어컨">
 				        	<label class="form-check-label" for="tag16">에어컨</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag17" value="전자렌지">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag17" value="전자렌지">
 				        	<label class="form-check-label" for="tag17">전자렌지</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag18" value="밥솥">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag18" value="밥솥">
 				        	<label class="form-check-label" for="tag18">밥솥</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag19" value="세탁기">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag19" value="세탁기">
 				        	<label class="form-check-label" for="tag19">세탁기</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag20" value="건조기">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag20" value="건조기">
 				        	<label class="form-check-label" for="tag20">건조기</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag21" value="반려동물가능">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag21" value="반려동물가능">
 				        	<label class="form-check-label" for="tag21">반려동물가능</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag22" value="주차장">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag22" value="주차장">
 				        	<label class="form-check-label" for="tag22">주차장</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag23" value="와이파이">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag23" value="와이파이">
 				        	<label class="form-check-label" for="tag23">와이파이</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag24" value="무료주차장">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag24" value="무료주차장">
 				        	<label class="form-check-label" for="tag24">무료주차장</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag25" value="BBQ">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag25" value="BBQ">
 				        	<label class="form-check-label" for="tag25">BBQ</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag26" value="라운지">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag26" value="라운지">
 				        	<label class="form-check-label" for="tag26">라운지</label>
 				        </div>
 				        <br>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag27" value="엘레베이터">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag27" value="엘레베이터">
 				        	<label class="form-check-label" for="tag27">엘레베이터</label>
 				        </div>
 				        <div class="form-check form-check-inline">
-				        	<input class="form-check-input" type="checkbox" name="tag" id="tag28" value="수영장">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag28" value="수영장">
 				        	<label class="form-check-label" for="tag28">수영장</label>
 				        </div>
 				        <br>
 				        
-				        <button>필터 적용하기</button>
+				        <button onclick="filterFn()">필터 적용하기</button>
 					</div><!-- /필터 div -->
 				</form>
 		      <br>
@@ -337,6 +337,25 @@
 		var max = $("#maxPrice");
 		max.val(max.val().replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','));
 	});
+	
+	$("#peopleMinus").on("click", function(){
+		if($("#people").val()==1){
+			$("#people").val("1");
+		}
+		else {
+			$("#people").val(Number($("#people").val())-1);
+		}
+	});
+	
+	$("#peoplePlus").on("click", function(){
+		$("#people").val(Number($("#people").val())+1);
+	});
+	
+	function filterFn(){
+		$("#maxPrice").val($("#maxPrice").val().replaceAll(',',''));
+		$("#minPrice").val($("#minPrice").val().replaceAll(',',''));
+		$("#filterFrm").submit();
+	}
 	
 	$(function(){
 		$("#carousel0").addClass("active");

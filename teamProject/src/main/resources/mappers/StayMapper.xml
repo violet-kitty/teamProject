@@ -17,11 +17,18 @@
 			, a.midx
 			, a.name
 			, a.addr
+			, a.detailaddr
 			, a.tag
 			, a.photo
+			, a.service
 			, a.delyn
 			, min(b.price) as min
 			, max(b.price) as max
+			, max(b.people) as people
+			, b.sbed
+			, b.dbed
+			, b.qbed
+			, b.kbed
 		FROM stay a
 		LEFT OUTER JOIN
 		room b
@@ -42,6 +49,65 @@
 		GROUP BY bidx) f
 		ON e.sidx = f.bidx
 		WHERE e.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (e.name like CONCAT('%',#{searchValue},'%')
+		OR e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("name")'>
+		AND e.name like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- filter -->
+		<if test="filter != null">
+		<if  test="filter.people > 0">
+		<![CDATA[
+		AND e.people >= #{filter.people}
+		]]> 
+		</if>
+		<if  test="filter.min > 0 and filter.max > 0">
+		<![CDATA[
+		AND e.min <= #{filter.max}
+		AND e.max >= #{filter.min}
+		]]>
+		</if>
+		<if  test="filter.option != null">
+		<foreach item="op" collection="filter.option" index="index">
+		<if test="op.equals('싱글베드')">
+		AND e.sbed != 0
+		</if>
+		<if test="op.equals('더블베드')">
+		AND e.dbed != 0
+		</if>
+		<if test="op.equals('퀸베드')">
+		AND e.qbed != 0
+		</if>
+		<if test="op.equals('킹베드')">
+		AND e.kbed != 0
+		</if>
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		AND e.service like CONCAT('%',#{op},'%')
+		</if>
+		</foreach>
+		</if>
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("max")'>
+		ORDER BY e.max desc
+		</if>
+		<if test='sortType.equals("min")'>
+		ORDER BY e.min desc
+		</if>
+		<if test='sortType.equals("star")'>
+		ORDER BY f.star desc
+		</if>
+		<if test='sortType.equals("heart")'>
+		ORDER BY e.heart desc
+		</if>
 	</select>
 	
 	<!-- 전체 수 세기 -->
@@ -99,7 +165,10 @@
 			, people
 			, square
 			, photo
-			, bed
+			, sbed
+			, dbed
+			, qbed
+			, kbed
 			, delyn
 		)
 		VALUES(
@@ -110,7 +179,10 @@
 			, #{people}
 			, #{square}
 			, #{photo}
-			, #{bed}
+			, #{sbed}
+			, #{dbed}
+			, #{qbed}
+			, #{kbed}
 			, 'N'
 		)
 	</insert>

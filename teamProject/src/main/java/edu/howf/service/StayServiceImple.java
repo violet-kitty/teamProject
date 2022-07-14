@@ -55,10 +55,6 @@ public class StayServiceImple implements StayService{
 					//sidx 넣기
 					r.setSidx(vo.getSidx());
 					
-					//bed 이어 붙이기
-					String bed = "sbed,"+r.getSbed()+",dbed,"+r.getDbed()+",qbed,"+r.getQbed()+",kbed,"+r.getKbed();
-					r.setBed(bed);
-					
 					//tag 이어붙이기
 					StringBuilder tags = new StringBuilder("");
 					for(int i=0;i<r.getTag().size();i++) {

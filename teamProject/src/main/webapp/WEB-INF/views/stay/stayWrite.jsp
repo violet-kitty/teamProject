@@ -89,9 +89,9 @@
 				<hr class="my-1">
 				
 				<!-- 사진 미리보기 -->
-				<div class="row" style="height:200px">
+				<div class="row" style="min-height:150px;height:auto;">
 					<div class="col">
-						<div id="att_zone" style="min-height:100px;height:auto;">
+						<div id="att_zone">
 							
 						</div>
 					</div>

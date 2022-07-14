@@ -42,6 +42,8 @@ public class StayController {
 	
 	@RequestMapping(value="/stayList.do")
 	public String stayList(SearchVO vo, Model model) {
+		if(vo.getSortType()==null) vo.setSortType("star");
+		
 		List<StayVO> stay = stayService.staySelectAll(vo);
 		
 		if(stay != null) {
