@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <!-- 제이쿼리 사용시 필요 -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
-<!-- 제이쿼리 사용시 필요 -->
+<!-- /제이쿼리 사용시 필요 -->
 <style>
 h3{
 	text-align: center;
@@ -30,6 +30,12 @@ h3{
 	background-color: lightgray;
 	font-weight: bold;
 }
+.tb_title{
+	text-align: left;
+	border-top: 2px solid black;
+	padding-left: 10px;
+	
+}
 .tb_content{
 	border-top: 2px solid black;
 	height: 500px;
@@ -45,6 +51,8 @@ h3{
 }
 .tb_filename{
 	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 10px;
 }
 .div2{
@@ -98,9 +106,17 @@ h3{
 	border-bottom: 2px solid #27c6be;
 }
 .btn_td{
-	border-bottom: 2px solid #27c6be;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.div_btn{
+	box-sizing: content-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
 }
 .btn3{
+	box-sizing: content-box;
 	width: 100px;
 	height: 30px;
 	margin-left: 1%;
@@ -127,28 +143,30 @@ h3{
 					<td class="tb_category">문의유형</td>
 					<td>${cv.divsn}</td>
 					<td class="tb_category">작성자</td>
-					<td>${cv.nickname}</td>
-					<td class="tb_category">제목</td>
-					<td>${cv.title}</td>
+					<td>${cv.nickname}</td>					
 					<td class="tb_category">작성일</td>
 					<td>${cv.wdate}</td>
 					<td class="tb_category">조회수</td>
 					<td>${cv.cnt}</td>					
 				</tr>
 				<tr>
+					<td class="tb_category" style="border-top: 2px solid black;">제목</td>
+					<td class="tb_title" colspan="9">${cv.title}</td>
+				</tr>
+				<tr>
 					<td class="tb_category tb_content">내용</td>
-					<td colspan="11" class="tb_content tb_content_fill">${cv.content}</td>				
+					<td colspan="9" class="tb_content tb_content_fill">${cv.content}</td>				
 				</tr>
 			<c:if test="${cv.filename != null}">
 				<tr>
-					<td class="tb_category td_file">첨부파일</td>
-					<td colspan="11" class="tb_filename td_file"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a></td>
+					<td class="tb_category td_file">이미지 첨부 파일</td>
+					<td colspan="9" class="tb_filename td_file"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a></td>
 				</tr>
 			</c:if>
 			</tbody>
 		</table>
 		<div class="div2">
-			<c:if test="${login.role == 'admin'}">
+			<c:if test="${login.role == 'admin' && cvr == null}">
 				<input id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='csReply_write.do?csbidx=${cv.csbidx}'">
 			</c:if>
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
@@ -158,8 +176,8 @@ h3{
 			</c:if>
 		</div>
 	</div>
-	<br>
-	<c:forEach var="cvr" items="${cvr}">
+	<br><br>
+	<c:if test="${cvr != null}">
 		<div class="replies">
 			<table class="tb2">
 				<tbody>
@@ -180,18 +198,35 @@ h3{
 					</tr>
 					<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
 						<tr>
-							<td class="btn_td" colspan="6">							
-								<input type="button" id="reply_delete" value="삭제" class="btn3">
-								<input type="button" value="수정" class="btn3" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
+							<td class="btn_td" colspan="6">
+								<div class="div_btn">					
+									<input type="button" value="삭제" class="btn3" id="reply_delete">
+									<input type="button" value="수정" class="btn3" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
+								</div>
 							</td>									
 						</tr>	
 					</c:if>		
 				</tbody>
 			</table>
 		</div>
-	</c:forEach>
+		<br><br>
+		<script>
+			$(function(){
+				
+				$("#reply_delete").click(function(){
+					if(!confirm("정말로 삭제하시겠습니까?")){
+						return false;				
+					}
+					else{
+						location.href = "csReply_delete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx}";								 
+					}			
+				});
+				
+			});
+		</script>
+	</c:if>
 <script>
-	$(function(){
+	$(function(){	
 		
 		$("#delete").click(function(){
 			if(!confirm("삭제하시면 복구할 수 없습니다. \n\n정말로 삭제하시겠습니까?")){				
@@ -199,19 +234,9 @@ h3{
 			}
 			else{
 				 location.href = "csList_delete.do?csbidx=${cv.csbidx}";
-			}
-			
+			}			
 		});
 		
-		$("reply_delete").click(function(){
-			if(!confirm("정말로 삭제하시겠습니까?")){
-				return false;				
-			}
-			else{
-				locaion.href = "csReply_delete.do?csbidx=${cvr.csbidx}";								 
-			}
-			
-		});
 	});
 </script>
 </body>

@@ -66,9 +66,9 @@ public class CSDao {
 		return sqlSession.insert(namespace + "csReply_write", vo);
 	}
 	
-	public List<CSVO> csList_reply_view(int origincsbidx) {
+	public CSVO csList_reply_view(int origincsbidx) {
 		
-		return sqlSession.selectList(namespace + "csList_reply_view", origincsbidx);
+		return sqlSession.selectOne(namespace + "csList_reply_view", origincsbidx);
 	}
 	
 	public int csList_modify(CSVO vo) {

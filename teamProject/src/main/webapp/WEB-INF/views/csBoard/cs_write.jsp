@@ -7,7 +7,7 @@
 <head>
 <!-- 제이쿼리 사용시 필요 -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
-<!-- 제이쿼리 사용시 필요 -->
+<!-- /제이쿼리 사용시 필요 -->
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
@@ -35,19 +35,17 @@ h3{
 	background-color: lightgray;
 	font-weight: bold;
 }
+.input_title{
+	width: 100%;
+}
 .tb_content{
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
 }
-.tb_textarea{
-/* 	width: 100%; */
-/* 	text-align: left; */
-/* 	vertical-align: top; */
-/* 	padding-top: 10px; */
-/* 	padding-left: 10px; */
-}
 .tb_filename{
 	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 10px;
 }
 .div2{
@@ -74,7 +72,7 @@ h3{
 	<br>
 	<br>
 	<div class="div1">
-		<form id="form1" action="cs_write1.do" method="post" enctype="multipart/form-data">
+		<form id="form1" action="cs_write.do" method="post" enctype="multipart/form-data">
 			<table class="tb1">
 				<tbody>
 					<tr>			
@@ -93,34 +91,49 @@ h3{
 					</tr>
 					<tr>				
 						<td class="tb_category">제목</td>
-						<td><input type="text" name="title" id="title"></td>					
+						<td style="padding-right: 9px;"><input type="text" name="title" id="title" class="input_title"></td>					
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
 						<td><textarea class="tb_textarea" name="content" id="summernote"></textarea></td>
 					</tr>
 					<tr>
-						<td class="tb_category">첨부파일</td>
+						<td class="tb_category">이미지 첨부 파일</td>
 						<td class="tb_filename">
-							<img id="img">
-							<br><br><label><input type="file" id="file" name="file"></label>
+							<label><input type="file" id="file" name="file"></label>
+							<div id="div_img" style="margin-top: 10px; display: none;"><img id="img"></div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="div2">
-				<input type="button" onclick="checkFn()" value="등록" class="btn1">
-				<input type="button" value="취소" onclick="location.href='csList.do'" class="btn1">
+				<input type="button" onclick="writeFn()" value="등록" class="btn1">
+				<input type="button" value="취소" id="cancel" class="btn1">
 			</div>			
 		</form>		
 	</div>
 <script>
 	$(function(){
+		
+		 $("#cancel").click(function(){
+		    	if($("#summernote").val() != ""){
+		    		if(!confirm("작성된 내용이 있습니다. \n\n작성을 취소하시겠습니까?")){
+		    			return false;
+		    		}
+		    		else{
+		    			history.back();
+		    		}
+		    	}
+		    	else{
+	    			history.back();
+	    		}
+		    });
+		
 		$("#summernote").summernote({
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:true,
+			focus:false,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -140,9 +153,10 @@ h3{
 			styleTags: ['h1']
 		});
 		
-		$("#file").on("change",upload);
-	      
+		
+		$("#file").on("change",upload);	      
 	      function upload(e){
+	    	 $("#div_img").show();
 	         console.log("file name : ",e.value);
 	         var files = e.target.files;
 	         var filesArr = Array.prototype.slice.call(files);
@@ -166,10 +180,12 @@ h3{
 	            reader.readAsDataURL(f);
 	         });
 	      }
+	    
+	   
 		
 	});
 	
-	function checkFn(){
+	function writeFn(){
 		var title = $("#title");
 		var content = $("#summernote");
 		if(title.val() == ""){
@@ -187,7 +203,6 @@ h3{
 				return false;
 			}
 			else{
-				alert("글이 등록되었습니다.");
 				$("#form1").submit();
 			}			
 		}
