@@ -2,7 +2,7 @@
 
 /* header 세팅 */
 #header{position: fixed; width: 100%; z-index: 5000;}
-.topnavbar{padding:16px 0px 16px 0px; background: #FFFFFF80 0% 0% no-repeat padding-box; box-shadow: 0px 3px 6px #00000029;}
+.topnavbar{padding:8px 0px 8px 0px; background: #FFFFFF80 0% 0% no-repeat padding-box; box-shadow: 0px 3px 6px #00000029;}
 @media all and (max-width: 576px) {
 	.topnavbar {padding:8px 0px 8px 0px; min-height:45px;}
 }
@@ -12,24 +12,24 @@
 	.container-fluid {width: 100%; margin: auto; padding-right:5%; padding-left:5%;}
 }
 /* 로고 */
-.brand img {width:90px; margin-bottom:; float:left;}
+.brand img {width:70px; margin-bottom:; float:left;}
 @media all and (max-width: 576px) {
 	.brand img {width:60px;}
 }
 
 /* 검색창 */
 .search {background-color:white; position:relative;display: inline-block;box-sizing: border-box;text-align: center;}
-.search input[type=text] {margin-right:50px;margin-left:25px;width:30vw; height:38px; padding:10px;border:none;}
-.search img {width:18px;position:absolute;top:10px;left:10px;}
+.search input[type=text] {margin-right:50px;margin-left:25px;width:30vw; height:34px; padding:10px;border:none;}
+.search img {width:18px;position:absolute;top:8px;left:10px;}
 .search input[type=submit] {
 	color: white; position: absolute; top: 0px; right: 0px;
-	margin-left: -5px; height: 38px; background: #3E3E3E; padding: 10px;
+	margin-left: -5px; height: 34px; background: #3E3E3E; padding: 6px;
 	border: 2px solid #3E3E3E; margin-left: -5px;
 }
 
 /* 로그인 회원가입 */
 .navbtn {float:right;}
-.navbtn button {font-size:13px; padding:11px 23px;}
+.navbtn button {font-size:13px; padding:8px 16px;}
 
 @media all and (max-width: 576px) {
 	.navbtn button {font-size:11px; padding:6px 14px;}

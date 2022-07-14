@@ -66,7 +66,10 @@ public class CSServiceImple implements CSService{
 
 	@Override
 	public List<CSVO> csList_reply_view(int origincsbidx) {
-		
+		System.out.println("csList_reply_view_impl");
+		String title = csDao.csList_reply_view(origincsbidx).get(0).getTitle();
+		System.out.println("title"+title);
+		System.out.println("origincsbidx"+origincsbidx);
 		return csDao.csList_reply_view(origincsbidx);
 	}
 	

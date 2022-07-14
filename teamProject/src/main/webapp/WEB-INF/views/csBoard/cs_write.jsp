@@ -5,7 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 제이쿼리 사용시 필요 -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 제이쿼리 사용시 필요 -->
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
@@ -95,7 +97,7 @@ h3{
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
-						<td><textarea class="tb_textarea" rows="30" name="content" id="summernote"></textarea></td>
+						<td><textarea class="tb_textarea" name="content" id="summernote"></textarea></td>
 					</tr>
 					<tr>
 						<td class="tb_category">첨부파일</td>
@@ -136,37 +138,7 @@ h3{
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 			styleTags: ['h1']
-// 			,callbacks: {
-// 				onImageUpload : function(files){
-// 					uploadSummernoteImageFile(files[0], this);
-// 				},
-// 				onPaste: function(e){
-// 					var clipboardData = e.originalEvent.clipboardData;
-// 					if(clipboardData && clipboardData.items && clipboardData.items.length){
-// 						var item = clipboardData.items[0];
-// 						if(item.kind == 'file' && item.type.indexOf('image/') !== -1){
-// 							e.preventDefault();
-// 						}
-// 					}
-						
-// 				}
-// 			}
 		});
-		
-// 		function uploadSummernoteImageFile(file, editor){
-// 			data = new FormData();
-// 			data.append("file", file);
-// 			$.ajax({
-// 				data : data,
-// 				type : "post",
-// 				url : "/cs_write_summernote.do",
-// 				contentType : false,
-// 				processData : false,
-// 				success : function(data){
-// 					$(editor).summernote('insertImage', data.url);
-// 				}
-// 			});
-// 		};
 		
 		$("#file").on("change",upload);
 	      
@@ -214,8 +186,10 @@ h3{
 			if(!confirm("정말로 등록하시겠습니까?")){
 				return false;
 			}
-			alert("글이 등록되었습니다.");
-			$("#form1").submit();
+			else{
+				alert("글이 등록되었습니다.");
+				$("#form1").submit();
+			}			
 		}
 	};
 </script>
