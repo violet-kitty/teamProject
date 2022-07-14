@@ -25,10 +25,10 @@
 			, min(b.price) as min
 			, max(b.price) as max
 			, max(b.people) as people
-			, b.sbed
-			, b.dbed
-			, b.qbed
-			, b.kbed
+			, max(b.sbed)
+			, max(b.dbed)
+			, max(b.qbed)
+			, max(b.kbed)
 		FROM stay a
 		LEFT OUTER JOIN
 		room b
