@@ -301,7 +301,10 @@
 									</small>
 								</div>
 								<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-									<p style="margin-left: 0; margin-right: 0;width:100%;">${v.name}</p>
+									<p>${v.name}</p>
+								</div>
+								<div class="d-flex justify-content-start">
+									<p>${v.min} ~ ${v.max}</p>
 								</div>
 							</div><!-- card-body end -->
 						</div>
@@ -361,6 +364,18 @@
 		$("#carousel0").addClass("active");
 		for(var i=0;i<3;i++){
 			$("#tagArea"+i).text(tagArray[i]);
+		}
+		
+		if(${search.filter.people != null}){
+			$("#people").val("${search.filter.people}");
+			var minPrice = "${search.filter.min}";
+			
+			$("#minPrice").val("${search.filter.min}");
+			$("#maxPrice").val("${search.filter.max}");
+			
+			<c:forEach var="i" items="${search.filter.option}">
+			$("input[name='filter.option'][value='${i}']").prop("checked",true);
+			</c:forEach>
 		}
 	});
 </script>

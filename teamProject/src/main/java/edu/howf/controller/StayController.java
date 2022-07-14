@@ -50,6 +50,8 @@ public class StayController {
 			model.addAttribute("stay", stay);
 		}
 		
+		model.addAttribute("search", vo);
+		
 		
 		return "stay/stayList";
 	}
