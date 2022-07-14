@@ -5,5 +5,199 @@
  
  <!-- 숙박정보 -->
 <mapper namespace="edu.howf.mapper.stayMapper">
+	<!-- 리스트 보기 -->
+	<select id="staySelectAll" parameterType="searchVO" resultType="stayVO">
+		SELECT e.*
+			, f.star
+		FROM
+		(SELECT c.*
+			, d.heart
+		FROM
+		(SELECT a.sidx
+			, a.midx
+			, a.name
+			, a.addr
+			, a.detailaddr
+			, a.tag
+			, a.photo
+			, a.service
+			, a.delyn
+			, min(b.price) as min
+			, max(b.price) as max
+			, max(b.people) as people
+			, max(b.sbed)
+			, max(b.dbed)
+			, max(b.qbed)
+			, max(b.kbed)
+		FROM stay a
+		LEFT OUTER JOIN
+		room b
+		ON a.sidx = b.sidx
+		WHERE b.delyn = 'N') c
+		LEFT OUTER JOIN
+		(SELECT COUNT(hidx) as heart
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		GROUP BY bidx) d
+		ON c.sidx = d.bidx) e
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
+		GROUP BY bidx) f
+		ON e.sidx = f.bidx
+		WHERE e.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (e.name like CONCAT('%',#{searchValue},'%')
+		OR e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("name")'>
+		AND e.name like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- filter -->
+		<if test="filter != null">
+		<if  test="filter.people > 0">
+		<![CDATA[
+		AND e.people >= #{filter.people}
+		]]> 
+		</if>
+		<if  test="filter.min > 0 and filter.max > 0">
+		<![CDATA[
+		AND e.min <= #{filter.max}
+		AND e.max >= #{filter.min}
+		]]>
+		</if>
+		<if  test="filter.option != null">
+		<foreach item="op" collection="filter.option" index="index">
+		<if test="op.equals('싱글베드')">
+		AND e.sbed != 0
+		</if>
+		<if test="op.equals('더블베드')">
+		AND e.dbed != 0
+		</if>
+		<if test="op.equals('퀸베드')">
+		AND e.qbed != 0
+		</if>
+		<if test="op.equals('킹베드')">
+		AND e.kbed != 0
+		</if>
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		AND e.service like CONCAT('%',#{op},'%')
+		</if>
+		</foreach>
+		</if>
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("max")'>
+		ORDER BY e.max desc
+		</if>
+		<if test='sortType.equals("min")'>
+		ORDER BY e.min desc
+		</if>
+		<if test='sortType.equals("star")'>
+		ORDER BY f.star desc
+		</if>
+		<if test='sortType.equals("heart")'>
+		ORDER BY e.heart desc
+		</if>
+	</select>
+	
+	<!-- 전체 수 세기 -->
+	<select id="stayCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(sidx)
+		FROM stay
+		WHERE delyn = 'N'
+	</select>
+	
+	
+	<!-- 숙박정보 가져오기 -->
+	
+	<!-- 방 정보 가져오기 -->
+	
+	<!-- 리뷰 가져오기 -->
+	
+	<!-- 숙박시설 등록 -->
+	<insert id="stayInsert" parameterType="stayVO">
+	<![CDATA[
+		INSERT INTO stay(
+			midx
+			, name
+			, addr
+			, detailaddr
+			, content
+			, tag
+			, photo
+			, service
+			, delyn
+		)
+		VALUES(
+			#{midx}
+			, #{name}
+			, #{addr}
+			, #{detailaddr}
+			, #{contents}
+			, #{tag}
+			, #{photo}
+			, #{services}
+			, 'N'
+		)
+	]]>
+	<selectKey resultType="int" keyProperty="sidx" order="AFTER">
+		SELECT max(sidx) FROM stay
+	</selectKey>
+	</insert>
+	
+	<!-- 방 등록 -->
+	<insert id="roomInsert" parameterType="roomVO">
+		INSERT INTO room(
+			sidx
+			, name
+			, price
+			, tag
+			, people
+			, square
+			, photo
+			, sbed
+			, dbed
+			, qbed
+			, kbed
+			, delyn
+		)
+		VALUES(
+			#{sidx}
+			, #{name}
+			, #{price}
+			, #{tags}
+			, #{people}
+			, #{square}
+			, #{photo}
+			, #{sbed}
+			, #{dbed}
+			, #{qbed}
+			, #{kbed}
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 숙박시설 정보 수정 -->
+	
+	
+	<!-- 방 정보 수정 -->
+	
+	
+	<!-- 숙박시설 삭제 -->
+	
+	
+	<!-- 방 삭제 -->
+	
+	
 	
 </mapper>
