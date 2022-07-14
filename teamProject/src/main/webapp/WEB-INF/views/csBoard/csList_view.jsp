@@ -7,12 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 제이쿼리 사용시 필요 -->
 <script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- summernote -->
+<!-- 제이쿼리 사용시 필요 -->
 <style>
 h3{
 	text-align: center;
@@ -91,12 +88,12 @@ h3{
 	border-bottom: 2px solid #27c6be;
 }
 .reply_content{
+	width: 100%;
+	height: 300px;
 	text-align: left;
 	vertical-align: top;
 	padding-top: 10px;
 	padding-left: 10px;
-	width: 100%;
-	height: 500px;
 	border-top: 2px solid #27c6be;
 	border-bottom: 2px solid #27c6be;
 }
@@ -157,7 +154,7 @@ h3{
 				<input type="button" value="목록" onclick="location.href='csList.do'" class="btn2">
 			<c:if test="${login.midx == cv.midx || login.role == 'admin'}">				
 				<input type="button" value="수정" onclick="location.href='csList_modify.do?csbidx=${cv.csbidx}'" class="btn2">
-				<input type="button" value="삭제" onclick="location.href='csList_delete.do?csbidx=${cv.csbidx}'" class="btn2">
+				<input type="button" id="delete" value="삭제" class="btn2">
 			</c:if>
 		</div>
 	</div>
@@ -170,7 +167,7 @@ h3{
 						<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
 					</tr>				
 					<tr>
-						<td class="reply_category">작성자</td>
+						<td class="reply_category">작성자 </td>
 						<td>${cvr.nickname}</td>
 						<td class="reply_category">제목</td>
 						<td>${cvr.title}</td>
@@ -179,12 +176,12 @@ h3{
 					</tr>
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be; border-bottom: 2px solid #27c6be;">내용</td>
-						<td class="reply_content" colspan="5"><textarea id="summernote">${cvr.content}</textarea></td>
+						<td class="reply_content" colspan="5">${cvr.content}</td>
 					</tr>
 					<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
 						<tr>
 							<td class="btn_td" colspan="6">							
-								<input type="button" value="삭제" class="btn3" onclick="location.href='csReply_delete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx }'">
+								<input type="button" id="reply_delete" value="삭제" class="btn3">
 								<input type="button" value="수정" class="btn3" onclick="location.href='csReply_modify.do?csbidx=${cvr.csbidx}'">
 							</td>									
 						</tr>	
@@ -195,48 +192,27 @@ h3{
 	</c:forEach>
 <script>
 	$(function(){
-		$("#summernote").summernote({
-			height:300,
-			minHeight:null,
-			maxHeight:null,
-			focus:true,
-			lang:"ko-KR",
-			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
-			toolbar: [
-				['style',['style']],
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']],
-			    ['insert',['picture','link','video']],
-			    ['view', ['fullscreen', 'help']]
-			],
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-			styleTags: ['h1']
-		});
-// 		$("#reply_btn").click(function(){
-// 			$("#reply").show();
-// 		});
 		
-// 		$("#reply_btn2").click(function(){
-// 			var frm = $("#reply_form").serialize();
-// 			$.ajax({
-// 				url: 'csList_reply.do',
-// 				type: "post",
-// 				data: frm,
-// 				success: function(data){
-// 					if(data == 1){
-// 						alert("글이 등록되었습니다.");						
-// 						location.reload();
-// 					}
-					
-// 				}
-// 			});
-// 		});
+		$("#delete").click(function(){
+			if(!confirm("삭제하시면 복구할 수 없습니다. \n\n정말로 삭제하시겠습니까?")){				
+				return false;
+			}
+			else{
+				 location.href = "csList_delete.do?csbidx=${cv.csbidx}";
+			}
+			
+		});
+		
+		$("reply_delete").click(function(){
+			if(!confirm("정말로 삭제하시겠습니까?")){
+				return false;				
+			}
+			else{
+				locaion.href = "csReply_delete.do?csbidx=${cvr.csbidx}";								 
+			}
+			
+		});
+	});
 </script>
 </body>
 </html>

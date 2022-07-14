@@ -127,12 +127,11 @@ public class CSController {
 	
 
 	@RequestMapping(value = "/csList_view.do", method = RequestMethod.GET)
-	public String csListView(int csbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String csListView(int csbidx, int origincsbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Cookie[] cookies = request.getCookies();
 		int visitor = 0;
 				
 		for(Cookie cookie : cookies) {
-			System.out.println(cookie.getName());
 			if(cookie.getName().equals("visit")) {
 				visitor = 1;
 				
@@ -158,8 +157,10 @@ public class CSController {
 		
 		CSVO cv = csService.csList_view(csbidx);
 
-		List<CSVO> cvr = csService.csList_reply_view(csbidx);
+		List<CSVO> cvr = csService.csList_reply_view(origincsbidx);
 
+		
+		System.out.println("cvr.get0.csbidx : " + cvr.get(0).getCsbidx());
 		model.addAttribute("cv", cv);
 		model.addAttribute("cvr", cvr);
 
@@ -186,8 +187,9 @@ public class CSController {
 
 	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.POST)
 	public String csReply_write(CSVO vo, HttpServletRequest request, HttpSession session) {
-
-		UserVO login = (UserVO) session.getAttribute("login");
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
 
 		vo.setMidx(login.getMidx());
 		int result = csService.csReply_write(vo);
