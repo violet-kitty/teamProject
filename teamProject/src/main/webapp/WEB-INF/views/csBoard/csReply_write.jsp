@@ -84,8 +84,6 @@ h3{
 	border-top: 2px solid #27c6be;
 	text-align: left;
 }
-.content_input_box{
-}
 .btn_td{
 	border-top: 2px solid #27c6be;
 	border-bottom: 2px solid #27c6be;
@@ -136,7 +134,7 @@ h3{
 					</tr>
 					<tr>
 						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용<span class="span_must_input">*</span></td>
-						<td class="reply_content" colspan="3"><textarea id="summernote" name="content" class="content_input_box" style="resize: none;" placeholder="내용을 입력해주세요."></textarea></td>
+						<td class="reply_content" colspan="3"><textarea id="summernote" name="content" class="content_input_box"></textarea></td>
 					</tr>
 					<tr>
 						<td class="btn_td" colspan="4">
@@ -176,14 +174,26 @@ h3{
 		});
 		
 		$("#cancel").click(function(){
-	    	if($("#summernote").val() != null){
-	    		if(!confirm("작성된 내용이 있습니다. \n\n작성을 취소하시겠습니까?")){
+			var title = "${cv.title}";
+			if($("#title").val() != title){
+	    		if(!confirm("작성된 내용이 있습니다. \n\n답변 작성을 취소하시겠습니까?")){
 	    			return false;
 	    		}
 	    		else{
 	    			history.back();
 	    		}
 	    	}
+			else if($("#summernote").val() != null){
+	    		if(!confirm("작성된 내용이 있습니다. \n\n답변 작성을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+	    	}
+	    	else{
+    			history.back();
+    		}
 	    });
 		
 	});
@@ -202,7 +212,7 @@ h3{
 			return;
 		}
 		else {
-			alert("글이 등록되었습니다.");
+			alert("답변 글이 등록되었습니다.");
 			$("#form1").submit();
 		}
 	};

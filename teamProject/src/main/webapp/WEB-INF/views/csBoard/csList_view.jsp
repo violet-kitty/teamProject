@@ -281,7 +281,7 @@ h3{
 				return false;
 			}
 			else{
-				 location.href = "csList_delete.do?csbidx=${cv.csbidx}";
+				 location.href = "csList_delete.do?origincsbidx=${cv.origincsbidx}";
 			}			
 		});
 		

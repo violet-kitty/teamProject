@@ -159,8 +159,17 @@ h3{
 	$(function(){
 		
 		$("#cancel").click(function(){
+			var title = "${cv.title}";
 			var content = "${cv.content}";
-	    	if($("#summernote").val() != content){
+			if($("#title").val() != title){
+	    		if(!confirm("수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+	    	}
+			else if($("#summernote").val() != content){
 	    		if(!confirm("수정을 취소하시겠습니까?")){
 	    			return false;
 	    		}

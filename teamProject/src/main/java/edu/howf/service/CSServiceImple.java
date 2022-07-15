@@ -77,9 +77,9 @@ public class CSServiceImple implements CSService{
 	}
 	
 	@Override
-	public int csList_delete(int csbidx) {
+	public int csList_delete(int origincsbidx) {
 		
-		return csDao.csList_delete(csbidx);
+		return csDao.csList_delete(origincsbidx);
 	}
 
 	@Override

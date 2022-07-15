@@ -131,7 +131,6 @@ a{
 			</c:forEach>
 		</tbody>
 	</table>
-	
 	<div class="div1">
 		<input type="button" value="등록" onclick="location.href='cs_write.do'" class="btn1">
 	</div>

@@ -201,9 +201,9 @@ public class CSController {
 	}
 
 	@RequestMapping(value = "/csList_delete.do", method = RequestMethod.GET)
-	public String csListDelete(int csbidx) {
+	public String csListDelete(int origincsbidx) {
 
-		int result = csService.csList_delete(csbidx);
+		int result = csService.csList_delete(origincsbidx);
 
 		return "redirect:/csBoard/csList.do";
 	}
