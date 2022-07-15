@@ -36,9 +36,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		sessionList.add(session);
 		//세션값을 불러온
 		//0번째 중괄호에 session.getId()을 넣으라는 뜻
-		
 		//Session값을 가지고 데이터베이스등의 작업을 하면 채팅참여 사용자 정보 리스트를 구현
-
 		// 모든 세션에 채팅 전달
 
 		}

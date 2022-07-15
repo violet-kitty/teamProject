@@ -3,23 +3,42 @@
 /* home 세팅 */
 
 /* content 01 */
-.back {height: 100%; width: 100%; border: 1px solid black; position: absolute; top: 0px; background: rgba(0, 0, 0, 0.5);}
-.carousel{height:677px;}
-.carousel-dark .carousel-indicators [data-bs-target]{background-color:white;}
-.carousel-inner {position: relative;width: 100%;max-height: 665px;overflow: hidden;}
-.carousel-caption {position: absolute;top: 1.25rem;left: 15%;padding-top: 1.25rem;padding-bottom: 1.25rem;color: #fff;text-align: center;}
-.carousel-control-next-icon {background-image: none;}
-.carousel-control-prev-icon {background-image: none;}
-.carousel-caption h5 {font-size:2rem; margin-bottom:25px; margin-top:150px; line-height:42px;}
-.carousel-caption p {color:#d6d6d6;font-size: 16px; line-height:22px; margin-bottom:60px;} 
-   			    
-/* hero */
-.hero {position:relative; height:665px; }
-.hero-caption {position: absolute;z-index:1000;right: 15%;bottom: 15rem;left: 15%;padding-top: 1.25rem;color: #fff;text-align: center;}
-.hero-caption h5 {font-size: 2rem;margin-bottom: 25px;margin-top: 150px;line-height: 42px;}
+/* carousel */
+.contents01 .carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 665px;
+    overflow: hidden;
+}
+.contents01 .carousel-item {position:relative; height:665px;}
 
-@media all and (max-width: 992px) {
-	.hero{height:25rem;}
-	.hero-caption{bottom:7.25rem;}
-	.hero-caption h5 {margin-top:0px;}
+.contents01 .carousel-caption {
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+    text-align: center;
+}
+.contents01 .carousel-control-next-icon {background-image: none;}
+.contents01 .carousel-control-prev-icon {background-image: none;}
+.contents01 .carousel-caption h5 {font-size:2rem; margin-bottom:25px; line-height:45px;}
+.contents01 .carousel-caption p {font-size: 16px; line-height:22px; margin-bottom:32px;} 
+.contents01 .captionset {background:rgba(255,255,255,0.8); padding:65px; margin:auto; max-width:410px; vertical-align:middle; margin-top:10%;}
+.contents01 .imgset { width: 100%; height: 100%; background-size: cover;background-position: center bottom; background-repeat: no-repeat;}
+@media all and (max-width: 768px) {
+	.contents01 .carousel-inner{height:70vh;}
+	.contents01 .carousel-item {height:70vh;}
+	.contents01 .captionset {margin-top:10vh;}
+}
+@media all and (max-width: 576px) {
+	.contents01 .carousel-inner{height:60vh;}
+	.contents01 .carousel-item {height:60vh;}
+	.contents01 .carousel-caption h5 {font-size:1.8rem;}
+	.contents01 .captionset {padding:15px;}
+	.contents01 .captionset {max-width: 87vw; margin: auto; margin-top:10vh; }
 }
