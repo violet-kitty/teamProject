@@ -18,15 +18,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.howf.service.NoticeService;
 import edu.howf.util.MediaUtils;
@@ -46,6 +50,8 @@ public class NoticeController {
 	
 	@Autowired
 	String uploadPath;
+	
+	
 	
 	//경로
 	@RequestMapping(value = "noticewrite.do", method = RequestMethod.GET)
@@ -229,5 +235,24 @@ public class NoticeController {
 		}
 		return entity;
 	} 
+	
+	
+	@RequestMapping(value = "chattingview.do" ,method = RequestMethod.GET)
+	public String echo(){
+		
+		return "notice/chattingview";
+	}
+
+	
+	//웹 소켓 이용 채팅
+		
+	@GetMapping("/echo")
+	
+	public void chattingview(Model model,NoticeVO vo) {
+		
+		NoticeVO user = (NoticeVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		  
+		model.addAttribute("user", user.getNickname());
+		 }
 	
 }
