@@ -25,12 +25,14 @@ h3{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -71,6 +73,9 @@ h3{
 	background-color: #b2ffb5;
 	font-weight: bold;
 }
+.span_must_input{
+	color: red;
+}
 .reply_category_title{
 	border-top: 2px solid #27c6be;
 	border-bottom: 2px solid #27c6be;
@@ -100,11 +105,11 @@ h3{
 </style>
 </head>
 <body>
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>
 	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
-		<h3>1:1 문의 게시판</h3>
+		<h3>1:1 문의 게시글 답변 작성</h3>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
@@ -126,11 +131,11 @@ h3{
 					<tr>
 						<td class="reply_category">작성자</td>
 						<td>${login.nickname}<input type="hidden" name="origincsbidx" value="${cv.csbidx}"></td>
-						<td class="reply_category">제목</td>
+						<td class="reply_category">제목<span class="span_must_input">*</span></td>
 						<td><input type="text" id="title" name="title" class="input_title" value="${cv.title}"></td>
 					</tr>
 					<tr>
-						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용</td>
+						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용<span class="span_must_input">*</span></td>
 						<td class="reply_content" colspan="3"><textarea id="summernote" name="content" class="content_input_box" style="resize: none;" placeholder="내용을 입력해주세요."></textarea></td>
 					</tr>
 					<tr>

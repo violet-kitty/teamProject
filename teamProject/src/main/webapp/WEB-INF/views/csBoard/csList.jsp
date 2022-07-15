@@ -14,18 +14,20 @@ h3{
 a{
 	text-decoration-line: none;
 }
-table a:visited{
+.tb1 a:visited{
 	color: #ccc;
 }
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -86,10 +88,10 @@ table a:visited{
 </style>
 </head>
 <body>
-	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>
+	<div class="div_header">		
 		<h3>1:1 문의 게시판</h3>
 	</div>
 	<br><br>
@@ -143,7 +145,7 @@ table a:visited{
 					</c:if>
 				</td>
 				<td>
-					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage-1}">
+					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
 						<a href="csList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
 					</c:forEach>
 				</td>

@@ -1,23 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
- 
-=======
-	  	
-=======
-	
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
-
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 구글 로그인 -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-
 
 <script>
 function logoutFn(){
