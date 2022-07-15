@@ -13,14 +13,14 @@
 		(SELECT c.*
 			, d.heart
 		FROM
-		(SELECT a.sidx
+		(SELECT distinct(a.sidx) as sidx
 			, a.midx
 			, a.name
 			, a.addr
 			, a.detailaddr
 			, a.tag
 			, a.photo
-			, a.service
+			, a.services
 			, a.delyn
 			, b.min
 			, b.max
@@ -30,7 +30,7 @@
 			, b.qbed
 			, b.kbed
 		FROM stay a
-		LEFT OUTER JOIN
+		JOIN
 		(SELECT sidx
 			, MIN(price) as min
 			, MAX(price) as max
@@ -41,6 +41,15 @@
 			, IFNULL(MAX(kbed),0) as kbed
 		FROM room
 		WHERE delyn = 'N'
+		<if test="filter != null">
+		<if  test="filter.option != null">
+		<foreach item="op" collection="filter.option" index="index">
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		AND tags like CONCAT('%',#{op},'%')
+		</if>
+		</foreach>
+		</if>
+		</if>
 		GROUP BY sidx) b
 		ON a.sidx = b.sidx) c
 		LEFT OUTER JOIN
@@ -55,6 +64,7 @@
 			, bidx
 		FROM comment
 		WHERE type = 'stay'
+		AND delyn = 'N'
 		GROUP BY bidx) f
 		ON e.sidx = f.bidx
 		WHERE e.delyn = 'N'
@@ -99,7 +109,7 @@
 		AND e.kbed != 0
 		</if>
 		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
-		AND e.service like CONCAT('%',#{op},'%')
+		AND e.services like CONCAT('%',#{op},'%')
 		</if>
 		</foreach>
 		</if>
@@ -117,21 +127,156 @@
 		<if test='sortType.equals("heart")'>
 		ORDER BY e.heart desc
 		</if>
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
 	<!-- 전체 수 세기 -->
 	<select id="stayCountAll" parameterType="searchVO" resultType="int">
-		SELECT COUNT(sidx)
-		FROM stay
+		SELECT COUNT(DISTINCT(a.sidx))
+		FROM stay a
+		JOIN
+		(SELECT sidx
+			, MIN(price) as min
+			, MAX(price) as max
+			, MAX(people) as people
+			, IFNULL(MAX(sbed),0) as sbed
+			, IFNULL(MAX(dbed),0) as dbed
+			, IFNULL(MAX(qbed),0) as qbed
+			, IFNULL(MAX(kbed),0) as kbed
+		FROM room
 		WHERE delyn = 'N'
+		<if test="filter != null">
+		<if  test="filter.option != null">
+		<foreach item="op" collection="filter.option" index="index">
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		AND tags like CONCAT('%',#{op},'%')
+		</if>
+		</foreach>
+		</if>
+		</if>
+		GROUP BY sidx) b
+		ON a.sidx = b.sidx
+		WHERE a.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.name like CONCAT('%',#{searchValue},'%')
+		OR a.addr like CONCAT('%',#{searchValue},'%')
+		OR a.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("name")'>
+		AND a.name like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (a.addr like CONCAT('%',#{searchValue},'%')
+		OR a.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- filter -->
+		<if test="filter != null">
+		<if  test="filter.people > 0">
+		<![CDATA[
+		AND b.people >= #{filter.people}
+		]]> 
+		</if>
+		<if  test="filter.min > 0 and filter.max > 0">
+		<![CDATA[
+		AND b.min <= #{filter.max}
+		AND b.max >= #{filter.min}
+		]]>
+		</if>
+		<if  test="filter.option != null">
+		<foreach item="op" collection="filter.option" index="index">
+		<if test="op.equals('싱글베드')">
+		AND b.sbed != 0
+		</if>
+		<if test="op.equals('더블베드')">
+		AND b.dbed != 0
+		</if>
+		<if test="op.equals('퀸베드')">
+		AND b.qbed != 0
+		</if>
+		<if test="op.equals('킹베드')">
+		AND b.kbed != 0
+		</if>
+		</foreach>
+		</if>
+		</if>
 	</select>
 	
 	
 	<!-- 숙박정보 가져오기 -->
+	<select id="staySelectOne" parameterType="int" resultType="stayVO">
+		SELECT c.*, d.star
+		FROM
+		(SELECT a.sidx
+			, a.midx
+			, a.name
+			, a.addr
+			, a.detailaddr
+			, a.contents
+			, a.tag
+			, a.photo
+			, a.services
+			, a.delyn
+			, b.heart
+		FROM stay a
+		LEFT OUTER JOIN
+		(SELECT COUNT(hidx) as heart
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		GROUP BY bidx) b
+		ON a.sidx = b.bidx) c
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
+		GROUP BY bidx) d
+		ON c.sidx = d.bidx
+		WHERE c.sidx = #{sidx}
+	</select>
 	
 	<!-- 방 정보 가져오기 -->
+	<select id="roomSelect" parameterType="int" resultType="roomVO">
+		SELECT COUNT(ridx) as cnt
+			, name
+			, price
+			, tags
+			, people
+			, square
+			, photo
+			, sbed
+			, dbed
+			, qbed
+			, kbed
+		FROM room
+		WHERE sidx = #{sidx}
+		AND delyn = 'N'
+		GROUP BY name
+			, price
+			, tags
+			, people
+			, square
+			, photo
+			, sbed
+			, dbed
+			, qbed
+			, kbed
+	</select>
 	
 	<!-- 리뷰 가져오기 -->
+	<select id="reviewSelect" parameterType="int" resultType="boardVO">
+		SELECT a.cbidx
+			, a.content
+			, a.star
+			, a.midx
+			, b.nickname
+		FROM comment a, usertable b
+		WHERE a.midx = b.midx
+		AND a.bidx = #{sidx}
+		AND a.type = 'stay'
+		AND a.delyn = 'N'	
+	</select>
 	
 	<!-- 숙박시설 등록 -->
 	<insert id="stayInsert" parameterType="stayVO">
@@ -144,7 +289,7 @@
 			, content
 			, tag
 			, photo
-			, service
+			, services
 			, delyn
 		)
 		VALUES(

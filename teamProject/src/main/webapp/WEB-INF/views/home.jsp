@@ -57,12 +57,8 @@
 				</div>
 				<div class="carousel-inner" id="news">
 	
-					<div class="carousel-item active" data-bs-interval="500000">
-						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpeg);">
-						
-						
-						</div>
-						
+					<div class="carousel-item active" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpg);"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold">갬성자극! 제주도 여행은 ‘나미송 머무는 곳’</h5>
@@ -73,25 +69,25 @@
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset">
-							<img src="<%= request.getContextPath() %>/image/picture/picture2.jpg"  class="d-block w-100" alt="...">
-						</div>
-						
+						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture2.jpg);"></div>
 						<div class="carousel-caption d-md-block">
-							<h5 class="lfc-white bold">“토양 속 다이옥신은 전문기관에서 관리해야”</h5>
-							<p class="semibold">국회 토론회서 전문기관 및 인력 부족 등 부각<br>환경부 “POPs 기관과 협업해 분석 수요에 대응 계획”</p>
-							<a class="whitebtn" href="https://www.hkbs.co.kr/">환경뉴스</a>
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">벚꽃 여행 떠나보자! 2022년 추천 벚꽃여행지와 지역별 벚꽃명소</h5>
+								<p class="hfc-semibold hfc-darkgray">#축제  #힐링  #자연<br>#여행  #봄  #드라이브</p>
+								<button class="greenbtn hbshadow2">HOWF 여행지추천</button>
+							</div>
+							
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset">
-							<img src="<%= request.getContextPath() %>/image/picture/picture3.jpg"  class="d-block w-100" alt="...">
-						</div>
-						
-						<div class="carousel-caption d-none d-md-block">
-							<h5 class="lfc-white bold">기계설비 진화···기후변화 적응 바람 확산</h5>
-							<p class="semibold">2022 대한민국 기계설비전시회, 소방·환기 설비 트렌드 제시<br>‘에어샤워’·‘막힘 방지 펌프’ 등 눈길, LH 탄소중립 특별관 운영</p>
-							<a class="whitebtn" href="https://www.hkbs.co.kr/">환경뉴스</a>
+						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture4.jpeg);"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">맛있게 먹으면 피자도 0칼로리~ 피자의 축제! ’그라덴피자’ 남해 독일마을!</h5>
+								<p class="hfc-semibold hfc-darkgray">#남해  #독일마을  #피자<br>#이국적  #이색여행  #미슐랭</p>
+								<button class="greenbtn hbshadow2">HOWF 맛집추천</button>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -107,6 +103,10 @@
 				</button>
 			</div>
 			<!-- /content 01 -->
+			
+			<!-- content 02 -->
+			<!-- / .content 02 -->
+			
 	
 			<!-- Nav --><%@include file="Nav.jsp"%>
 

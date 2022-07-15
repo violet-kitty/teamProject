@@ -18,11 +18,20 @@ public class StayDao {
 	String namespace = "edu.howf.mapper.stayMapper.";
 	
 	public List<StayVO> staySelectAll(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"staySelectAll", vo);
 	}
 	
 	public int stayCoountAll(SearchVO vo) {
 		return sqlSession.selectOne(namespace+"stayCountAll", vo);
+	}
+	
+	public StayVO staySelectOne(int sidx) {
+		return sqlSession.selectOne(namespace+"staySelectOne", sidx);
+	}
+	
+	public List<RoomVO> roomSelect(int sidx) {
+		return sqlSession.selectList(namespace+"roomSelect", sidx);
 	}
 	
 	public int stayInsert(StayVO vo) {
