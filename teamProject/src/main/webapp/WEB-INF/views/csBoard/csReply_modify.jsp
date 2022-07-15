@@ -48,8 +48,9 @@ h3{
 	border-top: 2px solid #27c6be;
 }
 .btn_td{
+	padding-top: 5px;
+	padding-bottom: 5px;
 	border-top: 2px solid #27c6be;
-	border-bottom: 2px solid #27c6be;
 }
 .btn1{
 	width: 100px;
@@ -57,6 +58,15 @@ h3{
 	margin-left: 1%;
 	background-color: #b2ffb5;
 	border: 0.5px solid gray;
+}
+.td_input_title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.input_title{
+	width: 100%;
+	height: 100%;
 }
 </style>
 </head>
@@ -74,7 +84,7 @@ h3{
 						<td class="reply_category">작성자</td>
 						<td>${cv.nickname}</td>
 						<td class="reply_category">제목</td>
-						<td>${cv.title}</td>
+						<td class="td_input_title"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>
 						<td class="reply_category">작성일</td>
 						<td>${cv.wdate}</td>
 					</tr>
@@ -84,8 +94,8 @@ h3{
 					</tr>
 					<tr>
 						<td class="btn_td" colspan="6">
-							<input type="button" class="btn1" value="수정" onclick="checkFn()">
-							<input type="button" class="btn1" value="취소" onclick="javascript:history.back()">
+							<input type="button" class="btn1" value="수정" onclick="ModifyFn()">
+							<input type="button" class="btn1" value="취소" id="cancel">
 						</td>
 					</tr>			
 				</tbody>
@@ -94,11 +104,27 @@ h3{
 	</div>
 <script>
 	$(function(){
+		
+		$("#cancel").click(function(){
+			var content = "${cv.content}";
+	    	if($("#summernote").val() != content){
+	    		if(!confirm("수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
 		$("#summernote").summernote({
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:true,
+			focus:false,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -119,9 +145,15 @@ h3{
 		});		
 	});
 	
-	function checkFn(){
+	function ModifyFn(){
+		var title = $("#title");
 		var content = $("#summernote");
-		if(content.val() == ""){
+		if(title.val() == ""){
+			alert("제목을 입력해주세요");
+			title.focus();
+			return;
+		}
+		else if(content.val() == ""){
 			alert("내용을 입력해주세요");
 			content.focus();
 			return;
@@ -131,7 +163,6 @@ h3{
 				return false;
 			}
 			else{
-				alert("글이 수정되었습니다.");
 				$("#form1").submit();				
 			}
 			

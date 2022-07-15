@@ -6,6 +6,7 @@
 <!-- 1:1문의, FAQ -->
 <mapper namespace="edu.howf.mapper.csMapper">
 		
+		<!-- 게시글 기능 관련 매퍼 -->
 		<insert id="CS_write" parameterType="csVO">
 		<![CDATA[
  			INSERT INTO CStable(
@@ -47,6 +48,7 @@
 				  ,cs.origincsbidx
 			      ,u.midx
 			      ,u.name
+			      ,u.nickname
 			      ,cs.divsn			      
 			      ,cs.title
 			      ,cs.content
@@ -155,8 +157,26 @@
 			UPDATE CStable
 			SET	   cnt = cnt + 1
 			WHERE  csbidx = #{csbidx}
-		</update>	
+		</update>
+				
+		<update id="csList_modify" parameterType="csVO">
+			UPDATE CStable
+			SET    divsn = #{divsn}
+				   ,title = #{title}
+				   ,content = #{content}
+				   ,filename = #{filename}
+			WHERE  csbidx = #{csbidx}
+		</update>
 		
+		<update id="csList_delete" parameterType="int">
+			UPDATE CStable
+			SET    delyn='Y'
+			WHERE  csbidx = #{csbidx}
+		</update>
+		
+		
+		
+		<!-- 댓글 기능 관련 매퍼 -->
 		<insert id="csReply_write" parameterType="csVO">		
 			INSERT INTO CStable(
 							origincsbidx
@@ -195,26 +215,12 @@
 			AND    cs.csbidx != cs.origincsbidx
 			AND    cs.delyn = 'N'
 			AND    cs.origincsbidx = #{cs.origincsbidx}
-		</select>
-		
-		<update id="csList_modify" parameterType="csVO">
-			UPDATE CStable
-			SET    divsn = #{divsn}
-				   ,title = #{title}
-				   ,content = #{content}
-				   ,filename = #{filename}
-			WHERE  csbidx = #{csbidx}
-		</update>
-		
-		<update id="csList_delete" parameterType="int">
-			UPDATE CStable
-			SET    delyn='Y'
-			WHERE  csbidx = #{csbidx}
-		</update>
+		</select>				
 		
 		<update id="csReply_modify" parameterType="csVO">
 			UPDATE CStable
-			SET    content = #{content}
+			SET    title = #{title}
+				   ,content = #{content}
 				   ,wdate = now()
 			WHERE  csbidx = #{csbidx}
 		</update>

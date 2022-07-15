@@ -11,6 +11,31 @@
 h3{
 	text-align: center;
 }
+a{
+	text-decoration-line: none;
+}
+table a:visited{
+	color: #ccc;
+}
+.div_userInfo{	
+	display: inline-block;
+	float: left;
+	margin-left: 10%;
+}
+.span_userInfo{
+	display: inline-block;
+	font-weight: bold;
+	color : #5B6DCD;
+}
+.div_logout{
+	display: inline-block;
+	float: right;
+	margin-right: 10%;
+}
+.a_logout{
+	color: #5B6DCD;
+	font-weight: bold;
+}
 .div1{
 	margin-top: 5px;
 	margin-right: 10%;	
@@ -47,6 +72,11 @@ h3{
 </head>
 <body>
 	<h3>CS BOARD (임시)</h3>
+	<c:if test="${login != null }">
+		<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
+		<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
+	</c:if>
+	<br>
 	<hr>	
 	<br>
 	<br>
@@ -78,6 +108,7 @@ h3{
 			</c:forEach>
 		</tbody>
 	</table>
+	
 	<div class="div1">
 		<input type="button" value="등록" onclick="location.href='cs_write.do'" class="btn1">
 	</div>
@@ -91,7 +122,7 @@ h3{
 					</c:if>
 				</td>
 				<td>
-					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage-1}">
 						<a href="csList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
 					</c:forEach>
 				</td>
