@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
- 
-=======
-	  	
-=======
-	
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 구글 로그인 -->
