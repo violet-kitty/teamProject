@@ -15,7 +15,6 @@
 .contents01 .carousel-caption {
     width: 100%;
     height: 100%;
-    border: 1px solid red;
     right: 0%;
     bottom: 0%;
     left: 0%;
@@ -36,8 +35,8 @@
 	.contents01 .captionset {margin-top:10vh;}
 }
 @media all and (max-width: 576px) {
-	.contents01 .carousel-inner{height:60vh;}
-	.contents01 .carousel-item {height:60vh;}
+	.contents01 .carousel-inner{height:55vh;}
+	.contents01 .carousel-item {height:55vh;}
 	.contents01 .carousel-caption h5 {font-size:1.8rem;}
 	.contents01 .captionset {padding:15px;}
 	.contents01 .captionset {max-width: 87vw; margin: auto; margin-top:10vh; }

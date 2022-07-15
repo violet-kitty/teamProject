@@ -61,7 +61,7 @@
 				<div class="carousel-inner" id="news">
 	
 					<div class="carousel-item active" data-bs-interval="500000">
-						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpeg);">
+						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpg);">
 						
 						
 						</div>
