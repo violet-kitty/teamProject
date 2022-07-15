@@ -88,6 +88,7 @@
 
 <button id="btn2" onclick="location.href='noticewrite.do'">글 쓸꺼얌</button>
 <button id="btn2" onclick="location.href='../'">메인화면</button>
+<button id="btn2" onclick="location.href='chattingview.do'">채팅</button>
 
 
 

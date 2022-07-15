@@ -51,11 +51,5 @@ public class NoticeServiceImple implements NoticeService{
 		
 		return noticeDao.pagecount(searchVO);
 	}
-	
-
-
-	
-
-
 
 }

@@ -44,6 +44,7 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 		
 		<!-- multipart 쓸때 파일 사이즈 같은 설정 정보를 담고있음 -->
 		<!-- fileupload multipart-config maxSize set -->
