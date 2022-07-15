@@ -22,18 +22,27 @@
 			, a.photo
 			, a.service
 			, a.delyn
-			, min(b.price) as min
-			, max(b.price) as max
-			, max(b.people) as people
-			, max(b.sbed)
-			, max(b.dbed)
-			, max(b.qbed)
-			, max(b.kbed)
+			, b.min
+			, b.max
+			, b.people
+			, b.sbed
+			, b.dbed
+			, b.qbed
+			, b.kbed
 		FROM stay a
 		LEFT OUTER JOIN
-		room b
-		ON a.sidx = b.sidx
-		WHERE b.delyn = 'N') c
+		(SELECT sidx
+			, MIN(price) as min
+			, MAX(price) as max
+			, MAX(people) as people
+			, IFNULL(MAX(sbed),0) as sbed
+			, IFNULL(MAX(dbed),0) as dbed
+			, IFNULL(MAX(qbed),0) as qbed
+			, IFNULL(MAX(kbed),0) as kbed
+		FROM room
+		WHERE delyn = 'N'
+		GROUP BY sidx) b
+		ON a.sidx = b.sidx) c
 		LEFT OUTER JOIN
 		(SELECT COUNT(hidx) as heart
 			, bidx

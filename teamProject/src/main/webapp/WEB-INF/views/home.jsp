@@ -47,31 +47,50 @@
 		<div id="container">
 
 			<!-- contents 01 -->
-			<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+			<div id="carouselExampleDark" class="contents01 carousel carousel-dark slide"
+				data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-					<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					<button type="button" data-bs-target="#carouselExampleDark"
+						data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleDark"
+						data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleDark"
+						data-bs-slide-to="2" aria-label="Slide 3"></button>
 				</div>
 				<div class="carousel-inner" id="news">
-					<div class="carousel-item active" data-bs-interval="3000">
-						<div><img src="<%= request.getContextPath() %>/image/picture/picture1.jpeg"  class="d-block w-100" alt="..."></div>
-						<div class="carousel-caption d-none d-md-block">
-							<h5 class="lfc-white bold">EU 탄소무역장벽 강화···<br>국내 기업은 ‘남일 보듯’</h5>
-							<p class="semibold">EU 탄소국경조정세 강화‧‧‧ 품목 5개→9개, 본격적인 시행도 1년 앞당겨<br>국내 RE100 기업 중 실제 재생에너지 전력 사용은 LG‧현대자동차 2곳뿐</p>
-							<a class="whitebtn" href="https://www.hkbs.co.kr/">환경뉴스</a>
+	
+					<div class="carousel-item active" data-bs-interval="500000">
+						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpeg);">
+						
+						
+						</div>
+						
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">갬성자극! 제주도 여행은 ‘나미송 머무는 곳’</h5>
+								<p class="hfc-semibold hfc-darkgray">#민박  #고향민박  #독채<br>#정원  #주방기구  #자연경관</p>
+								<button class="greenbtn hbshadow2">HOWF 숙박추천</button>
+							</div>
+							
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div><img src="<%= request.getContextPath() %>/image/picture/picture2.jpg"  class="d-block w-100" alt="..."></div>
-						<div class="carousel-caption d-none d-md-block">
+						<div class="imgset">
+							<img src="<%= request.getContextPath() %>/image/picture/picture2.jpg"  class="d-block w-100" alt="...">
+						</div>
+						
+						<div class="carousel-caption d-md-block">
 							<h5 class="lfc-white bold">“토양 속 다이옥신은 전문기관에서 관리해야”</h5>
 							<p class="semibold">국회 토론회서 전문기관 및 인력 부족 등 부각<br>환경부 “POPs 기관과 협업해 분석 수요에 대응 계획”</p>
 							<a class="whitebtn" href="https://www.hkbs.co.kr/">환경뉴스</a>
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div><img src="<%= request.getContextPath() %>/image/picture/picture3.jpg"  class="d-block w-100" alt="..."></div>
+						<div class="imgset">
+							<img src="<%= request.getContextPath() %>/image/picture/picture3.jpg"  class="d-block w-100" alt="...">
+						</div>
+						
 						<div class="carousel-caption d-none d-md-block">
 							<h5 class="lfc-white bold">기계설비 진화···기후변화 적응 바람 확산</h5>
 							<p class="semibold">2022 대한민국 기계설비전시회, 소방·환기 설비 트렌드 제시<br>‘에어샤워’·‘막힘 방지 펌프’ 등 눈길, LH 탄소중립 특별관 운영</p>
@@ -93,8 +112,6 @@
 			<!-- /content 01 -->
 	
 			<!-- Nav --><%@include file="Nav.jsp"%>
-		
-			<!-- contents 02 -->
 
 		</div><!-- / #container -->
 		

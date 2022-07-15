@@ -18,6 +18,11 @@
 /* 부트스트랩 5 resetting */
 .row {--bs-gutter-x: 0;}
 a {text-decoration:none;}
+@media (max-width: 576px){
+	.col-xs-3 {flex: 0 0 auto;width: 25%;}/*4개*/	
+	.col-xs-6 {flex: 0 0 auto;width: 50%;}/*2개*/	
+}
+
 
 /* body 세팅 */
 body {font-family: 'Noto Sans', sans-serif; max-width: 1800px;}
@@ -82,7 +87,8 @@ input:focus { outline: none; }
 .hfc-black {font-weight:900;}
 
 /* shadow */
-.shadow {box-shadow: 8px 8px 0px #0000001A;}
+.hbshadow {box-shadow: 8px 8px 0px #0000001A;}
+.hbshadow2 {box-shadow: 0px 3px 8px rgba(0,0,0,0.2);}
 
 /* button */
 .graybtn {color:white; font-weight:700; padding: 16px 45px 16px 45px; border:2px solid #9B9B9B; background-color:#9B9B9B;}
@@ -98,18 +104,18 @@ input:focus { outline: none; }
 
 }
 
+/* mobile 사이즈 이하에서만 안보이기*/
 .onlypc {display:block;}
 .onlypc-inline {display:inline-block;}
-/* tablet 사이즈 이상에서만 보이기*/
 @media all and (max-width: 576px) {
 	.onlypc {display:none!important;}
 	.onlypc-inline {display:none!important;}
 }
 
-/* 모바일에서만 보이기 */
+/* mobile 사이즈 이하에서만 보이기*/
 .onlymobile {display:none;}
 .onlymobile-inline {display:none;}
 @media all and (max-width: 576px) {
-	.mobile {display:block!important;}
-	.mobile-inline {display:inline-block!important;}
+	.onlymobile {display:block!important;}
+	.onlymobile-inline {display:inline-block!important;}
 }
