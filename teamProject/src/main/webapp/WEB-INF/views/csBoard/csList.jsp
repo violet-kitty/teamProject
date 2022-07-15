@@ -17,6 +17,19 @@ a{
 table a:visited{
 	color: #ccc;
 }
+.div_header{
+	margin-left: 10%;
+	text-align: left;
+}
+.div_header a,img,h3{
+	display: inline-block;
+}
+.div_header h3{
+	float: center;
+}
+.a_logo{
+	
+}
 .div_userInfo{	
 	display: inline-block;
 	float: left;
@@ -71,7 +84,13 @@ table a:visited{
 </style>
 </head>
 <body>
-	<h3>CS BOARD (임시)</h3>
+	<div class="div_header">
+		<a href="<%=request.getContextPath()%>/home.do">
+			<img src="<%=request.getContextPath()%>/css/image/logo/logo.png">
+		</a>		
+		<h3>1:1 문의 게시판</h3>
+	</div>
+	
 	<c:if test="${login != null }">
 		<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
 		<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
