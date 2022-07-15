@@ -4,6 +4,7 @@ public class SearchVO extends Criteria{
 	private String searchType;
 	private String searchValue;
 	private String sortType;
+	private FilterVO filter;
 	
 	public String getSearchType() {
 		return searchType;
@@ -22,5 +23,11 @@ public class SearchVO extends Criteria{
 	}
 	public void setSortType(String sortType) {
 		this.sortType = sortType;
+	}
+	public FilterVO getFilter() {
+		return filter;
+	}
+	public void setFilter(FilterVO filter) {
+		this.filter = filter;
 	}
 }

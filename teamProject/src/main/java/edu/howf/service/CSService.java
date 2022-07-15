@@ -22,7 +22,7 @@ public interface CSService {
 	
 	public int csReply_write(CSVO vo);
 	
-	public List<CSVO> csList_reply_view(int origincsbidx);
+	public CSVO csList_reply_view(int origincsbidx);
 	
 	public int csList_modify(CSVO vo);
 	

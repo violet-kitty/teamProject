@@ -65,7 +65,7 @@ public class CSServiceImple implements CSService{
 	}
 
 	@Override
-	public List<CSVO> csList_reply_view(int origincsbidx) {
+	public CSVO csList_reply_view(int origincsbidx) {				
 		
 		return csDao.csList_reply_view(origincsbidx);
 	}

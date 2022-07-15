@@ -12,7 +12,7 @@
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- summernote -->
+<!-- /summernote -->
 <style>
 h3{
 	text-align: center;
@@ -33,6 +33,9 @@ h3{
 	background-color: lightgray;
 	font-weight: bold;
 }
+.input_title{
+	width: 100%;
+}
 .tb_content{
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
@@ -46,7 +49,13 @@ h3{
 }
 .tb_filename{
 	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 10px;
+}
+#div_img{
+	margin-top: 10px;
+	display:none;
 }
 .div2{
 	text-align: center;
@@ -75,7 +84,7 @@ h3{
 	<br>
 	<br>
 	<div class="div1">
-		<form id="form1" action="csList_modify.do?csbidx=${cv.csbidx}" method="post" enctype="multipart/form-data">
+		<form id="form1" action="csList_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post" enctype="multipart/form-data">
 			<table class="tb1">
 				<tbody>
 					<tr>			
@@ -94,34 +103,55 @@ h3{
 					</tr>
 					<tr>				
 						<td class="tb_category">제목</td>
-						<td><input type="text" name="title" value="${cv.title}" id="title"></td>					
+						<td style="padding-right: 9px;"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>					
 					</tr>
 					<tr>
 						<td class="tb_category">내용</td>
 						<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;" id="summernote">${cv.content}</textarea></td>
 					</tr>
 					<tr>
-						<td class="tb_category">첨부 이미지 파일</td>
-						<td class="tb_filename">						
+						<td class="tb_category">이미지 첨부 파일</td>
+						<td class="tb_filename">
+							<label><input type="file" name="file" id="file" class="file_btn"></label>
+						<c:if test="${cv.filename == null}">
+							<div id="div_img"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
+						</c:if>
+						<c:if test="${cv.filename != null}">
 							<a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a>
-							<br><br><label><input type="file" name="file" id="file" class="file_btn"></label>
+						</c:if>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="div2">
-				<input type="button" value="수정" class="btn1" onclick="checkFn()">
-				<input type="button" value="취소" onclick="location.href='csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}'" class="btn1">
+				<input type="button" value="수정" class="btn1" onclick="ModifyFn()">
+				<input type="button" value="취소" class="btn1" id="cancel">
 			</div>			
 		</form>		
 	</div>
 <script>
 	$(function(){
+		
+		$("#cancel").click(function(){
+			var content = "${cv.content}";
+	    	if($("#summernote").val() != content){
+	    		if(!confirm("수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    		}
+	    	}
+	    	else{
+    			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    	}
+	    });
+		
 		$("#summernote").summernote({
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:true,
+			focus:false,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -142,8 +172,8 @@ h3{
 		});
 		
 		$("#file").on("change",upload);
-	      
 	      function upload(e){
+	    	 $("#div_img").show();
 	         console.log("file name : ",e.value);
 	         var files = e.target.files;
 	         var filesArr = Array.prototype.slice.call(files);
@@ -170,9 +200,9 @@ h3{
 		
 	});
 	
-	function checkFn(){
+	function ModifyFn(){
 		var title = $("#title");
-		var content = $("#content");
+		var content = $("#summernote");
 		if(title.val() == ""){
 			alert("제목을 입력해주세요");
 			title.focus();
@@ -186,8 +216,7 @@ h3{
 		else {
 			if(!confirm("정말로 수정하시겠습니까?")){
 				return false;
-			}
-			alert("글이 수정되었습니다.");
+			}			
 			$("#form1").submit();
 		}
 	};

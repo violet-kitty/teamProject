@@ -33,7 +33,7 @@ public class BoardVO extends UserVO{
 			SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date formatData = dtFormat.parse(wdate);
 			this.wdate = newDtFormat.format(formatData);
-			System.out.println(this.wdate);
+//			System.out.println(this.wdate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

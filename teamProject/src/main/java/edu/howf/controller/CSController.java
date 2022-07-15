@@ -92,7 +92,7 @@ public class CSController {
 		return "csBoard/cs_write";
 	}
 
-	@RequestMapping(value = "/cs_write1.do")
+	@RequestMapping(value = "/cs_write.do")
 	public String cs_write(MultipartFile file, CSVO vo, HttpServletRequest request, HttpSession session)
 			throws IllegalStateException, IOException {
 		 
@@ -103,8 +103,7 @@ public class CSController {
 		 vo.setMidx(uv.getMidx());		 
 		 
 		 File dir = new File(uploadPath); 
-		 System.out.println("uploadPath");
-		 System.out.println(dir);
+
 		 
 		 if(!dir.exists()) { 
 			 dir.mkdirs(); 
@@ -127,19 +126,15 @@ public class CSController {
 	
 
 	@RequestMapping(value = "/csList_view.do", method = RequestMethod.GET)
-	public String csListView(int csbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String csListView(int csbidx, int origincsbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Cookie[] cookies = request.getCookies();
 		int visitor = 0;
 				
 		for(Cookie cookie : cookies) {
-			System.out.println(cookie.getName());
 			if(cookie.getName().equals("visit")) {
 				visitor = 1;
-				
-				System.out.println("visit 통과");
-				
+
 				if(cookie.getValue().contains(request.getParameter("csbidx"))) {
-					System.out.println("visit if 통과");
 				}
 				else {
 					cookie.setValue(cookie.getValue() + "_" + request.getParameter("csbidx"));
@@ -149,7 +144,6 @@ public class CSController {
 			}
 		}
 		if(visitor == 0) {
-			System.out.println("visitor 0 ");
 			Cookie cookie1 = new Cookie("visit", request.getParameter("csbidx"));
 			response.addCookie(cookie1);
 			
@@ -158,42 +152,14 @@ public class CSController {
 		
 		CSVO cv = csService.csList_view(csbidx);
 
-		List<CSVO> cvr = csService.csList_reply_view(csbidx);
-
+		CSVO cvr = csService.csList_reply_view(origincsbidx);
+		
 		model.addAttribute("cv", cv);
 		model.addAttribute("cvr", cvr);
 
 		return "csBoard/csList_view";
 	}
 
-	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.GET)
-	public String csReply_write(int csbidx, Model model, CSVO vo, HttpServletRequest request, HttpSession session) {
-
-		session = request.getSession();
-
-		UserVO login = (UserVO) session.getAttribute("login");
-
-		vo.setMidx(login.getMidx());
-		System.out.println(vo.getMidx());
-
-		CSVO cv = csService.csList_view(csbidx);
-
-		model.addAttribute("login", login);
-		model.addAttribute("cv", cv);
-
-		return "csBoard/csReply_write";
-	}
-
-	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.POST)
-	public String csReply_write(CSVO vo, HttpServletRequest request, HttpSession session) {
-
-		UserVO login = (UserVO) session.getAttribute("login");
-
-		vo.setMidx(login.getMidx());
-		int result = csService.csReply_write(vo);
-
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx();
-	}
 
 	@RequestMapping(value = "/csList_modify.do", method = RequestMethod.GET)
 	public String csListModify(int csbidx, Model model) {
@@ -214,7 +180,7 @@ public class CSController {
 		vo.setMidx(uv.getMidx());
 		
 		File dir = new File(uploadPath); 
-		 System.out.println(dir);
+		 
 		 
 		 if(!dir.exists()) { 
 			 dir.mkdirs(); 
@@ -231,7 +197,7 @@ public class CSController {
 
 		int result = csService.csList_modify(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getCsbidx();
+		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getCsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 
 	@RequestMapping(value = "/csList_delete.do", method = RequestMethod.GET)
@@ -242,6 +208,35 @@ public class CSController {
 		return "redirect:/csBoard/csList.do";
 	}
 
+	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.GET)
+	public String csReply_write(int csbidx, Model model, CSVO vo, HttpServletRequest request, HttpSession session) {
+
+		session = request.getSession();
+
+		UserVO login = (UserVO) session.getAttribute("login");
+
+		vo.setMidx(login.getMidx());
+		
+
+		CSVO cv = csService.csList_view(csbidx);
+
+		model.addAttribute("login", login);
+		model.addAttribute("cv", cv);
+
+		return "csBoard/csReply_write";
+	}
+
+	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.POST)
+	public String csReply_write(CSVO vo, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+
+		vo.setMidx(login.getMidx());
+		int result = csService.csReply_write(vo);
+
+		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
+	}
 	@RequestMapping(value = "/csReply_modify.do", method = RequestMethod.GET)
 	public String csReply_modify(int csbidx, Model model) {
 
@@ -257,7 +252,7 @@ public class CSController {
 
 		int result = csService.csReply_modify(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx();
+		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 
 	@RequestMapping(value = "/csReply_delete.do")
@@ -265,16 +260,11 @@ public class CSController {
 
 		int result = csService.csReply_delete(vo);
 
-		System.out.println(vo.getCsbidx());
-		System.out.println(vo.getOrigincsbidx());
-
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx();
+		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 	
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName, @RequestParam(value="down", defaultValue="0" ) int down ) throws Exception{
-		
-		System.out.println("fileName: " + fileName);
 		
 		InputStream in = null;		
 		ResponseEntity<byte[]> entity = null;
