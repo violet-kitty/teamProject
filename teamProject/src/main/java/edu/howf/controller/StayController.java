@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.StayService;
 import edu.howf.util.MediaUtils;
+import edu.howf.vo.PageMaker;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
@@ -42,15 +43,27 @@ public class StayController {
 	
 	@RequestMapping(value="/stayList.do")
 	public String stayList(SearchVO vo, Model model) {
+		//히어로
+		
+		//sort
 		if(vo.getSortType()==null) vo.setSortType("star");
 		
+		//페이징
+		int page = vo.getPage();
+		int cnt = stayService.stayCountAll(vo);
+		vo.setPerPageNum(9);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
 		List<StayVO> stay = stayService.staySelectAll(vo);
+		vo.setPage(page);
 		
-		if(stay != null) {
-			model.addAttribute("stay", stay);
-		}
-		
+
+		model.addAttribute("stay", stay);
 		model.addAttribute("search", vo);
+		model.addAttribute("pm", pm);
 		
 		
 		return "stay/stayList";
@@ -120,8 +133,9 @@ public class StayController {
 	
 	@RequestMapping(value="/stayView.do")
 	public String stayView(int sidx, Model model) {
+		StayVO stay = stayService.staySelectOne(sidx);
 		
-		
+		model.addAttribute("stay", stay);
 		
 		return "stay/stayView";
 	}

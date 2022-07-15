@@ -24,6 +24,22 @@ public class StayServiceImple implements StayService{
 	public int stayCountAll(SearchVO vo) {
 		return stayDao.stayCoountAll(vo);
 	}
+	
+	@Override
+	public StayVO staySelectOne(int sidx) {
+		//숙박시설 정보 가져오기
+		StayVO stay = stayDao.staySelectOne(sidx);
+		
+		//방 정보 가져오기
+		List<RoomVO> room = stayDao.roomSelect(sidx);
+		stay.setRoom(room);
+		
+		//리뷰 정보 가져오기
+		//(페이징 처리를 위해 후에 ajax로 따로 가져올것)
+		
+		
+		return stay;
+	}
 
 	@Override
 	public int stayInsert(StayVO vo) {
