@@ -22,6 +22,40 @@ body{
 h3{
 	text-align: center;
 }
+.div_header{
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: center;
+}
+.div_header a,img,h3{
+	display: inline-block;
+}
+.div_header a{
+	float: left;
+}
+.a_logo img{
+	max-width: 100px;
+	max-height: 100px;
+}
+.div_userInfo{	
+	display: inline-block;
+	float: left;
+	margin-left: 10%;
+}
+.span_userInfo{
+	display: inline-block;
+	font-weight: bold;
+	color : #5B6DCD;
+}
+.div_logout{
+	display: inline-block;
+	float: right;
+	margin-right: 10%;
+}
+.a_logout{
+	color: #5B6DCD;
+	font-weight: bold;
+}
 .replies{
 	margin-top: 50px;
 }
@@ -71,8 +105,22 @@ h3{
 </style>
 </head>
 <body>
-	<h3>1:1 문의 답변 글 수정</h3>
-	<hr>
+	<div class="div_header">
+		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+		</a>		
+		<h3>1:1 문의 게시판</h3>
+	</div>
+	<br><br>
+	<c:if test="${login != null }">
+		<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
+		<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
+	</c:if>
+	<br>
+	<hr>	
+	<br>
+	<br>
+	<br>
 	<div class="replies">
 		<form id="form1" action="csReply_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
 			<table class="tb2">
