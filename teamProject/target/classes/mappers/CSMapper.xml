@@ -86,6 +86,7 @@
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
 			AND    cs.delyn = 'N'
+			AND cs.csbidx = cs.origincsbidx
 			<if test="searchType != null and searchType.equals('total')">
 				AND (cs.title like concat('%', #{searchValue}, '%')
 				OR   cs.content like concat('%', #{searchValue}, '%')

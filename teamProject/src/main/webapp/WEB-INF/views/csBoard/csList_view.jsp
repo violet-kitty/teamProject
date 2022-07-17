@@ -17,12 +17,14 @@ h3{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -158,17 +160,17 @@ h3{
 	border: 0.5px solid gray;
 }
 #img{
-	max-width: 500px;
-	max-height: 300px;
+	max-width: 480px;
+	max-height: 270px;
 }
 </style>
 </head>
 <body>
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>
 	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
-		<h3>1:1 문의 게시판</h3>
+		<h3>1:1 문의 게시글</h3>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
@@ -279,7 +281,7 @@ h3{
 				return false;
 			}
 			else{
-				 location.href = "csList_delete.do?csbidx=${cv.csbidx}";
+				 location.href = "csList_delete.do?origincsbidx=${cv.origincsbidx}";
 			}			
 		});
 		

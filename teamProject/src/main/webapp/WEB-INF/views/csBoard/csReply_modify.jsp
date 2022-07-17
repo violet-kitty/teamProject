@@ -25,12 +25,14 @@ h3{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -71,6 +73,9 @@ h3{
 	background-color: #b2ffb5;
 	font-weight: bold;
 }
+.span_must_input{
+	color: red;
+}
 .reply_category_title{
 	border-top: 2px solid #27c6be;
 	border-bottom: 2px solid #27c6be;
@@ -105,11 +110,11 @@ h3{
 </style>
 </head>
 <body>
-	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
-		<h3>1:1 문의 게시판</h3>
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>	
+	<div class="div_header">	
+		<h3>1:1 문의 게시글 답변 수정</h3>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
@@ -131,13 +136,13 @@ h3{
 					<tr>
 						<td class="reply_category">작성자</td>
 						<td>${cv.nickname}</td>
-						<td class="reply_category">제목</td>
+						<td class="reply_category">제목<span class="span_must_input">*</span></td>
 						<td class="td_input_title"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>
 						<td class="reply_category">작성일</td>
 						<td>${cv.wdate}</td>
 					</tr>
 					<tr>
-						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용</td>
+						<td class="reply_category" style="border-top: 2px solid #27c6be;">내용<span class="span_must_input">*</span></td>
 						<td class="reply_content" colspan="5"><textarea id="summernote" name="content">${cv.content}</textarea></td>
 					</tr>
 					<tr>
@@ -154,8 +159,17 @@ h3{
 	$(function(){
 		
 		$("#cancel").click(function(){
+			var title = "${cv.title}";
 			var content = "${cv.content}";
-	    	if($("#summernote").val() != content){
+			if($("#title").val() != title){
+	    		if(!confirm("수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+	    	}
+			else if($("#summernote").val() != content){
 	    		if(!confirm("수정을 취소하시겠습니까?")){
 	    			return false;
 	    		}

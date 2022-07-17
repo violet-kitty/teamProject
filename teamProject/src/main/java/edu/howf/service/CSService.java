@@ -26,7 +26,7 @@ public interface CSService {
 	
 	public int csList_modify(CSVO vo);
 	
-	public int csList_delete(int csbidx);
+	public int csList_delete(int origincsbidx);
 	
 	public int csReply_modify(CSVO vo);
 	

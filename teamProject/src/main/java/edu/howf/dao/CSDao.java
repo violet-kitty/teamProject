@@ -76,9 +76,9 @@ public class CSDao {
 		return sqlSession.update(namespace + "csList_modify", vo);
 	}
 	
-	public int csList_delete(int csbidx) {
+	public int csList_delete(int origincsbidx) {
 		
-		return sqlSession.update(namespace + "csList_delete", csbidx);
+		return sqlSession.update(namespace + "csList_delete", origincsbidx);
 	}
 	
 	public int csReply_modify(CSVO vo) {

@@ -20,12 +20,14 @@ h3{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -51,9 +53,6 @@ h3{
 	color: #5B6DCD;
 	font-weight: bold;
 }
-.div1{
-	
-}
 .tb1{
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
@@ -66,6 +65,9 @@ h3{
 	width: 10%;
 	background-color: lightgray;
 	font-weight: bold;
+}
+.span_must_input{
+	color: red;
 }
 .input_title{
 	width: 100%;
@@ -87,10 +89,6 @@ h3{
 	padding-bottom: 10px;
 	padding-left: 10px;
 }
-#div_img{
-	margin-top: 10px;
-	display:none;
-}
 .div2{
 	text-align: center;
 	width: 80%;
@@ -103,21 +101,26 @@ h3{
 	height: 30px;
 	margin-left: 1%;
 }
-.file_btn{
-	
-}
 #img{
-	max-width: 500px;
-	max-height: 300px;
+	max-width: 480px;
+	max-height: 270px;
+}
+#div_img1{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#div_img2{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 </style>
 </head>
 <body>
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>
 	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
-		<h3>1:1 문의 게시판</h3>
+		<h3>1:1 문의 게시글 수정</h3>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
@@ -148,22 +151,24 @@ h3{
 						</td>
 					</tr>
 					<tr>				
-						<td class="tb_category">제목</td>
+						<td class="tb_category">제목<span class="span_must_input">*</span></td>
 						<td style="padding-right: 9px;"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>					
 					</tr>
 					<tr>
-						<td class="tb_category">내용</td>
+						<td class="tb_category">내용<span class="span_must_input">*</span></td>
 						<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;" id="summernote">${cv.content}</textarea></td>
 					</tr>
 					<tr>
 						<td class="tb_category">이미지 첨부 파일</td>
 						<td class="tb_filename">
-							<label><input type="file" name="file" id="file" class="file_btn"></label>
+							<div><input type="file" name="file" id="file" class="file_btn"></div>
 						<c:if test="${cv.filename == null}">
-							<div id="div_img"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
+							<div id="div_img1" style="display:none"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
+							<div id="delArea" style="display: none;"></div>
 						</c:if>
 						<c:if test="${cv.filename != null}">
-							<a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a>
+							<div id="div_img2"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
+							<div id="delArea"><input type="button" id="btn_file_del" value="파일 삭제"></div>
 						</c:if>
 						</td>
 					</tr>
@@ -179,15 +184,32 @@ h3{
 	$(function(){
 		
 		$("#cancel").click(function(){
+			var title = "${cv.title}";
 			var content = "${cv.content}";
-	    	if($("#summernote").val() != content){
-	    		if(!confirm("수정을 취소하시겠습니까?")){
+			if($("#title").val() != title){
+				if(!confirm("제목이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    		}
+			}
+			else if($("#summernote").val() != content){
+	    		if(!confirm("내용이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
 	    			return false;
 	    		}
 	    		else{
 	    			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
 	    		}
 	    	}
+			else if($("#file").val() != ""){				
+				if(!confirm("첨부된 파일이 변경되었습니다. \n\n수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    		}
+			}
 	    	else{
     			location.href="csList_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
 	    	}
@@ -219,7 +241,27 @@ h3{
 		
 		$("#file").on("change",upload);
 	      function upload(e){
-	    	 $("#div_img").show();
+	    	 <c:if test="${cv.filename == null}">
+	    	 	$("#div_img1").show();
+	    	 </c:if>
+	    	 <c:if test="${cv.filename != null}">
+	    	 	$("#div_img2").show();
+	    	 </c:if>
+	    	 $("#delArea").empty();
+	    	 $("#delArea").html('<input type="button" id="btn_file_del" value="파일 삭제">');
+	    	 $("#delArea").show();
+	    	 
+	    	 $(document).on("click","#btn_file_del",function(){
+		    	  $("#file").val("");
+		    	  <c:if test="${cv.filename == null}">
+			    	 $("#div_img1").css("display", "none");
+			      </c:if>
+		    	  <c:if test="${cv.filename != null}">
+		    	  	$("#div_img2").css("display", "none");
+		    	  </c:if>
+		    	  $("#delArea").css("display", "none");
+		      });
+	    	 
 	         console.log("file name : ",e.value);
 	         var files = e.target.files;
 	         var filesArr = Array.prototype.slice.call(files);
@@ -243,6 +285,12 @@ h3{
 	            reader.readAsDataURL(f);
 	         });
 	      }
+	      
+	      $("#btn_file_del").click(function(){	    	  
+	    	  $("#file").val("");
+	    	  $("#div_img2").css("display", "none");
+	    	  $("#delArea").css("display", "none");
+	      })
 		
 	});
 	

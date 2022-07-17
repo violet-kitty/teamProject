@@ -22,12 +22,14 @@ h3{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding-right: 10%;
 	text-align: center;
 }
-.div_header a,img,h3{
+.div_header h3{
 	display: inline-block;
 }
-.div_header a{
+.a_logo{
+	margin-left: 10%;
 	float: left;
 }
 .a_logo img{
@@ -69,6 +71,9 @@ h3{
 	background-color: lightgray;
 	font-weight: bold;
 }
+.span_must_input{
+	color: red;
+}
 .input_title{
 	width: 100%;
 }
@@ -81,6 +86,10 @@ h3{
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 10px;
+}
+#div_img{
+	margin-top: 10px;
+	display:none;
 }
 .div2{
 	text-align: center;
@@ -95,17 +104,17 @@ h3{
 	margin-left: 1%;
 }
 #img{
-	max-width: 500px;
-	max-height: 300px;
+	max-width: 480px;
+	max-height: 270px;
 }
 </style>
 </head>
 <body>
+	<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
+		<img src="<%=request.getContextPath()%>/image/logo/logo.png">
+	</a>
 	<div class="div_header">
-		<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-			<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-		</a>		
-		<h3>1:1 문의 게시판</h3>
+		<h3>1:1 문의 게시글 작성</h3>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
@@ -136,18 +145,18 @@ h3{
 						</td>
 					</tr>
 					<tr>				
-						<td class="tb_category">제목</td>
+						<td class="tb_category">제목<span class="span_must_input">*</span></td>
 						<td style="padding-right: 9px;"><input type="text" name="title" id="title" class="input_title"></td>					
 					</tr>
 					<tr>
-						<td class="tb_category">내용</td>
+						<td class="tb_category">내용<span class="span_must_input">*</span></td>
 						<td><textarea class="tb_textarea" name="content" id="summernote"></textarea></td>
 					</tr>
 					<tr>
 						<td class="tb_category">이미지 첨부 파일</td>
 						<td class="tb_filename">
 							<label><input type="file" id="file" name="file"></label>
-							<div id="div_img" style="margin-top: 10px; display: none;"><img id="img"></div>
+							<div id="div_img"><img id="img"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -162,18 +171,34 @@ h3{
 	$(function(){
 		
 		 $("#cancel").click(function(){
-		    	if($("#summernote").val() != ""){
-		    		if(!confirm("작성된 내용이 있습니다. \n\n작성을 취소하시겠습니까?")){
-		    			return false;
-		    		}
-		    		else{
-		    			history.back();
-		    		}
-		    	}
-		    	else{
-	    			history.back();
-	    		}
-		    });
+			 if($("#title").val() != ""){
+				 if(!confirm("작성된 제목이 있습니다. \n\n글 작성을 취소하시겠습니까?")){
+	    			 return false;
+	    		 }
+	    		 else{
+	    			 history.back();
+	    		 }
+			 }
+			 else if($("#summernote").val() != ""){
+	    		 if(!confirm("작성된 내용이 있습니다. \n\n글 작성을 취소하시겠습니까?")){
+	    			 return false;
+	    		 }
+	    		 else{
+	    			 history.back();
+	    		 }
+	    	 }
+			 else if($("#file").val() != ""){
+				 if(!confirm("첨부된 파일이 있습니다. \n\n글 작성을 취소하시겠습니까?")){
+	    			 return false;
+	    		 }
+	    		 else{
+	    			 history.back();
+	    		 }
+			 }
+	    	 else{
+    			 history.back();
+    		 }
+	    });
 		
 		$("#summernote").summernote({
 			height:300,
