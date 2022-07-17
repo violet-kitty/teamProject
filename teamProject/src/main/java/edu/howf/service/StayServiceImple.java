@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.StayDao;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
@@ -34,11 +35,17 @@ public class StayServiceImple implements StayService{
 		List<RoomVO> room = stayDao.roomSelect(sidx);
 		stay.setRoom(room);
 		
-		//리뷰 정보 가져오기
-		//(페이징 처리를 위해 후에 ajax로 따로 가져올것)
-		
-		
 		return stay;
+	}
+	
+	@Override
+	public List<CommentVO> reviewSelect(SearchVO vo) {
+		return stayDao.reviewSelect(vo);
+	}
+	
+	@Override
+	public int reviewCount(int bidx) {
+		return stayDao.reviewCount(bidx);
 	}
 
 	@Override
@@ -47,6 +54,7 @@ public class StayServiceImple implements StayService{
 		//content 이어붙이기
 		StringBuilder contents = new StringBuilder("");
 		for(int i=0;i<vo.getContent().size();i++) {
+			vo.getContent().get(i).replaceAll("\n", "<br>");
 			contents.append(vo.getContent().get(i)+",");
 		}
 		String content = contents.toString();
@@ -87,5 +95,15 @@ public class StayServiceImple implements StayService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int reviewInsert(CommentVO vo) {
+		return stayDao.reviewInsert(vo);
+	}
+
+	@Override
+	public float stayStar(int bidx) {
+		return stayDao.stayStar(bidx);
 	}
 }

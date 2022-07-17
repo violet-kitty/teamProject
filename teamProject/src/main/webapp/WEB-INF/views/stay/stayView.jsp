@@ -1,8 +1,10 @@
+<%@page import="edu.howf.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="edu.howf.vo.UserVO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,36 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<!-- 별점 css -->
+<style>
+.star-rating {
+	  display:flex;
+	  flex-direction: row-reverse;
+	  font-size:1em;
+	  justify-content:space-around;
+	  padding:0 .2em;
+	  text-align:center;
+	  width:5em;
+	}
+
+	.star-rating input[type=radio] {
+	  display:none;
+	}
+
+	.star-rating label {
+	  color:#ccc;
+	  cursor:pointer;
+	}
+
+	.star-rating :checked ~ label {
+	  color:#f90;
+	}
+
+	.star-rating label:hover,
+	.star-rating label:hover ~ label {
+	  color:#fc0;
+	}
+</style>
 </head>
 <body>
 	<div class="wrap">
@@ -30,9 +62,9 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<c:if test="${stay.photo != null}">
-						<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}" style="max-width:200px"><br>
+						<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}" style="max-width:200px" id="mainImage"><br>
 						<c:forEach var="item" items="${fn:split(stay.photo,',')}">
-							<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}" style="max-width:100px">
+							<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}" style="max-width:100px;cursor:pointer;" onclick="photoChange('${item}')">
 						</c:forEach>
 					</c:if>
 				</div>
@@ -42,7 +74,7 @@
 					</div>
 					<div class="col-lg-4 d-flex justify-content-end">
 						<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
-						<span class="ms-1">${stay.star}</span>
+						<span class="ms-1" id="stayStarArea">${stay.star}</span>
 						<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
 						<span class="ms-1">${stay.heart}</span>
 					</div>
@@ -138,30 +170,32 @@
 				<div class="col">
 					<div>
 						<p>주변정보</p>
-						<p>${fn:split(stay.contents,',')[1]}</p>
+						<div>${fn:split(stay.contents,',')[1]}</div>
 					</div>
 					<div>
 						<p>공지사항</p>
-						<p>${fn:split(stay.contents,',')[2]}</p>
+						<div>${fn:split(stay.contents,',')[2]}</div>
 					</div>
 					<div>
 						<p>기본 정보</p>
-						<p>${fn:split(stay.contents,',')[3]}</p>
+						<div>${fn:split(stay.contents,',')[3]}</div>
 					</div>
 					<div>
 						<p>현장 결제</p>
-						<p>${fn:split(stay.contents,',')[4]}</p>
+						<div>${fn:split(stay.contents,',')[4]}</div>
 					</div>
 					<div>
 						<p>확인사항 및 기타</p>
-						<p>${fn:split(stay.contents,',')[5]}</p>
+						<div>${fn:split(stay.contents,',')[5]}</div>
 					</div>
 					<div>
 						지도
 					</div>
 					<div>
 						<p>편의시설 및 서비스</p>
-						${stay.services}
+						<c:forEach var="s" items="${fn:split(stay.services,',')}">
+						<span style="border:1px solid black">${s}</span> 
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -169,9 +203,71 @@
 			<!-- 리뷰 -->
 			<div class="row" id="reviewTab" style="display:none">
 				<div class="col">
-					리뷰
-				</div>
-			</div>
+					<p>리뷰</p>
+					<div>
+						<!-- 리뷰쓰기 창 -->
+						<div style="border:1px solid black">
+							<p>이 숙소 리뷰</p>
+							<form id="reviewFrm" enctype="multipart/form-data">
+								<textarea rows="3" cols="20" placeholder="댓글" name="content"></textarea>
+								<div class="star-rating">
+									<input type="radio" id="5-stars" name="star" value="5" checked/>
+									<label for="5-stars" class="star">&#9733;</label>
+									<input type="radio" id="4-stars" name="star" value="4" />
+									<label for="4-stars" class="star">&#9733;</label>
+									<input type="radio" id="3-stars" name="star" value="3"/>
+									<label for="3-stars" class="star">&#9733;</label>
+									<input type="radio" id="2-stars" name="star" value="2" />
+									<label for="2-stars" class="star">&#9733;</label>
+									<input type="radio" id="1-star" name="star" value="1" />
+									<label for="1-star" class="star">&#9733;</label>
+								</div>
+								<input type="file" id="file" name="file">
+								<input type="hidden" name="bidx" value="${stay.sidx}">
+								<button type="button" id="reviewWriteBtn">리뷰 작성</button>
+							</form>
+						</div>
+						
+						<br>
+						
+						
+						<!-- page 정보 -->
+						<input type="hidden" id="page" value="${vo.page}">
+						<!-- 리뷰 리스트 -->
+						<div id="reviewList">
+							<c:forEach var="i" items="${review}">
+							<div style="border:1px solid black">
+								<p>${i.nickname}</p>
+								<p>
+								<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
+								${i.star}
+								</p>
+								<c:if test="${i.photo != null}">
+								<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="max-width:100px"></p>
+								</c:if>
+								<p>${i.content}</p>
+							</div>
+							</c:forEach>
+						</div>
+						
+						
+						<!-- 리뷰 페이징 -->
+						<div id="reviewPaging">
+							<c:if test="${pm.prev == true}">
+								<a href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<a href="javascript:reviewPaging(${i})" class="mx-1">${i}</a>
+							</c:forEach>
+							<c:if test="${pm.next == true}">
+								<a href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
+							</c:if>
+						</div>
+						
+						
+					</div>
+				</div><!-- /리뷰 col -->
+			</div><!-- /리뷰 row -->
 			
 			
 			
@@ -225,16 +321,142 @@
 			$("#reviewTabBtn").css("color","green");
 		});
 		
+		
+		//리뷰쓰기
+		$("#reviewWriteBtn").on("click",function(){
+			var login = '<%= (UserVO)session.getAttribute("login") %>';
+			if(login == "null"){
+				alert("로그인이 필요합니다");
+				return;
+			}
+			else {
+				var formData = new FormData($("#reviewFrm")[0]);
+				$.ajax({
+					url:"reviewWrite.do",
+					data:formData,
+					type:"post",
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(data){
+						if(data==1){
+							alert("글이 작성되었습니다");
+							
+							//리뷰 리스트 불러오기
+							$.ajax({
+								url:"reviewSelect.do",
+								data:"bidx=${stay.sidx}&page=1",
+								type:"post",
+								success:function(list){
+									//그려주기
+									var html = '';
+									for(var i=0;i<list.length;i++){
+										html = html + '<div style="border:1px solid black">'
+											+ '<p>'+list[i].nickname+'</p>'
+											+ '<p><img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">'
+											+ list[i].star+'</p>';
+											
+										if(list[i].photo != null){
+											html = html+'<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+'" style="max-width:100px"></p>';
+										}
+											
+										html = html + '<p>'+list[i].content+'</p>'
+											+ '</div>';
+										
+										$("#reviewList").html(html);
+									}
+									
+									//리뷰 페이징
+									$.ajax({
+										url:"reviewPaging.do",
+										data:"bidx=${stay.sidx}",
+										type:"post",
+										success:function(paging){
+											//페이징 만들기
+											var p = '';
+											
+											if(paging.prev == true){
+												p = p + '<a href="javascript:reviewPaging('+(paging.startPage-1)+')">◀</a>';
+											}
+											
+											for(var i=paging.startPage;i<=paging.endPage;i++){
+												p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1">'+i+'</a>';
+											}
+											
+											if(paging.next == true){
+												p = p + '<a href="javascript:reviewPaging('+(paging.endPage+1)+')">▶</a>';
+											}
+											
+											$("#reviewPaging").html(p);
+											
+											//별점 변경
+											$.ajax({
+												url:"stayStar.do",
+												data:"bidx=${stay.sidx}",
+												type:"post",
+												success:function(star){
+													$("#stayStarArea").html(star.toFixed(1));
+												}
+											});
+											
+										}
+									});//페이징 ajax
+									
+								}
+							});//리스트 ajax
+							
+						}
+					}
+				});//리뷰쓰기 ajax
+				
+			}
+		});//리뷰쓰기 function
+		
 	});
 	
+	//객실이용 안내 보이기
 	function roomInfoFn(index){
 		$("#roomInfoModal"+index).show();
 	}
-	
+	//객실 이용 안내 닫기
 	function modalClose(index){
 		$("#roomInfoModal"+index).hide();
 	}
 	
+	//리뷰 페이지 이동
+	function reviewPaging(index){
+		$.ajax({
+			url:"reviewSelect.do",
+			data:"bidx=${stay.sidx}&page="+index,
+			type:"post",
+			success:function(list){
+				$("#page").val(index);
+				
+				//그려주기
+				var html = '';
+				for(var i=0;i<list.length;i++){
+					html = html + '<div style="border:1px solid black">'
+						+ '<p>'+list[i].nickname+'</p>'
+						+ '<p><img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">'
+						+ list[i].star+'</p>';
+						
+					if(list[i].photo != null){
+						html = html+'<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+'" style="max-width:100px"></p>';
+					}
+						
+					html = html + '<p>'+list[i].content+'</p>'
+						+ '</div>';
+					
+					$("#reviewList").html(html);
+				}
+			}
+		});
+	}
+	
+	//사진 누르면 큰 사진 바꾸기
+	function photoChange(photo){
+		$("#mainImage").attr("src","<%=request.getContextPath() %>/stay/displayFile.do?fileName="+photo);
+	}
 </script>
 
 

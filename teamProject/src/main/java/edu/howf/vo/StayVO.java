@@ -14,7 +14,7 @@ public class StayVO {
 	private String photo;		//숙박시설 사진
 	private String delyn;		//삭제 여부
 	private List<RoomVO> room;	//숙박시설에 있는 방
-	private int star;			//숙박 시설 별점
+	private float star;		//숙박 시설 별점
 	private int heart;			//숙박 시설 찜 갯수
 	private int min;			//포함된 방의 최저가
 	private int max;			//포함된 방의 최고가
@@ -87,10 +87,10 @@ public class StayVO {
 	public void setRoom(List<RoomVO> room) {
 		this.room = room;
 	}
-	public int getStar() {
-		return star;
+	public float getStar() {
+		return (float)(Math.round(star*10)/10.0);
 	}
-	public void setStar(int star) {
+	public void setStar(float star) {
 		this.star = star;
 	}
 	public int getHeart() {

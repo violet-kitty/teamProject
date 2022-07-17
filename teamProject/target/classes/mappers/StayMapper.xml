@@ -265,17 +265,37 @@
 	</select>
 	
 	<!-- 리뷰 가져오기 -->
-	<select id="reviewSelect" parameterType="int" resultType="boardVO">
+	<select id="reviewSelect" parameterType="searchVO" resultType="commentVO">
 		SELECT a.cbidx
 			, a.content
 			, a.star
 			, a.midx
+			, a.photo
 			, b.nickname
 		FROM comment a, usertable b
 		WHERE a.midx = b.midx
-		AND a.bidx = #{sidx}
+		AND a.bidx = #{bidx}
 		AND a.type = 'stay'
-		AND a.delyn = 'N'	
+		AND a.delyn = 'N'
+		ORDER BY wdate desc
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 리뷰 전체 수 세기 -->
+	<select id="reviewCount" parameterType="int" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE type = 'stay'
+		AND bidx = #{bidx}
+		AND delyn = 'N'
+	</select>
+	
+	<select id="stayStar" parameterType="int" resultType="float">
+		SELECT AVG(star) as star
+		FROM comment
+		WHERE bidx = #{bidx}
+		AND type = 'stay'
+		AND delyn = 'N'
 	</select>
 	
 	<!-- 숙박시설 등록 -->
@@ -286,7 +306,7 @@
 			, name
 			, addr
 			, detailaddr
-			, content
+			, contents
 			, tag
 			, photo
 			, services
@@ -315,7 +335,7 @@
 			sidx
 			, name
 			, price
-			, tag
+			, tags
 			, people
 			, square
 			, photo
@@ -338,6 +358,34 @@
 			, #{qbed}
 			, #{kbed}
 			, 'N'
+		)
+	</insert>
+	
+	<!-- 리뷰 등록 -->
+	<insert id="reviewInsert" parameterType="commentVO">
+		INSERT INTO comment(
+			  content
+			, star
+			, type
+			, midx
+			, bidx
+			, wdate
+			, delyn
+			<if test="photo != null">
+			, photo
+			</if>
+		)
+		VALUES(
+			  #{content}
+			, #{star}
+			, 'stay'
+			, #{midx}
+			, #{bidx}
+			, now()
+			, 'N'
+			<if test="photo != null">
+			, #{photo}
+			</if>
 		)
 	</insert>
 	

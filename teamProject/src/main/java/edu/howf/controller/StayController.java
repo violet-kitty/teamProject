@@ -21,10 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.StayService;
 import edu.howf.util.MediaUtils;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
@@ -132,16 +134,90 @@ public class StayController {
 	}
 	
 	@RequestMapping(value="/stayView.do")
-	public String stayView(int sidx, Model model) {
+	public String stayView(int sidx, SearchVO vo, Model model) {
+		//숙박정보, 방 정보
 		StayVO stay = stayService.staySelectOne(sidx);
 		
+		//리뷰
+		//리뷰는 3개씩 보여줌
+		vo.setPerPageNum(3);
+		int page = vo.getPage();
+		
+		//리뷰 페이징
+		//페이징
+		int cnt = stayService.reviewCount(sidx);
+				
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		vo.setBidx(sidx);
+		if(vo.getPage()==0) vo.setPage(1);
+		List<CommentVO> review = stayService.reviewSelect(vo);
+		vo.setPage(page);
+		
 		model.addAttribute("stay", stay);
+		model.addAttribute("review", review);
+		model.addAttribute("pm", pm);
+		model.addAttribute("vo",vo);
 		
 		return "stay/stayView";
 	}
 	
+	//리뷰쓰기
+	@ResponseBody
+	@RequestMapping(value="/reviewWrite.do")
+	public int reviewWrite(CommentVO vo, MultipartFile file, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+		//파일 업로드
+		File dir = new File(uploadPath);
+		if(!dir.exists()) dir.mkdirs();
+		
+		if(!file.getOriginalFilename().isEmpty()) {
+			System.out.println("파일 저장 경로 : "+uploadPath);
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+			file.transferTo(new File(uploadPath,fileName));
+			vo.setPhoto(fileName);
+		}
+		else {
+			System.out.println("업로드된 파일 없음");
+		}
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		return stayService.reviewInsert(vo);
+	}
 	
+	//리뷰 불러오기
+	@ResponseBody
+	@RequestMapping(value="/reviewSelect.do", produces = "application/json;charset=utf-8")
+	public List<CommentVO> reviewSelect(SearchVO vo){
+		vo.setPerPageNum(3);
+		return stayService.reviewSelect(vo);
+	}
 	
+	//리뷰 페이징
+	@ResponseBody
+	@RequestMapping(value="/reviewPaging.do", produces = "application/json;charset=utf-8")
+	public PageMaker reviewPaging(SearchVO vo) {
+		int cnt = stayService.reviewCount(vo.getBidx());
+		vo.setPerPageNum(3);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		return pm;
+	}
+	
+	//별점 변경
+	@ResponseBody
+	@RequestMapping(value="stayStar.do")
+	public float stayStar(int bidx) {
+		return stayService.stayStar(bidx);
+	}
 	
 	//사진 보여주기 위한 코드
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)

@@ -69,7 +69,7 @@
 				
 				<div class="row">
 					<div class="col">
-						<input class="form-control" type="text" name="content" id="content" placeholder="간단한 설명을 해주세요">
+						<textarea class="form-control" name="content" id="content" placeholder="간단한 설명을 해주세요"></textarea>
 					</div>
 				</div>
 				

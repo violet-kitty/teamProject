@@ -5,6 +5,7 @@ public class SearchVO extends Criteria{
 	private String searchValue;
 	private String sortType;
 	private FilterVO filter;
+	private int bidx;
 	
 	public String getSearchType() {
 		return searchType;
@@ -29,5 +30,11 @@ public class SearchVO extends Criteria{
 	}
 	public void setFilter(FilterVO filter) {
 		this.filter = filter;
+	}
+	public int getBidx() {
+		return bidx;
+	}
+	public void setBidx(int bidx) {
+		this.bidx = bidx;
 	}
 }
