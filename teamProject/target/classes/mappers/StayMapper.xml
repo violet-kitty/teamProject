@@ -119,7 +119,7 @@
 		ORDER BY e.max desc
 		</if>
 		<if test='sortType.equals("min")'>
-		ORDER BY e.min desc
+		ORDER BY e.min asc
 		</if>
 		<if test='sortType.equals("star")'>
 		ORDER BY f.star desc
