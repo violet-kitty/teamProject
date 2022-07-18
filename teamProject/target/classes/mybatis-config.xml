@@ -22,6 +22,8 @@
         <typeAlias type="edu.howf.vo.HeartVO" alias="heartVO"/>
         <typeAlias type="edu.howf.vo.AutoVO" alias="autoVO"/>
         <typeAlias type="edu.howf.vo.CommentVO" alias="commentVO"/>
+        <typeAlias type="edu.howf.vo.TeamVO" alias="teamVO"/>
+        
     </typeAliases>
 
 </configuration>

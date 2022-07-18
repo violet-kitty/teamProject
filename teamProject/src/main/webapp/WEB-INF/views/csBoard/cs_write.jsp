@@ -19,6 +19,9 @@
 h3{
 	text-align: center;
 }
+a{
+	text-decoration-line: none;
+}
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
@@ -89,7 +92,9 @@ h3{
 }
 #div_img{
 	margin-top: 10px;
-	display:none;
+}
+#div_img2{
+	margin-top: 10px;
 }
 .div2{
 	text-align: center;
@@ -146,7 +151,7 @@ h3{
 					</tr>
 					<tr>				
 						<td class="tb_category">제목<span class="span_must_input">*</span></td>
-						<td style="padding-right: 9px;"><input type="text" name="title" id="title" class="input_title"></td>					
+						<td style="padding-right: 9px;"><input type="text" name="title" id="title" class="input_title" placeholder="제목을 입력해주세요"></td>					
 					</tr>
 					<tr>
 						<td class="tb_category">내용<span class="span_must_input">*</span></td>
@@ -156,7 +161,8 @@ h3{
 						<td class="tb_category">이미지 첨부 파일</td>
 						<td class="tb_filename">
 							<label><input type="file" id="file" name="file"></label>
-							<div id="div_img"><img id="img"></div>
+							<div id="div_img" style="display: none;"><img id="img"></div>
+							<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -228,6 +234,7 @@ h3{
 		$("#file").on("change",upload);	      
 	      function upload(e){
 	    	 $("#div_img").show();
+	    	 $("#div_img2").show();
 	         console.log("file name : ",e.value);
 	         var files = e.target.files;
 	         var filesArr = Array.prototype.slice.call(files);
@@ -251,6 +258,14 @@ h3{
 	            reader.readAsDataURL(f);
 	         });
 	      }
+	      
+	      $("#img_del_btn").click(function(){
+	    	  $("#file").val("");
+	    	  $("#div_img").css("display", "none");
+	    	  $("#div_img2").css("display", "none");
+	    	  
+	      });
+	     
 	    
 	   
 		

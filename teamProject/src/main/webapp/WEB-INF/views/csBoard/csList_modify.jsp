@@ -17,6 +17,9 @@
 h3{
 	text-align: center;
 }
+a{
+	text-decoration-line: none;
+}
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
