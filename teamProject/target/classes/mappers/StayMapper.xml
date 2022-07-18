@@ -390,16 +390,48 @@
 	</insert>
 	
 	<!-- 숙박시설 정보 수정 -->
+	<update id="stayModify" parameterType="stayVO">
+		UPDATE stay
+		SET   name = #{name}
+			, addr = #{addr}
+			, detailaddr = #{detailaddr}
+			, contents = #{contents}
+			, tag = #{tag}
+			<if test="photo != null">
+			, photo = #{photo}
+			</if>
+			, services = #{services}
+		WHERE sidx = #{sidx}
+	</update>
 	
-	
-	<!-- 방 정보 수정 -->
-	
+	<!-- 리뷰 수정 -->
+	<update id="reviewModify" parameterType="commentVO">
+		UPDATE comment
+		SET   content = #{content}
+			<if test="photo != null">
+			, photo = #{photo}
+		WHERE cbidx = #{cbidx}
+			</if>
+	</update>
 	
 	<!-- 숙박시설 삭제 -->
-	
+	<update id="stayDelete" parameterType="int">
+		UPDATE stay
+		SET delyn = 'Y'
+		WHERE sidx = #{sidx}
+	</update>
 	
 	<!-- 방 삭제 -->
+	<delete id="roomDelete" parameterType="int">
+		DELETE FROM room
+		WHERE sidx = #{sidx}
+	</delete>
 	
-	
+	<!-- 리뷰 삭제 -->
+	<update id="reviewDelete" parameterType="int">
+		UPDATE comment
+		SET delyn = 'Y'
+		WHERE cbidx = #{cbidx}
+	</update>
 	
 </mapper>

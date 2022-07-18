@@ -59,4 +59,6 @@ public class StayDao {
 	public float stayStar(int bidx) {
 		return sqlSession.selectOne(namespace+"stayStar", bidx);
 	}
+	
+	
 }
