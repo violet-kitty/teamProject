@@ -46,7 +46,21 @@
 		
 			<div class="row">
 				<div class="col">
-					
+					<table border="1">
+						<tbody>
+							<c:forEach var="tv" items="${tv}">
+								<tr>
+									<td>${tv.tidx}</td>
+									<td>${tv.midx}</td>
+									<td>${tv.title}</td>
+									<td>${tv.content}</td>
+									<td>${tv.wdate}</td>
+									<td>${tv.cnt}</td>
+									<td>${tv.people_cnt}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 					
 				</div>			
 			</div>
