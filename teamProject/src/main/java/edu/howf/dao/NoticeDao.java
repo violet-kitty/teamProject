@@ -57,5 +57,10 @@ public class NoticeDao {
 		
 		return sqlSession.selectOne(namespace+"pagecount",searchVO);
 	}
+	//조회수 
+	public int noticecnt(int nbidx) {
+
+		return sqlSession.update(namespace+"noticecnt",nbidx);
+	}
 
 }

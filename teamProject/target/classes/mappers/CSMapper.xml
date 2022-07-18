@@ -171,8 +171,8 @@
 		
 		<update id="csList_delete" parameterType="int">
 			UPDATE CStable
-			SET    delyn='Y'
-			WHERE  csbidx = #{csbidx}
+			SET    delyn = 'Y'
+			WHERE  origincsbidx = #{origincsbidx}
 		</update>
 		
 		

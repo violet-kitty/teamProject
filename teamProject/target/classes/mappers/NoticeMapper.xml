@@ -13,6 +13,7 @@
 					,midx
 					,filename
 					,wdate
+					,cnt
 					,delyn
 					)
 		VALUES	(
@@ -22,6 +23,7 @@
 					,#{midx}
 					,#{filename}
 					,now()
+					,#{cnt}
 					,'N'
 		)
 		]]>
@@ -35,6 +37,7 @@
 					,n.title
 					,n.content
 					,n.wdate
+					,n.cnt
 					,u.email
 					,u.name
 			FROM notice n , usertable u
@@ -47,6 +50,8 @@
 		  	 AND n.content like concat('%',#{searchValue},'%')
 		   	 OR u.name like concat('%',#{searchType},'%')
 			 </if>
+			 ORDER BY nbidx desc
+			 
 			LIMIT #{page}, #{perPageNum}
 	</select>
 	
@@ -67,11 +72,7 @@
 			
 			 
 	</select>
-	
 
-	
-	
-	
 	<!-- <select id="selectAllpage" parameterType="hashmap" resultType="noticeVO">
 			SELECT	nbidx
 			FROM	notice
@@ -87,6 +88,7 @@
 					,n.wdate
 					,n.filename
 					,n.midx
+					,n.cnt
 					,u.email
 					,u.name
 					,u.midx
@@ -129,6 +131,12 @@
 		AND		filename = #{filename}
 	
 	</select>
+	<update id="noticecnt" parameterType="int">
+		update notice
+		SET cnt = cnt+1
+		WHERE nbidx = #{nbidx}
+		
+	</update>
 
 
 	

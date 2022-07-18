@@ -45,6 +45,10 @@
 				</td>
 			</tr>
 			</c:if>
+			<tr>
+				<th align="right">조회수</th>
+				<td>${vo.cnt}</td>
+			</tr>
 		</tbody>
 	
 	</table>

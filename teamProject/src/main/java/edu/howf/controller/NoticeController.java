@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,14 +24,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.mysql.cj.util.StringUtils;
 
 import edu.howf.service.NoticeService;
 import edu.howf.util.MediaUtils;
@@ -109,6 +110,7 @@ public class NoticeController {
 	//공지사항 리스트
 	@RequestMapping(value = "notice.do")
 	public String list(Model model ,SearchVO searchVO ,  HttpServletRequest request ,HttpSession session ,HttpServletResponse response) throws IOException {
+		
 		int page = searchVO.getPage();
 		
 		PageMaker pageMaker = new PageMaker();
@@ -127,8 +129,31 @@ public class NoticeController {
 	
 	//공지사항 상세보기
 	@RequestMapping(value = "noticeone.do", method = RequestMethod.GET)
-	public String selectone(Model model,int nbidx) {
+	public String selectone(HttpServletRequest request ,HttpServletResponse response ,int nbidx ,Model model) {
+		//쿠키생성
+		Cookie[] cookies = request.getCookies();
+		int viewer = 0;
 		
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("viewer")) {
+				viewer = 1;
+				
+				if(cookie.getValue().contains(request.getParameter("nbidx"))) {
+					
+				}else {
+					cookie.setValue(cookie.getValue() + "/" + request.getParameter("nbidx"));
+					response.addCookie(cookie);
+					int result = noticeService.noticecnt(nbidx);
+				}
+			}
+		}
+		if (viewer == 0) {
+			Cookie newcookie = new Cookie("viewer", request.getParameter("nbidx"));
+			response.addCookie(newcookie);
+			
+			int result = noticeService.noticecnt(nbidx);
+		}
+			
 		NoticeVO vo = noticeService.selectone(nbidx);
 		model.addAttribute("vo",vo);
 		
@@ -236,23 +261,94 @@ public class NoticeController {
 		return entity;
 	} 
 	
-	
 	@RequestMapping(value = "chattingview.do" ,method = RequestMethod.GET)
 	public String echo(){
 		
 		return "notice/chattingview";
 	}
 
-	
 	//웹 소켓 이용 채팅
 		
 	@GetMapping("/echo")
-	
-	public void chattingview(Model model,NoticeVO vo) {
+	public void chattingview(Model model) {
 		
 		NoticeVO user = (NoticeVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		  
 		model.addAttribute("user", user.getNickname());
 		 }
+
+/*		
+		Cookie cookies[] = request.getCookies();
+		Map<String, String> mapCookie = new HashMap<String, String>();
+		if(request.getCookies() != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie obj = cookies[i];
+				mapCookie.put(obj.getName(), obj.getValue());
+			}
+			System.out.println(mapCookie);
+		}
+		//쿠키중 cnt만 불러오기
+		String cookie_cnt = (String) mapCookie.get("cnt");
+		//저장될 새로운 쿠키
+		String new_cookie_cnt = "/" +nbidx;
+		//저장된 쿠키에 새로운 쿠키값이 존재하는 지 검사
+		if (StringUtils.indexOfIgnoreCase(cookie_cnt, new_cookie_cnt) == -1) {
+			//없을 경우 쿠키 생성
+			Cookie cookie = new Cookie("cnt", cookie_cnt + new_cookie_cnt);
+			//cookie.setMaxAge(1000);//초단위
+			response.addCookie(cookie);
+			//조회수 업데이트
+			this.noticeService.noticecnt(nbidx);
+			System.out.println(cookie_cnt);
+		}
+		int result = this.noticeService.noticecnt(nbidx);
+		model.addAttribute(nbidx);
+*/
+/*		
+		NoticeVO nv = noticeService.noticecnt(nbidx);
+		ModelAndView view = new ModelAndView();
+		
+		Cookie[] cookies = request.getCookies();
+		
+		Cookie cntCookie = null;
+		
+		if (cookies != null && cookies.length > 0) {
+			for (int i =0; i < cookies.length; i++) {
+				if (cookies[i].getName().equals("cookie"+nbidx)) {
+					System.out.println("쿠키 들어옴");
+					cntCookie = cookies[i];
+				}
+			}
+		}
+		if (nv != null) {
+			view.addObject("nv",nv);
+			if (cntCookie ==null) {
+				Cookie newCookie = new Cookie("cookie"+nbidx,"|"+nbidx+"|");
+				
+				response.addCookie(newCookie);
+				
+				int result = noticeService.noticecnt(nbidx);
+				
+				if(result>0) {
+					System.out.println("증가");
+				}else {
+					System.out.println("에러");
+				}
+			}
+			else {
+				System.out.println("쿠키 잇어");
+				String value = cntCookie.getValue();
+				System.out.println("cookie"+value);
+			}
+			view.setViewName("noticeone");
+			return view;
+		}
+		else {
+			view.setViewName("notice");
+			return view;
+		}
+
 	
-}
+*/
+	}
+
