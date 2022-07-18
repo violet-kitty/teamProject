@@ -52,4 +52,10 @@ public class NoticeServiceImple implements NoticeService{
 		return noticeDao.pagecount(searchVO);
 	}
 
+	@Override
+	public int noticecnt(int nbidx) {
+		
+		return noticeDao.noticecnt(nbidx);
+	}
+
 }
