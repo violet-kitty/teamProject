@@ -214,9 +214,33 @@ public class StayController {
 	
 	//별점 변경
 	@ResponseBody
-	@RequestMapping(value="stayStar.do")
+	@RequestMapping(value="/stayStar.do")
 	public float stayStar(int bidx) {
 		return stayService.stayStar(bidx);
+	}
+	
+	//수정 페이지 이동
+	@RequestMapping(value="/stayModify.do", method=RequestMethod.GET)
+	public String stayModify(int sidx, Model model) {
+		
+		
+		return "stay/stayModify";
+	}
+	
+	//숙박 정보 수정
+	@RequestMapping(value="/stayModify.do", method=RequestMethod.POST)
+	public String stayModify(StayVO vo) {
+		
+		
+		
+		return "redirect:/stay/stayView.do?sidx="+vo.getSidx();
+	}
+	
+	//숙박 정보 삭제
+	@ResponseBody
+	@RequestMapping(value="/stayDelete.do")
+	public int stayDelete(int sidx) {
+		return 0;
 	}
 	
 	//사진 보여주기 위한 코드

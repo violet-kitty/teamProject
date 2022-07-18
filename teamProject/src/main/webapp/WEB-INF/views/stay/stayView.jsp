@@ -170,6 +170,7 @@
 				<div class="col">
 					<div>
 						<p>주변정보</p>
+						<!-- 아래 내용 꼭 div에 넣기. 안그럼 줄바꿈 안됨 -->
 						<div>${fn:split(stay.contents,',')[1]}</div>
 					</div>
 					<div>
@@ -209,7 +210,7 @@
 						<div style="border:1px solid black">
 							<p>이 숙소 리뷰</p>
 							<form id="reviewFrm" enctype="multipart/form-data">
-								<textarea rows="3" cols="20" placeholder="댓글" name="content"></textarea>
+								<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewContent"></textarea>
 								<div class="star-rating">
 									<input type="radio" id="5-stars" name="star" value="5" checked/>
 									<label for="5-stars" class="star">&#9733;</label>
@@ -269,6 +270,17 @@
 				</div><!-- /리뷰 col -->
 			</div><!-- /리뷰 row -->
 			
+			
+			<!-- 삭제, 수정, 글쓰기 버튼 -->
+			<div class="row">
+				<div class="col">
+					<c:if test="${login != null && (login.midx == stay.midx || login.role == 'admin')}">
+					<button id="stayDeleteBtn">삭제</button>
+					<button onclick="location.href='stayModfiy.do?sidx=${stay.sidx}'">수정</button>
+					<button onclick="location.href='stayWrite.do'">글쓰기</button>
+					</c:if>
+				</div>
+			</div>
 			
 			
 			<div class="row">
@@ -330,6 +342,13 @@
 				return;
 			}
 			else {
+				//유효성 검사
+				if($("#reviewContent").val()==""){
+					alert("리뷰 내용을 작성해 주세요");
+					return;
+				}
+				
+				//리뷰 작성 ajax
 				var formData = new FormData($("#reviewFrm")[0]);
 				$.ajax({
 					url:"reviewWrite.do",
@@ -412,6 +431,28 @@
 			}
 		});//리뷰쓰기 function
 		
+		
+		//숙박 정보 삭제
+		$("#stayDeleteBtn").on("click",function(){
+			var check = confirm("정말로 숙박정보를 삭제하시겠습니가?");
+			
+			if(check == false) return;
+			else if(check == true){
+				var sidx = "${stay.sidx}";
+				$.ajax({
+					url:"stayDelete.do",
+					data:"sidx="+sidx,
+					type:"post",
+					success:function(data){
+						if(data == 1){
+							alert("글이 삭제되었습니다");
+							location.href="stayList.do";
+						}
+					}
+				});
+			}
+		});//숙박 정보 삭제
+		
 	});
 	
 	//객실이용 안내 보이기
@@ -457,6 +498,7 @@
 	function photoChange(photo){
 		$("#mainImage").attr("src","<%=request.getContextPath() %>/stay/displayFile.do?fileName="+photo);
 	}
+	
 </script>
 
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
@@ -15,6 +15,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Controller
+@Configuration
 @RequestMapping(value = "/echo")
 public class EchoHandler extends TextWebSocketHandler {
 	
@@ -70,6 +71,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		//sessions.remove(session.getId());
 		
 	}
+	
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(this, "/echo").setAllowedOrigins("*");
 	}

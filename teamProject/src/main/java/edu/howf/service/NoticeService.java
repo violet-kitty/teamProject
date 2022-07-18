@@ -14,5 +14,5 @@ public interface NoticeService {
 	public int noticemodify(NoticeVO vo);
 	public int noticedelete(int nbidx);
 	public int pagecount(SearchVO searchVO);
-
+	public int noticecnt(int nbidx);
 }

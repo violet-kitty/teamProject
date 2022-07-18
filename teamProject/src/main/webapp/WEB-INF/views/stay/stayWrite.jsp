@@ -39,6 +39,11 @@
 	  -webkit-appearance: none;
 	}
 </style>
+<script>
+//객실 관련 변수들
+var index = 0;
+var tagi = 0;
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -50,7 +55,7 @@
 			</div>
 			
 						
-			<form method="post"  enctype="multipart/form-data" id="frm">
+			<form method="post"  enctype="multipart/form-data" id="stayFrm">
 				<div class="row">
 					<div class="col">
 						<input class="form-control" type="text" name="name" id="name" placeholder="숙소 이름">
@@ -108,7 +113,8 @@
 				
 				<div class="row" id="roomInfoBtn">
 					<div class="col">
-						<button id="roomAdd" type="button">객실 추가</button>
+						<button type="button" id="roomAdd">객실 추가</button>
+						<button type="button" id="roomRemove">객실 제거</button>
 					</div>
 				</div>
 				
@@ -253,7 +259,7 @@
 				<div class="row">
 					<div class="col">
 						<div>
-							<button>등록</button>
+							<button type="button" onclick="stayWriteFn()">등록</button>
 						</div>
 					</div>
 				</div>
@@ -347,10 +353,10 @@
 			      return div
 			    }
 			  }
-			)('att_zone', 'btnAtt')
+			)('att_zone', 'btnAtt')//이미지 미리보기
+			
 		$(function(){
-			var index = 0;
-			var tagi = 0;
+			//객실 추가
 			$("#roomAdd").click(function(){
 				var html = '<div class="room" id="room'+index+'">'
 				+ '<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">'
@@ -597,13 +603,208 @@
 				$(document).on("click","#peoplePlus"+(ind-1), function(){
 					$("#people"+(ind-1)).val(Number($("#people"+(ind-1)).val())+1);
 				});
-			});
+			});//객실 추가
+			
+			//객실 제거
+			$("#roomRemove").click(function(){
+				//인덱스 조정
+				if(index != 0){
+					index = index - 1;
+					tagi = tagi - 24;
+				}
+				
+				//room+index div 없애기
+				$("#room"+index).remove();
+			});//객실 제거
+			
 			
 			//tagify
 			var input = document.querySelector("#tag");
 			new Tagify(input);
 			
+			//textarea 특수문자 제한
+			$("textarea").keyup(function(){
+				var value = $(this).val();
+				var arr_char = new Array();
+				
+				arr_char.push("'");
+				arr_char.push("\"");
+				arr_char.push("<");
+				arr_char.push(">");
+				arr_char.push(",");
+				
+				for(var i=0 ; i<arr_char.length ; i++)
+				{
+					if(value.indexOf(arr_char[i]) != -1)
+					{
+						window.alert("< > , ' \" 특수문자는 사용하실 수 없습니다.");
+						value = value.substr(0, value.indexOf(arr_char[i]));
+						$(this).val(value);
+					}
+				}
+			});//특수문자 제한
+			
+			
 		});
+		
+		
+		//숙박 등록
+		function stayWriteFn(){
+			//유효성 체크
+			//숙박시설
+			var name = $("#name");
+			var addr = $("#addr");
+			var detailaddr = $("#detailaddr");
+			var tag = $("#tag");
+			var photo = $("#btnAtt");
+			
+			if(name.val()==""){
+				alert("시설 이름을 입력해 주세요");
+				name.focus();
+				return;
+			}
+			else if(addr.val()==""){
+				alert("주소를 입력해 주세요");
+				addr.focus();
+				return;
+			}
+			else if(detailaddr.val()==""){
+				alert("상세주소를 입력해 주세요");
+				detailaddr.focus();
+				return;
+			}
+			else if(tag.val()==""){
+				alert("태그를 입력해 주세요");
+				tag.focus();
+				return;
+			}
+			else if(photo.val()==""){
+				alert("숙소 사진을 등록해 주세요");
+				return;
+			}
+			else {
+				var con = false;
+				//content 유효성 검사
+				//간단 설명, 주변정보, 기본정보, 공지사항, 환불규정, 확인사항
+				$("textarea[name=content]").each(function(index, item){
+					var content = $(item);
+					if(content.val()==""){
+						alert("내용을 입력해 주세요");
+						
+						//숙소정보 탭에 있는 content라면 탭 변경
+						if(index>0) tabToggleFn('stay');
+						
+						content.focus();
+						con = true;
+						return false;
+					}//if val==""
+				});//content 유효성 검사
+				if(con == true) return;
+				
+				
+				//객실 등록 여부 확인
+				if(index == 0){
+					alert("객실이 적어도 하나는 등록되어야 합니다");
+					tabToggleFn('room');
+					return;
+				}
+				
+				//객실
+				tabToggleFn('room');
+				
+				for(var i=0;i<index;i++){
+					var rname = $("#name"+i);
+					var rsquare = $("#square"+i);
+					var sbed = $("#sbed"+i);
+					var dbed = $("#dbed"+i);
+					var qbed = $("#qbed"+i);
+					var kbed = $("#kbed"+i);
+					var rcnt = $("#cnt"+i);
+					var rpeople = $("#people"+i);
+					var rprice = $("#price"+i);
+					var roomFile = $("#roomFile"+i);
+					
+					if(rname.val()==""){
+						alert("객실 이름을 등록해 주세요");
+						rname.focus();
+						return;
+					}
+					else if(rsquare.val()==""){
+						alert("객실 평수를 입력해 주세요");
+						rsquare.focus();
+						return;
+					}
+					else if(Number(rsquare.val())<1){
+						alert("객실 평수는 0이나 음수가 될 수 없습니다");
+						rsquare.focus();
+						return;
+					}
+					else if(sbed.val()==""){
+						alert("싱글베드 수를 입력해 주세요");
+						sbed.focus();
+						return;
+					}
+					else if(dbed.val()==""){
+						alert("더블베드 수를 입력해 주세요");
+						dbed.focus();
+						return;
+					}
+					else if(qbed.val()==""){
+						alert("퀸베드 수를 입력해 주세요");
+						qbed.focus();
+						return;
+					}
+					else if(kbed.val()==""){
+						alert("킹베드 수를 입력해 주세요");
+						kbed.focus();
+						return;
+					}
+					else if(Number(sbed.val())<0 || Number(dbed.val())<0 || Number(qbed.val())<0 || Number(kbed.val())<0){
+						alert("침대 수는 음수가 될 수 없습니다");
+						sbed.focus();
+						return;
+					}
+					else if(rcnt.val()==""){
+						alert("같은 형식의 객실 수를 입력해 주세요");
+						rcnt.focus();
+						return;
+					}
+					else if(Number(rcnt.val())<1){
+						alert("객실 수는 0이나 음수가 될 수 없습니다");
+						rcnt.focus();
+						return;
+					}
+					else if(rpeople.val()==""){
+						alert("적정 인원 수를 입력해 주세요");
+						rpeople.focus();
+						return;
+					}
+					else if(Number(rpeople.val())<1){
+						alert("인원 수는 0이나 음수가 될 수 없습니다");
+						rpeople.focus();
+						return;
+					}
+					else if(rprice.val()==""){
+						alert("가격을 입력해 주세요");
+						rprice.focus();
+						return;
+					}
+					else if(Number(rprice.val())<0){
+						alert("가격은 음수가 될 수 없습니다");
+						rprice.focus();
+						return;
+					}
+					else if(roomFile.val()==""){
+						alert("객실 사진을 등록해 주세요");
+						return;
+					}
+				}
+			}//content, 객실 유효성 검사
+			
+			//전부다 통과하면 submit
+			$("#stayFrm").submit();
+			
+		}//숙박 등록
 	
 		//주소 입력 api
 		function addrFn() {
@@ -630,8 +831,6 @@
 		
 		//탭 눌렀을때 화면 변화
 		function tabToggleFn(type){
-			
-			
 			if(type == 'room'){
 				$("#roomTabBtn").css("color","green");
 				$("#stayTabBtn").css("color","black");
