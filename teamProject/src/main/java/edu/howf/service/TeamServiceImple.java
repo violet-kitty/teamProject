@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.TeamDao;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 
@@ -37,6 +38,24 @@ public class TeamServiceImple implements TeamService{
 	public TeamVO teamView(int tidx) {
 
 		return teamDao.teamView(tidx);
+	}
+
+	@Override
+	public int insert_join_apply(TeamVO tv) {
+		
+		return teamDao.insert_join_apply(tv);
+	}
+
+	@Override
+	public int delete_join_apply(TeamVO tv) {
+		
+		return teamDao.delete_join_apply(tv);
+	}
+
+	@Override
+	public JoinVO join_check(TeamVO tv) {
+
+		return teamDao.join_check(tv);
 	}
 	
 	

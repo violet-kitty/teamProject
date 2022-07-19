@@ -2,6 +2,7 @@ package edu.howf.service;
 
 import java.util.List;
 
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 
@@ -14,5 +15,11 @@ public interface TeamService {
 	public int countPage(SearchVO vo);
 	
 	public TeamVO teamView(int tidx);
+	
+	public int insert_join_apply(TeamVO tv);
+	
+	public int delete_join_apply(TeamVO tv);
+	
+	public JoinVO join_check(TeamVO tv);
 
 }

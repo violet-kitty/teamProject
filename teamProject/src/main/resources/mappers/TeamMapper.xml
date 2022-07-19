@@ -6,8 +6,10 @@
  <!-- 너나들이 -->
 <mapper namespace="edu.howf.mapper.teamMapper">
 	<select id="teamList" parameterType="searchVO" resultType="teamVO">
-		SELECT   t.tidx
-			     ,u.nickname
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT   t.tidx
+				 ,t.midx
 			     ,t.title
 			     ,t.content
 			     ,t.wdate
@@ -15,11 +17,13 @@
 			     ,t.delyn
 			     ,j.people_cnt
 		FROM     team t
-		JOIN     (SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
-				 FROM jointable j WHERE joinyn = 'Y' GROUP BY tidx) j
-		ON       t.tidx = j.tidx
-		JOIN 	 (SELECT u.midx, u.nickname FROM usertable u) u
-		ON 		 t.midx = j.midx = u.midx;
+		LEFT OUTER JOIN
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
+		ON       t.tidx = j.tidx) a
+		join 	 (select u.midx, u.nickname from usertable u) u
+		ON 		 a.midx = u.midx
+		ORDER BY a.tidx DESC
 	</select>
 	
 	<update id="team_cnt_update">
@@ -37,9 +41,10 @@
 	</select>
 	
 	<select id="teamView" parameterType="int" resultType="teamVO">
-		SELECT		t.tidx
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT		t.tidx
 					,t.midx
-					,u.nickname
 					,t.title
 					,t.content
 					,t.filename
@@ -48,11 +53,42 @@
 					,j.people_cnt
 					,t.delyn
 		FROM		team t
-		JOIN		(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
-					 FROM jointable j WHERE joinyn = 'Y' GROUP BY tidx) j
-		ON			t.tidx = j.tidx
-		JOIN		(SELECT u.midx, u.nickname FROM usertable u) u
-		ON			t.midx = j.midx = u.midx
-		AND			t.tidx = #{tidx}
+		LEFT OUTER JOIN
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
+		ON       t.tidx = j.tidx) a
+		join 	 (select u.midx, u.nickname from usertable u) u
+		ON 		 a.midx = u.midx
+		WHERE	 a.tidx = #{tidx}
+	</select>
+	
+	<insert id="insert_join_apply" parameterType="teamVO">
+		INSERT INTO jointable(
+						tidx
+						,midx
+						,jdate
+						,joinyn
+					)
+					VALUES(
+						#{tidx}
+						,#{midx}
+						,now()
+						,'N'
+					)
+	</insert>
+	
+	<delete id="delete_join_apply" parameterType="teamVO">
+		DELETE FROM jointable
+		WHERE		tidx = #{tidx}
+		AND			midx = #{midx}
+	</delete>
+	
+	<select id="join_check" parameterType="teamVO" resultType="joinVO">
+		SELECT COUNT(jidx) as jidx
+			  ,joinyn
+		FROM   jointable
+		WHERE  tidx = #{tidx}
+		AND    midx = #{midx}
+		GROUP BY joinyn
 	</select>
 </mapper>

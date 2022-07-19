@@ -30,12 +30,16 @@
 <title>Insert title here</title>
 <style>
 .team_title{
-	font-size: 2em;
+	font-size: 2.5em;
 	font-weight: bold;
 }
 .join_btn{
 	display: block;
-	width: 30%;
+	width: 25%;
+	height: 100px;
+	color: white;
+	background-color: #54ACA8;
+	border: 1px solid white;
 }
 </style>
 </head>
@@ -70,23 +74,32 @@
 			</div>
 			
 			<div class="row">
-				<div class="col">
+				<div class="col team_title">
 					${tv.title}
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
 					${tv.content}
-					<input type="button" id="join_btn" class="join_btn" value="가입신청">
+					<c:if test="${check.joinyn == 'N'}">
+						<c:if test="${check.jidx == 0}">
+							<input type="button" id="join_btn" class="join_btn" value="가입신청">
+							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">
+						</c:if>
+						<c:if test="${check.jidx != 0}">
+							<input type="button" id="join_btn" class="join_btn" value="가입신청" style="display: none;">
+							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소">
+						</c:if>
+					</c:if>
 				</div>
 			</div>
 			
 			
 			<div class="row">
 				<div class="col">
-					<button>1</button>
-					<button>2</button>
-					<button>3</button>
+					<button id="teamDelete">삭제</button>
+					<button id="teamModify">수정</button>
+					<button id="teamList">목록</button>
 				</div>
 			</div>
 	
@@ -95,6 +108,50 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
-	
+<script>
+	$(function(){
+		$("#teamList").click(function(){
+			location.href = "teamList.do";			
+		});
+		
+		$("#teamModify").click(function(){
+			locataion.href = "teamModify.do?tidx=${tv.tidx}";
+		});
+		
+		$("#teamDelete").click(function(){
+			location.href = "teamDelete.do?tidx=${tv.tidx}";
+		});
+		
+		$("#join_btn").click(function(){
+			$.ajax({
+				url: "join_apply.do",
+				data: "tidx=${tv.tidx}",
+				type: "get",
+				success:function(data){
+					if(data != 0){
+						$("#join_btn").toggle();
+						$("#join_cancel_btn").toggle();
+					}
+				}
+			});
+			
+		});
+		
+		$("#join_cancel_btn").click(function(){
+			$.ajax({
+				url: "join_apply_cancel.do",
+				data: "tidx=${tv.tidx}",
+				type: "get",
+				success: function(data){
+					if(data != 0){
+						$("#join_btn").toggle();
+					$("#join_cancel_btn").toggle();
+					}				
+				}
+			});
+		});
+		
+	});
+</script>
 </body>
 </html>

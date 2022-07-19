@@ -8,16 +8,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.howf.service.TeamService;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
+import edu.howf.vo.UserVO;
 
 @RequestMapping(value = "/team")
 @Controller
@@ -81,8 +86,56 @@ public class TeamController {
 		TeamVO tv = teamService.teamView(tidx);
 		model.addAttribute("tv", tv);
 		
+		session = request.getSession();
+		UserVO uv = (UserVO)session.getAttribute("login");
+		tv.setMidx(uv.getMidx());
+		
+		JoinVO check = teamService.join_check(tv);
+		model.addAttribute("check", check);
+		
 		return "team/teamView";
 	}
+	
+	@ResponseBody
+	@GetMapping("/join_apply.do")
+	public int join(TeamVO tv, HttpServletRequest request, HttpSession session) {
+
+		session = request.getSession();
+		UserVO uv = (UserVO)session.getAttribute("login");
+		tv.setMidx(uv.getMidx());
+		
+		return teamService.insert_join_apply(tv);
+	}
+	
+	@ResponseBody
+	@GetMapping("/join_apply_cancel.do")
+	public int join_cancel(TeamVO tv, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO uv = (UserVO)session.getAttribute("login");		
+		tv.setMidx(uv.getMidx());
+		
+		return teamService.delete_join_apply(tv);
+	}
+	
+	@GetMapping("/teamModify.do")
+	public String teamModify(TeamVO tv, Model model) {
+		
+		tv = teamService.teamView(tv.getTidx());
+		
+		model.addAttribute("tv", tv);
+	
+		return "team/teamModify";
+	}
+	
+	@PostMapping("/teamModify.do")
+	public String teamModify(TeamVO tv) {
+		
+		return "team/teamView";
+	}
+
+	
+	
 	
 	
 }

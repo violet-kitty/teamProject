@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 
@@ -37,5 +38,22 @@ public class TeamDao {
 		
 		return sqlSession.selectOne(namespace + "teamView", tidx);
 	}
+	
+	public int insert_join_apply(TeamVO tv) {
+		
+		return sqlSession.insert(namespace + "insert_join_apply", tv);
+	}
+	
+	public int delete_join_apply(TeamVO tv) {
+		
+		return sqlSession.delete(namespace + "delete_join_apply", tv);
+	}
+	
+	public JoinVO join_check(TeamVO tv) {
+
+		return sqlSession.selectOne(namespace + "join_check", tv);
+	}
+	
+	
 
 }
