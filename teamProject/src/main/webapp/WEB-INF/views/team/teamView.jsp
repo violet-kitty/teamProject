@@ -28,6 +28,16 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
 <title>Insert title here</title>
+<style>
+.team_title{
+	font-size: 2em;
+	font-weight: bold;
+}
+.join_btn{
+	display: block;
+	width: 30%;
+}
+</style>
 </head>
 <body>
 
@@ -46,32 +56,39 @@
 		
 			<div class="row">
 				<div class="col">
-					<table style="width: 100%; text-align: center;">
-						<tbody>
-							<tr>
-								<td>글번호</td>
-								<td>작성자</td>
-								<td>제목</td>
-								<td>작성일</td>
-								<td>조회수</td>
-								<td>팀원</td>
-							</tr>
-							<c:forEach items="${tv}" var="tv">
-								<tr>
-									<td>${tv.tidx}</td>
-									<td>${tv.nickname}</td>
-									<td><a href="teamView.do?tidx=${tv.tidx}">${tv.title}</a></td>
-									<td>${tv.wdate}</td>
-									<td>${tv.cnt}</td>
-									<td>${tv.people_cnt}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					
+					<div class="thumbnail">${tv.filename}</div>
 				</div>			
 			</div>
 			
+			<div class="row">
+				<div class="col-6 d-flex justify-content-start">
+						(프사 영역)${tv.wdate}${tv.nickname}
+				</div>
+				<div class="col-6 d-flex justify-content-end">
+						${tv.people_cnt}
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					${tv.title}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					${tv.content}
+					<input type="button" id="join_btn" class="join_btn" value="가입신청">
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col">
+					<button>1</button>
+					<button>2</button>
+					<button>3</button>
+				</div>
+			</div>
 	
 
 		</div><!-- / #container -->

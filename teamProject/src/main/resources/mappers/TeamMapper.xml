@@ -5,9 +5,9 @@
  
  <!-- 너나들이 -->
 <mapper namespace="edu.howf.mapper.teamMapper">
-	<select id="teamList" resultType="int">
-		SELECT   t.tidx		
-			     ,t.midx
+	<select id="teamList" parameterType="searchVO" resultType="teamVO">
+		SELECT   t.tidx
+			     ,u.nickname
 			     ,t.title
 			     ,t.content
 			     ,t.wdate
@@ -15,16 +15,44 @@
 			     ,t.delyn
 			     ,j.people_cnt
 		FROM     team t
-		JOIN     (SELECT COUNT(jidx) as people_cnt, tidx
-				 FROM jointable WHERE joinyn = 'Y' GROUP BY tidx) j
-		ON       t.tidx = j.tidx;
+		JOIN     (SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+				 FROM jointable j WHERE joinyn = 'Y' GROUP BY tidx) j
+		ON       t.tidx = j.tidx
+		JOIN 	 (SELECT u.midx, u.nickname FROM usertable u) u
+		ON 		 t.midx = j.midx = u.midx;
 	</select>
+	
+	<update id="team_cnt_update">
+		UPDATE team
+		SET    cnt = cnt + 1
+		WHERE  tidx = #{tidx}
+	</update>
 	
 	<select id="countPage" parameterType="searchVO" resultType="int">
 		SELECT COUNT(t.tidx)
-		FROM     team t, usertable u
-		WHERE    t.midx = u.midx
-		AND      t.delyn = 'N'
-		ORDER BY t.tidx DESC
+		FROM         team t, usertable u
+		WHERE        t.midx = u.midx
+		AND          t.delyn = 'N'
+		ORDER BY     t.tidx DESC
+	</select>
+	
+	<select id="teamView" parameterType="int" resultType="teamVO">
+		SELECT		t.tidx
+					,t.midx
+					,u.nickname
+					,t.title
+					,t.content
+					,t.filename
+					,t.wdate
+					,t.cnt
+					,j.people_cnt
+					,t.delyn
+		FROM		team t
+		JOIN		(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+					 FROM jointable j WHERE joinyn = 'Y' GROUP BY tidx) j
+		ON			t.tidx = j.tidx
+		JOIN		(SELECT u.midx, u.nickname FROM usertable u) u
+		ON			t.midx = j.midx = u.midx
+		AND			t.tidx = #{tidx}
 	</select>
 </mapper>

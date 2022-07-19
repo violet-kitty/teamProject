@@ -26,6 +26,18 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.countPage(vo);
 	}
+
+	@Override
+	public int team_cnt_update(int tidx) {
+		
+		return teamDao.team_cnt_update(tidx);
+	}
+
+	@Override
+	public TeamVO teamView(int tidx) {
+
+		return teamDao.teamView(tidx);
+	}
 	
 	
 	

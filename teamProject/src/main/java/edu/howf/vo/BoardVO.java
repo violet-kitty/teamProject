@@ -6,6 +6,7 @@ import java.util.Date;
 
 //게시판 관련 공통된 컬럼들 정의한 VO
 public class BoardVO extends UserVO{
+	
 	private String title;
 	private String content;
 	private String wdate;

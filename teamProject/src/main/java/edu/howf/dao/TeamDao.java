@@ -17,14 +17,25 @@ public class TeamDao {
 	
 	private static final String namespace = "edu.howf.mapper.teamMapper.";
 	
+	
 	public List<TeamVO> teamList(SearchVO vo) {
 		
 		return sqlSession.selectList(namespace + "teamList");
 	}
 	
+	public int team_cnt_update(int tidx) {
+		
+		return sqlSession.update(namespace + "team_cnt_update", tidx);
+	}
+	
 	public int countPage(SearchVO vo) {
 		
 		return sqlSession.selectOne(namespace + "countPage", vo);
+	}
+	
+	public TeamVO teamView(int tidx) {
+		
+		return sqlSession.selectOne(namespace + "teamView", tidx);
 	}
 
 }
