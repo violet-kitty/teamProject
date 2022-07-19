@@ -11,3 +11,8 @@
 .right-container .gotop {position:absolute; bottom:3%;display:block; width:56px;}
 .right-container .gotop:hover {width:60px;}
 
+@media all and (max-width: 576px) {
+.right-container .gotop {
+    display:none;
+}
+}
