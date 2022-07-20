@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
 
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -66,10 +67,10 @@ function logoutFn(){
 								<!-- 로그인 로그아웃 회원가입 -->
 								<div class="navbtn">
 									<c:if test="${login == null}">
-										<a href="user/login.do">
+										<a href="<%= request.getContextPath() %>/user/login.do">
 											<button class="bluebtn">로그인</button>
 										</a>
-										<a href="user/joinSelect.do"><button class="pinkbtn">회원가입</button></a>
+										<a href="<%= request.getContextPath() %>/user/joinSelect.do"><button class="pinkbtn">회원가입</button></a>
 									</c:if>
 									<c:if test="${login != null}">
 										<a href="#">
