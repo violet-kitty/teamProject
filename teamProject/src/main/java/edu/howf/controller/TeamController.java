@@ -111,7 +111,7 @@ public class TeamController {
 //		이 사람이 가입을 했는지 안했는지 확인하려고
 //		join_check 로 가입 여부를 DB의 jointable에서 가져옴
 //
-//		아직 가입신청 버튼을 클릭하지 못해서 가입여부에 대한 데이터가 join_table에 없음
+//		가입신청 버튼을 클릭하지 못했거나 or 가입신청 취소 시 가입여부에 대한 데이터가 join_table에 없음
 //
 //		그런데 글 보기 페이지로 가면 컨트롤러에선 
 //		해당 tidx에 대한 join_check를 요청함(데이터가 없는 상태)
