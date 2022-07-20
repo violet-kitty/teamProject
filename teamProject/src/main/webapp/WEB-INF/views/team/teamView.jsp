@@ -85,7 +85,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col text-center">
 					${tv.content}
 					<c:if test="${check.joinyn == 'N'}">
 						<c:if test="${check.jidx == 0}">

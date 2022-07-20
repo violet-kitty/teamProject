@@ -135,9 +135,6 @@ public class TeamController {
 	@PostMapping("/teamModify.do")
 	public String teamModify(TeamVO tv) {
 		
-		System.out.println("수정하기 컨트롤러 들어옴");
-		
-		
 		int result = teamService.teamModify(tv);
 		
 		return "redirect:/team/teamView.do?tidx=" + tv.getTidx();

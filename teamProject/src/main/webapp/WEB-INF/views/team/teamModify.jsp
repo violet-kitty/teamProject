@@ -77,7 +77,7 @@
 				<div class="col">
 					<textarea id="summernote" name="content">
 						${tv.content}
-						
+						<br><input type="checkbox" name="applyyn" style="margin: 0 auto;">
 					</textarea>
 				</div>
 			</div>
