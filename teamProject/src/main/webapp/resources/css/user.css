@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/* user 세팅 */
+/* join 뒷배경 이미지와 사이즈 */
+.joinbg {position:relative; background-image: url(../image/picture/picture5-2.jpg); background-size:cover;}
+
+/* 회원가입 - joinSelect */
+/* content 01 */
+.joinSelect .content01 {min-height: 86vh;display: flex; justify-content: center;}
+.joinSelect .content01 .row {max-width:700px; margin:auto;}
+.joinSelect .content01 .row .col{text-align:center; padding:0px 30px;}
+.joinSelect .content01 .row .col a {cursor:pointer;}
+.joinSelect .content01 .row .col img{width:100%;}
+
+@media all and (max-width: 576px) {
+	.joinSelect .content01 {min-height: 90vh}
+	.joinSelect .content01 .row .col{padding:10px 10px;}
+}
