@@ -23,14 +23,9 @@
 		ON       t.tidx = j.tidx) a
 		join 	 (select u.midx, u.nickname from usertable u) u
 		ON 		 a.midx = u.midx
+		WHERE    a.delyn = 'N'
 		ORDER BY a.tidx DESC
 	</select>
-	
-	<update id="team_cnt_update">
-		UPDATE team
-		SET    cnt = cnt + 1
-		WHERE  tidx = #{tidx}
-	</update>
 	
 	<select id="countPage" parameterType="searchVO" resultType="int">
 		SELECT COUNT(t.tidx)
@@ -39,6 +34,26 @@
 		AND          t.delyn = 'N'
 		ORDER BY     t.tidx DESC
 	</select>
+	
+	<insert id="teamWrite" parameterType="teamVO">
+		INSERT INTO team(
+						midx
+						,title
+						,content
+						,wdate
+						,filename
+						,applyyn
+		)
+		VALUES		(
+						#{midx}
+						,#{title}
+						,#{content}
+						,now()
+						,#{filename}
+						,#{applyyn}
+		)
+		
+	</insert>
 	
 	<select id="teamView" parameterType="int" resultType="teamVO">
 		SELECT a.*, u.nickname
@@ -50,6 +65,7 @@
 					,t.filename
 					,t.wdate
 					,t.cnt
+					,t.applyyn
 					,j.people_cnt
 					,t.delyn
 		FROM		team t
@@ -61,6 +77,12 @@
 		ON 		 a.midx = u.midx
 		WHERE	 a.tidx = #{tidx}
 	</select>
+		
+	<update id="team_cnt_update">
+		UPDATE team
+		SET    cnt = cnt + 1
+		WHERE  tidx = #{tidx}
+	</update>
 	
 	<insert id="insert_join_apply" parameterType="teamVO">
 		INSERT INTO jointable(
@@ -97,7 +119,14 @@
 		SET		title = #{title}
 				,content = #{content}
 				,filename = #{filename}
+				,applyyn = #{applyyn}
 				,wdate = now()
+		WHERE	tidx = #{tidx}
+	</update>
+	
+	<update id="teamDelete" parameterType="int">
+		UPDATE  team
+		SET		delyn = 'Y'
 		WHERE	tidx = #{tidx}
 	</update>
 </mapper>

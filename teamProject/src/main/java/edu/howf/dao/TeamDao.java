@@ -24,19 +24,24 @@ public class TeamDao {
 		return sqlSession.selectList(namespace + "teamList");
 	}
 	
-	public int team_cnt_update(int tidx) {
-		
-		return sqlSession.update(namespace + "team_cnt_update", tidx);
-	}
-	
 	public int countPage(SearchVO vo) {
 		
 		return sqlSession.selectOne(namespace + "countPage", vo);
 	}
 	
+	public int teamWrite(TeamVO tv) {
+		
+		return sqlSession.insert(namespace + "teamWrite", tv);
+	}
+	
 	public TeamVO teamView(int tidx) {
 		
 		return sqlSession.selectOne(namespace + "teamView", tidx);
+	}
+	
+	public int team_cnt_update(int tidx) {
+		
+		return sqlSession.update(namespace + "team_cnt_update", tidx);
 	}
 	
 	public int insert_join_apply(TeamVO tv) {
@@ -57,6 +62,11 @@ public class TeamDao {
 	public int teamModify(TeamVO tv) {
 		
 		return sqlSession.update(namespace + "teamModify", tv);
+	}
+	
+	public int teamDelete(int tidx) {
+		
+		return sqlSession.update(namespace + "teamDelete", tidx);
 	}
 	
 	

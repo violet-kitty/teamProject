@@ -27,17 +27,23 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.countPage(vo);
 	}
-
+	
 	@Override
-	public int team_cnt_update(int tidx) {
+	public int teamWrite(TeamVO tv) {
 		
-		return teamDao.team_cnt_update(tidx);
+		return teamDao.teamWrite(tv);
 	}
 
 	@Override
 	public TeamVO teamView(int tidx) {
 
 		return teamDao.teamView(tidx);
+	}
+
+	@Override
+	public int team_cnt_update(int tidx) {
+		
+		return teamDao.team_cnt_update(tidx);
 	}
 
 	@Override
@@ -62,6 +68,12 @@ public class TeamServiceImple implements TeamService{
 	public int teamModify(TeamVO tv) {
 		
 		return teamDao.teamModify(tv);
+	}
+
+	@Override
+	public int teamDelete(int tidx) {
+
+		return teamDao.teamDelete(tidx);
 	}
 	
 	

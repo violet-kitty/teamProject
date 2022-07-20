@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,12 +31,12 @@
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="Header.jsp"%>
-		<!-- Nav --><%@include file="Nav.jsp"%>
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
-			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+			<a href="<%=request.getContextPath()%>/"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
@@ -44,21 +45,19 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-				<!--  
-				
-				
-				여기에 html 작성하시믄 댑니다~!
-				
-				 -->	
-				
+					<!--  
+					
+					
+					여기에 html 작성하시믄 댑니다~!
+					
+					 -->	
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
 
-
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="Footer.jsp"%>
+		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 </body>
 </html>

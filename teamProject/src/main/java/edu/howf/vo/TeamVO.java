@@ -15,6 +15,7 @@ public class TeamVO extends BoardVO{
 	private int tidx;
 	private int people_cnt;
 	private String filename;
+	private String applyyn;
 	
 	public int getTidx() {
 		return tidx;
@@ -34,6 +35,13 @@ public class TeamVO extends BoardVO{
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+	public String getApplyyn() {
+		return applyyn;
+	}
+	public void setApplyyn(String applyyn) {
+		this.applyyn = applyyn;
+	}
+	
 	
 	
 

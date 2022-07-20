@@ -68,8 +68,12 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					
 				</div>			
+			</div>
+			<div class="row">
+				<div class="col d-flex justify-content-center">
+					<button id="teamWrite">글쓰기</button>
+				</div>
 			</div>
 			
 	
@@ -78,6 +82,14 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
+<script>
+$(function(){
 	
+	$("#teamWrite").click(function(){
+		location.href = "teamWrite.do";
+	});
+
+});
+</script>	
 </body>
 </html>

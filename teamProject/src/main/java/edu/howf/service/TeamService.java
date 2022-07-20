@@ -10,11 +10,13 @@ public interface TeamService {
 	
 	public List<TeamVO> teamList(SearchVO vo);
 	
-	public int team_cnt_update(int tidx);
-	
 	public int countPage(SearchVO vo);
 	
+	public int teamWrite(TeamVO tv);
+	
 	public TeamVO teamView(int tidx);
+	
+	public int team_cnt_update(int tidx);
 	
 	public int insert_join_apply(TeamVO tv);
 	
@@ -23,5 +25,7 @@ public interface TeamService {
 	public JoinVO join_check(TeamVO tv);
 	
 	public int teamModify(TeamVO tv);
+	
+	public int teamDelete(int tidx);
 
 }

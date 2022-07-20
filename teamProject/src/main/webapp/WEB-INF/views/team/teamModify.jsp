@@ -34,6 +34,14 @@
 <!-- /summernote -->
 <title>Insert title here</title>
 <style>
+.check_apply{
+	display: block;
+	width: 10%;
+	height: 100%;
+	color: white;
+	background-color: #54ACA8;
+	border: 1px solid white;
+}
 </style>
 </head>
 <body>
@@ -56,7 +64,7 @@
 			</div>
 			<div class="row">
 				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-start">
-						(프로필 사진 영역(선택))ㅇㅇㅇㅇㅇㅇㅇ
+						(프로필 사진 영역(선택))
 				</div>
 				<div class="text-center col-md-6 col-lg-3">
 						${tv.wdate}<input type="hidden" name="wdate">
@@ -65,7 +73,7 @@
 						${tv.nickname}
 				</div>
 				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-end">
-						${tv.people_cnt}ㅇㅇㅇㅇㅇㅇ
+						${tv.people_cnt}
 				</div>
 			</div>
 			<div class="row">
@@ -77,12 +85,21 @@
 				<div class="col">
 					<textarea id="summernote" name="content">
 						${tv.content}
-						<br><input type="checkbox" name="applyyn" style="margin: 0 auto;">
 					</textarea>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col justify-content-center">
+				<div class="col">
+					<c:if test="${tv.applyyn == 'Y'}">
+						가입신청 활성화/비활성화 <input type="checkbox" id="check" name="applyyn" value="Y" checked>
+					</c:if>
+					<c:if test="${tv.applyyn != 'Y'}">
+						가입신청 활성화/비활성화 <input type="checkbox" id="check" name="applyyn" value="Y">
+					</c:if>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
 				<c:if test="${login.midx == tv.midx}">
 					<button id="btn_modify">수정</button>
 				</c:if>

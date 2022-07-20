@@ -75,7 +75,7 @@
 						${tv.nickname}
 				</div>
 				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-end">
-						${tv.people_cnt}
+						팀원 ${tv.people_cnt}
 				</div>
 			</div>
 			
@@ -85,26 +85,32 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col text-center">
+				<div class="col">
 					${tv.content}
-					<c:if test="${check.joinyn == 'N'}">
-						<c:if test="${check.jidx == 0}">
-							<input type="button" id="join_btn" class="join_btn" value="가입신청">
-							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">
-						</c:if>
-						<c:if test="${check.jidx != 0}">
-							<input type="button" id="join_btn" class="join_btn" value="가입신청" style="display: none;">
-							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소">
+				</div>
+			</div>			
+			<div class="row">
+				<div class="col d-flex justify-content-center">
+					<c:if test="${tv.applyyn == 'Y'}">
+						<c:if test="${check.joinyn != 'Y'}">
+							<c:if test="${check.jidx == 0}">
+								<input type="button" id="join_btn" class="join_btn" value="가입신청">
+								<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">
+							</c:if>
+							<c:if test="${check.jidx != 0}">
+								<input type="button" id="join_btn" class="join_btn" value="가입신청" style="display: none;">
+								<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소">
+							</c:if>
 						</c:if>
 					</c:if>
 				</div>
 			</div>
-			
-			
 			<div class="row">
-				<div class="col">
-					<button id="teamDelete">삭제</button>
-					<button id="teamModify">수정</button>
+				<div class="col d-flex justify-content-center">
+					<c:if test="${login.midx == tv.midx}">
+						<button id="teamDelete">삭제</button>
+						<button id="teamModify">수정</button>
+					</c:if>
 					<button id="teamList">목록</button>
 				</div>
 			</div>
@@ -152,7 +158,7 @@
 				success: function(data){
 					if(data != 0){
 						$("#join_btn").toggle();
-					$("#join_cancel_btn").toggle();
+						$("#join_cancel_btn").toggle();
 					}				
 				}
 			});
