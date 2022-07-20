@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -119,10 +118,15 @@ public class TeamController {
 	}
 	
 	@GetMapping("/teamModify.do")
-	public String teamModify(TeamVO tv, Model model) {
+	public String teamModify(TeamVO tv, Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");		
+		tv.setMidx(login.getMidx());
 		
 		tv = teamService.teamView(tv.getTidx());
 		
+		model.addAttribute("login", login);
 		model.addAttribute("tv", tv);
 	
 		return "team/teamModify";
@@ -131,7 +135,12 @@ public class TeamController {
 	@PostMapping("/teamModify.do")
 	public String teamModify(TeamVO tv) {
 		
-		return "team/teamView";
+		System.out.println("수정하기 컨트롤러 들어옴");
+		
+		
+		int result = teamService.teamModify(tv);
+		
+		return "redirect:/team/teamView.do?tidx=" + tv.getTidx();
 	}
 
 	

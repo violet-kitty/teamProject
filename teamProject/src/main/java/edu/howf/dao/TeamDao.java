@@ -54,6 +54,11 @@ public class TeamDao {
 		return sqlSession.selectOne(namespace + "join_check", tv);
 	}
 	
+	public int teamModify(TeamVO tv) {
+		
+		return sqlSession.update(namespace + "teamModify", tv);
+	}
+	
 	
 
 }

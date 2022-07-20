@@ -21,5 +21,7 @@ public interface TeamService {
 	public int delete_join_apply(TeamVO tv);
 	
 	public JoinVO join_check(TeamVO tv);
+	
+	public int teamModify(TeamVO tv);
 
 }

@@ -27,20 +27,13 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- /summernote -->
 <title>Insert title here</title>
 <style>
-.team_title{
-	font-size: 2.5em;
-	font-weight: bold;
-}
-.join_btn{
-	display: block;
-	width: 25%;
-	height: 100px;
-	color: white;
-	background-color: #54ACA8;
-	border: 1px solid white;
-}
 </style>
 </head>
 <body>
@@ -55,60 +48,48 @@
 		
 		<!-- container -->
 		<div class="container">
-		
-		
-		
+		<form id="form1" method="post">
 			<div class="row">
-				<div class="col">
-					<div class="thumbnail">${tv.filename}</div>
+				<div class="col text-center">
+					<div class="thumbnail"><input type="file" id="thumbnail" name="filename">${tv.filename}</div>
 				</div>			
 			</div>
-			
 			<div class="row">
 				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-start">
-						(프로필 사진 영역(선택))
+						(프로필 사진 영역(선택))ㅇㅇㅇㅇㅇㅇㅇ
 				</div>
 				<div class="text-center col-md-6 col-lg-3">
-						${tv.wdate}
+						${tv.wdate}<input type="hidden" name="wdate">
 				</div>
 				<div class="text-center col-md-6 col-lg-3">
 						${tv.nickname}
 				</div>
 				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-end">
-						${tv.people_cnt}
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col team_title">
-					${tv.title}
+						${tv.people_cnt}ㅇㅇㅇㅇㅇㅇ
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
-					${tv.content}
-					<c:if test="${check.joinyn == 'N'}">
-						<c:if test="${check.jidx == 0}">
-							<input type="button" id="join_btn" class="join_btn" value="가입신청">
-							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">
-						</c:if>
-						<c:if test="${check.jidx != 0}">
-							<input type="button" id="join_btn" class="join_btn" value="가입신청" style="display: none;">
-							<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소">
-						</c:if>
-					</c:if>
+				<div class="col bd-highlight">
+					<input type="text" id="title" class="fs-3 fw-bold" name="title" value="${tv.title}">
 				</div>
 			</div>
-			
-			
 			<div class="row">
 				<div class="col">
-					<button id="teamDelete">삭제</button>
-					<button id="teamModify">수정</button>
-					<button id="teamList">목록</button>
+					<textarea id="summernote" name="content">
+						${tv.content}
+						
+					</textarea>
 				</div>
 			</div>
-	
+			<div class="row">
+				<div class="col justify-content-center">
+				<c:if test="${login.midx == tv.midx}">
+					<button id="btn_modify">수정</button>
+				</c:if>
+					<button id="btn_cancel">취소</button>
+				</div>
+			</div>
+		</form>
 
 		</div><!-- / #container -->
 		
@@ -116,47 +97,41 @@
 	</div><!-- /#wrap -->
 <script>
 	$(function(){
+		
+		$("#summernote").summernote({
+			height:500,
+			minHeight:null,
+			maxHeight:null,
+			focus:false,
+			lang:"ko-KR",
+			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
+			toolbar: [
+				['style',['style']],
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			styleTags: ['h1']
+		});
+				
+		$("#btn_modify").click(function(){
+			location.href = "teamModify.do?tidx=${tv.tidx}";			
+		});
+		
+		$("#btn_cancel").click(function(){
+			history.back();
+		});
 
-		$("#teamList").click(function(){
-			location.href = "teamList.do";			
-		});
-		
-		$("#teamModify").click(function(){
-			location.href = "teamModify.do?tidx=${tv.tidx}";
-		});
-		
-		$("#teamDelete").click(function(){
-			location.href = "teamDelete.do?tidx=${tv.tidx}";
-		});
-		
-		$("#join_btn").click(function(){
-			$.ajax({
-				url: "join_apply.do",
-				data: "tidx=${tv.tidx}",
-				type: "get",
-				success:function(data){
-					if(data != 0){
-						$("#join_btn").toggle();
-						$("#join_cancel_btn").toggle();
-					}
-				}
-			});
-			
-		});
-		
-		$("#join_cancel_btn").click(function(){
-			$.ajax({
-				url: "join_apply_cancel.do",
-				data: "tidx=${tv.tidx}",
-				type: "get",
-				success: function(data){
-					if(data != 0){
-						$("#join_btn").toggle();
-					$("#join_cancel_btn").toggle();
-					}				
-				}
-			});
-		});
+
+
 		
 	});
 </script>

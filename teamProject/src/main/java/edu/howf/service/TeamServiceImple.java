@@ -57,6 +57,12 @@ public class TeamServiceImple implements TeamService{
 
 		return teamDao.join_check(tv);
 	}
+
+	@Override
+	public int teamModify(TeamVO tv) {
+		
+		return teamDao.teamModify(tv);
+	}
 	
 	
 	

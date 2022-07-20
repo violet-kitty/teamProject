@@ -91,4 +91,13 @@
 		AND    midx = #{midx}
 		GROUP BY joinyn
 	</select>
+	
+	<update id="teamModify" parameterType="teamVO">
+		UPDATE  team
+		SET		title = #{title}
+				,content = #{content}
+				,filename = #{filename}
+				,wdate = now()
+		WHERE	tidx = #{tidx}
+	</update>
 </mapper>
