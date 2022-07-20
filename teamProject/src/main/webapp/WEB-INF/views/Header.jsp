@@ -44,7 +44,7 @@ function logoutFn(){
 				<div class="container-fluid">
 					
 					<!-- 로고 -->
-					<a href="#" class="brand"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
+					<a href="<%= request.getContextPath() %>" class="brand"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
 					
 					<!-- 모바일 메뉴 버튼 -->
 					<button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#main_nav"aria-expanded="false" aria-label="Toggle navigation">
