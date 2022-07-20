@@ -20,6 +20,7 @@ public class StayVO {
 	private int max;			//포함된 방의 최고가
 	private List<String> service;	//숙박시설의 편의시설 및 서비스
 	private String services;		//테이블에 저장할 편의시설 및 서비스
+	private int cnt;				//리뷰 갯수
 	
 	public int getSidx() {
 		return sidx;
@@ -122,5 +123,11 @@ public class StayVO {
 	}
 	public void setServices(String services) {
 		this.services = services;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 }

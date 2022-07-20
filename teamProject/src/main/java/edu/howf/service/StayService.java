@@ -15,4 +15,9 @@ public interface StayService {
 	public int stayInsert(StayVO vo);
 	public int reviewInsert(CommentVO vo);
 	public float stayStar(int bidx);
+	public int stayModify(StayVO vo);
+	public int reviewModify(CommentVO vo);
+	public int stayDelete(int sidx);
+	public int reviewDelete(int cbidx);
+	public CommentVO reviewSelectOne(int cbidx);
 }

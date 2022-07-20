@@ -222,7 +222,9 @@ public class StayController {
 	//수정 페이지 이동
 	@RequestMapping(value="/stayModify.do", method=RequestMethod.GET)
 	public String stayModify(int sidx, Model model) {
+		StayVO stay = stayService.staySelectOne(sidx);
 		
+		model.addAttribute("stay", stay);
 		
 		return "stay/stayModify";
 	}
@@ -240,7 +242,45 @@ public class StayController {
 	@ResponseBody
 	@RequestMapping(value="/stayDelete.do")
 	public int stayDelete(int sidx) {
-		return 0;
+		return stayService.stayDelete(sidx);
+	}
+	
+	//리뷰 수정
+	@ResponseBody
+	@RequestMapping(value="/reviewModify.do", method=RequestMethod.GET)
+	public CommentVO reviewModify(int cbidx) {
+		return stayService.reviewSelectOne(cbidx);
+	}
+	
+	//리뷰 수정 action
+	@ResponseBody
+	@RequestMapping(value="/reviewModify.do", method=RequestMethod.POST)
+	public int reviewModify(CommentVO vo, MultipartFile file) throws IllegalStateException, IOException {
+		if(file != null) {
+			//파일 업로드
+			File dir = new File(uploadPath);
+			if(!dir.exists()) dir.mkdirs();
+					
+			if(!file.getOriginalFilename().isEmpty()) {
+				System.out.println("파일 저장 경로 : "+uploadPath);
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+				file.transferTo(new File(uploadPath,fileName));
+				vo.setPhoto(fileName);
+			}
+			else {
+				System.out.println("업로드된 파일 없음");
+			}
+		}
+		
+		return stayService.reviewModify(vo);
+	}
+	
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping(value="/reviewDelete.do")
+	public int reviewDelete(int cbidx) {
+		return stayService.reviewDelete(cbidx);
 	}
 	
 	//사진 보여주기 위한 코드

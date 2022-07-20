@@ -106,4 +106,52 @@ public class StayServiceImple implements StayService{
 	public float stayStar(int bidx) {
 		return stayDao.stayStar(bidx);
 	}
+
+	@Override
+	public int stayModify(StayVO vo) {
+		int result = stayDao.stayModify(vo);
+		
+		if(result == 1) {
+			stayDao.roomDelete(vo.getSidx());
+			if(vo.getRoom() != null) {//등록할 방이 있다면
+				for(RoomVO r : vo.getRoom()) {
+					//sidx 넣기
+					r.setSidx(vo.getSidx());
+					
+					//tag 이어붙이기
+					StringBuilder tags = new StringBuilder("");
+					for(int i=0;i<r.getTag().size();i++) {
+						tags.append(r.getTag().get(i)+",");
+					}
+					String tag = tags.toString();
+					r.setTags(tag.substring(0,tag.length()-1));
+					
+					for(int i=0;i<r.getCnt();i++) {
+						result = stayDao.roomInsert(r);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int reviewModify(CommentVO vo) {
+		return stayDao.revieweModify(vo);
+	}
+
+	@Override
+	public int stayDelete(int sidx) {
+		return stayDao.stayDelete(sidx);
+	}
+
+	@Override
+	public int reviewDelete(int cbidx) {
+		return stayDao.reviewDelete(cbidx);
+	}
+
+	@Override
+	public CommentVO reviewSelectOne(int cbidx) {
+		return stayDao.reviewSelectOne(cbidx);
+	}
 }
