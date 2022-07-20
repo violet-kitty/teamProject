@@ -18,9 +18,13 @@
 /* 부트스트랩 5 resetting */
 .row {--bs-gutter-x: 0;}
 a {text-decoration:none;}
+.carousel-indicators [data-bs-target] {box-sizing: content-box;flex: 0 1 auto;width: 20px;height: 20px;padding: 0;margin-right: 15px;margin-left: 15px;text-indent: -999px;cursor: pointer;background-color: #fff;background-clip: padding-box;border: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-radius: 100%;opacity: .5;transition: opacity .6s ease;}
+.carousel-indicators .active {opacity: 1;}
 @media (max-width: 576px){
 	.col-xs-3 {flex: 0 0 auto;width: 25%;}/*4개*/	
 	.col-xs-6 {flex: 0 0 auto;width: 50%;}/*2개*/	
+	.carousel-indicators [data-bs-target] {box-sizing: content-box;flex: 0 1 auto;width: 16px;height: 16px;padding: 0;margin-right: 10px;margin-left: 10px;text-indent: -999px;cursor: pointer;background-color: #fff;background-clip: padding-box;border: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-radius: 100%;opacity: .5;transition: opacity .6s ease;}
+	.carousel-indicators .active {opacity: 1;}
 }
 
 
