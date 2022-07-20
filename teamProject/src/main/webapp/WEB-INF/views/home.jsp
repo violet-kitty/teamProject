@@ -47,66 +47,63 @@
 		<div id="container" class="hbg-lightgray">
 
 			<!-- contents 01 -->
-			<div id="carouselExampleDark" class="content01 carousel carousel-dark slide"
-				data-bs-ride="carousel">
+			<div id="carouselExampleIndicators" class="content01 carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleDark"
-						data-bs-slide-to="0" class="active" aria-current="true"
-						aria-label="Slide 1"></button>
-					<button type="button" data-bs-target="#carouselExampleDark"
-						data-bs-slide-to="1" aria-label="Slide 2"></button>
-					<button type="button" data-bs-target="#carouselExampleDark"
-						data-bs-slide-to="2" aria-label="Slide 3"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 				</div>
 				<div class="carousel-inner" id="news">
-	
+
 					<div class="carousel-item active" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture1.jpg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture1.jpg);"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold">갬성자극! 제주도 여행은 ‘나미송 머무는 곳’</h5>
-								<p class="hfc-semibold hfc-darkgray">#민박  #고향민박  #독채<br>#정원  #주방기구  #자연경관</p>
+								<p class="hfc-semibold hfc-darkgray">
+									#민박 #고향민박 #독채<br>#정원 #주방기구 #자연경관
+								</p>
 								<button class="greenbtn hbshadow2">HOWF 숙박추천</button>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture2.jpg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture2.jpg);"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold">벚꽃 여행 떠나보자! 2022년 추천 벚꽃여행지와 지역별 벚꽃명소</h5>
-								<p class="hfc-semibold hfc-darkgray">#축제  #힐링  #자연<br>#여행  #봄  #드라이브</p>
+								<p class="hfc-semibold hfc-darkgray">
+									#축제 #힐링 #자연<br>#여행 #봄 #드라이브
+								</p>
 								<button class="greenbtn hbshadow2">HOWF 여행지추천</button>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/picture4.jpeg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture4.jpeg);"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold">맛있게 먹으면 피자도 0칼로리~ 피자의 축제! ’그라덴피자’ 남해 독일마을!</h5>
-								<p class="hfc-semibold hfc-darkgray">#남해  #독일마을  #피자<br>#이국적  #이색여행  #미슐랭</p>
+								<p class="hfc-semibold hfc-darkgray">
+									#남해 #독일마을 #피자<br>#이국적 #이색여행 #미슐랭
+								</p>
 								<button class="greenbtn hbshadow2">HOWF 맛집추천</button>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
-				<button class="carousel-control-prev" type="button"
-					data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
 				</button>
-				<button class="carousel-control-next" type="button"
-					data-bs-target="#carouselExampleDark" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 				</button>
 			</div>
 			<!-- /content 01 -->
-	
+
 			<!-- Nav --><%@include file="Nav.jsp"%>
 			
 			<!-- content 02 -->
@@ -191,113 +188,166 @@
 			    </div><!-- /.container -->
 		    </div><!-- /.contents -->
 			<!-- / .content 02 -->
-			
+
 			<!-- content 03 -->
 			<div class="contents content03 hbg-whitegray">
 				<div class="container">
 					<div class="linediv">
-						<p class="title hfc-bold hfc-blackgray">HOWF에서는 <span class="hfc-green">숙박정보 검색</span>, <span class="hfc-pink">예약</span> 모두 가능!</p>
+						<p class="title hfc-bold hfc-blackgray">
+							HOWF에서는 <span class="hfc-green">숙박정보 검색</span>, <span class="hfc-pink">예약</span> 모두 가능!
+						</p>
 					</div>
-				   <div class="my-slider">
-				      <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/picture/stay1.jpeg);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">서귀포시, 서귀포</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">호텔 브릿지 서귀포</h3>
-								<h4 class="hfc-medium hfc-darkgray">$400,000 ~ $600,000</h4>
+					<div class="my-slider">
+						<a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/stay1.jpeg);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">서귀포시, 서귀포</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">호텔 브릿지 서귀포</h3>
+									<h4 class="hfc-medium hfc-darkgray">$400,000 ~ $600,000</h4>
+								</div>
 							</div>
-					      </div>
-				      </a>
-				      <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">지역도, 지역시</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
-								<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+						</a> <a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">지역도, 지역시</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
+									<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+								</div>
 							</div>
-					      </div>
-					  </a>
-				      <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">지역도, 지역시</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
-								<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+						</a> <a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">지역도, 지역시</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
+									<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+								</div>
 							</div>
-					      </div>
-					  </a>
-					  <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">지역도, 지역시</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
-								<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+						</a> <a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">지역도, 지역시</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
+									<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+								</div>
 							</div>
-					      </div>
-					  </a>
-					  <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">지역도, 지역시</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
-								<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+						</a> <a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">지역도, 지역시</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
+									<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+								</div>
 							</div>
-					      </div>
-					  </a>
-					  <a class="colitem" href="#">
-					      <div class="hbshadow3">
-						    <div class="imgset" style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png);"></div>
-							<div class="banding">
-								<p class="hfc-bold hfc-pink">지역도, 지역시</p><p class="hfc-darkgray dashp">|</p>
-								<img src="<%= request.getContextPath() %>/image/icon/star.png"><p class="score hfc-semibold hfc-blue">4.5</p>
-								<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
-								<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+						</a> <a class="colitem" href="#">
+							<div class="hbshadow3">
+								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+								<div class="banding">
+									<p class="hfc-bold hfc-pink">지역도, 지역시</p>
+									<p class="hfc-darkgray dashp">|</p>
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="score hfc-semibold hfc-blue">4.5</p>
+									<h3 class="hfc-bold hfc-blackgray">숙소이름 숙소이름 숙소이름</h3>
+									<h4 class="hfc-medium hfc-darkgray">$nnn,nnn ~ $nnn,nnn</h4>
+								</div>
 							</div>
-					      </div>
-					  </a>
-				   </div>
+						</a>
+					</div>
 				</div>
-						
 			</div>
+			<script>
+				$(document).ready(function() {
+					$('.my-slider').slick({
+						slidesToShow : 3,
+						slidesToScroll : 1,
+						arrows : true,
+						dots : false,
+						speed : 300,
+						infinite : true,
+						autoplaySpeed : 5000,
+						autoplay : true,
+						responsive : [ {
+							breakpoint : 992,
+							settings : {
+								slidesToShow : 3,
+							}
+						}, {
+							breakpoint : 992,
+							settings : {
+								slidesToShow : 1,
+							}
+						} ]
+					});
+				});
+			</script>
+			<!-- / .content 03 -->
 
-<script>
-$(document).ready(function(){
-    $('.my-slider').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      arrows: true,
-      dots: false,
-      speed: 300,
-      infinite: true,
-      autoplaySpeed: 5000,
-      autoplay: true,
-      responsive: [
-    {
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 3,
-      }
-    },
-    {
-      breakpoint: 767,
-      settings: {
-        slidesToShow: 1,
-      }
-    }
-  ]
-    });
-  });
-</script>
+			<!-- contents 04 -->
+			<div id="carouselExampleDark" class="content04 carousel carousel-dark slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target=#carouselExampleDark data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner" id="news">
+					<div class="carousel-item active" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture3.jpg);"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-white hfc-bold">2022 평창자연지키미축제</h5>
+								<p class="hfc-semibold hfc-green">2022. 6. 23 ~ 2022.06.28</p>
+							</div>
+
+						</div>
+					</div>
+					<div class="carousel-item" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/back.jpg);"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-white hfc-bold">제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다</h5>
+								<p class="hfc-semibold hfc-green">2022.05.01 ~ 2022.05.24</p>
+							</div>
+
+						</div>
+					</div>
+					<div class="carousel-item" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture7.jpeg);"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-white hfc-bold">제목입니다 제목입니다 제목입니다 제목입니다 제목입니다 제목입니다</h5>
+								<p class="hfc-semibold hfc-green">2022.05.01 ~ 2022.05.24</p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			<!-- /content 04 -->
 
 		</div><!-- / #container -->
 		
