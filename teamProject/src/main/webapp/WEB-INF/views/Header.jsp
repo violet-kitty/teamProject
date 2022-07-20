@@ -59,7 +59,7 @@ function logoutFn(){
 								<!-- 검색창 -->
 								<div class="search">
 									<img src="<%= request.getContextPath() %>/image/icon/search.png">
-									<input type="text" name="keyword" placeholder="HOWF는 여행정보, 커뮤니티, 숙박정보를 제공합니다!"> <input type="submit" value="검색">
+									<input type="text" name="keyword" placeholder="모두가 나누는 여행정보 HOWF!"> <input type="submit" value="검색">
 								</div>
 							</li>
 							<li class="nav-item">
