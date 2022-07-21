@@ -41,10 +41,18 @@
 	}
 </style>
 <script>
-//객실 관련 변수들
+	//객실 관련 변수들
 	var index = 0;
 	var tagi = 0;
 
+	//로딩 시 이미지 보여주기 위한 변수
+	var init = false;
+	var imgArr = [];
+	
+	//객실 이미지를 위한 변수
+	var roomArr1 = [];
+	var roomArr2 = [];
+	
 	//객실 추가
 	function roomAdd(){
 		var html = '<div class="room" id="room'+index+'">'
@@ -142,7 +150,9 @@
 		+ '<div class="feature col">'
 		+ '<span>가격</span>'
 		+ '<input type="number" name="room['+index+'].price" id="price'+index+'"><br>'
-		+ '<input type="file" id="roomFile'+index+'" name="roomFile"><br>'
+		+ '<label for="roomFile'+index+'" class="mx-2" style="border:1px solid black;background:#d3d3d3;cursor:pointer;width:100px;text-align:center">업로드</label>'
+		+ '<span id="roomFileTxt'+index+'"></span>'
+		+ '<input type="file" id="roomFile'+index+'" name="roomFile" style="display:none" onchange="roomFileChange('+index+')"><br>'
 		+ '<div class="form-check form-check-inline">'
 		+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+12)+'" value="전자렌지">'
 		+ '<label class="form-check-label" for="tag'+(tagi+12)+'">전자렌지</label>'
@@ -349,7 +359,11 @@
 				
 				<div class="row">
 					<div class="col">
-						<input type="file" id="btnAtt" name="btnAtt" multiple="multiple">
+						<label for="btnAtt" class="mx-2" style="border:1px solid black;background:#d3d3d3;cursor:pointer;width:100px;text-align:center">업로드</label>
+						<input type="file" id="btnAtt" name="btnAtt" multiple="multiple" style="display:none">
+						<c:set var="stayPhoto" value="${fn:split(stay.photo,',')}"/>
+						<c:set var="imgLength" value="${fn:length(stayPhoto)}"/>
+						<span id="stayImgInfoArea">파일 ${imgLength}개</span>
 					</div>
 				</div>
 				
@@ -523,6 +537,8 @@
 				<div class="row">
 					<div class="col">
 						<div>
+							<!-- 이미지 변경 안되었을때 배열 값이 들어갈 곳 -->
+							<div id="nonChangeImg"></div>
 							<button type="button" onclick="stayWriteFn()">등록</button>
 						</div>
 					</div>
@@ -561,12 +577,68 @@
 			    var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
 			                  + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
 			  
+			    if(init == false){
+			    	init = true;
+			    	var se = "${stay.photo}";
+				    var sel = se.split(',');
+			    	for(var aaa of sel){
+				    	sel_files.push("\'"+aaa+"\'");
+				    }
+			    	for(var aaa of sel_files){
+			    		var aa = aaa.substring(1,aaa.length-1);
+			    		//이미지 객체 생성
+						let img = document.createElement('img');
+					    img.setAttribute('style', img_style);
+					    img.src = '<%=request.getContextPath() %>/stay/displayFile.do?fileName='+aa;
+						
+			    		//div 생성
+						var div = document.createElement('div');
+						div.setAttribute('style', div_style);
+					    
+						//x버튼 생성
+						var btn = document.createElement('input');
+						btn.setAttribute('type', 'button');
+						btn.setAttribute('value', 'x');
+						btn.setAttribute('delFile', aaa);
+						btn.setAttribute('style', chk_style);
+						//버튼 클릭 이벤트
+						btn.onclick = function(ev){
+						  var ele = ev.srcElement;
+						  var delFile = ele.getAttribute('delFile');
+						  for(var i=0 ;i<sel_files.length; i++){
+							//삭제 버튼 클릭한 이미지와 같은 이름인 데이터 제거
+						    if(delFile== sel_files[i]){
+						    	sel_files.splice(i, 1);
+						    	imgArr.splice(i,1);
+						    }
+						  }
+						  $("#stayImgInfoArea").text("파일 "+sel_files.length+"개");
+						  
+						  var p = ele.parentNode;
+						  attZone.removeChild(p);
+						}
+						div.appendChild(img);
+						div.appendChild(btn);
+						
+						
+						//만든 div attZone에 추가
+						attZone.appendChild(div);
+						
+						imgArr.push(aaa);
+			    	}
+			    }
+			    
+			    
 			    btnAtt.onchange = function(e){
+			    sel_files = [];
+			    imgArr = [];
 			    $("#att_zone").empty();
 			      var files = e.target.files;
 			      var fileArr = Array.prototype.slice.call(files)
 			      for(f of fileArr){
 			        imageLoader(f);
+			        if(fileArr.length == 1) $("#stayImgInfoArea").text(f.name);
+			        else $("#stayImgInfoArea").text("파일 "+fileArr.length+"개");
 			      }
 			    }
 			    
@@ -602,6 +674,7 @@
 			            sel_files.splice(i, 1);      
 			          }
 			        }
+			        $("#stayImgInfoArea").text("파일 "+sel_files.length+"개");
 			        
 			        dt = new DataTransfer();
 			        for(f in sel_files) {
@@ -620,6 +693,13 @@
 			)('att_zone', 'btnAtt')//이미지 미리보기
 			
 		$(function(){
+			//객실 이미지 이름 담기
+			<c:forEach var="rrr" items="${stay.room}">
+			var rrrImg = "${rrr.photo}";
+			roomArr1.push("\'"+rrrImg+"\'");
+			
+			</c:forEach>
+			
 			//tagify
 			var input = document.querySelector("#tag");
 			new Tagify(input);
@@ -661,6 +741,10 @@
 				$("#people"+ii).val("${i.people}");
 				$("#price"+ii).val("${i.price}");
 				
+				//객실 이미지
+				<c:set var="rfileArr" value="${fn:split(i.photo,'_')}"/>
+				$("#roomFileTxt"+ii).text('${rfileArr[fn:length(rfileArr)-1]}');
+				
 				//체크 박스
 				<c:set var="tagsArr" value="${fn:split(i.tags,',')}"/>
 				<c:forEach var="j" items="${tagsArr}">
@@ -694,7 +778,12 @@
 			
 			
 		});
-	
+		
+		//객실의 이미지가 바뀔때의 이벤트
+		function roomFileChange(index){
+			var roomImgName = $("#roomFile"+index)[0].files[0].name;
+			$("#roomFileTxt"+index).text(roomImgName);
+		}
 	
 		
 		//숙박 등록
@@ -705,7 +794,8 @@
 			var addr = $("#addr");
 			var detailaddr = $("#detailaddr");
 			var tag = $("#tag");
-			var photo = $("#btnAtt");
+			var file = $("#btnAtt");
+			var fileLength = imgArr.length;
 			
 			if(name.val()==""){
 				alert("시설 이름을 입력해 주세요");
@@ -727,8 +817,8 @@
 				tag.focus();
 				return;
 			}
-			else if(photo.val()==""){
-				alert("숙소 사진을 등록해 주세요");
+			else if(file.val()=="" && fileLength == 0){//file이 비었고 배열의 길이도 0인 경우
+				alert("적어도 하나의 파일을 업로드 해주세요");
 				return;
 			}
 			else {
@@ -844,6 +934,33 @@
 					}
 				}
 			}//content, 객실 유효성 검사
+			
+			//숙박 이미지 정보 담은 배열 hidden 값으로 넘기기
+			if(imgArr.length != 0){
+				var html = '';
+				for(var ii of imgArr){
+					html = html + '<input type="hidden" name="imgArr" value="'+ii+'">';
+				}
+				$("#nonChangeImg").html(html);
+			}
+			
+			//객실 원래 이미지 정보 담은 배열 hidden 값으로 넘기기
+			if(roomArr1.length != 0){
+				var html = '';
+				for(var ii of roomArr1){
+					html = html + '<input type="hidden" name="roomArr1" value="'+ii+'">';
+				}
+				$("#nonChangeImg").append(html);
+			}
+			
+			//객실 이미지 input file 이름들 hidden 값으로 넘기기
+			for(var ii=0;ii<index;ii++){
+				var html = '';
+				var fileInput = $("#roomFile"+ii).val();
+				roomArr2.push("\'"+fileInput+"\'");
+				html = html + '<input type="hidden" name="roomArr2" value="'+roomArr2[ii]+'">';
+				$("#nonChangeImg").append(html);
+			}
 			
 			//전부다 통과하면 submit
 			$("#stayFrm").submit();

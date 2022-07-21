@@ -109,6 +109,25 @@ public class StayServiceImple implements StayService{
 
 	@Override
 	public int stayModify(StayVO vo) {
+		/* 숙박시설 등록 */
+		//content 이어붙이기
+		StringBuilder contents = new StringBuilder("");
+		for(int i=0;i<vo.getContent().size();i++) {
+			vo.getContent().get(i).replaceAll("\n", "<br>");
+			contents.append(vo.getContent().get(i)+",");
+		}
+		String content = contents.toString();
+		vo.setContents(content.substring(0,content.length()-1));
+		
+		//service 이어붙이기
+		StringBuilder services = new StringBuilder("");
+		for(int i=0;i<vo.getService().size();i++) {
+			services.append(vo.getService().get(i)+",");
+		}
+		String service = services.toString();
+		vo.setServices(service.substring(0,service.length()-1));
+		
+		//등록
 		int result = stayDao.stayModify(vo);
 		
 		if(result == 1) {
@@ -153,5 +172,10 @@ public class StayServiceImple implements StayService{
 	@Override
 	public CommentVO reviewSelectOne(int cbidx) {
 		return stayDao.reviewSelectOne(cbidx);
+	}
+
+	@Override
+	public int reviewDup(CommentVO vo) {
+		return stayDao.reviewDup(vo);
 	}
 }

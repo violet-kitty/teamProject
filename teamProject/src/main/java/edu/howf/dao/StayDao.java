@@ -83,4 +83,8 @@ public class StayDao {
 	public CommentVO reviewSelectOne(int cbidx) {
 		return sqlSession.selectOne(namespace+"reviewSelectOne", cbidx);
 	}
+	
+	public int reviewDup(CommentVO vo) {
+		return sqlSession.selectOne(namespace+"reviewDup", vo);
+	}
 }

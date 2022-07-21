@@ -310,7 +310,11 @@
 			, detailaddr
 			, contents
 			, tag
+	]]>
+			<if test='photo != null'>
 			, photo
+			</if>
+	<![CDATA[		
 			, services
 			, delyn
 		)
@@ -321,7 +325,11 @@
 			, #{detailaddr}
 			, #{contents}
 			, #{tag}
+	]]>		
+			<if test='photo != null'>
 			, #{photo}
+			</if>
+	<![CDATA[		
 			, #{services}
 			, 'N'
 		)
@@ -340,7 +348,9 @@
 			, tags
 			, people
 			, square
+			<if test='photo != null'>
 			, photo
+			</if>
 			, sbed
 			, dbed
 			, qbed
@@ -354,7 +364,9 @@
 			, #{tags}
 			, #{people}
 			, #{square}
+			<if test='photo != null'>
 			, #{photo}
+			</if>
 			, #{sbed}
 			, #{dbed}
 			, #{qbed}
@@ -373,7 +385,7 @@
 			, bidx
 			, wdate
 			, delyn
-			<if test="photo != null">
+			<if test='photo != null'>
 			, photo
 			</if>
 		)
@@ -385,7 +397,7 @@
 			, #{bidx}
 			, now()
 			, 'N'
-			<if test="photo != null">
+			<if test='photo != null'>
 			, #{photo}
 			</if>
 		)
@@ -399,12 +411,22 @@
 			, detailaddr = #{detailaddr}
 			, contents = #{contents}
 			, tag = #{tag}
-			<if test="photo != null">
+			<if test='photo != null'>
 			, photo = #{photo}
 			</if>
 			, services = #{services}
 		WHERE sidx = #{sidx}
 	</update>
+	
+	<!-- 리뷰 중복 여부 -->
+	<select id="reviewDup" parameterType="commentVO" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE type = 'stay'
+		AND midx = #{midx}
+		AND bidx = #{bidx}
+		AND delyn = 'N'
+	</select>
 	
 	<!-- 리뷰 하나만 가져오기 -->
 	<select id="reviewSelectOne" parameterType="int" resultType="commentVO">
@@ -421,7 +443,7 @@
 		UPDATE comment
 		SET   content = #{content}
 			, star = #{star}
-			<if test="photo != null">
+			<if test='photo != null'>
 			, photo = #{photo}
 			</if>
 		WHERE cbidx = #{cbidx}

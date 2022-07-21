@@ -304,55 +304,6 @@
 
 
 <script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(0, 0), // 지도의 중심좌표
-	        level: 4 // 지도의 확대 레벨
-	    };  
-	
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('${stay.addr}', function(result, status) {
-	
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-	
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	        
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	        	map: map,
-	            position: coords
-	        });
-	        
-	    	// 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:1px 0;">${stay.name}</div>'
-	        });
-	        infowindow.open(map, marker);
-	        
-	        setTimeout(function(){
-	        	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
-	        	map.relayout();
-	        	map.setCenter(coords);
-	        	map.relayout();
-	        },1000);
-	        setTimeout(function(){
-	        	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
-	        	map.relayout();
-	        	map.setCenter(coords);
-	        	map.relayout();
-	        },500);
-	    }
-	});
-	
 	$(function(){
 		//태그 파싱
 		var json = '${stay.tag}';
@@ -382,6 +333,48 @@
 			$("#roomTabBtn").css("color","black");
 			$("#stayTabBtn").css("color","green");
 			$("#reviewTabBtn").css("color","black");
+			
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(0, 0), // 지도의 중심좌표
+			        level: 4 // 지도의 확대 레벨
+			    };  
+			
+			// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch('${stay.addr}', function(result, status) {
+			
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			        	map: map,
+			            position: coords
+			        });
+			        
+			    	// 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:1px 0;">${stay.name}</div>'
+			        });
+			        infowindow.open(map, marker);
+			        
+			        setTimeout(function(){
+			        	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+			        	map.relayout();
+			        	map.setCenter(coords);
+			        	map.relayout();
+			        },1000);
+			    }
+			});
 		});
 		$("#reviewTabBtn").on("click",function(){
 			$("#roomTab").hide();
@@ -392,44 +385,6 @@
 			$("#stayTabBtn").css("color","black");
 			$("#reviewTabBtn").css("color","green");
 		});
-		
-		
-		//리뷰쓰기
-		$("#reviewWriteBtn").on("click",function(){
-			var login = '<%= (UserVO)session.getAttribute("login") %>';
-			if(login == "null"){
-				alert("로그인이 필요합니다");
-				return;
-			}
-			else {
-				//유효성 검사
-				if($("#reviewContent").val()==""){
-					alert("리뷰 내용을 작성해 주세요");
-					return;
-				}
-				
-				//리뷰 작성 ajax
-				var formData = new FormData($("#reviewFrm")[0]);
-				$.ajax({
-					url:"reviewWrite.do",
-					data:formData,
-					type:"post",
-					cache:false,
-					contentType:false,
-					processData:false,
-					success:function(data){
-						if(data==1){
-							alert("글이 작성되었습니다");
-							$("#reviewContent").val("");
-							$("#file").val("");
-							$("#file").replaceWith($("#file").clone(true));
-							reviewListAjax(1);
-						}
-					}
-				});//리뷰쓰기 ajax
-				
-			}
-		});//리뷰쓰기 function
 		
 		
 		//숙박 정보 삭제
@@ -474,6 +429,62 @@
 	function photoChange(photo){
 		$("#mainImage").attr("src","<%=request.getContextPath() %>/stay/displayFile.do?fileName="+photo);
 	}
+	
+	
+	//리뷰쓰기
+	$("#reviewWriteBtn").on("click",function(){
+		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		if(login == "null"){
+			alert("로그인이 필요합니다");
+			return;
+		}
+		else {
+			//유효성 검사
+			if($("#reviewContent").val()==""){
+				alert("리뷰 내용을 작성해 주세요");
+				return;
+			}
+			else {
+				//리뷰 중복 체크 ajax
+				$.ajax({
+					url:"reviewDup.do",
+					data:"bidx=${stay.sidx}",
+					type:"post",
+					success:function(dup){
+						if(dup == 0){
+							//리뷰 작성 ajax
+							var formData = new FormData($("#reviewFrm")[0]);
+							$.ajax({
+								url:"reviewWrite.do",
+								data:formData,
+								type:"post",
+								cache:false,
+								contentType:false,
+								processData:false,
+								success:function(data){
+									if(data==1){
+										alert("글이 작성되었습니다");
+										$("#reviewContent").val("");
+										$("#file").val("");
+										$("#file").replaceWith($("#file").clone(true));
+										reviewListAjax(1);
+									}
+								}
+							});//리뷰 작성 ajax
+							
+						}
+						else {
+							alert("리뷰는 한번만 등록할 수 있습니다");
+							$("#reviewContent").val("");
+							$("#file").val("");
+							$("#file").replaceWith($("#file").clone(true));
+							return;
+						}
+					}
+				});//리뷰 중복 체크 ajax
+			}
+		}
+	});//리뷰쓰기 function
 	
 	
 	//리뷰 리스트 그리기
@@ -600,7 +611,7 @@
 
 	}//리뷰 수정
 	
-	//리뷰 작성 클릭 이벤트
+	//리뷰 수정 클릭 이벤트
 	function reviewMFn(index){
 		var content = $("#reviewMContent");
 		if(content.val()==""){

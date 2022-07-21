@@ -20,4 +20,5 @@ public interface StayService {
 	public int stayDelete(int sidx);
 	public int reviewDelete(int cbidx);
 	public CommentVO reviewSelectOne(int cbidx);
+	public int reviewDup(CommentVO vo);
 }
