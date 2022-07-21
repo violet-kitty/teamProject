@@ -24,18 +24,55 @@
 		join 	 (select u.midx, u.nickname from usertable u) u
 		ON 		 a.midx = u.midx
 		WHERE    a.delyn = 'N'
+		<if test="searchType != null and searchType.equals('total')">
+		AND (a.title like concat('%', #{searchValue}, '%')
+		OR	 a.content like concat('%', #{searchValue}, '%')
+		OR	 u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('title')">
+		AND (a.title like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('content')">
+		AND (a.content like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('nickname')">
+		AND (u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test='sortType == null'>
 		ORDER BY a.tidx DESC
+		</if>
+		<if test='sortType != null and sortType.equals("team")'>
+		ORDER BY a.people_cnt DESC
+		</if>
+		<if test='sortType != null and sortType.equals("cnt")'>
+		ORDER BY a.cnt DESC
+		</if>
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
 	<select id="countPage" parameterType="searchVO" resultType="int">
 		SELECT COUNT(t.tidx)
-		FROM         team t, usertable u
-		WHERE        t.midx = u.midx
-		AND          t.delyn = 'N'
-		ORDER BY     t.tidx DESC
+		FROM   team t, usertable u
+		WHERE  t.midx = u.midx
+		AND    t.delyn = 'N'
+		<if test="searchType != null and searchType.equals('total')">
+		AND   (t.title like concat('%', #{searchValue}, '%')
+		OR	   t.content like concat('%', #{searchValue}, '%')
+		OR	   u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('title')">
+		AND   (t.title like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('content')">
+		AND   (t.content like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('nickname')">
+		AND   (u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
 	</select>
 	
 	<insert id="teamWrite" parameterType="teamVO">
+	<![CDATA[
 		INSERT INTO team(
 						midx
 						,title
@@ -52,7 +89,10 @@
 						,#{filename}
 						,#{applyyn}
 		)
-		
+		]]>
+		<selectKey resultType="int" keyProperty="tidx" order="AFTER">
+		SELECT max(tidx) FROM team
+		</selectKey>
 	</insert>
 	
 	<select id="teamView" parameterType="int" resultType="teamVO">
@@ -95,7 +135,7 @@
 						#{tidx}
 						,#{midx}
 						,now()
-						,'N'
+						,#{joinyn}
 					)
 	</insert>
 	
@@ -106,12 +146,26 @@
 	</delete>
 	
 	<select id="join_check" parameterType="teamVO" resultType="joinVO">
-		SELECT COUNT(jidx) as jidx
-			  ,joinyn
-		FROM   jointable
-		WHERE  tidx = #{tidx}
-		AND    midx = #{midx}
-		GROUP BY joinyn
+		select a.jidx,b.joinyn from
+		(SELECT COUNT(jidx) as jidx
+			, jidx as j
+				FROM   jointable
+				WHERE  tidx = #{tidx}
+				AND    midx = #{midx})a
+		left outer JOIN
+		(select joinyn
+			,jidx
+		from jointable a
+		where tidx = #{tidx}
+		and midx = #{midx})b
+		on a.j = b.jidx;
+	</select>
+	
+	<select id="write_check" parameterType="int" resultType="int">
+		SELECT  COUNT(tidx) as tidx
+		FROM	team
+		WHERE	midx = #{midx}
+		AND     delyn = 'N'
 	</select>
 	
 	<update id="teamModify" parameterType="teamVO">

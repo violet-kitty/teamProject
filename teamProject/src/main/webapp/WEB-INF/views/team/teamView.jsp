@@ -91,7 +91,7 @@
 			</div>			
 			<div class="row">
 				<div class="col d-flex justify-content-center">
-					<c:if test="${tv.applyyn == 'Y'}">
+					<c:if test="${login != null && tv.applyyn == 'Y'}">
 						<c:if test="${check.joinyn != 'Y'}">
 							<c:if test="${check.jidx == 0}">
 								<input type="button" id="join_btn" class="join_btn" value="가입신청">
@@ -107,7 +107,9 @@
 			</div>
 			<div class="row">
 				<div class="col d-flex justify-content-center">
-					<c:if test="${login.midx == tv.midx}">
+				${login.midx}<br>
+				${tv.midx}
+					<c:if test="${login!=null && login.midx == tv.midx}">
 						<button id="teamDelete">삭제</button>
 						<button id="teamModify">수정</button>
 					</c:if>
@@ -159,7 +161,7 @@
 					if(data != 0){
 						$("#join_btn").toggle();
 						$("#join_cancel_btn").toggle();
-					}				
+					}
 				}
 			});
 		});

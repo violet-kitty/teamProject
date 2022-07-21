@@ -56,7 +56,7 @@
 		
 		<!-- container -->
 		<div class="container">
-		<form id="form1" method="post">
+		<form id="form1" action="teamModify.do?tidx=${tv.tidx}" method="post">
 			<div class="row">
 				<div class="col text-center">
 					<div class="thumbnail"><input type="file" id="thumbnail" name="filename">${tv.filename}</div>
@@ -83,9 +83,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<textarea id="summernote" name="content">
-						${tv.content}
-					</textarea>
+					<textarea id="summernote" name="content">${tv.content}</textarea>
 				</div>
 			</div>
 			<div class="row">
@@ -101,9 +99,9 @@
 			<div class="row">
 				<div class="col text-center">
 				<c:if test="${login.midx == tv.midx}">
-					<button id="btn_modify">수정</button>
+					<button onclick="btn_modify">수정</button>
 				</c:if>
-					<button id="btn_cancel">취소</button>
+					<button type="button" id="btn_cancel">취소</button>
 				</div>
 			</div>
 		</form>
@@ -138,19 +136,62 @@
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 			styleTags: ['h1']
 		});
-				
-		$("#btn_modify").click(function(){
-			location.href = "teamModify.do?tidx=${tv.tidx}";			
-		});
 		
 		$("#btn_cancel").click(function(){
-			history.back();
+			var title = "${tv.title}";
+			var content = "${tv.content}";
+			if($("#title").val() != title){
+				if(!confirm("제목이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+			}
+			else if($("#summernote").val() != content){
+	    		if(!confirm("내용이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+	    	}
+			else if($("#thumbnail").val() != ""){				
+				if(!confirm("첨부된 파일이 변경되었습니다. \n\n수정을 취소하시겠습니까?")){
+	    			return false;
+	    		}
+	    		else{
+	    			history.back();
+	    		}
+			}
+	    	else{
+	    		history.back();
+	    	}
 		});
-
-
-
+		
 		
 	});
+	
+	function btn_modify(){
+		var title = $("#title");
+		var content = $("#summernote");
+		if(title.val() == ""){
+			alert("제목을 입력해주세요");
+			title.focus();
+			return;
+		}
+		else if(content.val() == ""){
+			alert("내용을 입력해주세요");
+			content.focus();
+			return;
+		}
+		else {
+			if(!confirm("정말로 수정하시겠습니까?")){
+				return false;
+			}
+			$("#form1").submit();
+		}
+	}
 </script>
 </body>
 </html>

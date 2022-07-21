@@ -20,8 +20,9 @@ public class TeamDao {
 	
 	
 	public List<TeamVO> teamList(SearchVO vo) {
-		
-		return sqlSession.selectList(namespace + "teamList");
+		int page = (vo.getPage()-1)*10;
+		vo.setPage(page);
+		return sqlSession.selectList(namespace + "teamList", vo);
 	}
 	
 	public int countPage(SearchVO vo) {
@@ -57,6 +58,11 @@ public class TeamDao {
 	public JoinVO join_check(TeamVO tv) {
 
 		return sqlSession.selectOne(namespace + "join_check", tv);
+	}
+	
+	public int write_check(int midx) {
+		
+		return sqlSession.selectOne(namespace + "write_check", midx);
 	}
 	
 	public int teamModify(TeamVO tv) {

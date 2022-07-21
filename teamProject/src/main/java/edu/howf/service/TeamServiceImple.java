@@ -30,8 +30,9 @@ public class TeamServiceImple implements TeamService{
 	
 	@Override
 	public int teamWrite(TeamVO tv) {
-		
-		return teamDao.teamWrite(tv);
+		teamDao.teamWrite(tv);
+		tv.setJoinyn("Y");
+		return teamDao.insert_join_apply(tv);
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class TeamServiceImple implements TeamService{
 
 	@Override
 	public int insert_join_apply(TeamVO tv) {
-		
+		tv.setJoinyn("N");
 		return teamDao.insert_join_apply(tv);
 	}
 
@@ -65,6 +66,12 @@ public class TeamServiceImple implements TeamService{
 	}
 
 	@Override
+	public int write_check(int midx) {
+
+		return teamDao.write_check(midx);
+	}
+	
+	@Override
 	public int teamModify(TeamVO tv) {
 		
 		return teamDao.teamModify(tv);
@@ -75,6 +82,7 @@ public class TeamServiceImple implements TeamService{
 
 		return teamDao.teamDelete(tidx);
 	}
+
 	
 	
 	

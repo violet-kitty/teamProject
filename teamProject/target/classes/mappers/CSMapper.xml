@@ -86,23 +86,23 @@
 			FROM   CStable cs, usertable u
 			WHERE  cs.midx = u.midx
 			AND    cs.delyn = 'N'
-			AND cs.csbidx = cs.origincsbidx
+			AND    cs.csbidx = cs.origincsbidx
 			<if test="searchType != null and searchType.equals('total')">
-				AND (cs.title like concat('%', #{searchValue}, '%')
-				OR   cs.content like concat('%', #{searchValue}, '%')
-				OR   u.nickname like concat('%', #{searchValue}, '%'))
+			AND   (cs.title like concat('%', #{searchValue}, '%')
+			OR     cs.content like concat('%', #{searchValue}, '%')
+			OR     u.nickname like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('divsn')">
-				AND (cs.divsn like concat('%', #{searchValue}, '%'))
+			AND   (cs.divsn like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('title')">
-				AND (cs.title like concat('%', #{searchValue}, '%'))
+			AND   (cs.title like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('content')">
-				AND (cs.content like concat('%', #{searchValue}, '%'))
+			AND   (cs.content like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('nickname')">
-				And (u.nickname like concat('%', ${searchValue}, '%'))
+			AND   (u.nickname like concat('%', #{searchValue}, '%'))
 			</if>
 			ORDER BY cs.csbidx DESC
 		</select>

@@ -24,6 +24,8 @@ public interface TeamService {
 	
 	public JoinVO join_check(TeamVO tv);
 	
+	public int write_check(int midx);
+	
 	public int teamModify(TeamVO tv);
 	
 	public int teamDelete(int tidx);

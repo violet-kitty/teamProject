@@ -26,7 +26,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
@@ -36,6 +36,7 @@
 <body>
 	<div id="wrap">
 		<!-- Header --><%@include file="../Header.jsp"%>
+		<div style="height:50px;"></div>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
 		<!-- Side -->
@@ -119,7 +120,21 @@ $(function(){
 	});
 			
 	$("#btn_write").click(function(){
-		$("#form1").submit();		
+		var title = $("#title");
+		var content = $("#summernote");
+		if(title.val() == ""){
+			alert("제목을 입력해주세요");
+			title.focus();
+			return false;
+		}
+		else if(content.val() == ""){
+			alert("내용을 입력해주세요");
+			content.focus();
+			return false;
+		}
+		else{
+			$("#form1").submit();
+		}				
 	});
 	
 	$("#btn_cancel").click(function(){

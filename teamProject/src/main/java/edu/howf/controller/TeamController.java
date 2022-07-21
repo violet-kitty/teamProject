@@ -36,14 +36,14 @@ public class TeamController {
 	
 	@RequestMapping(value = "/teamList.do", method = RequestMethod.GET)
 	public String teamList(Model model, SearchVO vo) {
-		
 		if(vo.getPage() < 1) {
 			vo.setPage(1);
 		}
 		int page = vo.getPage();
-		
+		vo.setPerPageNum(15);
 		List<TeamVO> tv = teamService.teamList(vo);
 		model.addAttribute("tv", tv);
+		model.addAttribute("vo", vo);
 		
 		int cnt = teamService.countPage(vo);
 		
@@ -101,26 +101,17 @@ public class TeamController {
 		}
 		
 		TeamVO tv = teamService.teamView(tidx);
-		model.addAttribute("tv", tv);
 		
+		int midx = tv.getMidx();
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
-		tv.setMidx(login.getMidx());
-		
-//		글 보기 페이지로 이동시
-//		이 사람이 가입을 했는지 안했는지 확인하려고
-//		join_check 로 가입 여부를 DB의 jointable에서 가져옴
-//
-//		가입신청 버튼을 클릭하지 못했거나 or 가입신청 취소 시 가입여부에 대한 데이터가 join_table에 없음
-//
-//		그런데 글 보기 페이지로 가면 컨트롤러에선 
-//		해당 tidx에 대한 join_check를 요청함(데이터가 없는 상태)
-		
-		System.out.println("check 값 담기 전");
-		JoinVO check = teamService.join_check(tv);
-		System.out.println("check 값 담은 후");
-		model.addAttribute("check", check);
-		
+		if(login != null) {
+			tv.setMidx(login.getMidx());
+			JoinVO check = teamService.join_check(tv);
+			model.addAttribute("check", check);
+		}
+		tv.setMidx(midx);
+		model.addAttribute("tv", tv);
 		return "team/teamView";
 	}
 	
@@ -144,6 +135,13 @@ public class TeamController {
 		tv.setMidx(uv.getMidx());
 		
 		return teamService.delete_join_apply(tv);
+	}
+	
+	@ResponseBody
+	@GetMapping("write_check.do")
+	public int write_check(int midx) {
+		
+		return teamService.write_check(midx);
 	}
 	
 	@GetMapping("/teamModify.do")
