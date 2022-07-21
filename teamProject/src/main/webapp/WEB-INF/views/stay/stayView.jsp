@@ -18,6 +18,8 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<!-- 지도 api -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
 <!-- 별점 css -->
 <style>
 .star-rating {
@@ -189,9 +191,8 @@
 						<p>확인사항 및 기타</p>
 						<div>${fn:split(stay.contents,',')[5]}</div>
 					</div>
-					<div>
-						지도
-					</div>
+					<p>지도</p>
+					<div id="map" style="width:100%;height:350px;"></div>
 					<div>
 						<p>편의시설 및 서비스</p>
 						<c:forEach var="s" items="${fn:split(stay.services,',')}">
@@ -208,7 +209,7 @@
 					<div>
 						<!-- 리뷰쓰기 창 -->
 						<div style="border:1px solid black">
-							<p>이 숙소 리뷰</p>
+							<p>이 숙소 리뷰 ${stay.cnt}</p>
 							<form id="reviewFrm" enctype="multipart/form-data">
 								<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewContent"></textarea>
 								<div class="star-rating">
@@ -237,7 +238,7 @@
 						<!-- 리뷰 리스트 -->
 						<div id="reviewList">
 							<c:forEach var="i" items="${review}">
-							<div style="border:1px solid black">
+							<div style="border:1px solid black" id="reviewL${i.cbidx}">
 								<p>${i.nickname}</p>
 								<p>
 								<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
@@ -247,6 +248,10 @@
 								<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="max-width:100px"></p>
 								</c:if>
 								<p>${i.content}</p>
+								<c:if test="${i.midx == login.midx}">
+								<button onclick="reviewModifyFn(${i.cbidx})">수정</button>
+								<button onclick="reviewDeleteFn(${i.cbidx})">삭제</button>
+								</c:if>
 							</div>
 							</c:forEach>
 						</div>
@@ -258,7 +263,12 @@
 								<a href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
 							</c:if>
 							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-								<a href="javascript:reviewPaging(${i})" class="mx-1">${i}</a>
+								<c:if test="${i==pm.startPage}">
+									<a href="javascript:reviewPaging(${i})" style="font-weight:bold;color:green;">${i}</a>
+								</c:if>
+								<c:if test="${i!=pm.startPage}">
+								<a href="javascript:reviewPaging(${i})">${i}</a>
+								</c:if>
 							</c:forEach>
 							<c:if test="${pm.next == true}">
 								<a href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
@@ -276,7 +286,7 @@
 				<div class="col">
 					<c:if test="${login != null && (login.midx == stay.midx || login.role == 'admin')}">
 					<button id="stayDeleteBtn">삭제</button>
-					<button onclick="location.href='stayModfiy.do?sidx=${stay.sidx}'">수정</button>
+					<button onclick="location.href='stayModify.do?sidx=${stay.sidx}'">수정</button>
 					<button onclick="location.href='stayWrite.do'">글쓰기</button>
 					</c:if>
 				</div>
@@ -291,6 +301,7 @@
 			
 		</div><!-- /container -->
 	</div><!-- /wrap -->
+
 
 <script>
 	$(function(){
@@ -322,6 +333,48 @@
 			$("#roomTabBtn").css("color","black");
 			$("#stayTabBtn").css("color","green");
 			$("#reviewTabBtn").css("color","black");
+			
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(0, 0), // 지도의 중심좌표
+			        level: 4 // 지도의 확대 레벨
+			    };  
+			
+			// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch('${stay.addr}', function(result, status) {
+			
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			        	map: map,
+			            position: coords
+			        });
+			        
+			    	// 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:1px 0;">${stay.name}</div>'
+			        });
+			        infowindow.open(map, marker);
+			        
+			        setTimeout(function(){
+			        	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+			        	map.relayout();
+			        	map.setCenter(coords);
+			        	map.relayout();
+			        },1000);
+			    }
+			});
 		});
 		$("#reviewTabBtn").on("click",function(){
 			$("#roomTab").hide();
@@ -334,107 +387,9 @@
 		});
 		
 		
-		//리뷰쓰기
-		$("#reviewWriteBtn").on("click",function(){
-			var login = '<%= (UserVO)session.getAttribute("login") %>';
-			if(login == "null"){
-				alert("로그인이 필요합니다");
-				return;
-			}
-			else {
-				//유효성 검사
-				if($("#reviewContent").val()==""){
-					alert("리뷰 내용을 작성해 주세요");
-					return;
-				}
-				
-				//리뷰 작성 ajax
-				var formData = new FormData($("#reviewFrm")[0]);
-				$.ajax({
-					url:"reviewWrite.do",
-					data:formData,
-					type:"post",
-					cache:false,
-					contentType:false,
-					processData:false,
-					success:function(data){
-						if(data==1){
-							alert("글이 작성되었습니다");
-							
-							//리뷰 리스트 불러오기
-							$.ajax({
-								url:"reviewSelect.do",
-								data:"bidx=${stay.sidx}&page=1",
-								type:"post",
-								success:function(list){
-									//그려주기
-									var html = '';
-									for(var i=0;i<list.length;i++){
-										html = html + '<div style="border:1px solid black">'
-											+ '<p>'+list[i].nickname+'</p>'
-											+ '<p><img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">'
-											+ list[i].star+'</p>';
-											
-										if(list[i].photo != null){
-											html = html+'<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+'" style="max-width:100px"></p>';
-										}
-											
-										html = html + '<p>'+list[i].content+'</p>'
-											+ '</div>';
-										
-										$("#reviewList").html(html);
-									}
-									
-									//리뷰 페이징
-									$.ajax({
-										url:"reviewPaging.do",
-										data:"bidx=${stay.sidx}",
-										type:"post",
-										success:function(paging){
-											//페이징 만들기
-											var p = '';
-											
-											if(paging.prev == true){
-												p = p + '<a href="javascript:reviewPaging('+(paging.startPage-1)+')">◀</a>';
-											}
-											
-											for(var i=paging.startPage;i<=paging.endPage;i++){
-												p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1">'+i+'</a>';
-											}
-											
-											if(paging.next == true){
-												p = p + '<a href="javascript:reviewPaging('+(paging.endPage+1)+')">▶</a>';
-											}
-											
-											$("#reviewPaging").html(p);
-											
-											//별점 변경
-											$.ajax({
-												url:"stayStar.do",
-												data:"bidx=${stay.sidx}",
-												type:"post",
-												success:function(star){
-													$("#stayStarArea").html(star.toFixed(1));
-												}
-											});
-											
-										}
-									});//페이징 ajax
-									
-								}
-							});//리스트 ajax
-							
-						}
-					}
-				});//리뷰쓰기 ajax
-				
-			}
-		});//리뷰쓰기 function
-		
-		
 		//숙박 정보 삭제
 		$("#stayDeleteBtn").on("click",function(){
-			var check = confirm("정말로 숙박정보를 삭제하시겠습니가?");
+			var check = confirm("정말로 숙박정보를 삭제하시겠습니까?");
 			
 			if(check == false) return;
 			else if(check == true){
@@ -466,17 +421,85 @@
 	
 	//리뷰 페이지 이동
 	function reviewPaging(index){
+		$("#page").val(index);
+		reviewListAjax(index);
+	}
+	
+	//사진 누르면 큰 사진 바꾸기
+	function photoChange(photo){
+		$("#mainImage").attr("src","<%=request.getContextPath() %>/stay/displayFile.do?fileName="+photo);
+	}
+	
+	
+	//리뷰쓰기
+	$("#reviewWriteBtn").on("click",function(){
+		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		if(login == "null"){
+			alert("로그인이 필요합니다");
+			return;
+		}
+		else {
+			//유효성 검사
+			if($("#reviewContent").val()==""){
+				alert("리뷰 내용을 작성해 주세요");
+				return;
+			}
+			else {
+				//리뷰 중복 체크 ajax
+				$.ajax({
+					url:"reviewDup.do",
+					data:"bidx=${stay.sidx}",
+					type:"post",
+					success:function(dup){
+						if(dup == 0){
+							//리뷰 작성 ajax
+							var formData = new FormData($("#reviewFrm")[0]);
+							$.ajax({
+								url:"reviewWrite.do",
+								data:formData,
+								type:"post",
+								cache:false,
+								contentType:false,
+								processData:false,
+								success:function(data){
+									if(data==1){
+										alert("글이 작성되었습니다");
+										$("#reviewContent").val("");
+										$("#file").val("");
+										$("#file").replaceWith($("#file").clone(true));
+										reviewListAjax(1);
+									}
+								}
+							});//리뷰 작성 ajax
+							
+						}
+						else {
+							alert("리뷰는 한번만 등록할 수 있습니다");
+							$("#reviewContent").val("");
+							$("#file").val("");
+							$("#file").replaceWith($("#file").clone(true));
+							return;
+						}
+					}
+				});//리뷰 중복 체크 ajax
+			}
+		}
+	});//리뷰쓰기 function
+	
+	
+	//리뷰 리스트 그리기
+	function reviewListAjax(page){
+		//리뷰 리스트 불러오기
 		$.ajax({
 			url:"reviewSelect.do",
-			data:"bidx=${stay.sidx}&page="+index,
+			data:"bidx=${stay.sidx}&page="+page,
 			type:"post",
 			success:function(list){
-				$("#page").val(index);
-				
 				//그려주기
 				var html = '';
+				var num = 0;
 				for(var i=0;i<list.length;i++){
-					html = html + '<div style="border:1px solid black">'
+					html = html + '<div style="border:1px solid black" id="reviewL'+list[i].cbidx+'">'
 						+ '<p>'+list[i].nickname+'</p>'
 						+ '<p><img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">'
 						+ list[i].star+'</p>';
@@ -485,18 +508,159 @@
 						html = html+'<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+'" style="max-width:100px"></p>';
 					}
 						
-					html = html + '<p>'+list[i].content+'</p>'
-						+ '</div>';
+					html = html + '<p>'+list[i].content+'</p>';
 					
-					$("#reviewList").html(html);
-				}
+					<c:if test="${login != null}">
+					var login = "${login.midx}";
+					if(login == list[i].midx){
+						html = html + '<button onclick="reviewModifyFn('+list[i].cbidx+')">수정</button>'
+						+ '<button onclick="reviewDeleteFn('+list[i].cbidx+')">삭제</button>';
+						
+						num++;
+					}
+					</c:if>
+					
+					html = html + '</div>';
+				}//for
+				
+				$("#reviewList").html(html);
+				
+				//리뷰 페이징
+				$.ajax({
+					url:"reviewPaging.do",
+					data:"bidx=${stay.sidx}",
+					type:"post",
+					success:function(paging){
+						//페이징 만들기
+						var p = '';
+						
+						if(paging.prev == true){
+							p = p + '<a href="javascript:reviewPaging('+(paging.startPage-1)+')">◀</a>';
+						}
+						
+						for(var i=paging.startPage;i<=paging.endPage;i++){
+							if(page == i){
+								p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1" style="font-weight:bold;color:green;">'+i+'</a>';
+							}
+							else {
+								p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1">'+i+'</a>';
+							}
+						}
+						
+						if(paging.next == true){
+							p = p + '<a href="javascript:reviewPaging('+(paging.endPage+1)+')">▶</a>';
+						}
+						
+						$("#reviewPaging").html(p);
+						
+						//별점 변경
+						$.ajax({
+							url:"stayStar.do",
+							data:"bidx=${stay.sidx}",
+							type:"post",
+							success:function(star){
+								$("#stayStarArea").html(star.toFixed(1));
+							}
+						});
+						
+					}
+				});//페이징 ajax
 			}
+		});//리스트 ajax
+	}//리뷰 리스트 그리기
+	
+	
+	
+	//리뷰 수정
+	function reviewModifyFn(cbidx){
+		var index = $("#page").val();
+		$("#reviewM").remove();
+		
+		$.ajax({
+			url:"reviewModify.do",
+			data:"cbidx="+cbidx,
+			type:"get",
+			async:false,
+			success:function(list){
+				var html = '<form id="reviewM" enctype="multipart/form-data">'
+					+ '<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewMContent">'+list.content+'</textarea>'
+					+ '<div class="star-rating">'
+					+ '<input type="radio" id="M5-stars" name="star" value="5"/>'
+					+ '<label for="M5-stars" class="star">&#9733;</label>'
+					+ '<input type="radio" id="M4-stars" name="star" value="4" />'
+					+ '<label for="M4-stars" class="star">&#9733;</label>'
+					+ '<input type="radio" id="M3-stars" name="star" value="3"/>'
+					+ '<label for="M3-stars" class="star">&#9733;</label>'
+					+ '<input type="radio" id="M2-stars" name="star" value="2" />'
+					+ '<label for="M2-stars" class="star">&#9733;</label>'
+					+ '<input type="radio" id="M1-star" name="star" value="1" />'
+					+ '<label for="M1-star" class="star">&#9733;</label>'
+					+ '</div>'
+					+ '<input type="file" id="Mfile" name="file">'
+					+ '<input type="hidden" name="cbidx" value="'+cbidx+'">'
+					+ '<button type="button" onclick="reviewMFn('+index+')">리뷰 작성</button>'
+					+ '</form>';
+				
+				$("#reviewL"+cbidx).html(html);
+				$("input:radio[name=star]:input[value="+list.star+"]").prop("checked",true);
+				
+				
+			}//success
+			
 		});
+
+	}//리뷰 수정
+	
+	//리뷰 수정 클릭 이벤트
+	function reviewMFn(index){
+		var content = $("#reviewMContent");
+		if(content.val()==""){
+			alert("리뷰 내용을 입력해 주세요");
+			content.focus();
+			return;
+		}
+		else {
+			var formData = new FormData($("#reviewM")[0]);
+			$.ajax({
+				url:"reviewModify.do",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				async:false,
+				type:"post",
+				success:function(data){
+					if(data == 1){
+						alert("리뷰가 수정되었습니다");
+						reviewListAjax(index);
+						return;
+					}
+				}
+			});
+		}
 	}
 	
-	//사진 누르면 큰 사진 바꾸기
-	function photoChange(photo){
-		$("#mainImage").attr("src","<%=request.getContextPath() %>/stay/displayFile.do?fileName="+photo);
+	//리뷰 삭제
+	function reviewDeleteFn(cbidx){
+		var check = confirm("정말로 해당 리뷰를 삭제하시겠습니까?");
+		
+		if(check == false) return;
+		else if(check == true){
+			$.ajax({
+				url:"reviewDelete.do",
+				data:"cbidx="+cbidx,
+				type:"post",
+				async:false,
+				success:function(data){
+					if(data == 1){
+						alert("리뷰가 삭제되었습니다");
+						reviewListAjax(1);
+						return;
+					}
+				}
+			});
+			
+		}
 	}
 	
 </script>

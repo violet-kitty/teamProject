@@ -222,15 +222,93 @@ public class StayController {
 	//수정 페이지 이동
 	@RequestMapping(value="/stayModify.do", method=RequestMethod.GET)
 	public String stayModify(int sidx, Model model) {
+		StayVO stay = stayService.staySelectOne(sidx);
 		
+		model.addAttribute("stay", stay);
 		
 		return "stay/stayModify";
 	}
 	
 	//숙박 정보 수정
 	@RequestMapping(value="/stayModify.do", method=RequestMethod.POST)
-	public String stayModify(StayVO vo) {
+	public String stayModify(MultipartFile[] btnAtt, @RequestParam("roomFile")MultipartFile[] roomFile, StayVO vo, String[] imgArr, String[] roomArr1, String[] roomArr2) throws IllegalStateException, IOException {
+		StringBuilder photos = new StringBuilder("");
 		
+		//새로운 이미지가 추가되지 않고 삭제되거나 혹은 변동 없는 경우
+		if(imgArr!=null) {
+			for(String a : imgArr) {
+				photos.append(a.substring(1, a.length()-1)+",");
+			}
+			String p = photos.toString();
+			vo.setPhoto(p.substring(0,p.length()-1));
+		}
+		
+		//새로운 이미지가 추가된 경우
+		//파일 업로드
+		File dir = new File(uploadPath);
+						
+		if(!dir.exists()) dir.mkdirs();
+		
+		//숙박시설의 이미지 받기
+		if(btnAtt != null) {
+			for(MultipartFile f : btnAtt) {
+				if(!f.getOriginalFilename().isEmpty()) {
+					System.out.println("파일 저장 경로 : "+uploadPath);
+					UUID uuid = UUID.randomUUID();
+					String fileName = uuid.toString()+"_"+f.getOriginalFilename();
+					f.transferTo(new File(uploadPath,fileName));
+					
+					photos.append(fileName+",");
+				}
+				else {
+					System.out.println("업로드된 파일 없음");
+				}
+			}
+			
+			String photo = photos.toString();
+			vo.setPhoto(photo.substring(0,photo.length()-1));
+		}
+		
+		//방 이미지 받기
+		if(roomFile != null) {
+			for(MultipartFile f : roomFile) {
+				if(!f.getOriginalFilename().isEmpty()) {
+					System.out.println("파일 저장 경로 : "+uploadPath);
+					UUID uuid = UUID.randomUUID();
+					String fileName = uuid.toString()+"_"+f.getOriginalFilename();
+					f.transferTo(new File(uploadPath,fileName));
+					
+					//roomArr2의 값이 ''이 아닌 곳에 값 넣기
+					for(int i=0;i<roomArr2.length;i++) {
+						if(!roomArr2[i].equals("\'\'")) {
+							roomArr2[i] = fileName;
+							break;
+						}
+					}
+				}
+				else {
+					System.out.println("업로드된 파일 없음");
+				}
+			}
+		}
+		
+		if(vo.getRoom() != null) {
+			for(int i=0;i<roomArr1.length;i++) {
+				System.out.println("arr1:"+roomArr1[i]);
+			}
+			
+			//배열 비교(돌면서 원래 배열에 있던 값 새로운 배열의 없는 값에 넣어주기)
+			for(int i=0;i<roomArr2.length;i++) {
+				if(i<roomArr1.length && roomArr2[i].equals("\'\'")) {
+					roomArr2[i] = roomArr1[i].substring(1, roomArr1[i].length()-1);
+				}
+				//배열에 저장된 값 vo에 넣기
+				System.out.println("room:"+roomArr2[i]);
+				vo.getRoom().get(i).setPhoto(roomArr2[i]);
+			}
+		}
+		
+		int result = stayService.stayModify(vo);
 		
 		
 		return "redirect:/stay/stayView.do?sidx="+vo.getSidx();
@@ -240,15 +318,60 @@ public class StayController {
 	@ResponseBody
 	@RequestMapping(value="/stayDelete.do")
 	public int stayDelete(int sidx) {
-		return 0;
+		return stayService.stayDelete(sidx);
+	}
+	
+	//리뷰 수정
+	@ResponseBody
+	@RequestMapping(value="/reviewModify.do", method=RequestMethod.GET)
+	public CommentVO reviewModify(int cbidx) {
+		return stayService.reviewSelectOne(cbidx);
+	}
+	
+	//리뷰 수정 action
+	@ResponseBody
+	@RequestMapping(value="/reviewModify.do", method=RequestMethod.POST)
+	public int reviewModify(CommentVO vo, MultipartFile file) throws IllegalStateException, IOException {
+		if(file != null) {
+			//파일 업로드
+			File dir = new File(uploadPath);
+			if(!dir.exists()) dir.mkdirs();
+					
+			if(!file.getOriginalFilename().isEmpty()) {
+				System.out.println("파일 저장 경로 : "+uploadPath);
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+				file.transferTo(new File(uploadPath,fileName));
+				vo.setPhoto(fileName);
+			}
+			else {
+				System.out.println("업로드된 파일 없음");
+			}
+		}
+		
+		return stayService.reviewModify(vo);
+	}
+	
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping(value="/reviewDelete.do")
+	public int reviewDelete(int cbidx) {
+		return stayService.reviewDelete(cbidx);
+	}
+	
+	//리뷰 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/reviewDup.do")
+	public int reviewDup(CommentVO vo, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		return stayService.reviewDup(vo);
 	}
 	
 	//사진 보여주기 위한 코드
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
-	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
-			
-		System.out.println("fileName:"+fileName);
-			
+	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{	
 		InputStream in = null;		
 		ResponseEntity<byte[]> entity = null;
 			

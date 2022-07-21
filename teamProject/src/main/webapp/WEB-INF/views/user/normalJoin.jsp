@@ -32,7 +32,7 @@
 			<input type="text" id="phone" name="phone" placeholder="연락처(-빼고 입력해 주세요)" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');"><br>
 			<input type="button" onclick="addrFn()" value="주소 찾기"><br>
 			<input type="text" id="address" name="addr" placeholder="주소" readOnly><br>
-			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소" readOnly><br>
+			<input type="text" id="detailAddress" name="detailaddr" placeholder="상세주소"><br>
 			<button type="button" onclick="joinFn()">회원가입</button>
 		</form>
 	</div>

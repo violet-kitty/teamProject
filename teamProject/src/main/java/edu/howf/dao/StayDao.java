@@ -60,5 +60,31 @@ public class StayDao {
 		return sqlSession.selectOne(namespace+"stayStar", bidx);
 	}
 	
+	public int stayModify(StayVO vo) {
+		return sqlSession.update(namespace+"stayModify", vo);
+	}
 	
+	public int revieweModify(CommentVO vo) {
+		return sqlSession.update(namespace+"reviewModify", vo);
+	}
+	
+	public int stayDelete(int sidx) {
+		return sqlSession.update(namespace+"stayDelete", sidx);
+	}
+	
+	public int roomDelete(int sidx) {
+		return sqlSession.delete(namespace+"roomDelete", sidx);
+	}
+	
+	public int reviewDelete(int cbidx) {
+		return sqlSession.update(namespace+"reviewDelete", cbidx);
+	}
+	
+	public CommentVO reviewSelectOne(int cbidx) {
+		return sqlSession.selectOne(namespace+"reviewSelectOne", cbidx);
+	}
+	
+	public int reviewDup(CommentVO vo) {
+		return sqlSession.selectOne(namespace+"reviewDup", vo);
+	}
 }

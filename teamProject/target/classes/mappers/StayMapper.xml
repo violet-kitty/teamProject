@@ -205,7 +205,7 @@
 	
 	<!-- 숙박정보 가져오기 -->
 	<select id="staySelectOne" parameterType="int" resultType="stayVO">
-		SELECT c.*, d.star
+		SELECT c.*, d.star, d.cnt
 		FROM
 		(SELECT a.sidx
 			, a.midx
@@ -228,9 +228,11 @@
 		ON a.sidx = b.bidx) c
 		LEFT OUTER JOIN
 		(SELECT avg(star) as star
+			, count(cbidx) as cnt
 			, bidx
 		FROM comment
 		WHERE type = 'stay'
+		AND delyn = 'N'
 		GROUP BY bidx) d
 		ON c.sidx = d.bidx
 		WHERE c.sidx = #{sidx}
@@ -308,7 +310,11 @@
 			, detailaddr
 			, contents
 			, tag
+	]]>
+			<if test='photo != null'>
 			, photo
+			</if>
+	<![CDATA[		
 			, services
 			, delyn
 		)
@@ -319,7 +325,11 @@
 			, #{detailaddr}
 			, #{contents}
 			, #{tag}
+	]]>		
+			<if test='photo != null'>
 			, #{photo}
+			</if>
+	<![CDATA[		
 			, #{services}
 			, 'N'
 		)
@@ -338,7 +348,9 @@
 			, tags
 			, people
 			, square
+			<if test='photo != null'>
 			, photo
+			</if>
 			, sbed
 			, dbed
 			, qbed
@@ -352,7 +364,9 @@
 			, #{tags}
 			, #{people}
 			, #{square}
+			<if test='photo != null'>
 			, #{photo}
+			</if>
 			, #{sbed}
 			, #{dbed}
 			, #{qbed}
@@ -371,7 +385,7 @@
 			, bidx
 			, wdate
 			, delyn
-			<if test="photo != null">
+			<if test='photo != null'>
 			, photo
 			</if>
 		)
@@ -383,7 +397,7 @@
 			, #{bidx}
 			, now()
 			, 'N'
-			<if test="photo != null">
+			<if test='photo != null'>
 			, #{photo}
 			</if>
 		)
@@ -397,21 +411,42 @@
 			, detailaddr = #{detailaddr}
 			, contents = #{contents}
 			, tag = #{tag}
-			<if test="photo != null">
+			<if test='photo != null'>
 			, photo = #{photo}
 			</if>
 			, services = #{services}
 		WHERE sidx = #{sidx}
 	</update>
 	
+	<!-- 리뷰 중복 여부 -->
+	<select id="reviewDup" parameterType="commentVO" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE type = 'stay'
+		AND midx = #{midx}
+		AND bidx = #{bidx}
+		AND delyn = 'N'
+	</select>
+	
+	<!-- 리뷰 하나만 가져오기 -->
+	<select id="reviewSelectOne" parameterType="int" resultType="commentVO">
+		SELECT cbidx
+			, content
+			, star
+			, photo
+		FROM comment
+		WHERE cbidx = #{cbidx}
+	</select>
+	
 	<!-- 리뷰 수정 -->
 	<update id="reviewModify" parameterType="commentVO">
 		UPDATE comment
 		SET   content = #{content}
-			<if test="photo != null">
+			, star = #{star}
+			<if test='photo != null'>
 			, photo = #{photo}
-		WHERE cbidx = #{cbidx}
 			</if>
+		WHERE cbidx = #{cbidx}
 	</update>
 	
 	<!-- 숙박시설 삭제 -->
