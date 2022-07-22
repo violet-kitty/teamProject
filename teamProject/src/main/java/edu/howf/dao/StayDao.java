@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.ResVO;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
@@ -86,5 +87,9 @@ public class StayDao {
 	
 	public int reviewDup(CommentVO vo) {
 		return sqlSession.selectOne(namespace+"reviewDup", vo);
+	}
+	
+	public int roomRidx(ResVO vo){
+		return sqlSession.selectOne(namespace+"roomRidx",vo);
 	}
 }

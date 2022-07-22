@@ -3,6 +3,7 @@ package edu.howf.service;
 import java.util.List;
 
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
 
@@ -21,4 +22,5 @@ public interface StayService {
 	public int reviewDelete(int cbidx);
 	public CommentVO reviewSelectOne(int cbidx);
 	public int reviewDup(CommentVO vo);
+	public int roomRidx(ResVO vo);
 }

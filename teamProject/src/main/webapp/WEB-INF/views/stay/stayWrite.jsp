@@ -81,7 +81,7 @@ var tagi = 0;
 				<div class="row">
 					<div class="col">
 						<p>태그를 나열해주세요&#13;&#10;&#35;과 &#44;를 이용해 태그를 작성할 수 있습니다</p>
-						<input class="form-control" name="tag" id="tag" size="40">
+						<input class="form-control" name="tag" id="tag">
 					</div>
 				</div>
 				

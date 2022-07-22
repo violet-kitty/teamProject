@@ -240,6 +240,8 @@
 	
 	<!-- 방 정보 가져오기 -->
 	<select id="roomSelect" parameterType="int" resultType="roomVO">
+	<!-- left outer join 이용해서 cnt는 따로 가져오기(예약 안된 방만 가져와야 하므로) -->
+	<!-- 날짜 조건은 if로 받아오기 (처음 view 페이지는 날짜 입력이 안된 상태이므로) -->
 		SELECT COUNT(ridx) as cnt
 			, name
 			, price
@@ -264,6 +266,20 @@
 			, dbed
 			, qbed
 			, kbed
+	</select>
+	
+	<!-- 방 ridx 가져오기 -->
+	<select id="roomRidx" parameterType="resVO" resultType="int">
+		SELECT ridx
+		FROM room
+		WHERE sidx = #{sidx}
+		AND name = #{name}
+		AND price = #{price}
+		AND people = #{people}
+		AND square = #{square}
+		AND tags = #{tags}
+		AND delyn = 'N'
+		LIMIT 0,1
 	</select>
 	
 	<!-- 리뷰 가져오기 -->

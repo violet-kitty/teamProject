@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.howf.dao.StayDao;
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.ResVO;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
@@ -177,5 +178,10 @@ public class StayServiceImple implements StayService{
 	@Override
 	public int reviewDup(CommentVO vo) {
 		return stayDao.reviewDup(vo);
+	}
+
+	@Override
+	public int roomRidx(ResVO vo) {
+		return stayDao.roomRidx(vo);
 	}
 }
