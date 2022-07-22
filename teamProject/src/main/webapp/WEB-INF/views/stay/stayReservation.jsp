@@ -62,7 +62,7 @@
 					
 					<!-- 예약 페이지 -->
 					<div class="row">
-						<div class="col">
+						<div class="col"> 
 							<form>
 								예약자 이름<br>
 								<input type="text" name="name" id="name" placeholder="체크인시 필요한 정보입니다"><br>
