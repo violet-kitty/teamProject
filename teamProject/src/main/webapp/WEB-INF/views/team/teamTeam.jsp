@@ -107,7 +107,7 @@
 			data: frm+"&tidx=${tidx}",
 			type: "post",
 			success: function(){
-				
+				//selectKey 이용해서 ridx 값 가져오기
 			}
 			
 		});
