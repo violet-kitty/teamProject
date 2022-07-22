@@ -71,6 +71,5 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
-999999
 </body>
 </html>
