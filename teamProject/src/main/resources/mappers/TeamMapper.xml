@@ -5,11 +5,9 @@
  
  <!-- 너나들이 -->
 <mapper namespace="edu.howf.mapper.teamMapper">
-	<select id="teamList" parameterType="searchVO" resultType="teamVO">
-		SELECT a.*, u.nickname
-		FROM
-		(SELECT   t.tidx
-				 ,t.midx
+	<select id="teamList" resultType="int">
+		SELECT   t.tidx		
+			     ,t.midx
 			     ,t.title
 			     ,t.content
 			     ,t.wdate
@@ -17,59 +15,19 @@
 			     ,t.delyn
 			     ,j.people_cnt
 		FROM     team t
-		LEFT OUTER JOIN
-				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
-				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
-		ON       t.tidx = j.tidx) a
-		join 	 (select u.midx, u.nickname from usertable u) u
-		ON 		 a.midx = u.midx
-		WHERE    a.delyn = 'N'
-		<if test="searchType != null and searchType.equals('total')">
-		AND (a.title like concat('%', #{searchValue}, '%')
-		OR	 a.content like concat('%', #{searchValue}, '%')
-		OR	 u.nickname like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('title')">
-		AND (a.title like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('content')">
-		AND (a.content like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('nickname')">
-		AND (u.nickname like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test='sortType == null'>
-		ORDER BY a.tidx DESC
-		</if>
-		<if test='sortType != null and sortType.equals("team")'>
-		ORDER BY a.people_cnt DESC
-		</if>
-		<if test='sortType != null and sortType.equals("cnt")'>
-		ORDER BY a.cnt DESC
-		</if>
-		LIMIT #{page}, #{perPageNum}
+		JOIN     (SELECT COUNT(jidx) as people_cnt, tidx
+				 FROM jointable WHERE joinyn = 'Y' GROUP BY tidx) j
+		ON       t.tidx = j.tidx;
 	</select>
 	
 	<select id="countPage" parameterType="searchVO" resultType="int">
 		SELECT COUNT(t.tidx)
-		FROM   team t, usertable u
-		WHERE  t.midx = u.midx
-		AND    t.delyn = 'N'
-		<if test="searchType != null and searchType.equals('total')">
-		AND   (t.title like concat('%', #{searchValue}, '%')
-		OR	   t.content like concat('%', #{searchValue}, '%')
-		OR	   u.nickname like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('title')">
-		AND   (t.title like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('content')">
-		AND   (t.content like concat('%', #{searchValue}, '%'))
-		</if>
-		<if test="searchType != null and searchType.equals('nickname')">
-		AND   (u.nickname like concat('%', #{searchValue}, '%'))
-		</if>
+		FROM     team t, usertable u
+		WHERE    t.midx = u.midx
+		AND      t.delyn = 'N'
+		ORDER BY t.tidx DESC
 	</select>
+<<<<<<< HEAD
 	
 	<insert id="teamWrite" parameterType="teamVO">
 	<![CDATA[
@@ -217,4 +175,6 @@
 	
 	
 	
+=======
+>>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 </mapper>

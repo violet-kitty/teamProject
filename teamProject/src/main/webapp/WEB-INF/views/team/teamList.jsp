@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page session="true" %>
 <!DOCTYPE html>
 <html>
@@ -42,43 +41,19 @@
 		
 		<!-- container -->
 		<div class="container">
-			<div class="row">
-				<div class="col d-flex justify-content-end">
-					<form id="form1" action="teamList.do" method="get">
-						<select name="searchType">
-							<option value="total"<c:if test="${!empty vo.searchType and vo.searchType eq ''}">selected</c:if>>전체</option>
-							<option value="title"<c:if test="${!empty vo.searchType and vo.searchType eq 'title'}">selected</c:if>>제목</option>
-							<option value="content"<c:if test="${!empty vo.searchType and vo.searchType eq 'content'}">selected</c:if>>내용</option>
-							<option value="nickname"<c:if test="${!empty vo.searchType and vo.searchType eq 'nickname'}">selected</c:if>>작성자</option>
-						</select>
-						<input type="text" name="searchValue" <c:if test="${!empty vo.searchValue }">value="${vo.searchValue}"</c:if>>
-						<button id="btn_search">검색</button>
-					</form>					
-				</div>
-			</div>
-			<div class="row">
-				<div class="col d-flex justify-content-end">
-					<button id="filter_team">팀원수</button>
-					<button id="filter_cnt">조회수</button>
-				</div>
-			</div>
+		
+		
+		
 			<div class="row">
 				<div class="col">
-					<table style="width: 100%; text-align: center;">
+					<table border="1">
 						<tbody>
-							<tr>
-								<td>글번호</td>
-								<td>작성자</td>
-								<td>제목</td>
-								<td>작성일</td>
-								<td>조회수</td>
-								<td>팀원</td>
-							</tr>
-							<c:forEach items="${tv}" var="tv">
+							<c:forEach var="tv" items="${tv}">
 								<tr>
 									<td>${tv.tidx}</td>
-									<td>${tv.nickname}</td>
-									<td><a href="teamView.do?tidx=${tv.tidx}">${tv.title}</a></td>
+									<td>${tv.midx}</td>
+									<td>${tv.title}</td>
+									<td>${tv.content}</td>
 									<td>${tv.wdate}</td>
 									<td>${tv.cnt}</td>
 									<td>${tv.people_cnt}</td>
@@ -86,37 +61,8 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					
 				</div>			
-			</div>
-			<div class="row">
-				<div class="col d-flex justify-content-center">
-					<table>
-						<tbody>						
-							<tr>
-								<c:if test="${pm.prev == true}">
-									<td>
-										<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">◀</a>
-									</td>
-								</c:if>
-								<td>
-									<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-										<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
-									</c:forEach>
-								</td>
-								<c:if test="${pm.next && pm.endPage > 0}">
-									<td>
-										<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">▶</a>
-									</td>
-								</c:if>
-							</tr>						
-						</tbody>
-					</table>
-				</div>	
-			</div>		
-			<div class="row">
-				<div class="col d-flex justify-content-center">
-					<button id="teamWrite">글쓰기</button>
-				</div>
 			</div>
 			
 	
@@ -125,45 +71,6 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
-<script>
-$(function(){
 	
-	$("#btn_search").click(function(){
-		$("#form1").submit();
-	});
-	
-	$("#teamWrite").click(function(){
-		if(${login == null}){
-			alert("로그인이 필요한 기능입니다.");
-			return false;
-		}
-		$.ajax({
-			url: "write_check.do",
-			data: "midx=${login.midx}",
-			type: "get",
-			success:(function(data){
-				if(data != 0){
-					alert("글은 최대 1개만 작성할 수 있습니다.");
-				}
-				else{
-					location.href = "teamWrite.do";
-				}
-				
-			})
-			
-		});
-		
-	});
-	
-	$("#filter_team").click(function(){
-		location.href = "teamList.do?sortType=team";
-	});
-	
-	$("#filter_cnt").click(function(){
-		location.href = "teamList.do?sortType=cnt";
-	});		
-
-});
-</script>	
 </body>
 </html>

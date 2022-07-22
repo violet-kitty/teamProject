@@ -15,7 +15,6 @@
 /* nav 메뉴바 */
 .navbar {padding-top:0px; padding-bottom:0px; position:relative;}
 .nav-item {margin: 0px 5vw; margin-right:0;}
-.item-join {margin:0px 1vw;}
 @media all and (max-width: 992px) {
 	.nav-item {margin: 20px 0px;}
 	.nav-item:last-child {margin: 0px 0px 20px 0px;}
@@ -50,14 +49,13 @@
 #header .navbtn button {font-size:13px; padding:8px 16px;}
 
 @media all and (max-width: 992px) {
-	#header .navbtn {float:unset;}
-	#header .navbtn a{width:100%;}
-	#header .navbtn button {width:100%;font-size:18px; padding:20px 14px;}
+	#header .navbtn button {font-size:11px; padding:6px 14px;}
 }
 
 /* 프로필 */
 #header .cprofile {position:relative; padding-left:30px;}
 #header .profile { width: 25px; height: 25px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;position: absolute;top: -6px;left: -4px;}
 @media all and (max-width: 992px) {
-	#header .cprofile {position:relative; padding-left:0px;}
-#header .profile {position: relative; margin: auto; vertical-align: middle; width: 80px;height: 80px; margin-bottom: 20px;top: 0px;left: 0px;}}
+	#header .cprofile {position:relative; padding-left:22px;}
+#header .profile { width: 21px; height: 21px; top: -5px;left: -4px;}
+}

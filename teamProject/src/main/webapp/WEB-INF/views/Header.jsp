@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -39,11 +38,12 @@ function logoutFn(){
 <div id="header">
 	<div class="topnavbar">
 			
+			
 			<nav class="navbar navbar-expand-lg">
 				<div class="container-fluid">
 					
 					<!-- 로고 -->
-					<a href="<%=request.getContextPath() %>/" class="brand"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
+					<a href="#" class="brand"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
 					
 					<!-- 모바일 메뉴 버튼 -->
 					<button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#main_nav"aria-expanded="false" aria-label="Toggle navigation">
@@ -66,10 +66,10 @@ function logoutFn(){
 								<!-- 로그인 로그아웃 회원가입 -->
 								<div class="navbtn">
 									<c:if test="${login == null}">
-										<a href="<%= request.getContextPath() %>/user/login.do">
+										<a href="user/login.do">
 											<button class="bluebtn">로그인</button>
 										</a>
-										<a href="<%= request.getContextPath() %>/user/joinSelect.do"><button class="pinkbtn">회원가입</button></a>
+										<a href="user/joinSelect.do"><button class="pinkbtn">회원가입</button></a>
 									</c:if>
 									<c:if test="${login != null}">
 										<a href="#">
@@ -104,12 +104,9 @@ function logoutFn(){
 					
 				</div> <!-- /.container-fluid -->
 			</nav>
+			
+			
 
-
-
-
-	</div>
-	<!-- /.topnavbar -->
-</div>
-<!-- /#header -->
+	</div><!-- /.topnavbar -->
+</div><!-- /#header -->
 
