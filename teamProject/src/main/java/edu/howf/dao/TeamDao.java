@@ -1,13 +1,13 @@
 package edu.howf.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.JoinVO;
+import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 
@@ -76,36 +76,11 @@ public class TeamDao {
 		return sqlSession.update(namespace + "teamDelete", tidx);
 	}
 	
-	/*
-	 * 여행 장소 추천 관련
-	 */
-	public List<Map<String, Object>> getPlaceList(){
+	public RecommendVO teamTeamView(int tidx) {
 		
-		return sqlSession.selectList(namespace + "getPlaceList");
+		return sqlSession.selectOne(namespace + "teamTeamView", tidx);
 	}
-	
-	public int placeInsertPost(Map<String, Object> requestMap){
-		
-		return sqlSession.insert(namespace + "placeInsertPost", requestMap);
-	}
-	
-	public int placeDuplicationCheck(Map<String, Object> requestMap){
-		
-		return sqlSession.selectOne(namespace + "placeDuplicationCheck", requestMap);
-	}
-	
-	public int placeRecPost(Map<String, Object> requestMap){
-		return sqlSession.insert(namespace + "placeRecPost", requestMap);
-	}
-	
-	public int placeRecCheck(Map<String, Object> requestMap){
-		return sqlSession.selectOne(namespace+ "placeRecCheck", requestMap);
-	}
-	
-	public List<Map<String, Object>> getVotePlaceList(){
-		return sqlSession.selectList(namespace + "getVotePlaceList");
-	}
-	
+
 	
 
 }
