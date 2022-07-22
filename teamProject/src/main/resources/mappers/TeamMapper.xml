@@ -27,7 +27,7 @@
 		AND      t.delyn = 'N'
 		ORDER BY t.tidx DESC
 	</select>
-<<<<<<< HEAD
+
 	
 	<insert id="teamWrite" parameterType="teamVO">
 	<![CDATA[
@@ -172,9 +172,5 @@
 		FROM		 tb_place
 		WHERE		 kakao_map_id = #{kakao_map_id}	
 	</select>
-	
-	
-	
-=======
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
+
 </mapper>
