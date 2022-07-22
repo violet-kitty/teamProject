@@ -28,6 +28,7 @@ import edu.howf.service.StayService;
 import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.PageMaker;
+import edu.howf.vo.ResVO;
 import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
@@ -368,6 +369,33 @@ public class StayController {
 		vo.setMidx(login.getMidx());
 		return stayService.reviewDup(vo);
 	}
+	
+	//객실ridx 가져오기
+	@ResponseBody
+	@RequestMapping(value="/roomRidx.do")
+	public int roomRidx(ResVO vo){
+		System.out.println("sidx:"+vo.getSidx()+" name:"+vo.getName()+" price:"+vo.getPrice()+" people:"+vo.getPeople()+" square:"+vo.getSquare()+" tags:"+vo.getTags());
+		return stayService.roomRidx(vo);
+	}
+	
+	//예약하기 페이지 이동
+	@RequestMapping(value="/stayReservation.do")
+	public String stayReservation(ResVO res, String stayName, Model model) {
+		//객실 정보(객실 이름, 가격), 선택한 날짜 들고 가기
+		model.addAttribute("stayName", stayName);
+		model.addAttribute("res", res);
+		
+		return "stay/stayReservation";
+	}
+	
+	//휴대폰 본인인증
+	
+	
+	//예약완료
+	
+	
+	
+	
 	
 	//사진 보여주기 위한 코드
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)

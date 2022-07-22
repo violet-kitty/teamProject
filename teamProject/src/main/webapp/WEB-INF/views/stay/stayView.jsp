@@ -108,6 +108,20 @@
 			<c:set var="index" value="0" />
 			<!-- 객실 안내/예약 -->
 			<div class="row" id="roomTab">
+				<div class="col-12 d-flex justify-content-center" style="text-align:center">
+					<div class="col-4 d-flex justify-content-end">
+						<input class="form-control" type="date" id="date1" name="date1">
+					</div>
+					<div class="col-1 d-flex justify-content-center">
+						<span> - </span>
+					</div>
+					<div class="col-4 d-flex justify-content-start">
+						<input class="form-control" type="date" id="date2" name="date2">
+					</div>
+					<div class="col-3 d-flex justify-content-start">
+						<button class="mx-3">날짜 검색</button>
+					</div>
+				</div>
 				<c:forEach var="v" items="${stay.room}">
 		    		<div class="col-sm-12 col-md-12 col-lg-4" >
 				    	<div class="card shadow-sm">
@@ -130,7 +144,13 @@
 									<button onclick="roomInfoFn('${index}')">객실 이용 안내</button>
 								</div>
 								<div class="d-flex justify-content-start">
-									<button>예약하기</button>
+									<c:if test="${v.cnt != 0}">
+										<button onclick="stayReservation('${stay.sidx}','${stay.name}','${v.name}','${v.price}','${v.people}','${v.square}','${v.tags}')">예약하기</button>
+									</c:if>
+									<c:if test="${v.cnt == 0}">
+										<button style="cursor:default">예약불가</button>
+									</c:if>
+									
 								</div>
 							</div><!-- card-body end -->
 						</div>
@@ -408,6 +428,23 @@
 			}
 		});//숙박 정보 삭제
 		
+		
+		//오늘 날짜 이전 선택 못하게 하기
+		var nowDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
+		$("#date1").attr("min",nowDate);
+		$("#date2").attr("min",nowDate);
+		
+		//시작날짜 - 종료날짜 이후 선택 불가
+		$("#date2").on("change",function(){
+			var endday = $("#date2").val();
+			$("#date1").attr("max",endday);
+		});
+		
+		//종료날짜 - 시작날짜 이전 선택 불가
+		$("#date1").on("change",function(){
+			var startday = $("#date1").val();
+			$("#date2").attr("min",startday);
+		});
 	});
 	
 	//객실이용 안내 보이기
@@ -662,6 +699,43 @@
 			
 		}
 	}
+	
+	//예약하기
+	function stayReservation(sidx, stayName, roomName, price, people, square, tags){
+		//날짜 받아와서 날짜 선택 안했으면 날짜 선택해 달라고 띄우기
+		//남은 객실이 없으면 해당 날짜에 남은 객실이 없다고 띄우기
+		//날짜도 잘 선택했고 남은 객실도 잇으면 예약 페이지로 이동
+		//예약 페이지로 이동시 객실 정보 가지고 가기
+		
+		var date1 = $("#date1");
+		var date2 = $("#date2");
+		
+		if(date1.val()==""){
+			alert("체크인 날짜를 선택해 주세요");
+			return;
+		}
+		else if(date2.val()==""){
+			alert("체크아웃 날짜를 선택해 주세요");
+			return;
+		}
+		else {
+			//ajax로 해당 유형의 숙소 ridx 가져오기
+			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1.val()+"&date2="+date2.val();
+			$.ajax({
+				url:"roomRidx.do",
+				data:dd,
+				type:"post",
+				success:function(data){
+					console.log(data);
+					
+					//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜 가지고 가기
+					var ddd = "stayName="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1.val()+"&date2="+date2.val();
+					location.href='stayReservation.do?'+ddd;
+				}
+			});
+		}
+		
+	}//예약하기
 	
 </script>
 
