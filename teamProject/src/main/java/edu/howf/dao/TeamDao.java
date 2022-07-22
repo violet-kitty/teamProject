@@ -1,6 +1,7 @@
 package edu.howf.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,36 @@ public class TeamDao {
 	public int teamDelete(int tidx) {
 		
 		return sqlSession.update(namespace + "teamDelete", tidx);
+	}
+	
+	/*
+	 * 여행 장소 추천 관련
+	 */
+	public List<Map<String, Object>> getPlaceList(){
+		
+		return sqlSession.selectList(namespace + "getPlaceList");
+	}
+	
+	public int placeInsertPost(Map<String, Object> requestMap){
+		
+		return sqlSession.insert(namespace + "placeInsertPost", requestMap);
+	}
+	
+	public int placeDuplicationCheck(Map<String, Object> requestMap){
+		
+		return sqlSession.selectOne(namespace + "placeDuplicationCheck", requestMap);
+	}
+	
+	public int placeRecPost(Map<String, Object> requestMap){
+		return sqlSession.insert(namespace + "placeRecPost", requestMap);
+	}
+	
+	public int placeRecCheck(Map<String, Object> requestMap){
+		return sqlSession.selectOne(namespace+ "placeRecCheck", requestMap);
+	}
+	
+	public List<Map<String, Object>> getVotePlaceList(){
+		return sqlSession.selectList(namespace + "getVotePlaceList");
 	}
 	
 	

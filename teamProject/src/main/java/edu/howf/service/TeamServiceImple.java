@@ -1,6 +1,8 @@
 package edu.howf.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +83,78 @@ public class TeamServiceImple implements TeamService{
 	public int teamDelete(int tidx) {
 
 		return teamDao.teamDelete(tidx);
+	}
+
+	@Override
+	public Map<String, Object> getTeamPlaceList() {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<Map<String, Object>> resultMapList = teamDao.getPlaceList();
+		
+		resultMap.put("data", resultMapList);
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> placeInsertPost(Map<String, Object> requestMap) {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int checkNo = teamDao.placeDuplicationCheck(requestMap);
+		
+		if(checkNo != 0) {
+			resultMap.put("place_cd", "001");
+			resultMap.put("place_msg", "중복된 장소입니다.");
+		}
+		else {
+			if(teamDao.placeInsertPost(requestMap) <= 0) {
+				resultMap.put("place_cd", "001");
+				resultMap.put("place_msg", "등록에 실패하였습니다.");
+			}
+			else {
+				resultMap.put("place_cd", "000");
+				resultMap.put("place_msg", "등록이 완료되었습니다.");
+			}
+		}
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> placeRecPost(Map<String, Object> requestMap) {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int checkRec = teamDao.placeRecCheck(requestMap);
+		
+		if(checkRec == 0) {
+			if(teamDao.placeRecPost(requestMap) <= 0) {
+				resultMap.put("place_cd", "001");
+				resultMap.put("place_msg", "추천에 실패하였습니다.");
+			} else {
+				resultMap.put("place_cd", "000");
+				resultMap.put("place_msg", "추천 되었습니다.");
+			}
+		} else {
+			resultMap.put("place_cd", "001");
+			resultMap.put("place_msg", "장소 추천을 이미 하셨습니다.");
+		}
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> getVotePlaceList() {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<Map<String, Object>> resultMapList = teamDao.getVotePlaceList(); 
+		
+		resultMap.put("resultList", resultMapList);
+		
+		return resultMap;
 	}
 
 	

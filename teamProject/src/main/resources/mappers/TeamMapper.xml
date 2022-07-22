@@ -183,4 +183,42 @@
 		SET		delyn = 'Y'
 		WHERE	tidx = #{tidx}
 	</update>
+	
+	<!-- 장소 추천 관련 -->
+	<select id="getPlaceList" resultType="map">
+		SELECT	place_id,
+				,place_nm
+				,place_cl
+				,place_lc
+				kakao_map_id
+		FROM	tb_place
+	</select>
+	
+	<insert id="placeInsertPost" parameterType="map">
+		INSERT INTO tb_place(
+						place_nm
+						,place_cl
+						,place_lc
+						kakao_map_id
+					)
+		VALUES		(
+						#{place_nm}
+						,#{place_cl}
+						,#{place_lc}
+						,#{kakao_map_id}
+					)
+	</insert>
+	
+	<select id="placeDuplicationCheck" parameterType="map" resultType="int">
+		SELECT COUNT(place_id)
+		FROM		 tb_place
+		WHERE		 kakao_map_id = #{kakao_map_id}	
+	</select>
+	
+	<insert id="placeRecPost">
+		SELECT COUNT(*)
+		FROM		 
+	</insert>
+	
+	
 </mapper>
