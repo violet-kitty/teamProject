@@ -23,11 +23,8 @@
         <typeAlias type="edu.howf.vo.AutoVO" alias="autoVO"/>
         <typeAlias type="edu.howf.vo.CommentVO" alias="commentVO"/>
         <typeAlias type="edu.howf.vo.TeamVO" alias="teamVO"/>
-<<<<<<< HEAD
         <typeAlias type="edu.howf.vo.JoinVO" alias="joinVO"/>
-=======
         <typeAlias type="edu.howf.vo.ResVO" alias="resVO"/>
->>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
         
     </typeAliases>
 
