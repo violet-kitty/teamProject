@@ -30,8 +30,8 @@
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		<!-- Header --><%@include file="Header.jsp"%>
+		<!-- Nav --><%@include file="Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -58,7 +58,7 @@
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="Footer.jsp"%>
 	</div><!-- /#wrap -->
 </body>
 </html>
