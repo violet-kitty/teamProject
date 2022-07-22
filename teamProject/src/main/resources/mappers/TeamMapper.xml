@@ -46,7 +46,7 @@
 						,now()
 						,#{filename}
 						,#{applyyn}
-		)
+					)
 		]]>
 		<selectKey resultType="int" keyProperty="tidx" order="AFTER">
 		SELECT max(tidx) FROM team
