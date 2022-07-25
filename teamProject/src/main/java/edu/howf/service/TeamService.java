@@ -1,9 +1,9 @@
 package edu.howf.service;
 
 import java.util.List;
-import java.util.Map;
 
 import edu.howf.vo.JoinVO;
+import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 
@@ -31,15 +31,7 @@ public interface TeamService {
 	
 	public int teamDelete(int tidx);
 	
-	/*
-	여행 장소 추천 관련
-	*/
-	public Map<String, Object> getTeamPlaceList();
-	
-	public Map<String, Object> placeInsertPost(Map<String, Object> requestMap);
-	
-	public Map<String, Object> placeRecPost(Map<String, Object> requestMap);
-	
-	public Map<String, Object> getVotePlaceList();
+	public RecommendVO teamTeamView(int tidx);
+
 
 }

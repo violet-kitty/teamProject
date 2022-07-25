@@ -9,7 +9,7 @@ public class UserVO {
 	private String phone;		//전화번호
 	private String addr;		//도로명주소 or 지번주소
 	private String detailaddr;	//상세주소
-	private String jumin;			//생년월일
+	private String jumin;		//생년월일
 	private String role;		//회원종류(일반회원, 사업자, 관리자)
 	private String img;			//프로필사진
 	private String document;	//사업자일시 사업자 등록증

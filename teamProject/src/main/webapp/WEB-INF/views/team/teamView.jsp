@@ -78,14 +78,13 @@
 						팀원 ${tv.people_cnt}
 				</div>
 			</div>
-			
 			<div class="row">
 				<div class="col team_title">
 					${tv.title}
 				</div>
 			</div>
 			<div class="row">
-				<div class="col">
+				<div class="col" style="min-height: 500px;">
 					${tv.content}
 				</div>
 			</div>			
@@ -106,9 +105,12 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col">
+					<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀팀</button>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col d-flex justify-content-center">
-				${login.midx}<br>
-				${tv.midx}
 					<c:if test="${login!=null && login.midx == tv.midx}">
 						<button id="teamDelete">삭제</button>
 						<button id="teamModify">수정</button>

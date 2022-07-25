@@ -1,7 +1,6 @@
 package edu.howf.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.howf.service.TeamService;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
+import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 import edu.howf.vo.UserVO;
@@ -43,6 +42,7 @@ public class TeamController {
 		int page = vo.getPage();
 		vo.setPerPageNum(15);
 		List<TeamVO> tv = teamService.teamList(vo);
+		
 		model.addAttribute("tv", tv);
 		model.addAttribute("vo", vo);
 		
@@ -177,55 +177,34 @@ public class TeamController {
 		return "redirect:/team/teamList.do";
 	}
 	
-	/*
-	 * 여행 장소 추천 관련 
-	 */
-	@GetMapping("teamPlaceList.do")
-	public String getTeamPlaceListPage() {
+	@GetMapping("teamTeam.do")
+	public String teamTeam(int tidx, Model model) {
 		
-		return "team/teamPlaceList";
+		RecommendVO rv = teamService.teamTeamView(tidx);
+		
+		model.addAttribute("rv", rv);
+		model.addAttribute("tidx", tidx);
+		
+		return "team/teamTeam";
 	}
 	
-	
-	@SuppressWarnings("unchecked")
-	@PostMapping("getTeamPlaceList")
 	@ResponseBody
-	public Map<String, Object> getTeamPlaceList(HttpServletRequest request, HttpSession session, Model model) throws Exception{
+	@PostMapping("upload_vote.do")
+	public String upload_vote(RecommendVO rv) {
 		
-		session = request.getSession();
-		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
 		
-		model.addAttribute("login", login);
 		
-		return teamService.getTeamPlaceList();
+		return "";
 	}
 	
-	@PostMapping("placeInsertPost")
 	@ResponseBody
-	public Map<String, Object> placeInsertPost(@RequestParam Map<String, Object> requestMap){
+	@PostMapping("vote.do")
+	public String vote() {
 		
-		return teamService.placeInsertPost(requestMap);
+		return "";
 	}
 	
-	@PostMapping
-	@ResponseBody
-	public Map<String, Object> placeRecPost(@RequestParam Map<String, Object> requestMap){
-		
-		return teamService.placeRecPost(requestMap);
-	}
 	
-	@GetMapping("placeVote")
-	public String getPlaceVotePage(){
-		
-		return "team/teamPlaceVote";
-	}
-	
-	@PostMapping("getVotePlaceList")
-	@ResponseBody
-	public Map<String, Object> getVotePlaceList(){
-		
-		return teamService.getVotePlaceList();
-	}
 
 	
 	

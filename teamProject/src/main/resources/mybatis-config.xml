@@ -25,6 +25,7 @@
         <typeAlias type="edu.howf.vo.TeamVO" alias="teamVO"/>
         <typeAlias type="edu.howf.vo.JoinVO" alias="joinVO"/>
         <typeAlias type="edu.howf.vo.ResVO" alias="resVO"/>
+        <typeAlias type="edu.howf.vo.RecommendVO" alias="recommendVO"/>
         
         
     </typeAliases>

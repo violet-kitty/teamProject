@@ -94,6 +94,9 @@ a{
 	<div class="div_header">		
 		<h3>1:1 문의 게시판</h3>
 	</div>
+	<div style="text-align:right;">
+		<button onclick="location.href='../notice/faqboard.do'" >공 지 사 항</button>
+	</div>
 	<br><br>
 	<c:if test="${login != null }">
 		<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>

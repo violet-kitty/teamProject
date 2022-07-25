@@ -5,9 +5,11 @@
  
  <!-- 너나들이 -->
 <mapper namespace="edu.howf.mapper.teamMapper">
-	<select id="teamList" resultType="int">
-		SELECT   t.tidx		
-			     ,t.midx
+	<select id="teamList" parameterType="searchVO" resultType="teamVO">
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT   t.tidx
+				 ,t.midx
 			     ,t.title
 			     ,t.content
 			     ,t.wdate
@@ -15,17 +17,58 @@
 			     ,t.delyn
 			     ,j.people_cnt
 		FROM     team t
-		JOIN     (SELECT COUNT(jidx) as people_cnt, tidx
-				 FROM jointable WHERE joinyn = 'Y' GROUP BY tidx) j
-		ON       t.tidx = j.tidx;
+		LEFT OUTER JOIN
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
+		ON       t.tidx = j.tidx) a
+		join 	 (select u.midx, u.nickname from usertable u) u
+		ON 		 a.midx = u.midx
+		WHERE    a.delyn = 'N'
+		<if test="searchType != null and searchType.equals('total')">
+		AND (a.title like concat('%', #{searchValue}, '%')
+		OR	 a.content like concat('%', #{searchValue}, '%')
+		OR	 u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('title')">
+		AND (a.title like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('content')">
+		AND (a.content like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('nickname')">
+		AND (u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test='sortType == null'>
+		ORDER BY a.tidx DESC
+		</if>
+		<if test='sortType != null and sortType.equals("team")'>
+		ORDER BY a.people_cnt DESC
+		</if>
+		<if test='sortType != null and sortType.equals("cnt")'>
+		ORDER BY a.cnt DESC
+		</if>
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
 	<select id="countPage" parameterType="searchVO" resultType="int">
 		SELECT COUNT(t.tidx)
-		FROM     team t, usertable u
-		WHERE    t.midx = u.midx
-		AND      t.delyn = 'N'
-		ORDER BY t.tidx DESC
+		FROM   team t, usertable u
+		WHERE  t.midx = u.midx
+		AND    t.delyn = 'N'
+		<if test="searchType != null and searchType.equals('total')">
+		AND   (t.title like concat('%', #{searchValue}, '%')
+		OR	   t.content like concat('%', #{searchValue}, '%')
+		OR	   u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('title')">
+		AND   (t.title like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('content')">
+		AND   (t.content like concat('%', #{searchValue}, '%'))
+		</if>
+		<if test="searchType != null and searchType.equals('nickname')">
+		AND   (u.nickname like concat('%', #{searchValue}, '%'))
+		</if>
 	</select>
 
 	
@@ -104,19 +147,19 @@
 	</delete>
 	
 	<select id="join_check" parameterType="teamVO" resultType="joinVO">
-		select a.jidx,b.joinyn from
-		(SELECT COUNT(jidx) as jidx
-			, jidx as j
-				FROM   jointable
-				WHERE  tidx = #{tidx}
-				AND    midx = #{midx})a
-		left outer JOIN
-		(select joinyn
-			,jidx
-		from jointable a
-		where tidx = #{tidx}
-		and midx = #{midx})b
-		on a.j = b.jidx;
+		SELECT  a.jidx,b.joinyn FROM
+		(SELECT COUNT(jidx) as jidx, jidx as j
+		FROM   jointable
+		WHERE  tidx = #{tidx}
+		AND    midx = #{midx}
+		 ) a
+		LEFT OUTER JOIN
+		(SELECT joinyn, jidx
+		FROM jointable a
+		WHERE tidx = #{tidx}
+		AND midx = #{midx}
+		 ) b
+		ON a.j = b.jidx;
 	</select>
 	
 	<select id="write_check" parameterType="int" resultType="int">
@@ -141,5 +184,14 @@
 		SET		delyn = 'Y'
 		WHERE	tidx = #{tidx}
 	</update>
+	
+	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
+		SELECT  title
+				,content
+				,wdate
+		FROM	recommend
+		WHERE	tidx = #{tidx}
+	</select>
+
 
 </mapper>

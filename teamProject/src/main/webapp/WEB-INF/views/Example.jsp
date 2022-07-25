@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,8 +31,8 @@
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="Header.jsp"%>
-		<!-- Nav --><%@include file="Nav.jsp"%>
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -58,7 +59,7 @@
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 </body>
 </html>

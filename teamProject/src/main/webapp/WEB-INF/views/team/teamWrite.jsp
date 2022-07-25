@@ -79,7 +79,7 @@
 						<div class="row">
 							<div class="col d-flex justify-content-center">
 								<button id="btn_write">등록</button>
-								<button id="btn_cancel">취소</button>
+								<button type="button" id="btn_cancel">취소</button>
 							</div>
 						</div>
 					</form>
