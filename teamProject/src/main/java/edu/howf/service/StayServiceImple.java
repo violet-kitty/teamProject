@@ -28,13 +28,18 @@ public class StayServiceImple implements StayService{
 	}
 	
 	@Override
-	public StayVO staySelectOne(int sidx) {
+	public StayVO staySelectOne(ResVO vo) {
 		//숙박시설 정보 가져오기
-		StayVO stay = stayDao.staySelectOne(sidx);
+		StayVO stay = stayDao.staySelectOne(vo.getSidx());
 		
 		//방 정보 가져오기
-		List<RoomVO> room = stayDao.roomSelect(sidx);
+		List<RoomVO> room = stayDao.roomSelect(vo.getSidx());
 		stay.setRoom(room);
+		//cnt 가져오기
+		for(RoomVO r : room) {
+			vo.setName(r.getName());
+			r.setCnt(stayDao.roomCnt(vo));
+		}
 		
 		return stay;
 	}

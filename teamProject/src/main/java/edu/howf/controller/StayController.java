@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +39,9 @@ import edu.howf.vo.RoomVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
 import edu.howf.vo.UserVO;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 
 //숙박정보
 @RequestMapping(value="/stay")
@@ -135,9 +144,20 @@ public class StayController {
 	}
 	
 	@RequestMapping(value="/stayView.do")
-	public String stayView(int sidx, SearchVO vo, Model model) {
+	public String stayView(ResVO res, SearchVO vo, Model model) {
+		//날짜 검색 기본값
+		Calendar cal = Calendar.getInstance();
+		String format = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		String today = sdf.format(cal.getTime());//오늘 날짜
+		cal.add(cal.DATE, +1);
+		String tomorrow = sdf.format(cal.getTime());//내일 날짜
+		
+		if(res.getDate1() == null) res.setDate1(today);
+		if(res.getDate2() == null) res.setDate2(tomorrow);
+		
 		//숙박정보, 방 정보
-		StayVO stay = stayService.staySelectOne(sidx);
+		StayVO stay = stayService.staySelectOne(res);
 		
 		//리뷰
 		//리뷰는 3개씩 보여줌
@@ -146,13 +166,13 @@ public class StayController {
 		
 		//리뷰 페이징
 		//페이징
-		int cnt = stayService.reviewCount(sidx);
+		int cnt = stayService.reviewCount(res.getSidx());
 				
 		PageMaker pm = new PageMaker();
 		pm.setSearch(vo);
 		pm.setTotalCount(cnt);
 		
-		vo.setBidx(sidx);
+		vo.setBidx(res.getSidx());
 		if(vo.getPage()==0) vo.setPage(1);
 		List<CommentVO> review = stayService.reviewSelect(vo);
 		vo.setPage(page);
@@ -161,6 +181,7 @@ public class StayController {
 		model.addAttribute("review", review);
 		model.addAttribute("pm", pm);
 		model.addAttribute("vo",vo);
+		model.addAttribute("res", res);
 		
 		return "stay/stayView";
 	}
@@ -222,8 +243,8 @@ public class StayController {
 	
 	//수정 페이지 이동
 	@RequestMapping(value="/stayModify.do", method=RequestMethod.GET)
-	public String stayModify(int sidx, Model model) {
-		StayVO stay = stayService.staySelectOne(sidx);
+	public String stayModify(ResVO vo, Model model) {
+		StayVO stay = stayService.staySelectOne(vo);
 		
 		model.addAttribute("stay", stay);
 		
@@ -374,7 +395,6 @@ public class StayController {
 	@ResponseBody
 	@RequestMapping(value="/roomRidx.do")
 	public int roomRidx(ResVO vo){
-		System.out.println("sidx:"+vo.getSidx()+" name:"+vo.getName()+" price:"+vo.getPrice()+" people:"+vo.getPeople()+" square:"+vo.getSquare()+" tags:"+vo.getTags());
 		return stayService.roomRidx(vo);
 	}
 	
@@ -389,9 +409,51 @@ public class StayController {
 	}
 	
 	//휴대폰 본인인증
+	@ResponseBody
+	@RequestMapping(value="/authPerson.do")
+	public int auth(String phone, HttpServletRequest request, HttpServletResponse response) {
+		String api_key = "NCST9YVUZ5B5V4JG";
+		String api_secret = "G89QGA76EDVCLYIP7XJ0TFXEBEOUWALN";
+		Message coolsms = new Message(api_key, api_secret);
+		
+		int authNum = (int)(Math.floor(Math.random()*900)+100);//인증번호
+		
+		Cookie cookie = new Cookie("authNum", Integer.toString(authNum));//인증번호를 쿠키에 저장
+		cookie.setPath(request.getContextPath());
+		cookie.setMaxAge(3600);
+		response.addCookie(cookie);
+		System.out.println("인증번호 : "+authNum);
+		
+		//인증 문자 보내기
+		/*
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", phone);
+		params.put("from", "01035428975");
+		params.put("type", "SMS");
+		params.put("text", "인증번호는 ["+authNum+"]입니다.");
+		params.put("app_version", "howf");
+		
+		try {
+			JSONObject obj = (JSONObject)coolsms.send(params);
+			System.out.println("message:"+obj.toString());
+		}catch(CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
+		*/
+		
+		return authNum;
+	}
 	
+	//결제 검증(결제번호, 가격)
+	@ResponseBody
+	@RequestMapping(value="/tradeAuth.do")
+	public int tradeAuth(String imp_uid, String merchant_uid) {
+		
+		return 1;
+	}
 	
-	//예약완료
+	//예약
 	
 	
 	
