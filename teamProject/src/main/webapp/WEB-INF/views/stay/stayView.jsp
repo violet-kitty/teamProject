@@ -110,16 +110,16 @@
 			<div class="row" id="roomTab">
 				<div class="col-12 d-flex justify-content-center" style="text-align:center">
 					<div class="col-4 d-flex justify-content-end">
-						<input class="form-control" type="date" id="date1" name="date1">
+						<input class="form-control" type="date" id="date1" name="date1" value="${res.date1}">
 					</div>
 					<div class="col-1 d-flex justify-content-center">
 						<span> - </span>
 					</div>
 					<div class="col-4 d-flex justify-content-start">
-						<input class="form-control" type="date" id="date2" name="date2">
+						<input class="form-control" type="date" id="date2" name="date2" value="${res.date2}">
 					</div>
 					<div class="col-3 d-flex justify-content-start">
-						<button class="mx-3">날짜 검색</button>
+						<button class="mx-3" onclick="dateSearch()">날짜 검색</button>
 					</div>
 				</div>
 				<c:forEach var="v" items="${stay.room}">
@@ -430,9 +430,13 @@
 		
 		
 		//오늘 날짜 이전 선택 못하게 하기
-		var nowDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);
-		$("#date1").attr("min",nowDate);
-		$("#date2").attr("min",nowDate);
+		var nowDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);//오늘날짜
+		var nownow = new Date();
+		nownow.setDate(nownow.getDate()+1);
+		var nextDate = nownow.getFullYear()+"-"+('0'+(nownow.getMonth()+1)).slice(-2)+"-"+('0'+nownow.getDate()).slice(-2);//내일날짜
+		$("#date1").attr("min",nowDate);//오늘 날짜 이전 선택 못하게 하기
+		$("#date2").attr("min",nextDate);//내일 날짜 이전 선택 못하게 하기
+		
 		
 		//시작날짜 - 종료날짜 이후 선택 불가
 		$("#date2").on("change",function(){
@@ -707,20 +711,24 @@
 		//날짜도 잘 선택했고 남은 객실도 잇으면 예약 페이지로 이동
 		//예약 페이지로 이동시 객실 정보 가지고 가기
 		
-		var date1 = $("#date1");
-		var date2 = $("#date2");
+		var date1 = $("#date1").val();
+		var date2 = $("#date2").val();
 		
-		if(date1.val()==""){
+		if(date1==""){
 			alert("체크인 날짜를 선택해 주세요");
 			return;
 		}
-		else if(date2.val()==""){
+		else if(date2==""){
 			alert("체크아웃 날짜를 선택해 주세요");
+			return;
+		}
+		else if(date1>date2){
+			alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
 			return;
 		}
 		else {
 			//ajax로 해당 유형의 숙소 ridx 가져오기
-			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1.val()+"&date2="+date2.val();
+			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
 			$.ajax({
 				url:"roomRidx.do",
 				data:dd,
@@ -729,13 +737,27 @@
 					console.log(data);
 					
 					//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜 가지고 가기
-					var ddd = "stayName="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1.val()+"&date2="+date2.val();
+					var ddd = "stayName="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
 					location.href='stayReservation.do?'+ddd;
 				}
 			});
 		}
 		
 	}//예약하기
+	
+	//날짜 검색
+	function dateSearch(){
+		var date1 = $("#date1").val();
+		var date2 = $("#date2").val();
+		
+		if(date1>date2){
+			alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
+			return;
+		}
+		else {
+			location.href='stayView.do?sidx=${stay.sidx}&date1='+date1+'&date2='+date2;
+		}
+	}
 	
 </script>
 

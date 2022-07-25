@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,13 +20,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<!-- 결제 api -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<script>
+	//본인인증 여부
+	var auth = false;
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -55,8 +61,8 @@
 							체크아웃<br>
 							${res.date2}<br>
 							<hr>
-							총 결제 금액
-							${res.price}
+							총 결제 금액<br>
+							${res.price} 원
 						</div>
 					</div>
 					
@@ -68,10 +74,13 @@
 								<input type="text" name="name" id="name" placeholder="체크인시 필요한 정보입니다"><br>
 								휴대폰 번호<br>
 								<!-- 10~11개 숫자만 받기 -->
-								<input type="text" name="phone" id="phone" placeholder="체크인시 필요한 정보입니다"><br>
-								<span id="txt"></span>
-								
-								<button type="button" onclick="">결제</button>
+								<input type="text" name="phone" id="phone" placeholder="숫자만 입력해 주세요">
+								<button type="button" onclick="authFn()">인증번호 전송</button><br>
+								<span id="txt"></span><br>
+								<input type="text" name="auth" id="auth" placeholder="인증번호 입력">
+								<button type="button" onclick="authOkFn()">인증번호 입력</button><br>
+								<span id="txt2"></span><br>
+								<button type="button" onclick="tradeFn()">결제</button>
 							</form>
 						</div>
 					</div>
@@ -97,5 +106,88 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
+	<script>
+		$(function(){
+			//아임 포트
+			var IMP = window.IMP;
+			IMP.init("imp18334167");
+		});
+		
+		//인증번호 받기
+		function authFn(){
+			$.ajax({
+				url:"authPerson.do",
+				data:"phone="+$("#phone").val(),
+				type:"post",
+				success:function(){
+					$("#txt").text("인증번호가 발송되었습니다. 인증번호를 입력해주세요");
+					return;
+				}
+			});
+		}
+		
+		//쿠키 가져오기
+		var getCookie = function(name){
+			var value = document.cookie.match('(^|;)?'+name+'=([^;]*)(;|$)');
+			return value? value[2] : null;
+		}
+		
+		//인증번호 입력
+		function authOkFn(){
+			//쿠키의 값과 비교
+			var cookie = getCookie("authNum");	//쿠키에 저장된 인증 번호 가져오기
+			var input = $("#auth").val();//입력된 값 가져오기
+			if(cookie == input){
+				auth = true;
+				$("#txt").text("");
+				$("#txt2").text("인증되었습니다");
+				return;
+			}
+			else {
+				$("#txt").text("");
+				$("#txt2").text("인증번호가 일치하지 않습니다");
+				return;
+			}
+		}
+		
+		function tradeFn(){
+			if(auth == false){
+				alert("본인인증을 해주세요");
+				return;
+			}
+			else {
+				// IMP.request_pay(param, callback) 결제창 호출
+				IMP.request_pay({ // param
+					pg: 'kcp',
+					pay_method: 'card',
+					merchant_uid: "ORD20180131-0000012",
+					name: '${stayName}',
+					amount: ${res.price},
+					buyer_name: $("#name").val(),
+					buyer_tel: $("#phone").val()
+				}, function (rsp) { // callback
+				    if (rsp.success) {
+				    	console.log(rsp);
+				    	
+				    	//결제된 금액이 실제 금액과 맞는지 확인
+				    	if(${res.price} == rsp.amount){
+				    		//결제된 상품의 id가 DB의 id와 일치하는지 확인
+				    		
+				    		
+				    	}
+				    	else {
+				    		alert("결제된 금액이 실제 금액과 다릅니다.");
+				    		return;
+				    	}
+				    }
+					else {
+						alert("결제에 실패했습니다. \n 에러 내용:"+rsp.error_msg);
+				    }
+				});
+			}
+		}
+		
+	</script>
 </body>
 </html>

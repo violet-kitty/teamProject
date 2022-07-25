@@ -90,6 +90,11 @@ public class StayDao {
 	}
 	
 	public int roomRidx(ResVO vo){
-		return sqlSession.selectOne(namespace+"roomRidx",vo);
+		ResVO v = sqlSession.selectOne(namespace+"roomRidx",vo);
+		return v.getRidx();
+	}
+	
+	public int roomCnt(ResVO vo) {
+		return sqlSession.selectOne(namespace+"roomCnt", vo);
 	}
 }
