@@ -10,6 +10,7 @@ import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
+import edu.howf.vo.VoteVO;
 
 @Service
 public class TeamServiceImple implements TeamService{ 
@@ -88,6 +89,18 @@ public class TeamServiceImple implements TeamService{
 	public RecommendVO teamTeamView(int tidx) {
 		
 		return teamDao.teamTeamView(tidx);
+	}
+
+	@Override
+	public int upload_vote(RecommendVO rv) {
+		
+		return teamDao.upload_vote(rv);
+	}
+
+	@Override
+	public int vote(VoteVO vv) {
+		
+		return teamDao.vote(vv);
 	}
 
 

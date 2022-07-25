@@ -23,6 +23,7 @@ import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
 import edu.howf.vo.UserVO;
+import edu.howf.vo.VoteVO;
 
 @RequestMapping(value = "/team")
 @Controller
@@ -190,18 +191,34 @@ public class TeamController {
 	
 	@ResponseBody
 	@PostMapping("upload_vote.do")
-	public String upload_vote(RecommendVO rv) {
+	public int upload_vote(RecommendVO rv, HttpServletRequest request, HttpSession session) {
 		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");		
+		rv.setMidx(login.getMidx());
 		
+		StringBuilder places = new StringBuilder("");
+		for(int i = 0; i < rv.getPlaces().size(); i++) {
+			places.append(rv.getPlaces().get(i)+",");
+		}
+		String place2 = places.toString();
+		rv.setPlace(place2.substring(0, place2.length()-1));
 		
-		return "";
+		teamService.upload_vote(rv);
+		return rv.getRidx();
 	}
 	
 	@ResponseBody
 	@PostMapping("vote.do")
-	public String vote() {
+	public int vote(VoteVO vv, HttpServletRequest request, HttpSession session) {
 		
-		return "";
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");		
+		vv.setMidx(login.getMidx());
+		
+
+		
+		return teamService.vote(vv);
 	}
 	
 	

@@ -106,7 +106,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀팀</button>
+					<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
 				</div>
 			</div>
 			<div class="row">

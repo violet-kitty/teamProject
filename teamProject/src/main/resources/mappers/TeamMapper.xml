@@ -187,11 +187,48 @@
 	
 	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
 		SELECT  title
-				,content
+				,place
 				,wdate
 		FROM	recommend
 		WHERE	tidx = #{tidx}
 	</select>
+	
+	<insert id="upload_vote" parameterType="recommendVO">
+		<![CDATA[
+		INSERT INTO recommend(
+						midx
+						,tidx
+						,title
+						,place
+						,wdate
+					)
+		VALUES		(
+						#{midx}
+						,#{tidx}
+						,#{title}
+						,#{place}
+						,now()
+					)
+		]]>
+		<selectKey resultType="int" keyProperty="ridx" order="AFTER">
+			SELECT max(ridx) FROM recommend
+		</selectKey>
+	</insert>
+	
+	<insert id="vote" parameterType="voteVO">
+		INSERT INTO vote(
+						ridx
+						,midx
+						,vote
+						,wdate
+					)
+		VALUES		(
+						#{ridx}
+						,#{midx}
+						,#{vote}
+						,now()
+					)
+	</insert>
 
 
 </mapper>

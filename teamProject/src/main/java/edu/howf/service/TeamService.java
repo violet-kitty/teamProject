@@ -6,6 +6,7 @@ import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
+import edu.howf.vo.VoteVO;
 
 public interface TeamService { 
 	
@@ -32,6 +33,10 @@ public interface TeamService {
 	public int teamDelete(int tidx);
 	
 	public RecommendVO teamTeamView(int tidx);
+	
+	public int upload_vote(RecommendVO rv);
+	
+	public int vote(VoteVO vv);
 
 
 }
