@@ -74,27 +74,3 @@
 	.content03 .slick-prev{top:40%;}
 	.content03 .slick-next{top:40%;}
 }
-
-/* content 04 */
-.content04 .carousel-inner {position: relative; width: 100%;height: 357px;overflow: hidden;}
-.content04 .carousel-item {position:relative; height:357px;}
-.content04 .carousel-caption {width: 100%;height: 100%;right: 0%;bottom: 0%;left: 0%;padding-top: 0;padding-bottom: 0;color: #fff;text-align: center;}
-.content04 .carousel-control-next-icon {background-image: none;}
-.content04 .carousel-control-prev-icon {background-image: none;}
-.content04 .carousel-caption h5 {font-size:32px; margin-bottom:16px; text-overflow: ellipsis;overflow: hidden;word-break: break-word;display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;}
-.content04 .carousel-caption p {font-size: 24px; text-overflow: ellipsis;overflow: hidden;word-break: break-word;display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;} 
-.content04 .captionset {background:rgba(0,0,0,0.7); padding:40px 96px; margin:auto; max-width:560px; vertical-align:middle; margin-top:6%;}
-.content04 .imgset { width: 100%; height: 100%; background-size: cover;background-position: center 50%; background-repeat: no-repeat;}
-@media all and (max-width: 1200px) {
-	.content04 .carousel-inner{height:43vh;}
-	.content04 .carousel-item {height:43vh;}
-	.content04 .captionset {margin-top:8vh;}
-}
-@media all and (max-width: 576px) {
-	.content04 .carousel-inner{height:36vh;}
-	.content04 .carousel-item {height:36vh;}
-	.content04 .carousel-caption h5 {font-size:1.4rem; -webkit-line-clamp: 1;}
-	.content04 .carousel-caption p  {font-size:1rem; -webkit-line-clamp: 1;}
-	.content04 .captionset {padding:32px;}
-	.content04 .captionset {max-width: 87vw; margin: auto; margin-top:8vh; }
-}

@@ -16,11 +16,27 @@
 */
 
 /* 부트스트랩 5 resetting */
+.py-10 {padding-top: 10rem;
+    padding-bottom: 10rem;}
 .row {--bs-gutter-x: 0;}
 a {text-decoration:none;}
 .carousel-indicators [data-bs-target] {box-sizing: content-box;flex: 0 1 auto;width: 20px;height: 20px;padding: 0;margin-right: 15px;margin-left: 15px;text-indent: -999px;cursor: pointer;background-color: #fff;background-clip: padding-box;border: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-radius: 100%;opacity: .5;transition: opacity .6s ease;}
 .carousel-indicators .active {opacity: 1;}
+.modal{background-color:rgba(0,0,0,0.5); z-index:9999;}
+.modal-dialog {max-width:415px; margin:auto;}
+.modal-content {border:none; border-radius:0; outline:none; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px 110px 65px;}
+.modal-content h2 {margin-bottom: 32px;}
+.modal-content p {margin-bottom:8px;}
+.modal-content input {margin: 8px 0px;}
+.modal input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.modal button {display:inline-block; width:30%;}
+.modal button:last-child {width:70%; float:right;}
+.modal .btnarea {    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;}
 @media (max-width: 576px){
+	.modal-dialog {max-width:415px;}
 	.col-xs-3 {flex: 0 0 auto;width: 25%;}/*4개*/	
 	.col-xs-6 {flex: 0 0 auto;width: 50%;}/*2개*/	
 	.carousel-indicators [data-bs-target] {box-sizing: content-box;flex: 0 1 auto;width: 16px;height: 16px;padding: 0;margin-right: 10px;margin-left: 10px;text-indent: -999px;cursor: pointer;background-color: #fff;background-clip: padding-box;border: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-radius: 100%;opacity: .5;transition: opacity .6s ease;}
@@ -35,7 +51,7 @@ body {font-family: 'Noto Sans', sans-serif; max-width: 1800px;}
 p {line-height:22px;}
 
 /* 태그 반응 세팅 */
-input:focus { outline: none; }
+input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 
 /* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
 #wrap {max-width:100%;} 
@@ -45,7 +61,8 @@ input:focus { outline: none; }
 #container {max-width:100%;}
 
 /* whitebox 세팅 */
-.whitebox {background:white; border:2px solid #3E3E3E; box-shadow: 8px 8px 0px rgba(0,0,0,0.1); padding:65px 60px;}
+
+.whitebox {max-width:850px; position:relative; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px;}
 
 /* 클래스 contents 세팅 */ /* 넓이 : 100% */
 .contents {max-width:100%; background:green;  margin:auto;}
@@ -58,6 +75,7 @@ input:focus { outline: none; }
 }
 @media all and (max-width: 576px) {
 	.container {width: 100%; margin: auto; padding: 40px 5%;}
+	.whitebox{padding: 35px 30px;}
 }
 
 
@@ -116,7 +134,7 @@ input:focus { outline: none; }
 /* mobile 사이즈 이하에서만 안보이기*/
 .onlypc {display:block;}
 .onlypc-inline {display:inline-block;}
-@media all and (max-width: 576px) {
+@media all and (max-width: 992px) {
 	.onlypc {display:none!important;}
 	.onlypc-inline {display:none!important;}
 }
