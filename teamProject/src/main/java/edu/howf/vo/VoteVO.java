@@ -2,11 +2,17 @@ package edu.howf.vo;
 
 public class VoteVO{
 	
+	private int vidx;
 	private int midx;
 	private int ridx;
-	private int vidx;
 	private String vote;
 
+	public int getVidx() {
+		return vidx;
+	}
+	public void setVidx(int vidx) {
+		this.vidx = vidx;
+	}
 	public int getMidx() {
 		return midx;
 	}
@@ -18,12 +24,6 @@ public class VoteVO{
 	}
 	public void setRidx(int ridx) {
 		this.ridx = ridx;
-	}
-	public int getVidx() {
-		return vidx;
-	}
-	public void setVidx(int vidx) {
-		this.vidx = vidx;
 	}
 	public String getVote() {
 		return vote;

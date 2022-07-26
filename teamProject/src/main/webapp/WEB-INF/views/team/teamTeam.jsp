@@ -61,15 +61,24 @@
 					<div class="row">
 						<div class="col">
 							<div id="vote">
-							<c:if test="${rv != null}">
-								<div id="" style="display: none;">
-									
+							<c:if test="${rv2 != null}">
+								<div id="show_vote_option">
+									<form id="form1">
+										<input type="hidden" name="ridx" value="${rv2.ridx}">
+										${rv2.title}
+										<br>
+										<c:forEach var="i" items="${rv2.places}">
+											<input type="radio" name="vote" value="${i}">${i}<br>
+										</c:forEach>
+										<br>
+										<button onclick="select_vote_option()">투표하기</button>
+									</form>
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
-								<button onclick="create_vote()" id="create_vote">투표 만들기</button><br>
+								<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
 								<div id="display" style="display:none">
-									<button onclick="add_option()">선택지 추가</button>
+									<button onclick="add_option()" class="h-auto">선택지 추가</button>
 									<div id="voteArea">
 										<form id="vote_option">
 											<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
@@ -77,7 +86,7 @@
 											<input type="text" id="p2" name="places" placeholder="투표 선택지2"><br>
 										</form>
 									</div>
-									<button onclick="upload_vote()">투표 올리기</button><br>
+									<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 								</div>
 							</c:if>
 							</div>
@@ -85,7 +94,7 @@
 					</div>
 					<div class="row">
 						<div class="col d-flex justify-content-center">
-							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'">팀 글 페이지</button>
+							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
 						</div>
 					</div>
 				</div><!-- /.container -->
@@ -120,21 +129,42 @@
 			data: frm+"&tidx=${tidx}",
 			type: "post",
 			success: function(ridx){
-				var html = '<form id="frm"><label>'+$("#title").val()+'</label><br>';
-				
-				for(var i = 1; i < index; i++){
-					html = html + '<input type="radio" name="vote" value="'+$("#p"+i).val()+'">'+$("#p"+i).val()+'<br>'
-				}
-				html = html + '<input type="hidden" name="ridx" id="ridx" value="'+ridx+'">'
-				html = html + '<input type="hidden" name="tidx" id="tidx" value="${tidx}">'		
-				html = html + '<button type="button" onclick="voteFn()">투표</button></form>';
+				var html = '<c:if test="${login.midx == rv.midx}"><button type="button" onclick="remove_vote()">투표 마감 / 삭제</button></c:if>'
 
-				$("#vote").html(html);
+				$("#show_vote_option").append(html);
 			}
 			
 		});
 		
 	}
+	
+	function select_vote_option(){
+		
+		var form = $("#form1").serialize();
+		
+		$.ajax({
+			url: "select_vote_option.do?",
+			data: form,
+			type: "post",
+			success: function(){
+				
+				
+			}
+		});
+	}
+	
+	function remove_vote(){
+		$.ajax({
+			url: "remove_vote.do?ridx=${rv.ridx}",
+			type: "get",
+			success: function(){
+				
+			}
+		});
+		
+	}
+
+
 		
 	
 </script>

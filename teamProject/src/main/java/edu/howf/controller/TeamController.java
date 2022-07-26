@@ -179,10 +179,17 @@ public class TeamController {
 	}
 	
 	@GetMapping("teamTeam.do")
-	public String teamTeam(int tidx, Model model) {
+	public String teamTeam(int tidx, Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");	
+		System.out.println(login.getMidx());
 		
 		RecommendVO rv = teamService.teamTeamView(tidx);
+		RecommendVO rv2 = teamService.vote_option(tidx);
+		model.addAttribute("rv2", rv2);
 		
+		model.addAttribute("login", login);
 		model.addAttribute("rv", rv);
 		model.addAttribute("tidx", tidx);
 		
@@ -201,11 +208,19 @@ public class TeamController {
 		for(int i = 0; i < rv.getPlaces().size(); i++) {
 			places.append(rv.getPlaces().get(i)+",");
 		}
-		String place2 = places.toString();
-		rv.setPlace(place2.substring(0, place2.length()-1));
+		String added_place = places.toString();
+		rv.setPlace(added_place.substring(0, added_place.length()-1));
 		
 		teamService.upload_vote(rv);
+		
 		return rv.getRidx();
+	}
+	
+	@ResponseBody
+	@GetMapping("remove_vote.do")
+	public int remove_vote(int ridx) {
+		
+		return teamService.remove_vote(ridx);
 	}
 	
 	@ResponseBody
@@ -219,6 +234,13 @@ public class TeamController {
 
 		
 		return teamService.vote(vv);
+	}
+	
+	@ResponseBody
+	@PostMapping("select_vote_option.do")
+	public int select_vote_option(int ridx) {
+		
+		return teamService.select_vote_option(ridx);
 	}
 	
 	

@@ -36,7 +36,13 @@ public interface TeamService {
 	
 	public int upload_vote(RecommendVO rv);
 	
+	public int remove_vote(int ridx);
+	
 	public int vote(VoteVO vv);
+	
+	public RecommendVO vote_option(int tidx);
+	
+	public int select_vote_option(int ridx);
 
 
 }

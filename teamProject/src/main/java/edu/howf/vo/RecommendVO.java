@@ -28,22 +28,16 @@ public class RecommendVO extends BoardVO{
 //	private String delyn;
 	
 	private int ridx;
-	private int tidx;
 	private String place;
 	private List<String> places;
 	private String pdate;
+	private String delyn;
 	
 	public int getRidx() {
 		return ridx;
 	}
 	public void setRidx(int ridx) {
 		this.ridx = ridx;
-	}
-	public int getTidx() {
-		return tidx;
-	}
-	public void setTidx(int tidx) {
-		this.tidx = tidx;
 	}
 	public String getPlace() {
 		return place;
@@ -63,6 +57,13 @@ public class RecommendVO extends BoardVO{
 	public void setPlaces(List<String> places) {
 		this.places = places;
 	}
+	public String getDelyn() {
+		return delyn;
+	}
+	public void setDelyn(String delyn) {
+		this.delyn = delyn;
+	}
+	
 	
 	
 

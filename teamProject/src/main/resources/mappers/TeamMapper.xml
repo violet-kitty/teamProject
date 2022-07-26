@@ -186,11 +186,13 @@
 	</update>
 	
 	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
-		SELECT  title
+		SELECT  midx
+				,title
 				,place
 				,wdate
 		FROM	recommend
 		WHERE	tidx = #{tidx}
+		AND		delyn = 'N'
 	</select>
 	
 	<insert id="upload_vote" parameterType="recommendVO">
@@ -201,6 +203,7 @@
 						,title
 						,place
 						,wdate
+						,delyn
 					)
 		VALUES		(
 						#{midx}
@@ -208,6 +211,7 @@
 						,#{title}
 						,#{place}
 						,now()
+						,'N'
 					)
 		]]>
 		<selectKey resultType="int" keyProperty="ridx" order="AFTER">
@@ -215,7 +219,38 @@
 		</selectKey>
 	</insert>
 	
+	<update id="remove_vote" parameterType="int">
+		UPDATE	recommend
+		SET		delyn = 'Y'
+		WHERE	ridx = #{ridx}
+	</update>
+	
 	<insert id="vote" parameterType="voteVO">
+		INSERT INTO vote(
+						ridx
+						,midx
+						,vote
+						,wdate
+					)
+		VALUES		(
+						#{ridx}
+						,#{midx}
+						,#{vote}
+						,now()
+					)
+	</insert>
+	
+	<select id="vote_option" parameterType="int" resultType="recommendVO">
+		SELECT	midx
+				,title
+				,place
+				,wdate
+		FROM	recommend
+		WHERE	tidx = #{tidx}
+		AND		delyn = 'N'
+	</select>
+	
+	<insert id="select_vote_option" parameterType="recommendVO">
 		INSERT INTO vote(
 						ridx
 						,midx
