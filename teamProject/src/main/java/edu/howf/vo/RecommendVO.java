@@ -1,5 +1,7 @@
 package edu.howf.vo;
 
+import java.util.List;
+
 public class RecommendVO extends BoardVO{
 	
 //	UserVO
@@ -27,7 +29,9 @@ public class RecommendVO extends BoardVO{
 	
 	private int ridx;
 	private String place;
+	private List<String> places;
 	private String pdate;
+	private String delyn;
 	
 	public int getRidx() {
 		return ridx;
@@ -47,6 +51,19 @@ public class RecommendVO extends BoardVO{
 	public void setPdate(String pdate) {
 		this.pdate = pdate;
 	}
+	public List<String> getPlaces() {
+		return places;
+	}
+	public void setPlaces(List<String> places) {
+		this.places = places;
+	}
+	public String getDelyn() {
+		return delyn;
+	}
+	public void setDelyn(String delyn) {
+		this.delyn = delyn;
+	}
+	
 	
 	
 

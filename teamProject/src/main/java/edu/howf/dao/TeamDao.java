@@ -10,6 +10,7 @@ import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
+import edu.howf.vo.VoteVO;
 
 @Repository
 public class TeamDao { 
@@ -79,6 +80,31 @@ public class TeamDao {
 	public RecommendVO teamTeamView(int tidx) {
 		
 		return sqlSession.selectOne(namespace + "teamTeamView", tidx);
+	}
+	
+	public int upload_vote(RecommendVO rv) {
+		
+		return sqlSession.insert(namespace + "upload_vote", rv);
+	}
+	
+	public int remove_vote(int ridx) {
+		
+		return sqlSession.update(namespace + "remove_vote", ridx);
+	}
+	
+	public int vote(VoteVO vv) {
+		
+		return sqlSession.insert(namespace + "vote", vv);
+	}
+	
+	public RecommendVO vote_option(int ridx) {
+		
+		return sqlSession.selectOne(namespace + "vote_option", ridx);
+	}
+	
+	public int select_vote_option(int ridx) {
+		
+		return sqlSession.insert(namespace + "select_vote_option", ridx);
 	}
 
 	
