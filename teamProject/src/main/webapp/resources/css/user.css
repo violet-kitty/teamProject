@@ -2,10 +2,9 @@
 
 /* user 세팅 */
 /* join 뒷배경 이미지와 사이즈 */
-.joinbg {position:relative; background-image: url(../image/picture/picture5-2.jpg); background-size:cover;}
+.joinbg {position:relative; background-image: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../image/picture/picture-t.jpg); background-size:cover;}
 
 /* 회원가입 - joinSelect */
-/* content 01 */
 .joinSelect .content01 {min-height: 86vh;display: flex; justify-content: center;}
 .joinSelect .content01 .row {max-width:700px; margin:auto;}
 .joinSelect .content01 .row .col{text-align:center; padding:0px 30px;}
@@ -16,3 +15,80 @@
 	.joinSelect .content01 {min-height: 90vh}
 	.joinSelect .content01 .row .col{padding:10px 10px;}
 }
+
+/* 회원가입 - Join */
+.joinUs .container {padding-top:95px; padding-bottom:110px;}
+.joinUs .whitebox {max-width:850px;}
+.joinUs .whitebox h2 {margin-bottom:32px;}
+.joinUs .whitebox .subtitle {font-size:16px;}
+.joinUs .feature:first-child {}
+.joinUs .feature:last-child {text-align:center; margin:auto;padding-left:40px;}
+.joinUs .feature form {margin: 8px 0px;}
+.joinUs .feature input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature input[type=password] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white; border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature input[type=email] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature input[type=date] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature input[type=file] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature select {border-radius:10px;width:100%;border:2px solid #3E3E3E; box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.joinUs .feature span {position: absolute;color: #DE8889;top: 35%;width: 25px;height: 25px;right: 20px;}
+.joinUs .feature .address {max-width:80%;}
+.joinUs .feature .col1 .graybtn {min-height:54px;position:absolute; right:0;border-bottom-right-radius:10px; border-top-right-radius:10px;}
+.joinUs .feature span img {width:100%;}
+.joinUs .feature table{width:100%; text-align:center;}
+.joinUs .feature td {vertical-align:middle;position:relative; text-align:left;}
+.joinUs .feature td p {padding:16px; font-size:16px; font-weight:600;}
+.joinUs .feature .col1 td {padding:8px 0px 8px 0px;}
+.joinUs .feature .col2 td:first-child {padding:8px 8px 8px 0px;}
+.joinUs .feature .col2 td:last-child {padding:8px 0px 8px 8px;}
+.joinUs .feature .greenbtn {width:100%;}
+@media all and (max-width: 992px) {
+	.joinUs .feature{margin:auto;}
+	.joinUs .feature:first-child {max-width:800px;}
+	.joinUs .feature .whitebox2 .feature:first-child {max-width:400px; padding: 40px 5% 40px 5% ;}
+}
+
+/* login */
+.login .joinguard {display: flex;flex-basis: 100%;align-items: center;font-size: 16px;margin:auto; margin-top:32px; margin-bottom:32px;text-align: center;}
+.login .joinguard::before {content: "";flex-grow: 2;background: rgba(0, 0, 0, 0.35);height: 2px;font-size: 0px;line-height: 0px;margin: 0px 16px 0px 0px;}
+.login .joinguard::after {content: "";flex-grow: 2;background: rgba(0, 0, 0, 0.35);height: 2px;font-size: 0px;line-height: 0px; margin: 0px 0px 0px 16px;}
+
+.login .left-img{width: -webkit-fill-available; margin:auto;}
+.login .keepbox {text-align:right;}
+.login #autoLogin {margin:auto; margin-bottom:24px; margin-top:8px;}
+
+.login .container {padding-top:160px; padding-bottom:190px;}
+.login .whitebox {max-width:850px;}
+.login .whitebox h2 {margin-bottom:32px;}
+.login .whitebox .subtitle {font-size:16px; display:inline-block;}
+.login .feature:first-child {}
+.login .feature:last-child {text-align:center; padding-left:40px;}
+.login .feature form {margin: 8px 0px;}
+.login .feature input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.login .feature input[type=password] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white; border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.login .feature input[type=email] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.login .feature input[type=date] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.login .feature select {border-radius:10px;width:100%;border:2px solid #3E3E3E; box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.login .feature .address {max-width:80%;}
+.login .feature .col1 .graybtn {position:absolute; right:0;border-bottom-right-radius:10px; border-top-right-radius:10px;}
+.login .feature span img {width:100%;}
+.login .feature table{width:100%; text-align:center;}
+.login .feature td {vertical-align:middle;position:relative; text-align:left;}
+.login .feature td p {padding:16px; font-size:16px; font-weight:600;}
+.login .feature .col1 td {padding:8px 0px 8px 0px;}
+.login .feature .col2 td:first-child {padding:8px 8px 8px 0px;}
+.login .feature .col2 td:last-child {padding:8px 0px 8px 8px;}
+.login .feature .greenbtn {width:100%; margin-bottom:16px;}
+.login .feature .snsloginbox {text-align: center;}
+.login .feature .snslogin {display:inline-block;}
+.login .feature .snslogin img {width:130px;}
+.login .form-floating div{position:relative;}
+.login .form-floating span {position: absolute;color: #DE8889;top: 35%;width: 25px;height: 25px;right: 20px;}
+.login .form-floating span img {width:100%;}
+@media all and (max-width: 992px) {
+	.login .feature{margin:auto;}
+	.login .feature:first-child {max-width:800px;}
+	.login .feature .whitebox2 .feature:first-child {max-width:400px; padding: 40px 5% 40px 5% ;}
+	.login .feature:last-child {text-align:center; padding-left:0px;}
+	.login .feature .snslogin img {width:130px; margin-bottom:8px;}
+}
+
