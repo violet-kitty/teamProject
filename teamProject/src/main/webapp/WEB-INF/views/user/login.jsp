@@ -1,12 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
+<title>HOWF로그인</title>
+
+<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Bootstrap5 AwsomeFont -->
+<script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 구글 로그인 -->
@@ -15,64 +29,121 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <!-- 네이버 로그인 -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<!-- jquery -->
-<script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
-<!-- 모달 CSS -->
-<link href="<%= request.getContextPath() %>/css/modal.css?ver0.1" rel="stylesheet">
+
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Nav2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav2.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
+
 <script>
 var nicknameDup = false;
 </script>
+
 </head>
 <body>
-<!-- 닉네임 받는 모달 -->
-<div id="modalDiv" style="display:none">
-	<div id="popupDiv">
-		<form id="modalFrm" action="nicknameInsert.do" method="post">
-			<p>HOWF에서 사용하실 닉네임을 입력해주세요</p>
-			<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><br>
-			<p id="nicknameTxt"></p><br>
-			<button type="button" class="modalBottomBtn" onclick="nicknameFn()">닉네임 입력</button>
-		</form>
-	</div>
-</div>
 
-<div>
-	<form id="frm">
-		<label>ID : <input type="text" name="email" id="email"></label><br>
-		<label>PASSWORD : <input type="password" name="password" id="password"></label><br>
-		<input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">자동 로그인</label><br>
-		<label><button type="button" onclick="loginFn()">로그인</button></label>
-	</form>
-	<br>
-	<br>
-	<!-- 카카오 -->
-	<a id="custom-login-btn" href="javascript:loginWithKakao()">
-		<img
-			src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-			width="222"
-			alt="카카오 로그인 버튼"
-		/>
-	</a>
-	<br>
-	<br>
-	<!-- 구글 -->
-	<div id="g_id_onload"
-		data-client_id="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com"
-		data-callback="handleCredentialResponse"
-		data-auto_prompt="false">
-	</div>
-	<div class="g_id_signin" data-type="standard" data-size="large"
-		data-theme="outline" data-text="sign_in_with" data-shape="rectangular"
-		data-logo_alignment="left">
-	</div>
-	<br>
-	<br>
-</div>
-<br><br>
-<a href="emailFind.do">이메일 찾기</a>
-<a href="pwdFind.do">비밀번호 찾기</a>
+	<div id="wrap" class="login">
 
-<script>
+		<!-- 닉네임 받는 모달 -->
+		<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">
+			<div class="modal-dialog hbshadow" role="document">
+				<div class="modal-content">
+					<h2 class="hfc-bold">나의 닉네임 설정하기</h2>
+
+					<form id="modalFrm" action="nicknameInsert.do" method="post">
+						<div class="form-floating ">
+							<p class="text-muted">HOWF에서 사용하실 닉네임을 입력해주세요</p>
+							<div>
+								<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><span id="nicknameTxt"></span>
+							</div>
+							<p class="hfc-pink">최초 닉네임 설정 이후, 닉네임을 변경하실 수 없습니다.</p>
+						</div>
+					</form>
+					<div class="btnarea">
+						<!-- <button type="button" class="graybtn w-30" data-bs-dismiss="modalDiv" aria-label="Close">닫기</button> -->
+						<button type="button" class="bluebtn w-100" onclick="nicknameFn()">닉네임 입력완료!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Header --><%@include file="../Header.jsp"%>
+		
+		<!-- Side -->
+		<div class="right-container">
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-white">
+			<div class="joinbg">
+				<div class="container">
+					<div class="whitebox">
+						<h2 class="hfc-bold">로그인</h2>
+						<div class="row row-cols-1 row-cols-lg-2">
+							<div class="feature col">
+								<p class="subtitle">기억이 않나나요?</p><br class="onlymobile"> <a href="emailFind.do">이메일 찾기</a> & <a href="pwdFind.do">비밀번호 찾기</a>
+								<!-- form -->
+								<form name="frm">
+									<table border="1">
+										<tr class="col1">
+											<td colspan="2"><input type="email" name="email" id="email" placeholder="이메일"></td>
+										</tr>
+										<tr class="col1">
+											<td colspan="2"><input type="password" name="password" id="password" placeholder="비밀번호"></td>
+										</tr>
+									</table>
+								</form>
+								<!-- /form -->
+								
+								<!-- 버튼 -->
+								<div class="keepbox"><input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">&nbsp;자동로그인</label></div>
+								<button type="button" name ="btn" value="확인" onclick="loginFn();" class="greenbtn">로그인</button>
+								
+								<div class="joinguard semibold"><span class="hfc-bold">간편</span> 로그인/회원가입</div>
+								
+								<div class="snsloginbox">
+									<!-- 카카오 -->
+									<a id="custom-login-btn" href="javascript:loginWithKakao()" class="snslogin"><img src="<%= request.getContextPath() %>/image/button/kakaologin.png"></a>
+								
+									<!-- 구글 -->
+									<div id="g_id_onload" class="snslogin"
+										data-client_id="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com"
+										data-callback="handleCredentialResponse"
+										data-auto_prompt="false">
+									</div>
+									<div class="g_id_signin snslogin" data-type="standard" data-size="large"
+										data-theme="outline" data-text="구글 로그인" data-shape="rectangular"
+										data-logo_alignment="left">
+									</div>
+								</div>
+								
+								
+							</div>
+							<div class="feature col">
+								<lottie-player src="https://assets5.lottiefiles.com/packages/lf20_1t8na1gy.json"  background="transparent"  speed="1"  style="width: auto; height:auto;"  loop autoplay></lottie-player>
+								<div class="joinguard semibold">리피의 새로운 회원이 되어보세요!</div>
+									<a href="<%=request.getContextPath()%>/user/joinSelect.do"><button class="pinkbtn w-100">회원가입하기</button></a>
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.whitebox --><!-- /.whitebox -->
+            
+				</div><!-- /.container -->
+			</div><!-- /.contents 01 -->
+		
+			<!-- Nav --><%@include file="../Nav.jsp"%>		
+			
+
+		</div><!-- / #container -->
+	
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+		
+	</div><!-- /#wrap -->
+	
+	<script>
 	function loginFn(){
 		var id = $("#email");
 		var password = $("#password");
@@ -197,7 +268,7 @@ var nicknameDup = false;
 	$(function(){
 		$("#nickname").on("propertychange change keyup paste input",function(){
 			if($("#nickname").val()==""){
-				$("#nicknameTxt").text("닉네임을 입력해 주세요");
+				$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 				$("#nickname").focus();
 			}
 			else {
@@ -208,11 +279,11 @@ var nicknameDup = false;
 					type:"post",
 					success:function(data){
 						if(data == 0){
-							$("#nicknameTxt").text("사용 가능한 닉네임 입니다");
+							$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationo.png'>");
 							nicknameDup = false;
 						}
 						else {
-							$("#nicknameTxt").text("이미 사용중인 닉네임 입니다");
+							$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 							nicknameDup = true;
 						}
 					}
@@ -224,11 +295,11 @@ var nicknameDup = false;
 	//소셜 로그인 후 닉네임 설정
 	function nicknameFn(){
 		if($("#nickname").val()==""){
-			$("#nicknameTxt").text("닉네임을 입력해 주세요");
+			$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 			return;
 		}
 		else if(nicknameDup == true){
-			$("#nicknameTxt").text("이미 사용중인 닉네임 입니다");
+			$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 			$("#nickname").focus();
 			return;
 		}
@@ -237,5 +308,6 @@ var nicknameDup = false;
 		}
 	}
 </script>
+
 </body>
 </html>

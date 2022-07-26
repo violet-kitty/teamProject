@@ -1,11 +1,38 @@
 @charset "UTF-8";
 
-/* user 세팅 */
-/* join 뒷배경 이미지와 사이즈 */
-.joinbg {position:relative; background-image: url(../image/picture/picture5-2.jpg); background-size:cover;}
+/* user 공통세팅 */
+.joinbg {position:relative; background-image: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../image/picture/picture-t.jpg); background-size:cover;}
+.whitebox h2 {margin-bottom:32px;}
+.whitebox .subtitle {font-size:16px; display:inline-block;}
+.feature{margin:auto;}
+.feature:first-child {max-width:800px;}
+.feature:last-child {text-align:center; margin:auto;padding-left:40px;}
+.feature input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.feature input[type=password] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white; border: none; padding: 16px;font-size: 16px;font-weight: 600;}
+.feature input[type=email] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.feature input[type=date] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.feature input[type=file] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.feature select {border-radius:10px;width:100%;border:2px solid #3E3E3E; box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+.feature .address {max-width:80%;}
+.feature form {margin: 8px 0px;}
+.feature .col1 .graybtn {min-height:54px;position:absolute; right:0;border-bottom-right-radius:10px; border-top-right-radius:10px;}
+.feature span img {width:100%;}
+.feature table{width:100%; text-align:center;}
+.feature td {vertical-align:middle;position:relative; text-align:left;}
+.feature td p {padding:16px; font-size:16px; font-weight:600;}
+.feature .col1 td {padding:8px 0px 8px 0px;}
+.feature .col2 td:first-child {padding:8px 8px 8px 0px;}
+.feature .col2 td:last-child {padding:8px 0px 8px 8px;}
+.feature button {width:100%;}
+.feature .colresult {width:100%;}
+.feature .result {font-size:18px;}
+.feature form span {position: absolute;color: #DE8889;top: 35%;width: 25px;height: 25px;right: 20px;}
+
+@media all and (max-width: 992px) {
+	.feature:last-child {text-align:center; padding-left:0px;}
+}
 
 /* 회원가입 - joinSelect */
-/* content 01 */
 .joinSelect .content01 {min-height: 86vh;display: flex; justify-content: center;}
 .joinSelect .content01 .row {max-width:700px; margin:auto;}
 .joinSelect .content01 .row .col{text-align:center; padding:0px 30px;}
@@ -16,3 +43,28 @@
 	.joinSelect .content01 {min-height: 90vh}
 	.joinSelect .content01 .row .col{padding:10px 10px;}
 }
+
+/* 회원가입 - Join */
+.joinUs .container {padding-top:95px; padding-bottom:110px;}
+
+/* login */
+.login .joinguard {display: flex;flex-basis: 100%;align-items: center;font-size: 16px;margin:auto; margin-top:32px; margin-bottom:32px;text-align: center;}
+.login .joinguard::before {content: "";flex-grow: 2;background: rgba(0, 0, 0, 0.35);height: 2px;font-size: 0px;line-height: 0px;margin: 0px 16px 0px 0px;}
+.login .joinguard::after {content: "";flex-grow: 2;background: rgba(0, 0, 0, 0.35);height: 2px;font-size: 0px;line-height: 0px; margin: 0px 0px 0px 16px;}
+.login .keepbox {text-align:right;}
+.login #autoLogin {margin:auto; margin-bottom:24px; margin-top:8px;}
+.login .container {padding-top:160px; padding-bottom:190px;}
+.login .feature .greenlinebtn {width:100%; margin-top:48px;}
+.login .feature .greenbtn {width:100%; margin:16px 0px;}
+.login .feature .snsloginbox {text-align: center;}
+.login .feature .snslogin {display:inline-block;}
+.login .feature .snslogin img {width:130px;}
+.login .form-floating div{position:relative;}
+.login .form-floating span {position: absolute;color: #DE8889;top: 35%;width: 25px;height: 25px;right: 20px;}
+.login .form-floating span img {width:100%;}
+.login
+@media all and (max-width: 992px) {
+	.login .container {padding-top:100px; padding-bottom:130px;}
+	.login .feature .snslogin img {width:130px; margin-bottom:8px;}
+}
+

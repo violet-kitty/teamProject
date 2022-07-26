@@ -161,7 +161,7 @@
 				IMP.request_pay({ // param
 					pg: 'kcp',
 					pay_method: 'card',
-					merchant_uid: "ORD20180131-0000012",
+					merchant_uid: "${merchant}",
 					name: '${stayName}',
 					amount: ${res.price},
 					buyer_name: $("#name").val(),
@@ -170,23 +170,29 @@
 				    if (rsp.success) {
 				    	console.log(rsp);
 				    	
-				    	//결제된 금액이 실제 금액과 맞는지 확인
-				    	if(${res.price} == rsp.amount){
-				    		//결제된 상품의 id가 DB의 id와 일치하는지 확인
-				    		
-				    		
-				    	}
-				    	else {
-				    		alert("결제된 금액이 실제 금액과 다릅니다.");
-				    		return;
-				    	}
+				    	var resData = "merchant_uid="+rsp.merchant_uid+"&amount="+rsp.paid_amount;
+				    	
+				    	$.ajax({
+			    			url:"tradeAuth.do",
+			    			data:"merchant_uid="+rsp.merchant_uid+"&amount="+rsp.paid_amount,
+			    			type:"post",
+			    			success:function(status){
+			    				if(status=="success"){
+			    					//예약 테이블에 넣어주기
+			    					alert("예약되었습니다");
+			    					location.href='예약 페이지';
+			    					return;
+			    				}
+			    				
+			    			}
+			    		});
 				    }
 					else {
 						alert("결제에 실패했습니다. \n 에러 내용:"+rsp.error_msg);
 				    }
-				});
+				});//callback
 			}
-		}
+		}//tradeFn
 		
 	</script>
 </body>
