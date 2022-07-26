@@ -61,7 +61,8 @@ input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 #container {max-width:100%;position:relative;}
 
 /* whitebox 세팅 */
-.whitebox {position:relative; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px;}
+
+.whitebox {max-width:850px; position:relative; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px;}
 
 /* 클래스 contents 세팅 */ /* 넓이 : 100% */
 .contents {max-width:100%; margin:auto;}
