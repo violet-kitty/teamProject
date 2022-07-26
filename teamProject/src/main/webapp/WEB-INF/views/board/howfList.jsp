@@ -1,23 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
-<!doctype html>
-<html lang="ko">
+    
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HOWF 추천</title>
-<!-- jquery -->
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<!-- css -->
-<link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
+<link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
+<title>Home</title>
+
+<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Bootstrap5 AwsomeFont -->
+<script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Howf --> <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 
 <style>
 .bd-placeholder-img {
@@ -39,78 +53,86 @@
 	object-fit: cover;
 }
 </style>
+
 </head>
+
 <body>
-	<main>
-		<!-- 리스트 페이지 히어로 -->
-		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[0].filename}">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>${hero[0].title}</h1>
-							<p>${hero[0].cate}</p>
-							<p id="tagArea0"></p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[0].hbidx}">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[1].filename}">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>${hero[1].title}</h1>
-							<p>${hero[1].cate}</p>
-							<p id="tagArea1"></p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[1].hbidx}">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${hero[2].filename}">
-					<div class="container">
-						<div class="carousel-caption" style="background:rgba(0,0,0,0.3)">
-							<h1>${hero[2].title}</h1>
-							<p>${hero[2].cate}</p>
-							<p id="tagArea2"></p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="howfView.do?hbidx=${hero[2].hbidx}">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<button class="carousel-control-prev" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-		<!-- carousel end -->
+
+	<div id="wrap">
+		<!-- Header --><%@include file="../Header.jsp"%>
 		
-		<!--  -->
-		<div class="container marketing">
-			<div class="album py-5 bg-light">
-				<div class="container">
+		<!-- Side -->
+		<div class="right-container">
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-lightgray">
+
+			<!-- contents 01 -->
+			<div id="carouselExampleIndicators" class="content01 carousel slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner" id="news">
+
+					<div class="carousel-item active" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${hero[0].filename});"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">${hero[0].title}</h5>
+								<p  class="hfc-semibold hfc-pink">${hero[0].cate}</p>
+								<p class="hfc-semibold hfc-darkgray" id="tagArea0"></p>
+								<button class="greenbtn hbshadow2">자세히보기</button>
+							</div>
+
+						</div>
+					</div>
+					<div class="carousel-item active" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${hero[1].filename});"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">${hero[1].title}</h5>
+								<p  class="hfc-semibold hfc-pink">${hero[1].cate}</p>
+								<p class="hfc-semibold hfc-darkgray" id="tagArea0"></p>
+								<button class="greenbtn hbshadow2">자세히보기</button>
+							</div>
+
+						</div>
+					</div>
+					<div class="carousel-item active" data-bs-interval="3000">
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${hero[2].filename});"></div>
+						<div class="carousel-caption d-md-block">
+							<div class="captionset">
+								<h5 class="hfc-blackgray hfc-bold">${hero[2].title}</h5>
+								<p  class="hfc-semibold hfc-pink">${hero[2].cate}</p>
+								<p class="hfc-semibold hfc-darkgray" id="tagArea0"></p>
+								<button class="greenbtn hbshadow2">자세히보기</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			<!-- /content 01 -->
+
+			<!-- Nav --><%@include file="../Nav.jsp"%>
+			
+			<!-- content 01 -->
+			<div class="contents content01 hbg-lightgray">
+				<div class="container" id="featured-2">
+					<p class="title hfc-bold hfc-blackgray">행복하고 만족했던 <br class="onlymobile"> 여행리뷰를 들려주세요!</p>
+					<p class="subtitle hfc-medium hfc-darkgray">성공적인 여행을 위해 여행전 열람 필수!! <br class="onlymobile">  진정한 여행러들이 나누는 이야기와 팁을 확인하세요! <a class="hfc-pink hfc-bold">‘여행이야기’ 가기</a></p>
+					<!-- 여기서부터 -->
+
 					
 					<!-- 
 					
@@ -208,89 +230,18 @@
 						</div>
 					</div>
 
-				</div>
-			</div>
-		</div>
-		<!-- /.container -->
+		<!-- /.여기서부터 -->
+			    </div><!-- /.container -->
+		    </div>
+			<!-- / .content 01 -->
 
-		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Example headline.</h1>
-							<p>Some representative placeholder content for the first
-								slide of the carousel.</p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Another example headline.</h1>
-							<p>Some representative placeholder content for the second
-								slide of the carousel.</p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="<%=request.getContextPath()%>/image/eventTest.png">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>One more for good measure.</h1>
-							<p>Some representative placeholder content for the third
-								slide of this carousel.</p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="#">자세히 보기</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<button class="carousel-control-prev" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-		<!-- carousel end -->
+			<!-- banner --><%@include file="../banner.jsp"%>
 
-		<!-- FOOTER -->
-		<footer class="container">
-			<p class="float-end">
-				<a href="#">Back to top</a>
-			</p>
-			<p>
-				&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a>
-				&middot; <a href="#">Terms</a>
-			</p>
-		</footer>
-	</main>
+		</div><!-- / #container -->
+		
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+	</div><!-- /#wrap -->
+	
 	<script>
 		$(function(){
 			//태그 파싱
@@ -320,9 +271,6 @@
 			$("#tagArea2").text(tags);
 		});
 	</script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
+
 </body>
 </html>
