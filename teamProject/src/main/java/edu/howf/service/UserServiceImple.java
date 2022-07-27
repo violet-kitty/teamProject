@@ -8,7 +8,7 @@ import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 @Service
-public class UserServiceImple implements UserService{
+public class UserServiceImple implements UserService{ 
 	@Autowired
 	UserDao userDao;
 
@@ -54,6 +54,11 @@ public class UserServiceImple implements UserService{
 			return vo.getMidx();
 		}
 		return userDao.socialLogin(vo);
+	}
+	
+	@Override
+	public String socialType(UserVO vo) {
+		return userDao.socialType(vo);
 	}
 
 	@Override

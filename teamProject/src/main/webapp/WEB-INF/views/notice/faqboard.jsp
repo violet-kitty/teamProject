@@ -31,6 +31,7 @@
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 
 	<script type="text/javascript">
+	
 	// faq 내용 펼치기 이벤트
 	$(function(callback) {
 	$(".faq > dd").hide();
@@ -197,7 +198,7 @@ function modify(index){
   	
   		<br>
 		<button type="button" id="modify" class="modify" onclick="wmodify(${vo.fbidx})" >테스트수정</button>
-  		<button id="delfaq" onclick="del(${vo.fbidx})">삭제</button>
+  	
   		<button onclick="location.href='delfaq.do?fbidx=${vo.fbidx}'">삭제</button>
 
   		</c:if>
@@ -207,6 +208,7 @@ function modify(index){
 	</div>
 </div>
 <button id="btn2" onclick="location.href='faqwrite.do'">faq작성 </button>
+
 <!--  검색 및 페이징 -->
 <div>
 		<c:if test="${pageMaker.prev == true} ">

@@ -10,24 +10,15 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.FormSubmitEvent.MethodType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import edu.howf.service.FaqService;
 import edu.howf.vo.FaqVO;
-import edu.howf.vo.NoticeVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
@@ -73,15 +64,7 @@ public class FaqController {
 			}
 		
 	}
-	/*
-	 * @RequestMapping(value = "notice/faqmodify.do" , method = RequestMethod.GET)
-	 * public String faqmodify(HttpServletRequest request ,HttpServletResponse
-	 * response ,Model model,int fbidx ) throws Exception { FaqVO vo =
-	 * faqService.selectone(fbidx); model.addAttribute("vo",vo);
-	 * System.out.println("fbidx"+fbidx);
-	 * 
-	 * return "notice/faqmodify"; }
-	 */
+
 	//faq 수정
 	@ResponseBody
 	@RequestMapping(value = "/notice/faqmodify.do" ,method = RequestMethod.POST)
@@ -104,6 +87,7 @@ public class FaqController {
 		
 		return result;
 	}
+	
 	//faq 삭제
 	@RequestMapping(value = "/notice/delfaq.do" , method = RequestMethod.GET)
 	public String delfaq(FaqVO vo){
@@ -114,6 +98,7 @@ public class FaqController {
 		
 		return "redirect:/notice/faqboard.do";
 	}
+	
 	//리스트
 	@RequestMapping(value = "/notice/faqboard.do" ,method = {RequestMethod.GET ,RequestMethod.POST})
 	public String list(SearchVO searchVO , Model model, HttpServletRequest request ,HttpSession session) throws IOException {

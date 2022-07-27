@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.mysql.cj.util.StringUtils;
 
 import edu.howf.service.NoticeService;
 import edu.howf.util.MediaUtils;
@@ -203,7 +202,7 @@ public class NoticeController {
 		return "redirect:/notice/noticeone.do?nbidx="+vo.getNbidx();
 			
 	}
-	//널 제거한다모
+	//제거하기
 	@RequestMapping(value = "noticedelete.do", method = RequestMethod.GET)
 	public String noticedelete(int nbidx) throws Exception {
 		
@@ -212,6 +211,7 @@ public class NoticeController {
 		return "redirect:/notice/notice.do";
 	}
 	
+	//파일
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("filename") String filename,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
 		

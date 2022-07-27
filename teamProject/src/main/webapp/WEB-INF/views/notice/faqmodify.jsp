@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+
 	function check() {
 	
 		var title = $("#title");
@@ -46,6 +47,6 @@
  
     <button type="button" onclick="check()">저장</button>
 </form>
-	    <a href="notice.do">취소</a>
+	    <a href="faqbaord.do">취소</a>
 </body>
 </html>
