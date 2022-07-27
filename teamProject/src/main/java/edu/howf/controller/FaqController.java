@@ -87,6 +87,7 @@ public class FaqController {
 		
 		return result;
 	}
+	
 	//faq 삭제
 	@RequestMapping(value = "/notice/delfaq.do" , method = RequestMethod.GET)
 	public String delfaq(FaqVO vo){
@@ -97,6 +98,7 @@ public class FaqController {
 		
 		return "redirect:/notice/faqboard.do";
 	}
+	
 	//리스트
 	@RequestMapping(value = "/notice/faqboard.do" ,method = {RequestMethod.GET ,RequestMethod.POST})
 	public String list(SearchVO searchVO , Model model, HttpServletRequest request ,HttpSession session) throws IOException {
