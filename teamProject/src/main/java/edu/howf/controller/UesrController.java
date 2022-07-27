@@ -130,21 +130,29 @@ public class UesrController {
 	@ResponseBody
 	@RequestMapping(value="/socialLogin.do")
 	public String social(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
-		int midx = userService.socialLogin(vo);
+		String type = userService.socialType(vo);
+		String social = vo.getSocial();
 		
-		session.setAttribute("token", accessToken);
-		
-		String nickname = userService.nicknameSelect(vo.getEmail());
-		if(nickname == null) {
-			return vo.getMidx()+"";
+		//소셜 로그인 종류가 다르면
+		if(type.equals(social) == false) {
+			return "-1";//이메일만 같고 소셜 로그인 종류가 다를시 로그인 안되게
 		}
 		else {
-			vo.setNickname(nickname);
-			vo.setMidx(midx);
-			vo.setRole("normal");
-			session = request.getSession();
-			session.setAttribute("login", vo);
-			return "1";
+			int midx = userService.socialLogin(vo);
+			session.setAttribute("token", accessToken);
+			String nickname = userService.nicknameSelect(vo.getEmail());
+			
+			if(nickname == null) {//닉네임이 없다면(첫 로그인)
+				return midx+"";
+			}
+			else {
+				vo.setNickname(nickname);
+				vo.setMidx(midx);
+				vo.setRole("normal");
+				session = request.getSession();
+				session.setAttribute("login", vo);
+				return "0";
+			}
 		}
 	}
 	

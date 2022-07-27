@@ -59,6 +59,11 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"socialLogin", vo);
 	}
 	
+	//소셜 로그인 소셜 종류
+	public String socialType(UserVO vo) {
+		return sqlSession.selectOne(namespace+"socialType", vo);
+	}
+	
 	//이름, 닉네임 받아 이메일 반환
 	public String nameToEmail(UserVO vo) {
 		return sqlSession.selectOne(namespace+"nameToEmail", vo);

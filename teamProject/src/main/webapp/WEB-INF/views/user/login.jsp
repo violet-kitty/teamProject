@@ -203,14 +203,14 @@ var nicknameDup = false;
 						$.ajax({
 							url:"socialLogin.do",
 							type:"post",
-							data:"email="+email+"&name="+name+"&accessToken="+accessToken,
+							data:"email="+email+"&name="+name+"&accessToken="+accessToken+"&social=kakao",
 							success:function(data){
-								if(data == "0"){
+								if(data == "-1"){
 									//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
 									alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 									return;
 								}
-								else if(data == "1"){
+								else if(data == "0"){
 									//닉네임 있으면 바로 이동
 									location.href = "<%= request.getContextPath() %>/";
 								}
@@ -239,14 +239,14 @@ var nicknameDup = false;
 		$.ajax({
 			url:"socialLogin.do",
 			type:"post",
-			data:"email="+email+"&name="+name+"&accessToken="+accessToken,
+			data:"email="+email+"&name="+name+"&accessToken="+accessToken+"&social=google",
 			success:function(data){
-				if(data == "0"){
+				if(data == "-1"){
 					//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
 					alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 					return;
 				}
-				else if(data == "1"){
+				else if(data == "0"){
 					//닉네임 있으면 바로 이동
 					location.href = "<%= request.getContextPath() %>/";
 				}
@@ -258,8 +258,6 @@ var nicknameDup = false;
 				}
 			}
 		});
-	     
-	     //location.href="google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
 	}
 	
 	function parseJwt(token){
