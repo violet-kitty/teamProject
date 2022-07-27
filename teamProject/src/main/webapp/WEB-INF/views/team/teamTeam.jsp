@@ -53,12 +53,22 @@
 								<div id="show_vote_option">
 									<form id="form1">
 										<input type="hidden" name="ridx" value="${rv2.ridx}">
-										${rv2.title}
-										<br>
-										<c:forEach var="i" items="${rv2.places}">
-											<input type="radio" name="vote" value="${i}">${i}<br>
-										</c:forEach>
-										<br>
+										${rv2.title}<br>
+										<c:if test="${rv2.place1 != null }">
+											<input type="radio" name="vote" value="${rv2.place1}">${rv2.place1}<br>
+										</c:if>
+										<c:if test="${rv2.place2 != null }">
+											<input type="radio" name="vote" value="${rv2.place2}">${rv2.place2}<br>
+										</c:if>
+										<c:if test="${rv2.place3 != null }">
+											<input type="radio" name="vote" value="${rv2.place3}">${rv2.place3}<br>
+										</c:if>
+										<c:if test="${rv2.place4 != null }">
+											<input type="radio" name="vote" value="${rv2.place4}">${rv2.place4}<br>
+										</c:if>
+										<c:if test="${rv2.place5 != null }">
+											<input type="radio" name="vote" value="${rv2.place5}">${rv2.place5}<br>
+										</c:if>
 										<button type="button" onclick="insert_vote_option()">투표하기</button>
 									</form>
 									<c:if test="${login.midx == rv.midx}">
@@ -74,8 +84,8 @@
 										<div id="voteArea">
 											<form id="vote_option">
 												<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-												<input type="text" id="p1" name="places" placeholder="투표 선택지1"><br>
-												<input type="text" id="p2" name="places" placeholder="투표 선택지2"><br>
+												<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
+												<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
 											</form>
 										</div>
 										<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
@@ -109,8 +119,16 @@
 	}
 	var index = 3;
 	function add_option(){
-		$("#vote_option").append('<input type="text" id="p'+index+'" name="places" placeholder="투표 선택지'+index+'"><br>');
-		index++;
+		if(index > 5){
+			alert("선택지는 최대 5개까지만 가능합니다.");
+			return;
+		}
+		else{
+			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
+			index++;
+		}
+		
+		
 	}
 	
 	function upload_vote(){
@@ -147,9 +165,9 @@
 				
 				var html = '<br>${rv2.ridx}<br>';
 					html += '${rv2.title}<br>';
-				for(int i = 0; i < ${rv2.places.length}; i++){
+				/* for(var i = 0; i < ${rv2.places.length}; i++){
 					html += '${rv2.places['+i+']} + [ ]<br>'
-				}
+				} */
 					html += '<button type="button" onclick="revote">투표 다시하기</button>'
 				
 				
@@ -166,6 +184,7 @@
 			success: function(){
 				$("#show_vote_option").hide();
 			}
+			
 		});
 		
 	}

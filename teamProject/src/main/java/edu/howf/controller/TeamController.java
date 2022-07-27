@@ -183,7 +183,6 @@ public class TeamController {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");	
-		System.out.println(login.getMidx());
 		
 		RecommendVO rv = teamService.teamTeamView(tidx);
 		RecommendVO rv2 = teamService.vote_option(tidx);
@@ -203,13 +202,6 @@ public class TeamController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");		
 		rv.setMidx(login.getMidx());
-		
-		StringBuilder places = new StringBuilder("");
-		for(int i = 0; i < rv.getPlaces().size(); i++) {
-			places.append(rv.getPlaces().get(i)+",");
-		}
-		String added_place = places.toString();
-		rv.setPlace(added_place.substring(0, added_place.length()-1));
 		
 		teamService.upload_vote(rv);
 		

@@ -188,7 +188,11 @@
 	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
 		SELECT  midx
 				,title
-				,place
+				,place1
+				,place2
+				,place3
+				,place4
+				,place5
 				,wdate
 		FROM	recommend
 		WHERE	tidx = #{tidx}
@@ -201,7 +205,11 @@
 						tidx
 						,midx
 						,title
-						,place
+						,place1
+						,place2
+						,place3
+						,place4
+						,place5
 						,wdate
 						,delyn
 					)
@@ -209,7 +217,11 @@
 						#{tidx}
 						,#{midx}
 						,#{title}
-						,#{place}
+						,#{place1}
+						,#{place2}
+						,#{place3}
+						,#{place4}
+						,#{place5}
 						,now()
 						,'N'
 					)
@@ -234,7 +246,11 @@
 		SELECT	ridx
 				,midx
 				,title
-				,place
+				,place1
+				,place2
+				,place3
+				,place4
+				,place5
 				,wdate
 		FROM	recommend
 		WHERE	tidx = #{tidx}

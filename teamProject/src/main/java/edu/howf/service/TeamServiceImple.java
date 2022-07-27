@@ -108,17 +108,6 @@ public class TeamServiceImple implements TeamService{
 	public RecommendVO vote_option(int tidx) {
 		
 		RecommendVO vo = teamDao.vote_option(tidx);
-		if(vo != null) {
-			String[] list = vo.getPlace().split(",");
-			
-			List<String> l = new ArrayList<>();
-			
-			for(int i = 0; i < list.length; i++) {
-				System.out.println("list = " + list[i]);
-				l.add(list[i]);
-			}
-			vo.setPlaces(l);
-		}
 		
 		return vo;
 	}
