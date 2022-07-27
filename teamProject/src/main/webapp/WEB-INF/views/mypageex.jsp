@@ -41,17 +41,51 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-				<!--  
-				
-				
-				여기에 html 작성하시믄 댑니다~!
-				
-				 -->	
-				
-				</div><!-- /.container -->
+			<!-- contents 02 -->
+			<style>
+			.feature {text-align:center;}
+			.feature img {margin:auto; margin-bottom:40px;}
+			.feature p {margin-bottom: 56px;}
+			.feature h2 {margin-bottom:24px;}
+			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
+    width: auto;}
+.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
+    width: auto;}
+			</style>
+			
+			<div class="contents lbg-lightestgray">
+				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
+					<!-- 페이지 제목 -->
+						<div class="title">
+							<h1>함께하는 환경 지키미의 라이프스타일</h1>
+						</div>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
+						<div class="feature col">
+							<img src="images/m1.png" style="width:56px;">
+							<h2>Minimalism</h2>
+							<p>Paragraph of text beneath the heading to explain the
+								heading. We'll add onto it with another sentence and probably
+								just keep going until we run out of words.</p>
+							<a class="mainbtn" href="https://www.hkbs.co.kr/">자세히 보기</a>
+						</div>
+						<div class="feature col">
+							<img src="images/m2.png" style="width:56px;">
+							<h2>Zero Waste</h2>
+							<p>Paragraph of text beneath the heading to explain the
+								heading. We'll add onto it with another sentence and probably
+								just keep going until we run out of words.</p>
+							<a class="mainbtn" href="https://www.hkbs.co.kr/">자세히 보기</a>
+						</div>
+						<div class="feature col">
+							<img src="images/m3.png" style="width:56px;">
+							<h2>ECO-Friendly</h2>
+							<p>Paragraph of text beneath the heading to explain the
+								heading. We'll add onto it with another sentence and probably
+								just keep going until we run out of words.</p>
+							<a class="mainbtn" href="https://www.hkbs.co.kr/">자세히 보기</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- / .content01 -->
 

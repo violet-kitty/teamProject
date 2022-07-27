@@ -46,6 +46,9 @@
 					<div class="row">
 						<div class="col">
 							<div id="vote">
+							<div id="selected_vote_option" style="display: none">
+							
+							</div>
 							<c:if test="${rv2 != null}">
 								<div id="show_vote_option">
 									<form id="form1">
@@ -56,7 +59,7 @@
 											<input type="radio" name="vote" value="${i}">${i}<br>
 										</c:forEach>
 										<br>
-										<button type="button" onclick="select_vote_option()">투표하기</button>
+										<button type="button" onclick="insert_vote_option()">투표하기</button>
 									</form>
 									<c:if test="${login.midx == rv.midx}">
 										<button type="button" onclick="remove_vote()">투표  마감 / 삭제</button>
@@ -135,34 +138,33 @@
 		var form = $("#form1").serialize();
 		
 		$.ajax({
-			url: "insert_vote_option.do",
+			url: "insert_vote_option.do?ridx=${rv.ridx}",
 			data: form,
 			type: "post",
 			success: function(){
-				var html = '';
 				
+				$("#show_vote_option").hide();
+				
+				var html = '<br>${rv2.ridx}<br>';
+					html += '${rv2.title}<br>';
+				for(int i = 0; i < ${rv2.places.length}; i++){
+					html += '${rv2.places['+i+']} + [ ]<br>'
+				}
+					html += '<button type="button" onclick="revote">투표 다시하기</button>'
+				
+				
+				$("#selected_vote_option").html(html);
+				$("#selected_vote_option").show();
 			}
 		});
 	}
-// 	function voteFn(){
-// 		var frm = $("#frm").serialize();
-// 		$.ajax({
-// 			url: "vote.do",
-// 			data: frm,
-// 			type: "post",
-// 			success: function(){
-// 				alert("미너ㅏㅇ래미나ㅡㅇ리만을");
-// 			}
-			
-// 		});
-		
-// 	}
+
 	function remove_vote(){
 		$.ajax({
 			url: "remove_vote.do?ridx=${rv.ridx}",
 			type: "get",
 			success: function(){
-				
+				$("#show_vote_option").hide();
 			}
 		});
 		

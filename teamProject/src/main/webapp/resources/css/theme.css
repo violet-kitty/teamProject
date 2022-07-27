@@ -45,7 +45,7 @@ a {text-decoration:none;}
 
 
 /* body 세팅 */
-body {font-family: 'Noto Sans', sans-serif; max-width: 1800px;}
+body {font-family: 'Noto Sans', sans-serif; max-width: 2000px;}
 
 /* 태그 세팅 */
 p {line-height:22px;}
@@ -58,14 +58,14 @@ input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 
 
 /* 아이디 container 세팅 */  /* #header, #navmenu, #footer 제외된 container만 해당 */
-#container {max-width:100%;}
+#container {max-width:100%;position:relative;}
 
 /* whitebox 세팅 */
 
 .whitebox {max-width:850px; position:relative; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px;}
 
 /* 클래스 contents 세팅 */ /* 넓이 : 100% */
-.contents {max-width:100%; background:green;  margin:auto;}
+.contents {max-width:100%; margin:auto;}
 
 /* 클래스 container 세팅 */ /* 넓이 : 1100% */
 .container {width: 1100px; margin: auto; padding: 80px 0px; padding-bottom: 90px; position:relative;}

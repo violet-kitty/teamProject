@@ -130,9 +130,9 @@ public class TeamServiceImple implements TeamService{
 	}
 
 	@Override
-	public VoteVO selected_vote_option() {
+	public VoteVO selected_vote_option(int ridx) {
 		
-		return teamDao.selected_vote_option();
+		return teamDao.selected_vote_option(ridx);
 	}
 
 
