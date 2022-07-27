@@ -23,6 +23,7 @@ import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
+
 @Controller
 @EnableAspectJAutoProxy
 public class FaqController {
