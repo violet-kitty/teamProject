@@ -51,7 +51,8 @@ body {font-family: 'Noto Sans', sans-serif; max-width: 2000px;}
 p {line-height:22px;}
 
 /* 태그 반응 세팅 */
-input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
+input:focus {outline:none; border:none; box-shadow:none;}
+form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 
 /* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
 #wrap {max-width:100%;} 
