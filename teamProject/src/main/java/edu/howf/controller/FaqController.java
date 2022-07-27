@@ -23,7 +23,6 @@ import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
-
 @Controller
 @EnableAspectJAutoProxy
 public class FaqController {
@@ -37,7 +36,7 @@ public class FaqController {
 		return "notice/faqwrite";
 	}
 	
-	//faq 작성 테스트용 주석
+	//faq 작성
 	@RequestMapping(value = "/notice/faqwrite.do", method = RequestMethod.POST)
 	public void insertfaq(FaqVO vo, HttpServletRequest request ,HttpServletResponse response ,HttpSession session) throws IOException {
 		session = request.getSession();
