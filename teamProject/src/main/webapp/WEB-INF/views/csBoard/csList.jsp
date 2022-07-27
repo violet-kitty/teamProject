@@ -95,7 +95,7 @@ a{
 		<h3>1:1 문의 게시판</h3>
 	</div>
 	<div style="text-align:right;">
-		<button onclick="location.href='../notice/faqboard.do'" >공 지 사 항</button>
+		<button onclick="location.href='../notice/notice.do'" >공 지 사 항</button>
 	</div>
 	<br><br>
 	<c:if test="${login != null }">
