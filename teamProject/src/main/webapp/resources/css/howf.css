@@ -50,3 +50,117 @@
 }
 
 /* list */
+
+.clist .searchinfo{    padding: 16px;
+    margin: 0px 12px;
+    text-align:center;
+    border: 2px solid #ededed;}
+.clist .thumbnailitem {padding:16px; padding-bottom:32px; border:none}
+
+.clist .imgarea {}
+.clist .thumbnailimg {width:100%;}
+.clist .thumbnailitem a thumbnailimg:hover {overflow:hidden;}
+
+.clist .writerinfo p {color:#3D3D3D; font: normal normal bold 13px/19px Noto Sans; letter-spacing: 0.52px; margin:16px 0px 8px 0px;}
+.clist .writerinfo p span {color:#3D3D3D; font: normal normal 13px/19px Noto Sans; letter-spacing: 0.52px; margin:16px 0px 8px 0px;}
+
+.clist .caption h4 {	text-overflow:ellipsis; overflow:hidden;
+	white-space:normal; height: 2.8em; color:#3D3D3D; font: normal normal bold 24px/34px Noto Sans;}
+
+/* grid */
+.clist .grid figure {
+	position: relative; overflow: hidden; width: 100%; max-height: 240px;
+	height: auto; background: #3085a3; cursor: pointer;
+}
+.clist .grid figure img {
+	position: relative; display: block;
+	opacity: 0.8;
+	}
+.clist .grid figure figcaption {
+	padding: 2em; color: #fff; text-transform: uppercase; font-size: 1.25em;
+	-webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+.clist .grid figure figcaption::before, .grid figure figcaption::after {
+	pointer-events: none;
+}
+.clist .grid figure figcaption, .grid figure figcaption>a {
+	position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* figure */
+.clist .grid figure figcaption>a {
+	z-index: 1000; text-indent: 200%; white-space: nowrap; font-size: 0;
+	opacity: 0;
+}
+.clist .grid figure h2 {
+	word-spacing: -0.15em; font-weight: 800;
+}
+.clist .grid figure h2, .grid figure p {
+	margin: 0;
+}
+.clist .grid figure p {
+	letter-spacing: 1px; font-size: 68.5%;
+}
+
+/* 이미지 */
+.clist .effect-ming img{
+	height:250px;
+}
+/* thumbnail hover effect */
+.clist figure.effect-ming {
+	background: #030c17;
+}
+.clist figure.effect-ming img {
+	opacity: 0.9; -webkit-transition: opacity 0.35s;
+	transition: opacity 0.35s;
+}
+.clist figure.effect-ming figcaption::before {
+	position: absolute; top: 30px; right: 30px; bottom: 30px; left: 30px;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.2); content: '';
+	opacity: 0; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale3d(1.4, 1.4, 1);
+	transform: scale3d(1.4, 1.4, 1);
+}
+.clist figure.effect-ming h2 {
+	margin: 20% 0 10px 0; -webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	font: normal normal bold 24px/34px Noto Sans;
+}
+.clist figure.effect-ming p {
+	text-align: justify; padding: 1em; opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale(1.5); transform: scale(1.5);
+	text-overflow: ellipsis; overflow: hidden; white-space: normal;
+	height: 92%;
+}
+.clist figure.effect-ming p span {
+	text-align: left; font-size: 1.2em; font-weight: 700;
+}
+.clist .thumbnail:hover figure.effect-ming h2 {
+	-webkit-transform: scale(0.9); transform: scale(0.9);
+}
+.clist .thumbnail:hover figure.effect-ming figcaption::before, .thumbnail:hover figure.effect-ming p
+	{
+	opacity: 1; -webkit-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+}
+.clist .thumbnail:hover figure.effect-ming figcaption {
+	background-color: rgba(58, 52, 42, 0.8);
+}
+.clist .thumbnail:hover img {
+	opacity: 0.4;
+}
+
+/* Media queries */
+@media screen and (max-width: 50em) {
+	.clist .grid figure {
+		display: inline-block; float: none; margin: 10px auto; width: 100%;
+	}
+}
+
+*, *:after, *:before {
+	-webkit-box-sizing: border-box; box-sizing: border-box;
+}
