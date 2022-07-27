@@ -145,6 +145,7 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
 <script>
 $(function(){
 	$("#summernote").summernote({
