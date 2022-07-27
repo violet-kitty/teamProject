@@ -231,8 +231,6 @@ public class TeamController {
 		UserVO login = (UserVO)session.getAttribute("login");		
 		vv.setMidx(login.getMidx());
 		
-
-		
 		return teamService.vote(vv);
 	}
 	

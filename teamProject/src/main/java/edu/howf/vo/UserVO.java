@@ -13,6 +13,7 @@ public class UserVO {
 	private String role;		//회원종류(일반회원, 사업자, 관리자)
 	private String img;			//프로필사진
 	private String document;	//사업자일시 사업자 등록증
+	private String social;		//소셜 로그인 종류
 	private String joinyn;		//가입 승인 여부
 	private String delyn;		//탈퇴 여부
 	
@@ -61,7 +62,7 @@ public class UserVO {
 	public String getDetailaddr() {
 		return detailaddr;
 	}
-	public void setDetailAddr(String detailaddr) {
+	public void setDetailaddr(String detailaddr) {
 		this.detailaddr = detailaddr;
 	}
 	public String getJumin() {
@@ -87,6 +88,12 @@ public class UserVO {
 	}
 	public void setDocument(String document) {
 		this.document = document;
+	}
+	public String getSocial() {
+		return social;
+	}
+	public void setSocial(String social) {
+		this.social = social;
 	}
 	public String getJoinyn() {
 		return joinyn;
