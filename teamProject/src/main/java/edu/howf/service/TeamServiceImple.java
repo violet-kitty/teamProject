@@ -105,12 +105,6 @@ public class TeamServiceImple implements TeamService{
 	}
 
 	@Override
-	public int vote(VoteVO vv) {
-		
-		return teamDao.vote(vv);
-	}
-
-	@Override
 	public RecommendVO vote_option(int tidx) {
 		
 		RecommendVO vo = teamDao.vote_option(tidx);
@@ -129,9 +123,16 @@ public class TeamServiceImple implements TeamService{
 		return vo;
 	}
 	
-	public int select_vote_option(int ridx) {
+	@Override
+	public int insert_vote_option(VoteVO vv) {
 		
-		return teamDao.select_vote_option(ridx);
+		return teamDao.insert_vote_option(vv);
+	}
+
+	@Override
+	public VoteVO selected_vote_option() {
+		
+		return teamDao.selected_vote_option();
 	}
 
 

@@ -198,16 +198,16 @@
 	<insert id="upload_vote" parameterType="recommendVO">
 		<![CDATA[
 		INSERT INTO recommend(
-						midx
-						,tidx
+						tidx
+						,midx
 						,title
 						,place
 						,wdate
 						,delyn
 					)
 		VALUES		(
-						#{midx}
-						,#{tidx}
+						#{tidx}
+						,#{midx}
 						,#{title}
 						,#{place}
 						,now()
@@ -225,23 +225,14 @@
 		WHERE	ridx = #{ridx}
 	</update>
 	
-	<insert id="vote" parameterType="voteVO">
-		INSERT INTO vote(
-						ridx
-						,midx
-						,vote
-						,wdate
-					)
-		VALUES		(
-						#{ridx}
-						,#{midx}
-						,#{vote}
-						,now()
-					)
-	</insert>
+	<delete id="remove_voted" parameterType="int">
+		DELETE FROM vote
+		WHERE		ridx = #{ridx}
+	</delete>
 	
 	<select id="vote_option" parameterType="int" resultType="recommendVO">
-		SELECT	midx
+		SELECT	ridx
+				,midx
 				,title
 				,place
 				,wdate
@@ -250,7 +241,7 @@
 		AND		delyn = 'N'
 	</select>
 	
-	<insert id="select_vote_option" parameterType="recommendVO">
+	<insert id="insert_vote_option" parameterType="VoteVO">
 		INSERT INTO vote(
 						ridx
 						,midx
@@ -264,6 +255,10 @@
 						,now()
 					)
 	</insert>
+	
+<!-- 	<select id="selected_vote_option"> -->
+		
+<!-- 	</select> -->
 
 
 </mapper>

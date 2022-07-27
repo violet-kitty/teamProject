@@ -38,11 +38,11 @@ public interface TeamService {
 	
 	public int remove_vote(int ridx);
 	
-	public int vote(VoteVO vv);
-	
 	public RecommendVO vote_option(int tidx);
 	
-	public int select_vote_option(int ridx);
+	public int insert_vote_option(VoteVO vv);
+	
+	public VoteVO selected_vote_option();
 
 
 }

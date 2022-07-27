@@ -26,21 +26,6 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<script>
-	function voteFn(){
-		var frm = $("#frm").serialize();
-		$.ajax({
-			url: "vote.do",
-			data: frm,
-			type: "post",
-			success: function(){
-				alert("미너ㅏㅇ래미나ㅡㅇ리만을");
-			}
-			
-		});
-		
-	}
-</script>
 </head>
 <body>
 	<div id="wrap">
@@ -71,22 +56,27 @@
 											<input type="radio" name="vote" value="${i}">${i}<br>
 										</c:forEach>
 										<br>
-										<button onclick="select_vote_option()">투표하기</button>
+										<button type="button" onclick="select_vote_option()">투표하기</button>
 									</form>
+									<c:if test="${login.midx == rv.midx}">
+										<button type="button" onclick="remove_vote()">투표  마감 / 삭제</button>
+									</c:if>
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
-								<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
-								<div id="display" style="display:none">
-									<button onclick="add_option()" class="h-auto">선택지 추가</button>
-									<div id="voteArea">
-										<form id="vote_option">
-											<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-											<input type="text" id="p1" name="places" placeholder="투표 선택지1"><br>
-											<input type="text" id="p2" name="places" placeholder="투표 선택지2"><br>
-										</form>
+								<div id="div_create_vote">
+									<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
+									<div id="display" style="display:none">
+										<button onclick="add_option()" class="h-auto">선택지 추가</button>
+										<div id="voteArea">
+											<form id="vote_option">
+												<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
+												<input type="text" id="p1" name="places" placeholder="투표 선택지1"><br>
+												<input type="text" id="p2" name="places" placeholder="투표 선택지2"><br>
+											</form>
+										</div>
+										<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 									</div>
-									<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 								</div>
 							</c:if>
 							</div>
@@ -129,21 +119,23 @@
 			data: frm+"&tidx=${tidx}",
 			type: "post",
 			success: function(ridx){
-				var html = '<c:if test="${login.midx == rv.midx}"><button type="button" onclick="remove_vote()">투표 마감 / 삭제</button></c:if>'
-
-				$("#show_vote_option").append(html);
+				
+				$("#div_create_vote").hide();
+				
+				location.reload();
+				
 			}
 			
 		});
 		
 	}
 	
-	function select_vote_option(){
+	function insert_vote_option(){
 		
 		var form = $("#form1").serialize();
 		
 		$.ajax({
-			url: "select_vote_option.do?",
+			url: "insert_vote_option.do",
 			data: form,
 			type: "post",
 			success: function(){
@@ -152,7 +144,19 @@
 			}
 		});
 	}
-	
+// 	function voteFn(){
+// 		var frm = $("#frm").serialize();
+// 		$.ajax({
+// 			url: "vote.do",
+// 			data: frm,
+// 			type: "post",
+// 			success: function(){
+// 				alert("미너ㅏㅇ래미나ㅡㅇ리만을");
+// 			}
+			
+// 		});
+		
+// 	}
 	function remove_vote(){
 		$.ajax({
 			url: "remove_vote.do?ridx=${rv.ridx}",
