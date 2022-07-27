@@ -74,7 +74,7 @@
 								<input type="text" name="name" id="name" placeholder="체크인시 필요한 정보입니다"><br>
 								휴대폰 번호<br>
 								<!-- 10~11개 숫자만 받기 -->
-								<input type="text" name="phone" id="phone" placeholder="숫자만 입력해 주세요">
+								<input type="text" name="phone" id="phone" placeholder="숫자만 입력해 주세요" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');" size="11">
 								<button type="button" onclick="authFn()">인증번호 전송</button><br>
 								<span id="txt"></span><br>
 								<input type="text" name="auth" id="auth" placeholder="인증번호 입력">
