@@ -145,7 +145,7 @@ public class UesrController {
 			if(nickname == null) {//닉네임이 없다면(첫 로그인)
 				return midx+"";
 			}
-			else {
+			else {//닉네임이 존재하면
 				vo.setNickname(nickname);
 				vo.setMidx(midx);
 				vo.setRole("normal");
