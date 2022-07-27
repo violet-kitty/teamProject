@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+
 	function check() {
 	
 		var title = $("#title");

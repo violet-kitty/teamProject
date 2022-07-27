@@ -1,82 +1,52 @@
 @charset "UTF-8";
 @import "reset.css";
 
-/* Carousel base class */
-.carousel {
-  margin-bottom: 4rem;
+/* hero */
+.howflist .hero .carousel-inner {position: relative; width: 100%;height: 465px;overflow: hidden;}
+.howflist .hero .carousel-item {position:relative; height:465px;}
+.howflist .hero .carousel-caption {width: 100%;height: 100%;right: 0%;bottom: 0%;left: 0%;padding-top: 0;padding-bottom: 0;color: #fff;text-align: center;}
+.howflist .hero .carousel-control-next-icon {background-image: none;}
+.howflist .hero .carousel-control-prev-icon {background-image: none;}
+.howflist .hero .carousel-caption h5 {font-size:2rem; margin-bottom:25px; line-height:45px; text-overflow: ellipsis;overflow: hidden;word-break: break-word;display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.howflist .hero .carousel-caption p {font-size: 16px; line-height:22px; margin-bottom:32px;text-overflow: ellipsis;overflow: hidden;word-break: break-word;display: -webkit-box; -webkit-line-clamp: 2;-webkit-box-orient: vertical;} 
+.howflist .hero .captionset {background:rgba(255,255,255,0.8); padding:65px; margin:auto; max-width:410px; vertical-align:middle; margin-top:8vh;}
+.howflist .hero .imgset { width: 100%; height: 100%; background-size: cover;background-position: center 50%; background-repeat: no-repeat;}
+@media all and (max-width: 768px) {
+	.howflist .hero .carousel-inner{height:70vh;}
+	.howflist .hero .carousel-item {height:70vh;}
+	.howflist .hero .captionset {margin-top:10vh;}
 }
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  bottom: 3rem;
-  z-index: 10;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel-item {
-  height: 32rem;
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 32rem;
-}
-
-
-/* MARKETING CONTENT
--------------------------------------------------- */
-
-/* Center align the text within the three columns below the carousel */
-.marketing .col-lg-4 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.marketing h2 {
-  font-weight: 400;
-}
-/* rtl:begin:ignore */
-.marketing .col-lg-4 p {
-  margin-right: .75rem;
-  margin-left: .75rem;
-}
-/* rtl:end:ignore */
-
-
-/* Featurettes
-------------------------- */
-
-.featurette-divider {
-  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
-}
-
-/* Thin out the marketing headings */
-.featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  /* rtl:remove */
-  letter-spacing: -.05rem;
+@media all and (max-width: 576px) {
+	.hero .carousel-inner{height:60vh;}
+	.hero .carousel-item {height:60vh;}
+	.hero .carousel-caption h5 {font-size:1.8rem; line-height:40px;}
+	.hero .captionset {padding:32px;}
+	.hero .captionset {max-width: 87vw; margin: auto; margin-top:10vh; }
 }
 
 
-/* RESPONSIVE CSS
--------------------------------------------------- */
+/* pagehead & search */
+.howflist .pagehead .pageinfo {display:inline-block;width:100%; padding:0px 12px; margin-bottom:50px;}
+.howflist .pagehead .title {margin-top:36px; float:left; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
+.howflist .pagehead .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
+.howflist .pagehead .rightbox {text-align:right;}
+.howflist .pagehead .search {position:relative;float:right;display: inline-block;box-sizing: border-box;text-align: center;}
+.howflist .pagehead .search input[type=text] {width:400px; height:48px; padding:10px;border:2px solid #3E3E3E;margin-left:-4px;}
+.howflist .pagehead .search select {cursor:pointer;border: 3.2px solid #3E3E3E;background-color: #3E3E3E;padding: 10px;color: white;}
+.howflist .pagehead .search input[type=submit] {
+	color: white; position: absolute; top: 0px; right: 0px;
+	margin-left: -5px; height: 48px; background: #3E3E3E; padding: 10px;
+	border: 2px solid #3E3E3E; margin-left: -5px;
+}
+.howflist .pagehead .filterbtn button{color:#9B9B9B; font-size:12px;font-weight:600; padding: 8px 24px 8px 24px; margin:8px 4px; border:2px solid #9B9B9B; background-color:white;}
 
-@media (min-width: 40em) {
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-
-  .featurette-heading {
-    font-size: 50px;
-  }
+@media all and (max-width: 992px) {
+	.howflist .pagehead .pageinfo{padding:0px;}
+	.howflist .pagehead .title{float:none; display:block;}
+	.howflist .pagehead .search{float:none;  display:block;}
+	.howflist .pagehead .search select {width:100%}
+	.howflist .pagehead .search input[type=text] {width:100%;margin-left:0;}
+	.howflist .pagehead .search input[type=button] {opacity:0;}
 }
 
-@media (min-width: 62em) {
-  .featurette-heading {
-    margin-top: 7rem;
-  }
-}
+/* list */

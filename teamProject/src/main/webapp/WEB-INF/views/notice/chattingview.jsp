@@ -17,6 +17,7 @@
 </head>
 <body>
 
+
 		<h1>Chatting Page (id: ${login.nickname})</h1>
 <div class="container">
 	<div class="col-6">

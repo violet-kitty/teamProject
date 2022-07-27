@@ -28,6 +28,7 @@
 
 <!-- 유효성 -->
 <script type="text/javascript">
+
  	function check() {
 		
 		var title = $("#title");

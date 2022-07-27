@@ -31,6 +31,7 @@
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 
 	<script type="text/javascript">
+	
 	// faq 내용 펼치기 이벤트
 	$(function(callback) {
 	$(".faq > dd").hide();
