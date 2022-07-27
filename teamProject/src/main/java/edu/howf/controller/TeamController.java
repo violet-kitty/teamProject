@@ -224,22 +224,17 @@ public class TeamController {
 	}
 	
 	@ResponseBody
-	@PostMapping("vote.do")
-	public int vote(VoteVO vv, HttpServletRequest request, HttpSession session) {
+	@PostMapping("insert_vote_option.do")
+	public int insert_vote_option(VoteVO vv, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");		
 		vv.setMidx(login.getMidx());
 		
-		return teamService.vote(vv);
+		return teamService.insert_vote_option(vv);
 	}
 	
-	@ResponseBody
-	@PostMapping("select_vote_option.do")
-	public int select_vote_option(int ridx) {
-		
-		return teamService.select_vote_option(ridx);
-	}
+	
 	
 	
 
