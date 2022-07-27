@@ -139,7 +139,7 @@
 			data: form,
 			type: "post",
 			success: function(){
-				
+				var html = '';
 				
 			}
 		});
