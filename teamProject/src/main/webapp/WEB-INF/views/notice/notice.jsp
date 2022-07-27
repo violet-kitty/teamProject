@@ -59,6 +59,7 @@
 
 <div>
 
+
 <h1>공지사항</h1>
 <br><p>현재 ${login.nickname}으로 로그인 됨</p>
 </div>

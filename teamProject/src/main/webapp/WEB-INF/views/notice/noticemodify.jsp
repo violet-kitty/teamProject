@@ -103,7 +103,6 @@
 		<input type="reset" value="다시작성">
     </form>
     
-
 <button id="btn1" onclick="location.href='notice.do'"> 리스트</button><br>
 
 				</div><!-- /.container -->

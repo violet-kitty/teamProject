@@ -147,6 +147,7 @@
 	</div><!-- /#wrap -->
 	
 <script>
+
 $(function(){
 	$("#summernote").summernote({
 		height:300,
