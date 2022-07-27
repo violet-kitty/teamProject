@@ -24,8 +24,9 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 
+
+<!-- 유효성 -->
 <script type="text/javascript">
  	function check() {
 		
@@ -62,6 +63,7 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
+				
 <!-- 본문 -->
 <form id="form" action="faqwrite.do" method="post" enctype="multipart/form-data">
 <table>

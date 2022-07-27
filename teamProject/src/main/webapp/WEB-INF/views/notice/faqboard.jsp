@@ -207,6 +207,7 @@ function modify(index){
 	</div>
 </div>
 <button id="btn2" onclick="location.href='faqwrite.do'">faq작성 </button>
+
 <!--  검색 및 페이징 -->
 <div>
 		<c:if test="${pageMaker.prev == true} ">

@@ -63,6 +63,8 @@
 <h1>공지사항</h1>
 <br><p>현재 ${login.nickname}으로 로그인 됨</p>
 </div>
+
+<!-- 검색 -->
 <form method="get" action="notice.do">
 		<select name="searchType">
 			<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
@@ -104,6 +106,8 @@
 		</c:if>
 	</tbody>
 </table>
+
+<!-- 페이징  -->
 <div>
 		<c:if test="${pageMaker.prev == true} ">
 			<a href="notice.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">이전</a>

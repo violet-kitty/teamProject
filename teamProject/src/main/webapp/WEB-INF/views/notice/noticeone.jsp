@@ -47,7 +47,7 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-
+<!--  본문  -->
 <table border="1">
 
 		<tbody>
@@ -87,6 +87,7 @@
 		</tbody>
 	
 	</table>
+	
 	<c:if test="${login == null }">
 		<a href="notice.do">목록으로</a>
 		<a href="../user/login.do">로그인하려가기</a>
@@ -97,7 +98,7 @@
 	</c:if>
 	
 	<button id="btn1" onclick="location.href='notice.do'"> 리스트</button><br>
-	<a href="../user/login.do">로그인하려가기</a><br>
+	<button id="btn1" onclick="location.href='../user/login.do'">로그인하려가기</button><br>
 					</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
