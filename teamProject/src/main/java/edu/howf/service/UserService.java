@@ -3,7 +3,7 @@ package edu.howf.service;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
-public interface UserService {
+public interface UserService { 
 	public int emailDup(String email);
 	public String emailDupPwd(String email);
 	public int nicknameDup(String nickname);

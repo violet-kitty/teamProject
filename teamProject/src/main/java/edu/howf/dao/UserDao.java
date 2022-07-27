@@ -8,7 +8,7 @@ import edu.howf.vo.AutoVO;
 import edu.howf.vo.UserVO;
 
 @Repository
-public class UserDao {
+public class UserDao { 
 	@Autowired
 	SqlSession sqlSession;
 	

@@ -181,5 +181,4 @@
 		 FROM usertable
 		 WHERE midx = #{midx}
 	</select>
-	
 </mapper>
