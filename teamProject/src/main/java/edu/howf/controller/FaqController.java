@@ -37,7 +37,7 @@ public class FaqController {
 		return "notice/faqwrite";
 	}
 	
-	//faq 작성
+	//faq 작성 테스트용 주석
 	@RequestMapping(value = "/notice/faqwrite.do", method = RequestMethod.POST)
 	public void insertfaq(FaqVO vo, HttpServletRequest request ,HttpServletResponse response ,HttpSession session) throws IOException {
 		session = request.getSession();
