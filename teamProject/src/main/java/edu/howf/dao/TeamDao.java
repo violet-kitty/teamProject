@@ -106,7 +106,7 @@ public class TeamDao {
 	
 	public VoteVO selected_vote_option() {
 		
-		return sqlSession.select(namespace + "selected_vote_option");
+		return sqlSession.selectOne(namespace + "selected_vote_option");
 	}
 
 	
