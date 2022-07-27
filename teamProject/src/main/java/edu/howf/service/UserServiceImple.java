@@ -18,6 +18,11 @@ public class UserServiceImple implements UserService{
 	}
 	
 	@Override
+	public String emailDupPwd(String email) {
+		return userDao.emailDupPwd(email);
+	}
+	
+	@Override
 	public int nicknameDup(String nickname) {
 		return userDao.nicknameDup(nickname);
 	}
@@ -45,7 +50,8 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int socialLogin(UserVO vo) {
 		if(userDao.emailDup(vo.getEmail())==0) {
-			return userDao.socialInsert(vo);
+			userDao.socialInsert(vo);
+			return vo.getMidx();
 		}
 		return userDao.socialLogin(vo);
 	}

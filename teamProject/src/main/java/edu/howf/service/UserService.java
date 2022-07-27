@@ -5,6 +5,7 @@ import edu.howf.vo.UserVO;
 
 public interface UserService {
 	public int emailDup(String email);
+	public String emailDupPwd(String email);
 	public int nicknameDup(String nickname);
 	public int nicknameInsert(UserVO vo);
 	public String nicknameSelect(String email);

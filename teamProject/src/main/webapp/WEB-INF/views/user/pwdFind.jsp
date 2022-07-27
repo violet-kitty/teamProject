@@ -144,7 +144,12 @@ var nicknameDup = false;
 						data : "email=" + email.val(),
 						type : "post",
 						success : function(data) {
-							if (data == 0) {
+							if(data == -1){
+								alert("소셜 회원입니다. 소셜 로그인을 해주세요.");
+								location.href='login.do';
+								return;
+							}
+							else if (data == 0) {
 								alert("일치하는 회원이 없습니다");
 								return;
 							} else {

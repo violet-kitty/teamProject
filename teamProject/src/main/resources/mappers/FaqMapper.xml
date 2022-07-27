@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="edu.howf.mapper.faqMapper">
+  
+  <insert id="insertfaq" parameterType="faqVO">
+		INSERT INTO faqboard(
+					title
+					,content
+					,midx
+					,wdate
+					,cnt
+					,delyn
+		)VALUES(
+					#{title}
+					,#{content}
+					,#{midx}
+					,now()
+					,#{cnt}
+					,'N'
+		)  
+		
+  </insert>
+  
+<select id="selectAll" resultType="faqVO" parameterType="searchVO">
+			select	 n.fbidx
+					,n.title
+					,n.content
+					,n.wdate
+					,n.cnt
+					,u.email
+					,u.name
+			FROM faqboard n , usertable u
+			WHERE n.midx = u.midx
+			AND 	n.delyn = 'N'
+			<if test='searchType != null and searchType.equals("title")'>
+		 	 AND n.title like concat('%',#{searchValue},'%')
+		 	</if>
+			 <if test='searchType != null and searchType.equals("contentWriter")'>
+		  	 AND n.content like concat('%',#{searchValue},'%')
+		   	 OR u.name like concat('%',#{searchType},'%')
+			 </if>
+
+			 
+			LIMIT #{page}, #{perPageNum}
+	</select>
+	
+<select id="selectone" resultType="int" parameterType="faqVO">
+	SELECT	n.fbidx
+			,n.title
+			,n.content
+			,n.wdate
+			,n.cnt
+			,u.email
+			,u.name
+	FROM faqboard n , usertable u
+	WHERE n.midx = u.midx
+	AND		n.fbidx = #{n.fbidx}
+</select>
+	
+<select id="pagecount" resultType="int" parameterType="faqVO">
+			
+			SELECT	count(n.fbidx)		
+			FROM	faqboard n , usertable u
+			WHERE	n.midx = u.midx
+			AND		n.delyn = 'N'
+	
+		<if test='searchType != null and searchType.equals("title")'>
+		 	 AND n.title like concat('%',#{searchValue},'%')
+		 	</if>
+			 <if test='searchType != null and searchType.equals("contentWriter")'>
+		  	 AND n.content like concat('%',#{searchValue},'%')
+		   	 OR u.name like concat('%',#{searchType},'%')
+			 </if>
+	 
+</select>
+
+<update id="faqmodify" parameterType="faqVO">
+			update faqboard
+			SET title = #{title}
+				,content = #{content}
+				,wdate = now()
+				 
+			WHERE fbidx = #{fbidx}
+</update>
+
+
+	<update id="delfaq" parameterType="faqVO">
+			update faqboard
+			SET delyn = 'Y'
+			WHERE fbidx = #{fbidx}
+	</update>
+
+  </mapper>

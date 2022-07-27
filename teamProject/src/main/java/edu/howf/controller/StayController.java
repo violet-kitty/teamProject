@@ -405,6 +405,11 @@ public class StayController {
 		model.addAttribute("stayName", stayName);
 		model.addAttribute("res", res);
 		
+		//상품 id(다른것과 id가 겹치면 중복된 결제건이라고 결제가 되지 않음)
+		Calendar cal = Calendar.getInstance();
+		String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
+		model.addAttribute("merchant", merchant);
+		
 		return "stay/stayReservation";
 	}
 	
@@ -445,15 +450,15 @@ public class StayController {
 		return authNum;
 	}
 	
-	//결제 검증(결제번호, 가격)
+	//결제 검증, 예약
 	@ResponseBody
 	@RequestMapping(value="/tradeAuth.do")
-	public int tradeAuth(String imp_uid, String merchant_uid) {
-		
-		return 1;
+	public String tradeAuth(String merchant_uid, String amount) {
+		System.out.println("merchant:"+merchant_uid);
+		System.out.println("amount:"+amount);
+		return "success";
 	}
 	
-	//예약
 	
 	
 	

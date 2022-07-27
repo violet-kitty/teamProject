@@ -27,8 +27,6 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="729086770108-hbv4086knp5tl5r8l77jjk01gbe4e7nd.apps.googleusercontent.com">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<!-- 네이버 로그인 -->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
@@ -57,6 +55,8 @@ var nicknameDup = false;
 							<p class="text-muted">HOWF에서 사용하실 닉네임을 입력해주세요</p>
 							<div>
 								<input type="text" name="nickname" id="nickname" placeholder="닉네임 입력"><span id="nicknameTxt"></span>
+								<input type="hidden" name="email" id="emailHidden">
+								<input type="hidden" name="midx" id="midxHidden">
 							</div>
 							<p class="hfc-pink">최초 닉네임 설정 이후, 닉네임을 변경하실 수 없습니다.</p>
 						</div>
@@ -85,9 +85,9 @@ var nicknameDup = false;
 						<h2 class="hfc-bold">로그인</h2>
 						<div class="row row-cols-1 row-cols-lg-2">
 							<div class="feature col">
-								<p class="subtitle">기억이 않나나요?</p><br class="onlymobile"> <a href="emailFind.do">이메일 찾기</a> & <a href="pwdFind.do">비밀번호 찾기</a>
+								<p class="subtitle">기억이 안나나요?</p><br class="onlymobile"> <a href="emailFind.do">이메일 찾기</a> & <a href="pwdFind.do">비밀번호 찾기</a>
 								<!-- form -->
-								<form name="frm">
+								<form id="frm">
 									<table border="1">
 										<tr class="col1">
 											<td colspan="2"><input type="email" name="email" id="email" placeholder="이메일"></td>
@@ -125,7 +125,7 @@ var nicknameDup = false;
 							</div>
 							<div class="feature col">
 								<lottie-player src="https://assets5.lottiefiles.com/packages/lf20_1t8na1gy.json"  background="transparent"  speed="1"  style="width: auto; height:auto;"  loop autoplay></lottie-player>
-								<div class="joinguard semibold">리피의 새로운 회원이 되어보세요!</div>
+								<div class="joinguard semibold">HOWF의 새로운 회원이 되어보세요!</div>
 									<a href="<%=request.getContextPath()%>/user/joinSelect.do"><button class="pinkbtn w-100">회원가입하기</button></a>
 							</div>
 						</div><!-- /.row -->
@@ -167,7 +167,13 @@ var nicknameDup = false;
 						alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
 					}
 					else if(data == "FAIL"){
-						alert("존재하지 않는 회원이거나 아이디 혹은 비밀번호가 다릅니다.");
+						alert("아이디 혹은 비밀번호가 다릅니다.");
+					}
+					else if(data == "FAIL2"){
+						alert("존재하지 않는 회원입니다.");
+					}
+					else if(data == "SOCIAL"){
+						alert("소셜 회원입니다. 소셜 로그인을 해주세요.")
 					}
 					else {
 						location.href = "<%= request.getContextPath() %>/";
@@ -200,22 +206,27 @@ var nicknameDup = false;
 							data:"email="+email+"&name="+name+"&accessToken="+accessToken,
 							success:function(data){
 								if(data == "0"){
-									//모달 띄우기
-									$("#modalDiv").show();
+									//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
+									alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+									return;
 								}
-								else {
+								else if(data == "1"){
 									//닉네임 있으면 바로 이동
 									location.href = "<%= request.getContextPath() %>/";
 								}
+								else {//닉네임이 존재하지 않는 경우(첫 소셜 로그인)
+									$("#midxHidden").val(data);
+									$("#emailHidden").val(email);
+									//모달 띄우기
+									$("#modalDiv").show();
+								}
 							}
 						});
-						
-						//location.href = "kakao.do?email=" + email + "&name=" + name + "&accessToken=" + accessToken;
 					}
 				});
 			}
 		});
-	}
+	}//카카오 로그인
 
 	//구글 로그인을 위한 코드
 	function handleCredentialResponse(response) {
@@ -231,17 +242,26 @@ var nicknameDup = false;
 			data:"email="+email+"&name="+name+"&accessToken="+accessToken,
 			success:function(data){
 				if(data == "0"){
+					//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
+					alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+					return;
+				}
+				else if(data == "1"){
+					//닉네임 있으면 바로 이동
+					location.href = "<%= request.getContextPath() %>/";
+				}
+				else {//닉네임이 존재하지 않는 경우(첫 소셜 로그인)
+					$("#midxHidden").val(data);
+					$("#emailHidden").val(email);
 					//모달 띄우기
 					$("#modalDiv").show();
-				}
-				else {
-					location.href = "<%= request.getContextPath() %>/";
 				}
 			}
 		});
 	     
 	     //location.href="google.do?name="+responsePayload.name+"&email="+responsePayload.email+"&accessToken="+response.credential;
 	}
+	
 	function parseJwt(token){
 		var base64Url = token.split('.')[1];
 		var base64 = base64Url.replace(/-/g, '+').replace(/_/g,'/');
@@ -262,7 +282,7 @@ var nicknameDup = false;
 		} // customization attributes
 		);
 		google.accounts.id.prompt(); // also display the One Tap dialog
-	}
+	}//구글 로그인
 	
 	//닉네임 입력시 중복 체크
 	$(function(){
