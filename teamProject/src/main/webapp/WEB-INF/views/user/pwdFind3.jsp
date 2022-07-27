@@ -37,23 +37,6 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
 
-<script>
-	var getCookie = function(name){
-		var value = document.cookie.match('(^|;)?'+name+'=([^;]*)(;|$)');
-		return value? value[2] : null;
-	}
-	function authCheck(){
-		var cookie = getCookie("authNum");	//쿠키에 저장된 인증 번호 가져오기
-		var input = $("#code").val();//입력된 값 가져오기
-		if(cookie == input){
-			location.href="pwdFindComplete.do?email=${email}";
-		}
-		else {
-			alert("인증번호가 일치하지 않습니다");
-		}
-	}
-</script>
-
 </head>
 <body>
 
@@ -82,7 +65,8 @@
 										<tr class="col2">
 											<td><input type="password" id="password" name="password" placeholder="새 비밀번호"><br>
 											<span id="pwdTxt"></span></td>
-											<td><input type="password" id="passwordOk" name="passwordOk" placeholder="비밀번호 확인"><br>
+											<td><input type="password" id="passwordOk" placeholder="비밀번호 확인"><br>
+											<input type="hidden" name="email" value="${email}">
 											<span id="pwdOkTxt"></span></td>
 										</tr>
 									</table>
@@ -151,7 +135,7 @@
 
 	function inputCheck(){
 		var pwd = $("#password");
-		var pwdOK = $("#passwordOK");
+		var pwdOK = $("#passwordOk");
 		
 		if(pwd.val()==""){
 			pwd.focus();

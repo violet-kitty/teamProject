@@ -60,20 +60,36 @@ public class UesrController {
 		
 		//로그인 정보 있다면
 		if(login != null) {
+			//비밀번호가 null인 경우(소셜 회원)
+			if(login.getPassword() == null) {
+				return "SOCIAL";
+			}
 			//만약 승인된 경우
 			if(login.getJoinyn().equals("Y")) {
-				System.out.println("승인된 회원");
 				
 				//입력값과 인코딩된 비밀번호가 match 되는지 확인
 				Boolean pwdCheck = passwordEncoder.matches(vo.getPassword(), login.getPassword());
+				
+				
 				
 				//비밀번호 일치하는 경우
 				if(pwdCheck == true) {
 					session = request.getSession();
 					session.setAttribute("login", login);
 					
-					//만약 자동로그인 체크했다면 쿠키에 정보 저장
+					//만약 자동로그인 체크했다면 
 					if(autoLogin != null && autoLogin.equals("autoLogin")) {
+						//이전에 테이블에 저장된 정보 삭제
+						userService.autoLoginDelete(login.getMidx());
+						//이전 쿠키 제거
+						Cookie c1 = new Cookie("autoLoginMidx",null);
+						c1.setMaxAge(0);
+						response.addCookie(c1);
+						Cookie c2 = new Cookie("autoLoginToken",null);
+						c2.setMaxAge(0);
+						response.addCookie(c2);
+						
+						//쿠키에 정보 저장
 						Cookie cookie = new Cookie("autoLoginMidx", Integer.toString(login.getMidx()));//회원번호를 쿠키에 저장
 						cookie.setPath(request.getContextPath());
 						cookie.setMaxAge(3600*24*30);
@@ -94,21 +110,19 @@ public class UesrController {
 					
 					return "Y";
 				}
-				else {
+				else {//비밀번호가 일치하지 않는 경우
 					return "FAIL";
 				}
 				
 			}
 			//승인이 되지 않은 경우
 			else {
-				System.out.println("승인되지 않은 회원");
 				return "N";
 			}
 		}
 		else {
 			//로그인 실패(회원 존재하지 않음)
-			System.out.println("회원 정보 일치하지 않음");
-			return "FAIL";
+			return "FAIL2";
 		}
 	}
 	
@@ -117,19 +131,18 @@ public class UesrController {
 	@RequestMapping(value="/socialLogin.do")
 	public String social(UserVO vo, String accessToken, HttpServletRequest request, HttpSession session) {
 		int midx = userService.socialLogin(vo);
-		session = request.getSession();
-		vo.setMidx(midx);
-		vo.setRole("normal");
 		
 		session.setAttribute("token", accessToken);
 		
 		String nickname = userService.nicknameSelect(vo.getEmail());
 		if(nickname == null) {
-			session.setAttribute("login", vo);
-			return "0";
+			return vo.getMidx()+"";
 		}
 		else {
 			vo.setNickname(nickname);
+			vo.setMidx(midx);
+			vo.setRole("normal");
+			session = request.getSession();
 			session.setAttribute("login", vo);
 			return "1";
 		}
@@ -138,14 +151,12 @@ public class UesrController {
 	//소셜 첫 로그인 시 닉네임 받기
 	@RequestMapping(value="/nicknameInsert.do")
 	public String nickname(UserVO vo, HttpServletRequest request, HttpSession session) {
-		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");
-		vo.setEmail(login.getEmail());
-		
 		//닉네임 업데이트 해주기
 		int result = userService.nicknameInsert(vo);
-		login.setNickname(vo.getNickname());
-		session.setAttribute("login", login);
+		vo.setRole("normal");
+		
+		session = request.getSession();
+		session.setAttribute("login", vo);
 		
 		return "redirect:/";
 	}
@@ -172,8 +183,15 @@ public class UesrController {
 	@ResponseBody
 	@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
 	public int emailDup(String email) {
-		int result = userService.emailDup(email);
-		return result;
+		//만약 비밀번호가 null이면 (소셜 회원이면)
+		String pwd = userService.emailDupPwd(email);
+		if(pwd == null) {
+			return -1;
+		}
+		else {
+			int result = userService.emailDup(email);
+			return result;
+		}
 	}
 	
 	//닉네임 중복 체크
@@ -311,6 +329,7 @@ public class UesrController {
 	@RequestMapping(value="/pwdFindComplete.do", method=RequestMethod.POST)
 	public int pwdFind2(UserVO vo) {
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+		System.out.println("password:"+vo.getPassword());
 		return userService.pwdModify(vo);
 	}
 	

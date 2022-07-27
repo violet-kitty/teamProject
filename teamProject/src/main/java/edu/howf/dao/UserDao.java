@@ -24,6 +24,11 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"emailDup", email);
 	}
 	
+	//이메일 중복체크2
+	public String emailDupPwd(String email) {
+		return sqlSession.selectOne(namespace+"emailDupPwd", email);
+	}
+	
 	//닉네임 중복체크
 	public int nicknameDup(String nickname) {
 		return sqlSession.selectOne(namespace+"nicknameDup", nickname);

@@ -49,6 +49,13 @@
 		 WHERE email = #{email}
 	</select>
 	
+	<!-- 이메일 중복체크 비밀번호 null -->
+	<select id="emailDupPwd" parameterType="String" resultType="String">
+		SELECT password
+		FROM usertable
+		WHERE email = #{email}
+	</select>
+	
 	<!-- 닉네임 중복체크 -->
 	<select id="nicknameDup" parameterType="String" resultType="int">
 		SELECT COUNT(nickname)
