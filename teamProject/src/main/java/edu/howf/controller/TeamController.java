@@ -235,10 +235,10 @@ public class TeamController {
 	}
 	
 	@ResponseBody
-	@PostMapping("")
-	public VoteVO selected_vote_option() {
+	@PostMapping("selected_vote_option.do")
+	public VoteVO selected_vote_option(int ridx) {
 		
-		return teamService.selected_vote_option();
+		return teamService.selected_vote_option(ridx);
 	}
 	
 	
