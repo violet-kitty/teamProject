@@ -234,6 +234,13 @@ public class TeamController {
 		return teamService.insert_vote_option(vv);
 	}
 	
+	@ResponseBody
+	@PostMapping("")
+	public VoteVO selected_vote_option() {
+		
+		return teamService.selected_vote_option();
+	}
+	
 	
 	
 	
