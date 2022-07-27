@@ -197,7 +197,7 @@ function modify(index){
   	
   		<br>
 		<button type="button" id="modify" class="modify" onclick="wmodify(${vo.fbidx})" >테스트수정</button>
-  		<button id="delfaq" onclick="del(${vo.fbidx})">삭제</button>
+  	
   		<button onclick="location.href='delfaq.do?fbidx=${vo.fbidx}'">삭제</button>
 
   		</c:if>

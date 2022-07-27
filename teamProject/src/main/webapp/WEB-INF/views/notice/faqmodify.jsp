@@ -46,6 +46,6 @@
  
     <button type="button" onclick="check()">저장</button>
 </form>
-	    <a href="notice.do">취소</a>
+	    <a href="faqbaord.do">취소</a>
 </body>
 </html>
