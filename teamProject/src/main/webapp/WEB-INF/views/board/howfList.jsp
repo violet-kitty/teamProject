@@ -40,10 +40,13 @@
 		<!-- Header --><%@include file="../Header.jsp"%>
 		
 		<!-- Side -->
+		
 		<div class="right-container">
-			<div class="docctrl">
-				<a href="<%=request.getContextPath()%>/community/Write.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
-			</div>
+			<c:if test="${login!=null && login.role=='admin'}">
+				<div class="docctrl">
+					<a href="<%=request.getContextPath()%>/howf/howfWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+				</div>
+			</c:if>
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
@@ -132,67 +135,84 @@
 					</div><!-- .pageinfo -->
 					<!-- / pagehead -->
 					
-					<!-- 여기서부터 -->
-
-					 <c:if test="${login!=null && login.role=='admin'}">
-					 <div class="row">
-					 	<div class="col">
-					 		<button class="btn btn-success" onclick="location.href='howfWrite.do'">글 쓰기</button>
-					 	</div>
-					 </div>
-					 </c:if>
 					
-					<!-- content 시작 -->
+					<!-- ----------------------------------------------------------------------------------------------------- -->
 					
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-						<c:forEach var="v" items="${howf}">
-						<div class="col-sm-12 col-md-12 col-lg-4">
-							<div class="card shadow-sm" style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
-								<c:if test="${v.filename != null}">
-									<img class="card-img-top" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename}">
-								</c:if>
-								<div class="card-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="btn-group">
-											<c:if test="${v.cate=='숙박추천'}">
-												<span style="background: #54ACA8; border-radius: 5px; color: white;">${v.cate}</span>
-											</c:if>
-											<c:if test="${v.cate=='여행지추천'}">
-												<span style="background: #85A548; border-radius: 5px; color: white;">${v.cate}</span>
-											</c:if>
-											<c:if test="${v.cate=='맛집추천'}">
-												<span style="background: #DE8889; border-radius: 5px; color: white;">${v.cate}</span>
-											</c:if>
-											<span class="ms-1">${v.wdate}</span>
-										</div>
-										<small class="text-muted"><img
-											src="<%=request.getContextPath()%>/image/redheart.png"
-											width="30" height="30"><span class="ms-1">${v.heart}</span></small>
-									</div>
-									<div class="d-flex justify-content-start" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-										<p style="margin-left: 0; margin-right: 0;width:100%;">${v.title}</p>
-									</div>
-								</div><!-- card-body end -->
-							</div>
-						</div><!-- col end -->
-						</c:forEach>
-					</div><!-- row end -->
+					<!-- 리스트 카드 -->
+					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
+					<div class="clist">
+						
+						<div class="row grid">
+							<!-- C리스트 14. 반복 -->
+							<c:forEach var="v" items="${howf}">
+							<div class="thumbnailitem col-xs-18 col-sm-6 col-md-4">
+								<a style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
+									<div class="thumbnail">
 
-					<div class="row">
-						<div class="col d-flex justify-content-center">
-							<c:if test="${pm.prev == true}">
-								<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
-							</c:if>
-							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-								<a href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
+											<figure class="effect-ming">
+												<!-- 메인이미지 보여주기-->
+												<c:if test="${v.filename != null}">
+													<div class="imgbox"
+														style="background-image: url(<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename}); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+												</c:if>
+
+												<c:if test="${v.filename == null}">
+													<div class="imgbox"
+														style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+												</c:if>
+
+												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
+												<figcaption>
+													<p id="howftag">${v.tag}</p>
+												</figcaption>
+											</figure>
+											<div class="writerinfo">
+												<p>
+													<c:if test="${v.cate=='숙박추천'}">
+														<span style="background: #54ACA8; border-radius: 5px; color: white;">${v.cate}</span>
+													</c:if>
+													<c:if test="${v.cate=='여행지추천'}">
+														<span style="background: #85A548; border-radius: 5px; color: white;">${v.cate}</span>
+													</c:if>
+													<c:if test="${v.cate=='맛집추천'}">
+														<span style="background: #DE8889; border-radius: 5px; color: white;">${v.cate}</span>
+													</c:if>
+													<span>| ${v.wdate}</span>
+												</p>
+												<small class="text-muted"><img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30"><span class="ms-1">${v.heart}</span></small>
+											</div>
+											<div class="caption">
+												<h4>${v.title}</h4>
+											</div>
+										</div><!-- /.thumbnail -->
+									</a>
+							</div><!--/. thumbnailitem -->
 							</c:forEach>
-							<c:if test="${pm.next == true}">
-								<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
-							</c:if>
 						</div>
+						<!--/row-->
+						
+						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+								<c:if test="${pm.prev == true}">
+									<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+								</c:if>
+								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+									<a href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
+								</c:forEach>
+								<c:if test="${pm.next == true}">
+									<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+								</c:if>
+							</div>
+						</div>
+						<!-- /페이징 -->
+						
 					</div>
-
-		<!-- /.여기서부터 -->
+					<!-- /.clist -->
+					
+					<!-- ----------------------------------------------------------------------------------------------------- -->
+					
+	
 			    </div><!-- /.container -->
 		    </div>
 			<!-- / .pagehead -->
