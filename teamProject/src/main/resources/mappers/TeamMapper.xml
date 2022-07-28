@@ -186,7 +186,8 @@
 	</update>
 	
 	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
-		SELECT  midx
+		SELECT  ridx
+				,midx
 				,title
 				,place1
 				,place2
@@ -272,9 +273,32 @@
 					)
 	</insert>
 	
-<!-- 	<select id="selected_vote_option"> -->
-		
-<!-- 	</select> -->
+	<select id="selected_vote_option" parameterType="int" resultType="voteVO">
+		SELECT   vote, COUNT(vidx) as cnt
+		FROM	 vote
+		WHERE	 ridx = #{ridx}
+		Group by vote;
+	</select>
+	
+	<select id="inserted_vote_option" parameterType="int" resultType="recommendVO">
+	 	SELECT  midx
+				,tidx
+				,title
+				,place1
+				,place2
+				,place3
+				,place4
+				,place5
+		FROM	recommend
+		WHERE	ridx = #{ridx}				
+	</select>
+	
+	<select id="check_vote" parameterType="voteVO" resultType="int">
+		SELECT  COUNT(vidx) as cnt
+		FROM	vote
+		WHERE	ridx = #{ridx}
+		AND		midx = #{midx}
+	</select>
 
 
 </mapper>

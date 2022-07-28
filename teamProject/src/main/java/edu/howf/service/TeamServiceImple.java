@@ -119,10 +119,67 @@ public class TeamServiceImple implements TeamService{
 	}
 
 	@Override
-	public VoteVO selected_vote_option(int ridx) {
+	public List<VoteVO> selected_vote_option(int ridx) {
 		
-		return teamDao.selected_vote_option(ridx);
+		 RecommendVO v = teamDao.inserted_vote_option(ridx);
+		 List<VoteVO> vo = teamDao.selected_vote_option(ridx);
+		 
+		 List<VoteVO> list = new ArrayList<VoteVO>();
+		 //place 정보 넣기
+		 if(v.getPlace1()!=null) {
+			 VoteVO vote = new VoteVO();
+			 vote.setVote(v.getPlace1());
+			 list.add(vote);
+		 }
+		 if(v.getPlace2()!=null) {
+			 VoteVO vote = new VoteVO();
+			 vote.setVote(v.getPlace2());
+			 list.add(vote);
+		 }
+		 if(v.getPlace3()!=null) {
+			 VoteVO vote = new VoteVO();
+			 vote.setVote(v.getPlace3());
+			 list.add(vote);
+		 }
+		 if(v.getPlace4()!=null) {
+			 VoteVO vote = new VoteVO();
+			 vote.setVote(v.getPlace4());
+			 list.add(vote);
+		 }
+		 if(v.getPlace5()!=null) {
+			 VoteVO vote = new VoteVO();
+			 vote.setVote(v.getPlace5());
+			 list.add(vote);
+		 }
+		 
+		 //vote 숫자 넣기
+		 for(VoteVO vv : vo) {
+			 if(v.getPlace1()!= null && v.getPlace1().equals(vv.getVote())) {
+				 list.get(0).setCnt(vv.getCnt());
+			 }
+			 else if(v.getPlace2()!= null && v.getPlace2().equals(vv.getVote())) {
+				 list.get(1).setCnt(vv.getCnt());
+			 }
+			 else if(v.getPlace3()!= null && v.getPlace3().equals(vv.getVote())) {
+				 list.get(2).setCnt(vv.getCnt());
+			 }
+			 else if(v.getPlace4()!= null && v.getPlace4().equals(vv.getVote())) {
+				 list.get(3).setCnt(vv.getCnt());
+			 }
+			 else if(v.getPlace5()!= null && v.getPlace5().equals(vv.getVote())) {
+				 list.get(4).setCnt(vv.getCnt());
+			 }
+		 }
+		 
+		return list;
 	}
+
+	@Override
+	public int check_vote(VoteVO vv) {
+		
+		return teamDao.check_vote(vv);
+	}
+
 
 
 

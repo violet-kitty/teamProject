@@ -104,9 +104,19 @@ public class TeamDao {
 		return sqlSession.insert(namespace + "insert_vote_option", vv);
 	}
 	
-	public VoteVO selected_vote_option(int ridx) {
+	public List<VoteVO> selected_vote_option(int ridx) {
 		
-		return sqlSession.selectOne(namespace + "selected_vote_option", ridx);
+		return sqlSession.selectList(namespace + "selected_vote_option", ridx);
+	}
+	
+	public RecommendVO inserted_vote_option(int ridx) {
+		
+		return sqlSession.selectOne(namespace + "inserted_vote_option", ridx);
+	}
+	
+	public int check_vote(VoteVO vv) {
+		
+		return sqlSession.selectOne(namespace + "check_vote", vv);
 	}
 
 	

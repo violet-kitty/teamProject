@@ -42,7 +42,10 @@ public interface TeamService {
 	
 	public int insert_vote_option(VoteVO vv);
 	
-	public VoteVO selected_vote_option(int ridx);
+	public List<VoteVO> selected_vote_option(int ridx);
+	
+	public int check_vote(VoteVO vv);
+
 
 
 }

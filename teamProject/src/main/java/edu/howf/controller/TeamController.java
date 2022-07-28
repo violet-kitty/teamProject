@@ -184,12 +184,24 @@ public class TeamController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");	
 		
-		RecommendVO rv = teamService.teamTeamView(tidx);
-		RecommendVO rv2 = teamService.vote_option(tidx);
+		RecommendVO rv = teamService.teamTeamView(tidx);	//
+		RecommendVO rv2 = teamService.vote_option(tidx);	//투표 선택지들 가져옴
+		
+		if(rv != null) {
+			VoteVO vo = new VoteVO();
+			vo.setMidx(login.getMidx());
+			vo.setRidx(rv.getRidx());
+			
+			int result = teamService.check_vote(vo);
+			
+			model.addAttribute("result", result);
+		}
+		
+		model.addAttribute("rv", rv);
 		model.addAttribute("rv2", rv2);
 		
 		model.addAttribute("login", login);
-		model.addAttribute("rv", rv);
+		
 		model.addAttribute("tidx", tidx);
 		
 		return "team/teamTeam";
@@ -202,6 +214,22 @@ public class TeamController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");		
 		rv.setMidx(login.getMidx());
+		
+		if(rv.getPlace1() == "") {
+			rv.setPlace1(null);
+		}
+		if(rv.getPlace2() == ""){
+			rv.setPlace2(null);
+		}
+		if(rv.getPlace3() == ""){
+			rv.setPlace3(null);
+		}
+		if(rv.getPlace4() == ""){
+			rv.setPlace4(null);
+		}
+		if(rv.getPlace5() == ""){
+			rv.setPlace5(null);
+		}
 		
 		teamService.upload_vote(rv);
 		
@@ -216,21 +244,18 @@ public class TeamController {
 	}
 	
 	@ResponseBody
-	@PostMapping("insert_vote_option.do")
-	public int insert_vote_option(VoteVO vv, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value="insert_vote_option.do", produces = "application/json; charset=utf-8")
+	public List<VoteVO> insert_vote_option(int ridx, VoteVO vv, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");		
 		vv.setMidx(login.getMidx());
 		
-		return teamService.insert_vote_option(vv);
-	}
-	
-	@ResponseBody
-	@PostMapping("selected_vote_option.do")
-	public VoteVO selected_vote_option(int ridx) {
+		teamService.insert_vote_option(vv);
 		
-		return teamService.selected_vote_option(ridx);
+		List<VoteVO> vote = teamService.selected_vote_option(ridx);
+		
+		return vote;
 	}
 	
 	
