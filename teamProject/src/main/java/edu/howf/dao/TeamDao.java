@@ -94,11 +94,6 @@ public class TeamDao {
 		return sqlSession.update(namespace + "remove_vote", ridx);
 	}
 	
-	public RecommendVO vote_option(int ridx) {
-		
-		return sqlSession.selectOne(namespace + "vote_option", ridx);
-	}
-	
 	public int insert_vote_option(VoteVO vv) {
 		
 		return sqlSession.insert(namespace + "insert_vote_option", vv);
@@ -117,6 +112,11 @@ public class TeamDao {
 	public int check_vote(VoteVO vv) {
 		
 		return sqlSession.selectOne(namespace + "check_vote", vv);
+	}
+	
+	public int revote(VoteVO vv) {
+		
+		return sqlSession.delete(namespace + "revote", vv);
 	}
 
 	

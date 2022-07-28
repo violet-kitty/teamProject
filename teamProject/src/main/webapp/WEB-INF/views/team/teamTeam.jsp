@@ -28,6 +28,56 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+<script>
+	function asdasd(){
+		
+		var li = [];
+		var li2 = [];
+		
+		<c:set var="i" value="0"/>
+		<c:forEach var="vv" items="${vote}">
+		li[${i}] = "${vv.vote}";
+		li2[${i}] = "${vv.cnt}";
+		<c:set var="i" value="${i+1}"/>
+		</c:forEach>
+		
+		let pieChartData = {
+				labels : li,
+				datasets: [{
+					data: li2,
+					backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)',
+						'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)']
+				}]
+		};
+		
+		let pieChartDraw = function () {
+		    let ctx = document.getElementById('pieChartCanvas').getContext('2d');
+		    
+		    window.pieChart = new Chart(ctx, {
+		        type: 'pie',
+		        data: pieChartData,
+		        options: {
+		        	responsive: false,
+		        	title: {
+		        		display:true,
+		        		text:'투표결과',
+		        		fontSize: 20
+		        	}
+		        }
+		    });
+		};
+		
+		
+		$("#show_vote_option").hide();
+		
+		pieChartDraw();
+		
+		var html = '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br>';
+		
+		$("#selected_vote_option").append(html);
+		$("#selected_vote_option").show();
+	}
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -46,32 +96,38 @@
 			<div class="contents content01">
 				<div class="container">
 					<div class="row">
-						<div class="col d-flex justify-content-center">
+						<div class="col d-flex justify-content-center text-center">
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
+							<c:if test="${rv != null && result != 0}">
 								<canvas id="pieChartCanvas" style="width: 500px; height: 500px;"></canvas>
+								<script>asdasd();</script>
+							</c:if>
 							</div>
-							<c:if test="${rv2 != null">
+							<c:if test="${rv != null && result != 0}">
+
+							</c:if>
+							<c:if test="${rv != null && result == 0}">
 								<div id="show_vote_option">
 									<form id="form1">
-										<input type="hidden" name="ridx" value="${rv2.ridx}">
+										<input type="hidden" name="ridx" value="${rv.ridx}">
 										<div class="text-center">
-											${rv2.title}
+											${rv.title}
 										</div><br>
-										<c:if test="${rv2.place1 != null }">
-											<input type="radio" name="vote" value="${rv2.place1}">${rv2.place1}<br>
+										<c:if test="${rv.place1 != null }">
+											<input type="radio" name="vote" value="${rv.place1}">${rv.place1}<br>
 										</c:if>
-										<c:if test="${rv2.place2 != null }">
-											<input type="radio" name="vote" value="${rv2.place2}">${rv2.place2}<br>
+										<c:if test="${rv.place2 != null }">
+											<input type="radio" name="vote" value="${rv.place2}">${rv.place2}<br>
 										</c:if>
-										<c:if test="${rv2.place3 != null }">
-											<input type="radio" name="vote" value="${rv2.place3}">${rv2.place3}<br>
+										<c:if test="${rv.place3 != null }">
+											<input type="radio" name="vote" value="${rv.place3}">${rv.place3}<br>
 										</c:if>
-										<c:if test="${rv2.place4 != null }">
-											<input type="radio" name="vote" value="${rv2.place4}">${rv2.place4}<br>
+										<c:if test="${rv.place4 != null }">
+											<input type="radio" name="vote" value="${rv.place4}">${rv.place4}<br>
 										</c:if>
-										<c:if test="${rv2.place5 != null }">
-											<input type="radio" name="vote" value="${rv2.place5}">${rv2.place5}<br>
+										<c:if test="${rv.place5 != null }">
+											<input type="radio" name="vote" value="${rv.place5}">${rv.place5}<br>
 										</c:if>
 										<div class="text-center">
 											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
@@ -102,6 +158,7 @@
 							</div>
 						</div>
 					</div>
+					<br>
 					<div class="row">
 						<div class="col d-flex justify-content-center">
 							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
@@ -170,58 +227,26 @@
 		var form = $("#form1").serialize();
 		
 		$.ajax({
-			url: "insert_vote_option.do?ridx=${rv2.ridx}",
+			url: "insert_vote_option.do?ridx=${rv.ridx}",
 			data: form,
 			type: "post",
 			success: function(vlist){
-				var li = [];
-				var li2 = [];
-				for(var i=0;i<vlist.length;i++){
-					li[i] = vlist[i].vote;
-					li2[i] = vlist[i].cnt;
-				}
-				
-				let pieChartData = {
-						labels : li,
-						datasets: [{
-							data: li2,
-							backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)',
-								'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)']
-						}]
-				};
-				
-				let pieChartDraw = function () {
-				    let ctx = document.getElementById('pieChartCanvas').getContext('2d');
-				    
-				    window.pieChart = new Chart(ctx, {
-				        type: 'pie',
-				        data: pieChartData,
-				        options: {
-				        	responsive: false,
-				        	title: {
-				        		display:true,
-				        		text:'투표결과',
-				        		fontSize: 20
-				        	}
-				        }
-				    });
-				};
-				
-				
-				$("#show_vote_option").hide();
-				
-				pieChartDraw();
-				
-				var html = '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br>';
-				
-				$("#selected_vote_option").append(html);
-				$("#selected_vote_option").show();
+				location.reload();
 			}
 		});
 	}
 	
 	function revote(){
+		$.ajax({
+			url: "revote.do",
+			data: "ridx=${rv.ridx}&midx=${login.midx}",
+			type: "post",
+			success:function(){
+				location.reload();
+			}
 		
+			
+		})
 		
 	}
 
@@ -230,11 +255,11 @@
 			url: "remove_vote.do?ridx=${rv.ridx}",
 			type: "get",
 			success: function(){
-				$("#show_vote_option").hide();
+				alert("삭제 되었습니다.");
+				location.reload();
+				
 			}
-			
 		});
-		
 	}
 	
 

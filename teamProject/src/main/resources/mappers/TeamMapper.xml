@@ -243,21 +243,6 @@
 		WHERE		ridx = #{ridx}
 	</delete>
 	
-	<select id="vote_option" parameterType="int" resultType="recommendVO">
-		SELECT	ridx
-				,midx
-				,title
-				,place1
-				,place2
-				,place3
-				,place4
-				,place5
-				,wdate
-		FROM	recommend
-		WHERE	tidx = #{tidx}
-		AND		delyn = 'N'
-	</select>
-	
 	<insert id="insert_vote_option" parameterType="VoteVO">
 		INSERT INTO vote(
 						ridx
@@ -299,6 +284,12 @@
 		WHERE	ridx = #{ridx}
 		AND		midx = #{midx}
 	</select>
+	
+	<delete id="revote" parameterType="voteVO">
+		DELETE FROM vote
+		WHERE		midx = #{midx}
+		AND			ridx = #{ridx}
+	</delete>
 
 
 </mapper>

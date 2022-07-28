@@ -103,14 +103,6 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.remove_vote(ridx);
 	}
-
-	@Override
-	public RecommendVO vote_option(int tidx) {
-		
-		RecommendVO vo = teamDao.vote_option(tidx);
-		
-		return vo;
-	}
 	
 	@Override
 	public int insert_vote_option(VoteVO vv) {
@@ -179,6 +171,14 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.check_vote(vv);
 	}
+
+	@Override
+	public int revote(VoteVO vv) {
+		
+		return teamDao.revote(vv);
+	}
+	
+	
 
 
 

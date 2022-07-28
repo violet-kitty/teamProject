@@ -184,8 +184,7 @@ public class TeamController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");	
 		
-		RecommendVO rv = teamService.teamTeamView(tidx);	//
-		RecommendVO rv2 = teamService.vote_option(tidx);	//투표 선택지들 가져옴
+		RecommendVO rv = teamService.teamTeamView(tidx);	//투표 선택지들 가져옴
 		
 		if(rv != null) {
 			VoteVO vo = new VoteVO();
@@ -195,14 +194,18 @@ public class TeamController {
 			int result = teamService.check_vote(vo);
 			
 			model.addAttribute("result", result);
+			
+			List<VoteVO> vote = teamService.selected_vote_option(rv.getRidx());
+			if(vote != null) {
+				model.addAttribute("vote", vote);
+			}
 		}
 		
 		model.addAttribute("rv", rv);
-		model.addAttribute("rv2", rv2);
-		
 		model.addAttribute("login", login);
-		
 		model.addAttribute("tidx", tidx);
+		
+		
 		
 		return "team/teamTeam";
 	}
@@ -257,6 +260,15 @@ public class TeamController {
 		
 		return vote;
 	}
+	
+	@ResponseBody
+	@PostMapping("revote.do")
+	public int revote(VoteVO vv) {
+		
+		
+		return teamService.revote(vv);
+	}
+	
 	
 	
 	
