@@ -78,7 +78,8 @@ public class UesrController {
 					session.setAttribute("login", login);
 					
 					//만약 자동로그인 체크했다면 
-					if(autoLogin != null && autoLogin.equals("autoLogin")) {
+					if(autoLogin != null) {
+						System.out.println("autoLogin");
 						//이전에 테이블에 저장된 정보 삭제
 						userService.autoLoginDelete(login.getMidx());
 						//이전 쿠키 제거
@@ -97,7 +98,7 @@ public class UesrController {
 						
 						String token = passwordEncoder.encode(vo.getPassword());
 						
-						Cookie cookie2 = new Cookie("autoLoginToken", token);//회원번호를 쿠키에 저장
+						Cookie cookie2 = new Cookie("autoLoginToken", token);//토큰을 쿠키에 저장
 						cookie2.setPath(request.getContextPath());
 						cookie2.setMaxAge(3600*24*30);
 						response.addCookie(cookie2);
