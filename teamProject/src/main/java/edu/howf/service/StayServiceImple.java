@@ -184,9 +184,50 @@ public class StayServiceImple implements StayService{
 	public int reviewDup(CommentVO vo) {
 		return stayDao.reviewDup(vo);
 	}
+	
+	
+	//예약
+	
 
 	@Override
 	public int roomRidx(ResVO vo) {
 		return stayDao.roomRidx(vo);
 	}
+
+	@Override
+	public int resInsert(ResVO vo) {
+		return stayDao.resInsert(vo);
+	}
+
+	@Override
+	public int resPay(String merchant) {
+		return stayDao.resPay(merchant);
+	}
+
+	@Override
+	public int resDelete(int reidx) {
+		return stayDao.resDelete(reidx);
+	}
+
+	@Override
+	public List<ResVO> resSelectAll(int midx) {
+		return stayDao.resSelectAll(midx);
+	}
+
+	@Override
+	public int resInsertB(ResVO vo) {
+		return stayDao.resInsert(vo);
+	}
+
+	@Override
+	public int resDeleteB(int reidx) {
+		return stayDao.resDeleteB(reidx);
+	}
+
+	@Override
+	public List<ResVO> resSelectAllB(ResVO vo) {
+		return stayDao.resSelectAllB(vo);
+	}
+	
+	
 }

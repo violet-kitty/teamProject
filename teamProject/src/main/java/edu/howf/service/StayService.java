@@ -22,5 +22,14 @@ public interface StayService {
 	public int reviewDelete(int cbidx);
 	public CommentVO reviewSelectOne(int cbidx);
 	public int reviewDup(CommentVO vo);
+	
+	//예약
 	public int roomRidx(ResVO vo);
+	public int resInsert(ResVO vo);
+	public int resPay(String merchant);
+	public int resDelete(int reidx);
+	public List<ResVO> resSelectAll(int midx);
+	public int resInsertB(ResVO vo);
+	public int resDeleteB(int reidx);
+	public List<ResVO> resSelectAllB(ResVO vo);
 }

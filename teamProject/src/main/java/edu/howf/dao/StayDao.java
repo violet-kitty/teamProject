@@ -89,12 +89,43 @@ public class StayDao {
 		return sqlSession.selectOne(namespace+"reviewDup", vo);
 	}
 	
-	public int roomRidx(ResVO vo){
+	public int roomCnt(ResVO vo) {
+		return sqlSession.selectOne(namespace+"roomCnt", vo);
+	}
+	
+	
+	//예약
+	public int roomRidx(ResVO vo) {
 		ResVO v = sqlSession.selectOne(namespace+"roomRidx",vo);
 		return v.getRidx();
 	}
 	
-	public int roomCnt(ResVO vo) {
-		return sqlSession.selectOne(namespace+"roomCnt", vo);
+	public int resInsert(ResVO vo) {
+		return sqlSession.insert(namespace+"resInsert", vo);
 	}
+	
+	public int resPay(String merchant) {
+		return sqlSession.update(namespace+"resPay", merchant);
+	}
+	
+	public int resDelete(int reidx) {
+		return sqlSession.update(namespace+"resDelete", reidx);
+	}
+	
+	public List<ResVO> resSelectAll(int midx) {
+		return sqlSession.selectList(namespace+"resSelectAll", midx);
+	}
+	
+	public int resInsertB(ResVO vo) {
+		return sqlSession.insert(namespace+"resInsertB", vo);
+	}
+	
+	public int resDeleteB(int reidx) {
+		return sqlSession.update(namespace+"resDeleteB", reidx);
+	}
+	
+	public List<ResVO> resSelectAllB(ResVO vo) {
+		return sqlSession.selectList(namespace+"resSelectAllB", vo);
+	}
+	
 }

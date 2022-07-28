@@ -105,30 +105,15 @@ var nicknameDup = false;
 				if(email.includes('@')==false){
 					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 					return;
-				}else{
+				}
+				else if (email == "") {
+					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					$("#email").focus();
+				}
+				else{
 					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationo.png'>");
 					return;
 				};
-			      
-				if (email == "") {
-					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-					$("#email").focus();
-				} else {
-					$.ajax({
-						url : "emailDup.do",
-						data : "email=" + email,
-						type : "post",
-						success : function(data) {
-							if (data == 0) {
-								$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationo.png'>");
-								emailDup = false;
-							} else {
-								$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-								emailDup = true;
-							}
-						}
-					});
-				}
 			});
 	
 		$(function() {
@@ -140,7 +125,7 @@ var nicknameDup = false;
 					return;
 				} else {
 					$.ajax({
-						url : "emailDup.do",
+						url : "emailDupPwd.do",
 						data : "email=" + email.val(),
 						type : "post",
 						success : function(data) {

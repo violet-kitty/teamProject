@@ -96,11 +96,12 @@ var nicknameDup = false;
 											<td colspan="2"><input type="password" name="password" id="password" placeholder="비밀번호"></td>
 										</tr>
 									</table>
-								</form>
-								<!-- /form -->
+								
 								
 								<!-- 버튼 -->
 								<div class="keepbox"><input type="checkbox" name="autoLogin" id="autoLogin" value="autoLogin"><label for="autoLogin">&nbsp;자동로그인</label></div>
+								</form>
+								<!-- /form -->
 								<button type="button" name ="btn" value="확인" onclick="loginFn();" class="greenbtn">로그인</button>
 								
 								<div class="joinguard semibold"><span class="hfc-bold">간편</span> 로그인/회원가입</div>

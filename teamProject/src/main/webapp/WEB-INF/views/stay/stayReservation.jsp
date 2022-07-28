@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +53,7 @@
 					<!-- 객실 정보 -->
 					<div class="row">
 						<div class="col">
-							숙소이름 : ${stayName}<br>
+							숙소이름 : ${res.sname}<br>
 							객실타입/기간<br>
 							${res.name}<br>
 							체크인<br>
@@ -161,29 +161,28 @@
 				IMP.request_pay({ // param
 					pg: 'kcp',
 					pay_method: 'card',
-					merchant_uid: "${merchant}",
-					name: '${stayName}',
+					merchant_uid: "${res.merchant}",
+					name: '${res.sname}',
 					amount: ${res.price},
 					buyer_name: $("#name").val(),
 					buyer_tel: $("#phone").val()
 				}, function (rsp) { // callback
 				    if (rsp.success) {
-				    	console.log(rsp);
-				    	
-				    	var resData = "merchant_uid="+rsp.merchant_uid+"&amount="+rsp.paid_amount;
-				    	
+				    	var resData = "merchant="+rsp.merchant_uid+"&price="+rsp.paid_amount;
 				    	$.ajax({
 			    			url:"tradeAuth.do",
-			    			data:"merchant_uid="+rsp.merchant_uid+"&amount="+rsp.paid_amount,
+			    			data:resData,
 			    			type:"post",
 			    			success:function(status){
 			    				if(status=="success"){
-			    					//예약 테이블에 넣어주기
 			    					alert("예약되었습니다");
-			    					location.href='예약 페이지';
+			    					location.href='<%= request.getContextPath() %>/user/mypage.do';
 			    					return;
 			    				}
-			    				
+			    				else {
+			    					alert("예약에 실패했습니다.")
+			    					return;
+			    				}
 			    			}
 			    		});
 				    }

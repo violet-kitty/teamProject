@@ -155,14 +155,11 @@
 						if(email.includes('@')==false){
 							$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 							return;
-						}else{
-							$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationo.png'>");
-							return;
-						};
-					      
-						if (email == "") {
+						}
+						else if (email == "") {
 							$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 							$("#email").focus();
+							return;
 						} else {
 							$.ajax({
 								url : "emailDup.do",

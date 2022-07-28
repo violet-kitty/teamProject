@@ -78,7 +78,7 @@ public class UesrController {
 					session.setAttribute("login", login);
 					
 					//만약 자동로그인 체크했다면 
-					if(autoLogin != null && autoLogin.equals("autoLogin")) {
+					if(autoLogin != null) {
 						//이전에 테이블에 저장된 정보 삭제
 						userService.autoLoginDelete(login.getMidx());
 						//이전 쿠키 제거
@@ -97,7 +97,7 @@ public class UesrController {
 						
 						String token = passwordEncoder.encode(vo.getPassword());
 						
-						Cookie cookie2 = new Cookie("autoLoginToken", token);//회원번호를 쿠키에 저장
+						Cookie cookie2 = new Cookie("autoLoginToken", token);//토큰을 쿠키에 저장
 						cookie2.setPath(request.getContextPath());
 						cookie2.setMaxAge(3600*24*30);
 						response.addCookie(cookie2);
@@ -187,10 +187,10 @@ public class UesrController {
 		return "user/businessJoin";
 	}
 	
-	//이메일 중복 체크
+	//이메일 중복 체크 로그인
 	@ResponseBody
-	@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
-	public int emailDup(String email) {
+	@RequestMapping(value="/emailDupPwd.do", method=RequestMethod.POST)
+	public int emailDupPwd(String email) {
 		//만약 비밀번호가 null이면 (소셜 회원이면)
 		String pwd = userService.emailDupPwd(email);
 		if(pwd == null) {
@@ -201,6 +201,14 @@ public class UesrController {
 			return result;
 		}
 	}
+	
+	//이메일 중복 체크
+		@ResponseBody
+		@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
+		public int emailDup(String email) {
+			int result = userService.emailDup(email);
+			return result;
+		}
 	
 	//닉네임 중복 체크
 	@ResponseBody
@@ -340,6 +348,35 @@ public class UesrController {
 		System.out.println("password:"+vo.getPassword());
 		return userService.pwdModify(vo);
 	}
+	
+	
+	
+	//마이페이지 이동(일반회원)
+	@RequestMapping(value="/mypage.do")
+	public String mypageN() {
+		return "user/mypageNList";
+	}
+	
+	//마이페이지 이동(공무원)
+	@RequestMapping(value="/mypageOfficial.do")
+	public String mypageO() {
+		return "user/mypageOList";
+	}
+	
+	//마이페이지 이동(business)
+	@RequestMapping(value="/mypageBusiness.do")
+	public String mypageB() {
+		return "user/mypageBList";
+	}
+	
+	//마이페이지 이동(admin)
+	@RequestMapping(value="/mypageAdmin.do")
+	public String mypageA() {
+		return "user/mypageAList";
+	}
+	
+	
+	
 	
 	
 	
