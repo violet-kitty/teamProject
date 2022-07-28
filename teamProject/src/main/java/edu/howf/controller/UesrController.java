@@ -187,10 +187,10 @@ public class UesrController {
 		return "user/businessJoin";
 	}
 	
-	//이메일 중복 체크
+	//이메일 중복 체크 로그인
 	@ResponseBody
-	@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
-	public int emailDup(String email) {
+	@RequestMapping(value="/emailDupPwd.do", method=RequestMethod.POST)
+	public int emailDupPwd(String email) {
 		//만약 비밀번호가 null이면 (소셜 회원이면)
 		String pwd = userService.emailDupPwd(email);
 		if(pwd == null) {
@@ -201,6 +201,14 @@ public class UesrController {
 			return result;
 		}
 	}
+	
+	//이메일 중복 체크
+		@ResponseBody
+		@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
+		public int emailDup(String email) {
+			int result = userService.emailDup(email);
+			return result;
+		}
 	
 	//닉네임 중복 체크
 	@ResponseBody
