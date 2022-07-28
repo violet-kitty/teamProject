@@ -279,8 +279,9 @@
 		FROM room r
 		JOIN res rr
 		ON r.ridx = rr.ridx
+		WHERE rr.delyn = 'N'
 		<if test='date1 != null and date2 != null'>
-		WHERE rr.date1 <![CDATA[<=]]> #{date2}
+		AND rr.date1 <![CDATA[<=]]> #{date2}
 		AND rr.date2 <![CDATA[>=]]> #{date1}
 		</if>
 		) b
@@ -519,5 +520,138 @@
 		SET delyn = 'Y'
 		WHERE cbidx = #{cbidx}
 	</update>
+	
+	<!-- 
+	
+		예약
+	
+	 -->
+	
+	<!-- 예약 추가(일반 회원) -->
+	<insert id="resInsert" parameterType="resVO">
+	<![CDATA[
+		INSERT INTO res(
+			  midx
+			, ridx
+			, date1
+			, date2
+			, merchant
+			, pay
+			, wdate
+			, delyn
+		)
+		VALUES(
+			  #{midx}
+			, #{ridx}
+			, #{date1}
+			, #{date2}
+			, #{merchant}
+			, 'N'
+			, now()
+			, 'N'
+		)
+	]]>
+	<selectKey resultType="int" keyProperty="reidx" order="AFTER">
+		SELECT max(reidx) FROM res
+	</selectKey>
+	</insert>
+	
+	<!-- 결제 완료(일반 회원) -->
+	<update id="resPay" parameterType="String">
+		UPDATE res
+		   SET pay = 'Y'
+		 WHERE merchant = #{merchant}
+	</update>
+	
+	<!-- 예약 삭제(일반 회원) -->
+	<update id="resDelete" parameterType="int">
+		UPDATE res
+		   SET delyn = 'Y'
+		 WHERE reidx = #{reidx}
+	</update>
+	
+	<!-- 예약 목록 가져오기(일반 회원) -->
+	<select id="resSelectAll" parameterType="int" resultType="resVO">
+		SELECT reidx
+			, ridx
+			, date1
+			, date2
+			, merchant
+			, pay
+			, wdate
+			, delyn
+		FROM res
+		WHERE midx = #{midx}
+		ORDER BY wdate desc
+	</select>
+	
+	
+	
+	
+	<!-- 예약 추가(business) -->
+	<insert id="resInsertB" parameterType="resVO">
+		INSERT INTO res(
+			  midx
+			, ridx
+			, date1
+			, date2
+			, merchant
+			, pay
+			, wdate
+			, delyn
+		)
+		VALUES(
+			  #{midx}
+			, #{ridx}
+			, #{date1}
+			, #{date2}
+			, #{merchant}
+			, 'N'
+			, now()
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 예약 삭제(business) -->
+	<update id="resDeleteB" parameterType="int">
+		UPDATE res
+		   SET delyn = 'Y'
+		 WHERE reidx = #{reidx}
+	</update>
+	
+	<!-- 예약 목록 가져오기(business / 본인 소유 시설 목록 전체 ) -->
+	<select id="resSelectAllB" parameterType="resVO" resultType="resVO">
+		SELECT re.*
+			, s.midx
+			, s.name as sname
+		FROM stay s
+		JOIN
+		(SELECT r.reidx
+			, r.ridx
+			, r.date1
+			, r.date2
+			, r.merchant
+			, r.pay
+			, r.wdate
+			, r.delyn
+			, ro.sidx
+			, ro.name as rname
+		FROM res r
+		JOIN room ro
+		ON r.ridx = ro.ridx
+		WHERE r.delyn = 'N'
+		<!-- 기간 조건 -->
+		<if test='date1 != null'>
+		AND date1 <![CDATA[>=]]> #{date1}
+		</if>
+		<if test='date2 != null'>
+		AND date2 <![CDATA[<=]]> #{date2}
+		</if>
+		AND r.pay = 'Y') re
+		ON s.sidx = re.sidx
+		WHERE s.midx = #{midx}
+		ORDER BY s.name asc, re.wdate desc
+	</select>
+	
 	
 </mapper>

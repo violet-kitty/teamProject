@@ -400,15 +400,21 @@ public class StayController {
 	
 	//예약하기 페이지 이동
 	@RequestMapping(value="/stayReservation.do")
-	public String stayReservation(ResVO res, String stayName, Model model) {
-		//객실 정보(객실 이름, 가격), 선택한 날짜 들고 가기
-		model.addAttribute("stayName", stayName);
-		model.addAttribute("res", res);
-		
+	public String stayReservation(ResVO res, Model model, HttpServletRequest request, HttpSession session) {
 		//상품 id(다른것과 id가 겹치면 중복된 결제건이라고 결제가 되지 않음)
 		Calendar cal = Calendar.getInstance();
 		String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
-		model.addAttribute("merchant", merchant);
+		res.setMerchant(merchant);
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		res.setMidx(login.getMidx());
+		
+		//예약정보 DB에 넣기
+		stayService.resInsert(res);
+		
+		//객실 정보, 선택한 날짜 들고 가기
+		model.addAttribute("res", res);
 		
 		return "stay/stayReservation";
 	}
@@ -453,10 +459,15 @@ public class StayController {
 	//결제 검증, 예약
 	@ResponseBody
 	@RequestMapping(value="/tradeAuth.do")
-	public String tradeAuth(String merchant_uid, String amount) {
-		System.out.println("merchant:"+merchant_uid);
-		System.out.println("amount:"+amount);
-		return "success";
+	public String tradeAuth(ResVO vo) {
+		int result = stayService.resPay(vo.getMerchant());
+		
+		if(result != 0) {
+			return "success";
+		}
+		else {
+			return "fail";
+		}
 	}
 	
 	

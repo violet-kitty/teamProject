@@ -737,7 +737,7 @@
 					console.log(data);
 					
 					//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜 가지고 가기
-					var ddd = "stayName="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
+					var ddd = "sname="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
 					location.href='stayReservation.do?'+ddd;
 				}
 			});

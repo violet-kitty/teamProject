@@ -80,7 +80,8 @@ function logoutFn(){
 						<c:if test="${login != null}">
 							<li class="nav-item">
 								<div class="navbtn">
-									<a href="#">
+								<c:if test="${login.role=='normal'}">
+									<a href="<%=request.getContextPath()%>/user/mypage.do">
 										<button class="bluebtn">
 											<div class="cprofile">
 
@@ -101,6 +102,76 @@ function logoutFn(){
 											</div>
 										</button>
 									</a>
+								</c:if>
+								<c:if test="${login.role=='official'}">
+									<a href="<%=request.getContextPath()%>/user/mypageOfficial.do">
+										<button class="bluebtn">
+											<div class="cprofile">
+
+												<!-- 사용자 프로필 보여주기-->
+												<%
+														if (session.getAttribute("community_writerp") != null) {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
+												<%
+														} else {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												<%
+														}
+													%>
+
+												${login.nickname}
+											</div>
+										</button>
+									</a>
+								</c:if>
+								<c:if test="${login.role=='business'}">
+									<a href="<%=request.getContextPath()%>/user/mypageBusiness.do">
+										<button class="bluebtn">
+											<div class="cprofile">
+
+												<!-- 사용자 프로필 보여주기-->
+												<%
+														if (session.getAttribute("community_writerp") != null) {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
+												<%
+														} else {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												<%
+														}
+													%>
+
+												${login.nickname}
+											</div>
+										</button>
+									</a>
+								</c:if>
+								<c:if test="${login.role=='admin'}">
+									<a href="<%=request.getContextPath()%>/user/mypageAdmin.do">
+										<button class="bluebtn">
+											<div class="cprofile">
+
+												<!-- 사용자 프로필 보여주기-->
+												<%
+														if (session.getAttribute("community_writerp") != null) {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
+												<%
+														} else {
+													%>
+												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												<%
+														}
+													%>
+
+												${login.nickname}
+											</div>
+										</button>
+									</a>
+								</c:if>
 								</div>
 							</li>
 							<li class="nav-item item-join">

@@ -343,6 +343,35 @@ public class UesrController {
 	
 	
 	
+	//마이페이지 이동(일반회원)
+	@RequestMapping(value="/mypage.do")
+	public String mypageN() {
+		return "user/mypageNList";
+	}
+	
+	//마이페이지 이동(공무원)
+	@RequestMapping(value="/mypageOfficial.do")
+	public String mypageO() {
+		return "user/mypageOList";
+	}
+	
+	//마이페이지 이동(business)
+	@RequestMapping(value="/mypageBusiness.do")
+	public String mypageB() {
+		return "user/mypageBList";
+	}
+	
+	//마이페이지 이동(admin)
+	@RequestMapping(value="/mypageAdmin.do")
+	public String mypageA() {
+		return "user/mypageAList";
+	}
+	
+	
+	
+	
+	
+	
 	//사진 보여주기 위한 코드
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
