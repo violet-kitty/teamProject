@@ -79,7 +79,6 @@ public class UesrController {
 					
 					//만약 자동로그인 체크했다면 
 					if(autoLogin != null) {
-						System.out.println("autoLogin");
 						//이전에 테이블에 저장된 정보 삭제
 						userService.autoLoginDelete(login.getMidx());
 						//이전 쿠키 제거
