@@ -151,105 +151,54 @@ var tagi = 0;
 							<p>편의시설 및 서비스</p>
 							<div>
 								<div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="원룸">
-						        	<label class="form-check-label" for="tag">원룸</label>
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="편의점">
+						        	<label class="form-check-label" for="tag">편의점</label>
 						        </div>
 						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="분리형원룸">
-						        	<label class="form-check-label" for="tag">분리형원룸</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="전자렌지">
-						        	<label class="form-check-label" for="tag">전자렌지</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="밥솥">
-						        	<label class="form-check-label" for="tag">밥솥</label>
-						        </div>
-						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="투룸">
-						        	<label class="form-check-label" for="tag">투룸</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="쓰리룸">
-						        	<label class="form-check-label" for="tag">쓰리룸</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="세탁기">
-						        	<label class="form-check-label" for="tag">세탁기</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="건조기">
-						        	<label class="form-check-label" for="tag">건조기</label>
-						        </div>
-						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="포룸">
-						        	<label class="form-check-label" for="tag">포룸</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="방5개이상">
-						        	<label class="form-check-label" for="tag">방5개이상</label>
-						        </div>
-						         <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="반려동물가능">
-						        	<label class="form-check-label" for="tag">반려동물가능</label>
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="커피숍">
+						        	<label class="form-check-label" for="tag">커피숍</label>
 						        </div>
 						        <div class="form-check form-check-inline">
 						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="주차장">
 						        	<label class="form-check-label" for="tag">주차장</label>
 						        </div>
-						        <br>
 						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="주방/식당">
-						        	<label class="form-check-label" for="tag">주방/식당</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="욕실">
-						        	<label class="form-check-label" for="tag">욕실</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="와이파이">
-						        	<label class="form-check-label" for="tag">와이파이</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="무료주차장">
-						        	<label class="form-check-label" for="tag">무료주차장</label>
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="골프장">
+						        	<label class="form-check-label" for="tag">골프장</label>
 						        </div>
 						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="욕조">
-						        	<label class="form-check-label" for="tag">욕조</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="욕실용품">
-						        	<label class="form-check-label" for="tag">욕실용품</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="BBQ">
-						        	<label class="form-check-label" for="tag">BBQ</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="라운지">
-						        	<label class="form-check-label" for="tag">라운지</label>
-						        </div>
-						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="드라이기">
-						        	<label class="form-check-label" for="tag">드라이기</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="에어컨">
-						        	<label class="form-check-label" for="tag">에어컨</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="엘레베이터">
-						        	<label class="form-check-label" for="tag">엘레베이터</label>
-						        </div>
 						        <div class="form-check form-check-inline">
 						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="수영장">
 						        	<label class="form-check-label" for="tag">수영장</label>
+						        </div>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="족구장">
+						        	<label class="form-check-label" for="tag">족구장</label>
+						        </div>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="농구장">
+						        	<label class="form-check-label" for="tag">농구장</label>
+						        </div>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="실내낚시터">
+						        	<label class="form-check-label" for="tag">실내낚시터</label>
+						        </div>
+						        <br>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="산책로">
+						        	<label class="form-check-label" for="tag">산책로</label>
+						        </div>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="익스트림체험장">
+						        	<label class="form-check-label" for="tag">익스트림체험장</label>
+						        </div>
+						         <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="세차장">
+						        	<label class="form-check-label" for="tag">세차장</label>
+						        </div>
+						        <div class="form-check form-check-inline">
+						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="키드존">
+						        	<label class="form-check-label" for="tag">키드존</label>
 						        </div>
 							</div>
 						</div>

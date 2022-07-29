@@ -27,6 +27,7 @@ public interface StayService {
 	public int roomRidx(ResVO vo);
 	public int resInsert(ResVO vo);
 	public int resPay(String merchant);
+	public ResVO resDup(ResVO vo);
 	public int resDelete(int reidx);
 	public List<ResVO> resSelectAll(int midx);
 	public int resInsertB(ResVO vo);

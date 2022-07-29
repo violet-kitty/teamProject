@@ -1,6 +1,7 @@
 package edu.howf.vo;
 
 public class ResVO extends RoomVO{
+	private int reidx;		//구분 번호
 	private String date1;	//체크인 날짜
 	private String date2;	//체크아웃 날짜
 	private int midx;		//예약한 회원
@@ -10,6 +11,12 @@ public class ResVO extends RoomVO{
 	private String sname;	//숙소 이름
 	private String rname;	//방 이름
 	
+	public int getReidx() {
+		return reidx;
+	}
+	public void setReidx(int reidx) {
+		this.reidx = reidx;
+	}
 	public String getDate1() {
 		return date1;
 	}

@@ -67,12 +67,15 @@ public class StayServiceImple implements StayService{
 		vo.setContents(content.substring(0,content.length()-1));
 		
 		//service 이어붙이기
-		StringBuilder services = new StringBuilder("");
-		for(int i=0;i<vo.getService().size();i++) {
-			services.append(vo.getService().get(i)+",");
+		if(vo.getService().size()!=0) {
+			StringBuilder services = new StringBuilder("");
+			for(int i=0;i<vo.getService().size();i++) {
+				services.append(vo.getService().get(i)+",");
+			}
+			String service = services.toString();
+			vo.setServices(service.substring(0,service.length()-1));
 		}
-		String service = services.toString();
-		vo.setServices(service.substring(0,service.length()-1));
+		
 		
 		//등록
 		int result = stayDao.stayInsert(vo);
@@ -86,12 +89,14 @@ public class StayServiceImple implements StayService{
 					r.setSidx(vo.getSidx());
 					
 					//tag 이어붙이기
-					StringBuilder tags = new StringBuilder("");
-					for(int i=0;i<r.getTag().size();i++) {
-						tags.append(r.getTag().get(i)+",");
+					if(r.getTag().size() != 0) {
+						StringBuilder tags = new StringBuilder("");
+						for(int i=0;i<r.getTag().size();i++) {
+							tags.append(r.getTag().get(i)+",");
+						}
+						String tag = tags.toString();
+						r.setTags(tag.substring(0,tag.length()-1));
 					}
-					String tag = tags.toString();
-					r.setTags(tag.substring(0,tag.length()-1));
 					
 					for(int i=0;i<r.getCnt();i++) {
 						result = stayDao.roomInsert(r);
@@ -126,12 +131,14 @@ public class StayServiceImple implements StayService{
 		vo.setContents(content.substring(0,content.length()-1));
 		
 		//service 이어붙이기
-		StringBuilder services = new StringBuilder("");
-		for(int i=0;i<vo.getService().size();i++) {
-			services.append(vo.getService().get(i)+",");
+		if(vo.getService().size() != 0) {
+			StringBuilder services = new StringBuilder("");
+			for(int i=0;i<vo.getService().size();i++) {
+				services.append(vo.getService().get(i)+",");
+			}
+			String service = services.toString();
+			vo.setServices(service.substring(0,service.length()-1));
 		}
-		String service = services.toString();
-		vo.setServices(service.substring(0,service.length()-1));
 		
 		//등록
 		int result = stayDao.stayModify(vo);
@@ -144,12 +151,14 @@ public class StayServiceImple implements StayService{
 					r.setSidx(vo.getSidx());
 					
 					//tag 이어붙이기
-					StringBuilder tags = new StringBuilder("");
-					for(int i=0;i<r.getTag().size();i++) {
-						tags.append(r.getTag().get(i)+",");
+					if(r.getTag().size() != 0) {
+						StringBuilder tags = new StringBuilder("");
+						for(int i=0;i<r.getTag().size();i++) {
+							tags.append(r.getTag().get(i)+",");
+						}
+						String tag = tags.toString();
+						r.setTags(tag.substring(0,tag.length()-1));
 					}
-					String tag = tags.toString();
-					r.setTags(tag.substring(0,tag.length()-1));
 					
 					for(int i=0;i<r.getCnt();i++) {
 						result = stayDao.roomInsert(r);
@@ -202,6 +211,11 @@ public class StayServiceImple implements StayService{
 	@Override
 	public int resPay(String merchant) {
 		return stayDao.resPay(merchant);
+	}
+	
+	@Override
+	public ResVO resDup(ResVO vo) {
+		return stayDao.resDup(vo);
 	}
 
 	@Override

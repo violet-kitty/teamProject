@@ -108,6 +108,10 @@ public class StayDao {
 		return sqlSession.update(namespace+"resPay", merchant);
 	}
 	
+	public ResVO resDup(ResVO vo) {
+		return sqlSession.selectOne(namespace+"resDup", vo);
+	}
+	
 	public int resDelete(int reidx) {
 		return sqlSession.update(namespace+"resDelete", reidx);
 	}

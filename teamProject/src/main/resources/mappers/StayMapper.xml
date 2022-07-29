@@ -108,9 +108,6 @@
 		<if test="op.equals('킹베드')">
 		AND e.kbed != 0
 		</if>
-		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
-		AND e.services like CONCAT('%',#{op},'%')
-		</if>
 		</foreach>
 		</if>
 		</if>
@@ -563,6 +560,21 @@
 		 WHERE merchant = #{merchant}
 	</update>
 	
+	<!-- 가예약 여부 판단 -->
+	<select id="resDup" parameterType="resVO" resultType="resVO">
+		SELECT r.ridx
+			, r.merchant
+		FROM res r
+		JOIN room ro
+		ON r.ridx = ro.ridx
+		WHERE r.midx = #{midx}
+		AND ro.sidx = #{sidx}
+		AND ro.name = #{name}
+		AND ro.price = #{price}
+		AND r.pay = 'N'
+		AND r.delyn = 'N'
+	</select>
+	
 	<!-- 예약 삭제(일반 회원) -->
 	<update id="resDelete" parameterType="int">
 		UPDATE res
@@ -572,15 +584,31 @@
 	
 	<!-- 예약 목록 가져오기(일반 회원) -->
 	<select id="resSelectAll" parameterType="int" resultType="resVO">
-		SELECT reidx
-			, ridx
-			, date1
-			, date2
-			, merchant
-			, pay
-			, wdate
-			, delyn
-		FROM res
+		SELECT r.reidx
+			, r.ridx
+			, r.date1
+			, r.date2
+			, r.merchant
+			, r.pay
+			, r.wdate
+			, r.delyn
+			, a.sname
+			, a.rname
+			, a.price
+			, a.photo
+			, a.sidx
+		FROM res r
+		JOIN
+		(SELECT ro.ridx
+			, s.name as sname
+			, ro.name as rname
+			, ro.price
+			, ro.photo
+			, s.sidx
+		FROM room ro
+		JOIN stay s
+		ON ro.sidx = s.sidx) a
+		ON r.ridx = a.ridx
 		WHERE midx = #{midx}
 		ORDER BY wdate desc
 	</select>

@@ -176,7 +176,7 @@
 			    			success:function(status){
 			    				if(status=="success"){
 			    					alert("예약되었습니다");
-			    					location.href='<%= request.getContextPath() %>/user/mypage.do';
+			    					location.href='<%= request.getContextPath() %>/user/myReservation.do';
 			    					return;
 			    				}
 			    				else {

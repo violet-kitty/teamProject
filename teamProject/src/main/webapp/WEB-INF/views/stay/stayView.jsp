@@ -215,9 +215,11 @@
 					<div id="map" style="width:100%;height:350px;"></div>
 					<div>
 						<p>편의시설 및 서비스</p>
+						<c:if test="${stay.services != null}">
 						<c:forEach var="s" items="${fn:split(stay.services,',')}">
 						<span style="border:1px solid black">${s}</span> 
 						</c:forEach>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -714,7 +716,12 @@
 		var date1 = $("#date1").val();
 		var date2 = $("#date2").val();
 		
-		if(date1==""){
+		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		if(login == "null"){
+			alert("로그인이 필요합니다");
+			return;
+		}
+		else if(date1==""){
 			alert("체크인 날짜를 선택해 주세요");
 			return;
 		}
@@ -727,20 +734,35 @@
 			return;
 		}
 		else {
-			//ajax로 해당 유형의 숙소 ridx 가져오기
 			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
+			//중복 가예약인지 아닌지 여부 판단
 			$.ajax({
-				url:"roomRidx.do",
+				url:"resDup.do",
 				data:dd,
 				type:"post",
-				success:function(data){
-					console.log(data);
-					
-					//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜 가지고 가기
-					var ddd = "sname="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
-					location.href='stayReservation.do?'+ddd;
+				success:function(dup){
+					alert(dup.ridx);
+					if(dup.ridx != undefined){
+						alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
+						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2+"&merchant="+dup.merchant;
+						location.href='stayReservation.do?'+data1;
+						return;
+					}
+					else {
+						//ajax로 해당 유형의 숙소 ridx 가져오기
+						$.ajax({
+							url:"roomRidx.do",
+							data:dd,
+							type:"post",
+							success:function(data){
+								//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜
+								var data2 = "sname="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
+								location.href='stayReservation.do?'+data2;
+							}
+						});//ridx 가져오고 이동
+					}
 				}
-			});
+			});//가예약 중복 여부 판단 후 이동
 		}
 		
 	}//예약하기
