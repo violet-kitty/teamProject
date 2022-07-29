@@ -74,7 +74,7 @@ function modalFn(msg, btnMsg1, title, btnMsg2){
 					+ '</div>'
 					+ '</div>'
 					+ '</div>'
-					+ '</div>';
+					+ '</div>'; 
 		
 		$("body").prepend(html);
 		

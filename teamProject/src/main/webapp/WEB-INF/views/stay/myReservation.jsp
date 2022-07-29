@@ -100,7 +100,7 @@
 		modalFn("메시지 메시지메시지 메시지 메시지  ","확인", "타이틀입니다","취소");
 	}
 	
-	function modalOkFn(){
+	function modalOkFn(){e
 		modalClose();
 		modalFn("확인 버튼 잘 적용됨");
 		setTimeout(function(){
