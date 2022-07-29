@@ -26,6 +26,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 <script>
@@ -167,7 +168,7 @@
 					<div class="row">
 						<div class="col">
 							<div>
-							
+<!-- 							<button onclick="clickFn()">sdfs</button> -->
 							</div>
 						</div>
 					</div>
@@ -179,6 +180,14 @@
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+// 	function clickFn(){
+// 		취소 버튼 대신 설정한 시간(밀리초) 만큼만 모달을 띄워놓고 싶을 때
+// 		modalFn("sdfsdfsdf");
+// 		setTimeout(function(){
+// 			modalClose();
+// 		},1500);
+// 		modalFn("sdfsdfsdfsdf ","qweqwe");
+// 	}
 	function create_vote(){
 		$("#create_vote").hide();
 		$("#display").show();
@@ -202,13 +211,22 @@
 
 	function add_option(){
 		if(index > 5){
-			alert("선택지는 최대 5개까지만 가능합니다.");
+			modalFn("선택지는 최대 5개까지만 가능합니다.","확인","타이틀","취소");
 			return;
 		}
 		else{
 			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
 			index++;
 		}
+		
+	}
+	
+	function modalOkFn(){
+		modalClose();
+		modalFn("ddd");
+		setTimeout(function(){
+ 			modalClose();
+ 		},1500);
 		
 	}
 	
@@ -262,7 +280,7 @@
 			url: "remove_vote.do?ridx=${rv.ridx}",
 			type: "get",
 			success: function(){
-				alert("삭제 되었습니다.");
+				modalFn("삭제되었습니다.","확인");
 				location.reload();
 				
 			}
