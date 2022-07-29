@@ -27,6 +27,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -96,7 +97,11 @@
 	
 	//예약 취소
 	function resCancel(){
-		
+/* 		modalFn("sㄴㅇㄹㄴㅇㄹㄴㅇㄹㄷㄹ");
+		setTimeout(function(){
+			modalClose();
+		},3000); */
+		modalFn("메시지 메시지메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지  ","닫기");
 	}
 </script>	
 </body>
