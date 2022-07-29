@@ -26,6 +26,58 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+<script>
+	function asdasd(){
+		
+		var li = [];
+		var li2 = [];
+		
+		<c:set var="i" value="0"/>
+		<c:forEach var="vv" items="${vote}">
+		li[${i}] = "${vv.vote}";
+		li2[${i}] = "${vv.cnt}";
+		<c:set var="i" value="${i+1}"/>
+		</c:forEach>
+		
+		let pieChartData = {
+				labels : li,
+				datasets: [{
+					data: li2,
+					backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)',
+						'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)']
+				}]
+		};
+		
+		let pieChartDraw = function () {
+		    let ctx = document.getElementById('pieChartCanvas').getContext('2d');
+		    
+		    window.pieChart = new Chart(ctx, {
+		        type: 'pie',
+		        data: pieChartData,
+		        options: {
+		        	responsive: false,
+		        	title: {
+		        		display:true,
+		        		text:'투표결과',
+		        		fontSize: 20
+		        	}
+		        }
+		    });
+		};
+		
+		
+		$("#show_vote_option").hide();
+		
+		pieChartDraw();
+		
+		var html = '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br>';
+		
+		$("#selected_vote_option").append(html);
+		$("#selected_vote_option").show();
+	}
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -44,38 +96,59 @@
 			<div class="contents content01">
 				<div class="container">
 					<div class="row">
-						<div class="col">
+						<div class="col d-flex justify-content-center text-center">
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
-							
+							<c:if test="${rv != null && result != 0}">
+								<canvas id="pieChartCanvas" style="width: 500px; height: 500px;"></canvas>
+								<script>asdasd();</script>
+							</c:if>
 							</div>
-							<c:if test="${rv2 != null}">
+							<c:if test="${rv != null && result != 0}">
+
+							</c:if>
+							<c:if test="${rv != null && result == 0}">
 								<div id="show_vote_option">
 									<form id="form1">
-										<input type="hidden" name="ridx" value="${rv2.ridx}">
-										${rv2.title}
-										<br>
-										<c:forEach var="i" items="${rv2.places}">
-											<input type="radio" name="vote" value="${i}">${i}<br>
-										</c:forEach>
-										<br>
-										<button type="button" onclick="insert_vote_option()">투표하기</button>
+										<input type="hidden" name="ridx" value="${rv.ridx}">
+										<div class="text-center">
+											${rv.title}
+										</div><br>
+										<c:if test="${rv.place1 != null }">
+											<input type="radio" name="vote" value="${rv.place1}">${rv.place1}<br>
+										</c:if>
+										<c:if test="${rv.place2 != null }">
+											<input type="radio" name="vote" value="${rv.place2}">${rv.place2}<br>
+										</c:if>
+										<c:if test="${rv.place3 != null }">
+											<input type="radio" name="vote" value="${rv.place3}">${rv.place3}<br>
+										</c:if>
+										<c:if test="${rv.place4 != null }">
+											<input type="radio" name="vote" value="${rv.place4}">${rv.place4}<br>
+										</c:if>
+										<c:if test="${rv.place5 != null }">
+											<input type="radio" name="vote" value="${rv.place5}">${rv.place5}<br>
+										</c:if>
+										<div class="text-center">
+											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
+										</div>
 									</form>
 									<c:if test="${login.midx == rv.midx}">
-										<button type="button" onclick="remove_vote()">투표  마감 / 삭제</button>
+										<br><button type="button" onclick="remove_vote()">투표  마감 / 삭제</button><br>
 									</c:if>
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
 								<div id="div_create_vote">
+									<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
 									<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
 									<div id="display" style="display:none">
 										<button onclick="add_option()" class="h-auto">선택지 추가</button>
 										<div id="voteArea">
 											<form id="vote_option">
 												<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-												<input type="text" id="p1" name="places" placeholder="투표 선택지1"><br>
-												<input type="text" id="p2" name="places" placeholder="투표 선택지2"><br>
+												<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
+												<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
 											</form>
 										</div>
 										<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
@@ -85,6 +158,7 @@
 							</div>
 						</div>
 					</div>
+					<br>
 					<div class="row">
 						<div class="col d-flex justify-content-center">
 							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
@@ -99,18 +173,36 @@
 	</div><!-- /#wrap -->
 <script>
 	function create_vote(){
-		if($("#display").css("display") == "none"){
-			$("#create_vote").html("취소");
-		}
-		else {
-			$("#create_vote").html("투표 만들기");
-		}
-		$("#display").toggle();
+		$("#create_vote").hide();
+		$("#display").show();
+		$("#cancel_vote").show();
 	}
-	var index = 3;
+	
+	let index = 3;
+	function cancel_vote(){
+		
+		$("#cancel_vote").hide();
+		$("#create_vote").show();
+		$("#display").hide();
+		
+		var html = '<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>';
+			html += '<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>';
+			html += '<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>';
+			
+		$("#vote_option").html(html);
+		index = 3;
+	}
+
 	function add_option(){
-		$("#vote_option").append('<input type="text" id="p'+index+'" name="places" placeholder="투표 선택지'+index+'"><br>');
-		index++;
+		if(index > 5){
+			alert("선택지는 최대 5개까지만 가능합니다.");
+			return;
+		}
+		else{
+			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
+			index++;
+		}
+		
 	}
 	
 	function upload_vote(){
@@ -126,13 +218,10 @@
 				$("#div_create_vote").hide();
 				
 				location.reload();
-				
 			}
-			
 		});
-		
 	}
-	
+	//투표한 값을 vote 테이블에 반영 후 투표결과 화면에 표시
 	function insert_vote_option(){
 		
 		var form = $("#form1").serialize();
@@ -141,22 +230,24 @@
 			url: "insert_vote_option.do?ridx=${rv.ridx}",
 			data: form,
 			type: "post",
-			success: function(){
-				
-				$("#show_vote_option").hide();
-				
-				var html = '<br>${rv2.ridx}<br>';
-					html += '${rv2.title}<br>';
-				for(int i = 0; i < ${rv2.places.length}; i++){
-					html += '${rv2.places['+i+']} + [ ]<br>'
-				}
-					html += '<button type="button" onclick="revote">투표 다시하기</button>'
-				
-				
-				$("#selected_vote_option").html(html);
-				$("#selected_vote_option").show();
+			success: function(vlist){
+				location.reload();
 			}
 		});
+	}
+	
+	function revote(){
+		$.ajax({
+			url: "revote.do",
+			data: "ridx=${rv.ridx}&midx=${login.midx}",
+			type: "post",
+			success:function(){
+				location.reload();
+			}
+		
+			
+		})
+		
 	}
 
 	function remove_vote(){
@@ -164,11 +255,13 @@
 			url: "remove_vote.do?ridx=${rv.ridx}",
 			type: "get",
 			success: function(){
-				$("#show_vote_option").hide();
+				alert("삭제 되었습니다.");
+				location.reload();
+				
 			}
 		});
-		
 	}
+	
 
 
 		

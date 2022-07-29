@@ -29,8 +29,11 @@ public class RecommendVO extends BoardVO{
 	
 	private int ridx;
 	private int tidx;
-	private String place;
-	private List<String> places;
+	private String place1;
+	private String place2;
+	private String place3;
+	private String place4;
+	private String place5;
 	private String pdate;
 	private String delyn;
 	
@@ -46,11 +49,35 @@ public class RecommendVO extends BoardVO{
 	public void setTidx(int tidx) {
 		this.tidx = tidx;
 	}
-	public String getPlace() {
-		return place;
+	public String getPlace1() {
+		return place1;
 	}
-	public void setPlace(String place) {
-		this.place = place;
+	public void setPlace1(String place1) {
+		this.place1 = place1;
+	}
+	public String getPlace2() {
+		return place2;
+	}
+	public void setPlace2(String place2) {
+		this.place2 = place2;
+	}
+	public String getPlace3() {
+		return place3;
+	}
+	public void setPlace3(String place3) {
+		this.place3 = place3;
+	}
+	public String getPlace4() {
+		return place4;
+	}
+	public void setPlace4(String place4) {
+		this.place4 = place4;
+	}
+	public String getPlace5() {
+		return place5;
+	}
+	public void setPlace5(String place5) {
+		this.place5 = place5;
 	}
 	public String getPdate() {
 		return pdate;
@@ -58,18 +85,14 @@ public class RecommendVO extends BoardVO{
 	public void setPdate(String pdate) {
 		this.pdate = pdate;
 	}
-	public List<String> getPlaces() {
-		return places;
-	}
-	public void setPlaces(List<String> places) {
-		this.places = places;
-	}
 	public String getDelyn() {
 		return delyn;
 	}
 	public void setDelyn(String delyn) {
 		this.delyn = delyn;
 	}
+	
+	
 	
 	
 	

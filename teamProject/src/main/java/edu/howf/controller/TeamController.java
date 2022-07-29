@@ -183,15 +183,29 @@ public class TeamController {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");	
-		System.out.println(login.getMidx());
 		
-		RecommendVO rv = teamService.teamTeamView(tidx);
-		RecommendVO rv2 = teamService.vote_option(tidx);
-		model.addAttribute("rv2", rv2);
+		RecommendVO rv = teamService.teamTeamView(tidx);	//투표 선택지들 가져옴
 		
-		model.addAttribute("login", login);
+		if(rv != null) {
+			VoteVO vo = new VoteVO();
+			vo.setMidx(login.getMidx());
+			vo.setRidx(rv.getRidx());
+			
+			int result = teamService.check_vote(vo);
+			
+			model.addAttribute("result", result);
+			
+			List<VoteVO> vote = teamService.selected_vote_option(rv.getRidx());
+			if(vote != null) {
+				model.addAttribute("vote", vote);
+			}
+		}
+		
 		model.addAttribute("rv", rv);
+		model.addAttribute("login", login);
 		model.addAttribute("tidx", tidx);
+		
+		
 		
 		return "team/teamTeam";
 	}
@@ -204,12 +218,21 @@ public class TeamController {
 		UserVO login = (UserVO)session.getAttribute("login");		
 		rv.setMidx(login.getMidx());
 		
-		StringBuilder places = new StringBuilder("");
-		for(int i = 0; i < rv.getPlaces().size(); i++) {
-			places.append(rv.getPlaces().get(i)+",");
+		if(rv.getPlace1() == "") {
+			rv.setPlace1(null);
 		}
-		String added_place = places.toString();
-		rv.setPlace(added_place.substring(0, added_place.length()-1));
+		if(rv.getPlace2() == ""){
+			rv.setPlace2(null);
+		}
+		if(rv.getPlace3() == ""){
+			rv.setPlace3(null);
+		}
+		if(rv.getPlace4() == ""){
+			rv.setPlace4(null);
+		}
+		if(rv.getPlace5() == ""){
+			rv.setPlace5(null);
+		}
 		
 		teamService.upload_vote(rv);
 		
@@ -224,22 +247,28 @@ public class TeamController {
 	}
 	
 	@ResponseBody
-	@PostMapping("insert_vote_option.do")
-	public int insert_vote_option(VoteVO vv, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value="insert_vote_option.do", produces = "application/json; charset=utf-8")
+	public List<VoteVO> insert_vote_option(int ridx, VoteVO vv, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");		
 		vv.setMidx(login.getMidx());
 		
-		return teamService.insert_vote_option(vv);
+		teamService.insert_vote_option(vv);
+		
+		List<VoteVO> vote = teamService.selected_vote_option(ridx);
+		
+		return vote;
 	}
 	
 	@ResponseBody
-	@PostMapping("selected_vote_option.do")
-	public VoteVO selected_vote_option(int ridx) {
+	@PostMapping("revote.do")
+	public int revote(VoteVO vv) {
 		
-		return teamService.selected_vote_option(ridx);
+		
+		return teamService.revote(vv);
 	}
+	
 	
 	
 	
