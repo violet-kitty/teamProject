@@ -164,6 +164,13 @@
 							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col">
+							<div>
+							
+							</div>
+						</div>
+					</div>
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->

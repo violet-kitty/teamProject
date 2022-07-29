@@ -147,18 +147,18 @@
 	</delete>
 	
 	<select id="join_check" parameterType="teamVO" resultType="joinVO">
-		SELECT  a.jidx,b.joinyn FROM
-		(SELECT COUNT(jidx) as jidx, jidx as j
-		FROM   jointable
-		WHERE  tidx = #{tidx}
-		AND    midx = #{midx}
-		 ) a
-		LEFT OUTER JOIN
-		(SELECT joinyn, jidx
-		FROM jointable a
-		WHERE tidx = #{tidx}
-		AND midx = #{midx}
-		 ) b
+		SELECT  a.jidx, b.joinyn
+		FROM    (SELECT COUNT(jidx) as jidx, jidx as j
+				 FROM 	jointable
+				 WHERE	tidx = #{tidx}
+				 AND	midx = #{midx}
+		 		) a
+		LEFT OUTER JOIN	(
+				 SELECT joinyn, jidx
+				 FROM jointable a
+				 WHERE tidx = #{tidx}
+				 AND midx = #{midx}
+		 	) b
 		ON a.j = b.jidx;
 	</select>
 	

@@ -104,11 +104,13 @@
 					</c:if>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
+			<c:if test="${check.joinyn == 'Y'}">
+				<div class="row">
+					<div class="col">
+						<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="row">
 				<div class="col d-flex justify-content-center">
 					<c:if test="${login!=null && login.midx == tv.midx}">
