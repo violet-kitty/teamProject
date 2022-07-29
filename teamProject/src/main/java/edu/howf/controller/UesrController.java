@@ -35,7 +35,9 @@ import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.util.SMTP;
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
+import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -380,12 +382,29 @@ public class UesrController {
 	
 	//예약한 숙소리스트 이동
 	@RequestMapping(value="/myReservation.do")
-	public String myReservation(Model model, HttpServletRequest request, HttpSession session) {
+	public String myReservation(SearchVO search, Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
+		search.setMidx(login.getMidx());
 		
-		List<ResVO> vo = stayService.resSelectAll(login.getMidx());
-		model.addAttribute("res", vo);
+		//sort
+		if(search.getSortType() == null) search.setSortType("new");
+		
+		//페이징
+		int page = search.getPage();
+		int cnt = stayService.resCountAll(search);
+		search.setPerPageNum(6);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(search);
+		pm.setTotalCount(cnt);
+		
+		List<ResVO> res = stayService.resSelectAll(search);
+		search.setPage(page);
+		
+		model.addAttribute("res", res);
+		model.addAttribute("search", search);
+		model.addAttribute("pm", pm);
 		
 		return "stay/myReservation";
 	}

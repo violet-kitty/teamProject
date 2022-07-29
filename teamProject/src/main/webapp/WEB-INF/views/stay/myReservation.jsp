@@ -57,9 +57,36 @@
 			<div class="contents lbg-lightestgray">
 				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
 					<!-- 페이지 제목 -->
-						<div class="title">
-							<h1>예약한 숙소 목록</h1>
+					<div class="title">
+						<h1>예약한 숙소 목록</h1>
+					</div>
+						
+					
+					<!-- sort 버튼 -->
+					<div class="row">
+						<div class="col d-flex justify-content-end">
+							<!-- searchVO에 sortType max, min, heart, star 넘김 -->
+							<button onclick="location.href='myReservation.do?sortType=new'">최신순</button>
+							<button onclick="location.href='myReservation.do?sortType=payY'">예약 완료</button>
+							<button onclick="location.href='myReservation.do?sortType=payN'">결제 필요</button>
 						</div>
+					</div>
+					<br>
+					<!-- 게시판 이름, 검색창 -->
+					<div class="row">
+						<div class="col d-flex justify-content-end">
+							<form class="d-flex input-group" action="myReservation.do" method="post">
+								<select class="form-select" name="searchType">
+									<option value="total" selected>전체</option>
+								</select>
+								<input type="text" class="form-control" name="searchValue" value="${search.searchValue}">
+								<button class="btn btn-dark">검색</button>
+							</form>
+						</div>
+					</div><!-- row end -->
+					<br>
+					
+						
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<c:forEach var="i" items="${res}">
 						<div class="feature col">
@@ -68,16 +95,47 @@
 							<h3>객실 이름 : ${i.rname}</h3>
 							<p>예약한 날짜 : ${i.wdate}<br>
 							체크인 : ${i.date1} 체크아웃 : ${i.date2}<br>
-							가격 : ${i.price} 결제여부 : ${i.pay}</p>
-							<c:if test="${i.pay == 'N'}">
+							가격 : ${i.price}<br>
+							<c:choose>
+								<c:when test="${i.delyn == 'Y'}">
+									예약 취소됨
+								</c:when>
+								<c:when test="${i.pay == 'N'}">
+									결제 필요
+								</c:when>
+								<c:otherwise>
+									예약됨
+								</c:otherwise>
+							</c:choose>
+							</p>
+							<c:if test="${i.pay == 'N' && i.delyn == 'N'}">
 							<button onclick="payment('${i.sname}','${i.ridx}','${i.rname}','${i.price}','${i.date1}','${i.date2}','${i.merchant}')">결제하기</button>
 							</c:if>
-							<c:if test="${i.pay == 'Y'}">
-							<button onclick="resCancel('${merchant}')">예약 취소</button>
+							<c:if test="${i.pay == 'Y' && i.delyn == 'N'}">
+							<button onclick="resCancel('${i.reidx}')">예약 취소</button>
 							</c:if>
 						</div>
 						</c:forEach>
+						<!-- 예약 취소를 위한 hidden input -->
+						<input type="hidden" name="reidx" id="reidx">
 					</div>
+					
+					<!-- 페이징 -->
+					<div class="row">
+						<div class="col d-flex justify-content-center">
+							<c:if test="${pm.prev == true}">
+								<a href="myReservation.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<a href="myReservation.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
+							</c:forEach>
+							<c:if test="${pm.next == true}">
+								<a href="myReservation.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+							</c:if>
+						</div>
+					</div>
+					
+					
 				</div>
 			</div>
 			<!-- / .content01 -->
@@ -96,16 +154,28 @@
 	}
 	
 	//예약 취소
-	function resCancel(){
-		modalFn("메시지 메시지메시지 메시지 메시지  ","확인", "타이틀입니다","취소");
+	function resCancel(reidx){
+		$("#reidx").val(reidx);
+		modalFn("정말 예약을 취소하시겠습니까?","예약 취소", "예약 취소","닫기");
 	}
 	
-	function modalOkFn(){e
+	function modalOkFn(){
 		modalClose();
-		modalFn("확인 버튼 잘 적용됨");
-		setTimeout(function(){
-			modalClose();
-		},1500);
+		$.ajax({
+			url:"<%= request.getContextPath() %>/stay/resDelete.do",
+			data:"reidx="+$("#reidx").val(),
+			type:"post",
+			success:function(data){
+				if(data == 1){
+					modalFn("예약이 취소되었습니다");
+					setTimeout(function(){
+						modalClose();
+						location.reload();
+					},1500);
+				}
+			}
+		});
+		
 	}
 </script>	
 </body>
