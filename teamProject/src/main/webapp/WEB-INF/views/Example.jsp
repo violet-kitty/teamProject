@@ -30,6 +30,21 @@
 </head>
 <body>
 	<div id="wrap">
+		<!-- 모달예제 
+		<button onclick="modalex()">모달예제</button>
+		<script>
+		function modalex(){
+		
+			/* modalex("모달이 완료되었습니다");
+		      setTimeout(function(){
+		         modalClose();
+		      },3000); */
+		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
+			
+		}
+		</script>
+		-->
+		
 		<!-- Header --><%@include file="Header.jsp"%>
 		<!-- Nav --><%@include file="Nav.jsp"%>
 		

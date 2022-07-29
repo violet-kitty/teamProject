@@ -97,11 +97,15 @@
 	
 	//예약 취소
 	function resCancel(){
-/* 		modalFn("sㄴㅇㄹㄴㅇㄹㄴㅇㄹㄷㄹ");
+		modalFn("메시지 메시지메시지 메시지 메시지  ","확인", "타이틀입니다","취소");
+	}
+	
+	function modalOkFn(){e
+		modalClose();
+		modalFn("확인 버튼 잘 적용됨");
 		setTimeout(function(){
 			modalClose();
-		},3000); */
-		modalFn("메시지 메시지메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지 메시지  ","닫기");
+		},1500);
 	}
 </script>	
 </body>

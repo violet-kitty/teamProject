@@ -26,7 +26,7 @@ a {text-decoration:none;}
 .modal-dialog {max-width:415px; margin:auto;}
 .modal-content {border:none; border-radius:0; outline:none; background:white; margin:auto; box-shadow: 8px 8px 5px rgba(0,0,0,0.1); padding:65px 60px 110px 65px;}
 .modal-content h2 {margin-bottom: 32px;}
-.modal-content p {margin-bottom:8px;}
+.modal-content p {margin-bottom:8px; line-height:1.8; text-align:center;}
 .modal-content input {margin: 8px 0px;}
 .modal input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
 .modal button {display:inline-block; width:30%;}
@@ -37,6 +37,7 @@ a {text-decoration:none;}
     left: 0;}
 @media (max-width: 576px){
 	.modal-dialog {max-width:415px;}
+	.modal-content {padding:55px 50px 100px 55px;}
 	.col-xs-3 {flex: 0 0 auto;width: 25%;}/*4개*/	
 	.col-xs-6 {flex: 0 0 auto;width: 50%;}/*2개*/	
 	.carousel-indicators [data-bs-target] {box-sizing: content-box;flex: 0 1 auto;width: 16px;height: 16px;padding: 0;margin-right: 10px;margin-left: 10px;text-indent: -999px;cursor: pointer;background-color: #fff;background-clip: padding-box;border: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-radius: 100%;opacity: .5;transition: opacity .6s ease;}
