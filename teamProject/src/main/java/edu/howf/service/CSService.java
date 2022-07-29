@@ -31,5 +31,8 @@ public interface CSService {
 	public int csReply_modify(CSVO vo);
 	
 	public int csReply_delete(CSVO vo);
+	
+	//답변 여부
+	public int csReply_check(int origincsbidx);
 
 }

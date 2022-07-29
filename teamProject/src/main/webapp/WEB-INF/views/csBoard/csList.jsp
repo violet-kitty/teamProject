@@ -115,7 +115,8 @@ a{
 				<th class="tb_category">작성자</th>
 				<th class="tb_category">제목</th>
 				<th class="tb_category">조회수</th>
-				<th class="tb_category">작성일</th>				
+				<th class="tb_category">작성일</th>
+				<th class="tb_category">답변여부</th>				
 			</tr>
 			<c:if test="${cv.size() == 0 }">
 				<tr>
@@ -130,6 +131,12 @@ a{
 					<td><a href="csList_view.do?csbidx=${c.csbidx}&origincsbidx=${c.origincsbidx}">${c.title}</a></td>
 					<td>${c.cnt}</td>
 					<td>${c.wdate}</td>
+					<c:if test="${c.answer != 2}">
+					<td>답변 대기</td>
+					</c:if>
+					<c:if test="${c.answer == 2}">
+					<td>답변 완료</td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</tbody>

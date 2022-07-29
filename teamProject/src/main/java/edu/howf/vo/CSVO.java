@@ -12,6 +12,7 @@ public class CSVO extends BoardVO{
 	private int origincsbidx;
 	private String divsn;
 	private String filename;
+	private int answer;
 	
 	public int getCsbidx() {
 		return csbidx;
@@ -37,8 +38,15 @@ public class CSVO extends BoardVO{
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+	public int getAnswer() {
+		return answer;
+	}
+	public void setAnswer(int answer) {
+		this.answer = answer;
+	}
 
 	
+
 	
 
 

@@ -42,6 +42,8 @@
 
 </body>
 
+
+
 <script type="text/javascript">
 
 //전송 버튼 누르는 이벤트
@@ -50,7 +52,7 @@ $("#button-send").on("click", function(e) {
 	$('#msg').val('')
 });
 
-var sock = new SockJS('http://localhost:8090/controller/echo');
+var sock = new SockJS('http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo');
 sock.onmessage = onMessage;
 sock.onclose = onClose;
 sock.onopen = onOpen;
@@ -114,6 +116,7 @@ function onOpen(evt) {
 	
 	$("#msgArea").append(str);
 }
+
 
 </script>
 
