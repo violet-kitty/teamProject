@@ -10,6 +10,7 @@ import edu.howf.vo.StayVO;
 public interface StayService {
 	public List<StayVO> staySelectAll(SearchVO vo);
 	public int stayCountAll(SearchVO vo);
+	public List<StayVO> stayHero();
 	public StayVO staySelectOne(ResVO vo);
 	public List<CommentVO> reviewSelect(SearchVO vo);
 	public int reviewCount(int bidx);
