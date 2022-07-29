@@ -224,8 +224,13 @@ public class StayServiceImple implements StayService{
 	}
 
 	@Override
-	public List<ResVO> resSelectAll(int midx) {
-		return stayDao.resSelectAll(midx);
+	public List<ResVO> resSelectAll(SearchVO vo) {
+		return stayDao.resSelectAll(vo);
+	}
+	
+	@Override
+	public int resCountAll(SearchVO vo) {
+		return stayDao.resCountAll(vo);
 	}
 
 	@Override

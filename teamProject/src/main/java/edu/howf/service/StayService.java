@@ -29,7 +29,8 @@ public interface StayService {
 	public int resPay(String merchant);
 	public ResVO resDup(ResVO vo);
 	public int resDelete(int reidx);
-	public List<ResVO> resSelectAll(int midx);
+	public List<ResVO> resSelectAll(SearchVO vo);
+	public int resCountAll(SearchVO vo);
 	public int resInsertB(ResVO vo);
 	public int resDeleteB(int reidx);
 	public List<ResVO> resSelectAllB(ResVO vo);

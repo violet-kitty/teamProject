@@ -583,7 +583,7 @@
 	</update>
 	
 	<!-- 예약 목록 가져오기(일반 회원) -->
-	<select id="resSelectAll" parameterType="int" resultType="resVO">
+	<select id="resSelectAll" parameterType="searchVO" resultType="resVO">
 		SELECT r.reidx
 			, r.ridx
 			, r.date1
@@ -610,10 +610,51 @@
 		ON ro.sidx = s.sidx) a
 		ON r.ridx = a.ridx
 		WHERE midx = #{midx}
-		ORDER BY wdate desc
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.sname like CONCAT('%',#{searchValue},'%')
+		OR a.rname like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("payN")'>
+		AND r.pay = 'N'
+		</if>
+		<if test='sortType.equals("payY")'>
+		AND r.pay = 'Y'
+		AND r.delyn = 'N'
+		</if>
+		ORDER BY reidx desc
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
-	
+	<!-- 예약 목록 세기 (일반 회원) -->
+	<select id="resCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(r.reidx)
+		FROM res r
+		JOIN
+		(SELECT ro.ridx
+			, s.sidx
+			, s.name as sname
+			, ro.name as rname
+		FROM room ro
+		JOIN stay s
+		ON ro.sidx = s.sidx) a
+		ON r.ridx = a.ridx
+		WHERE midx = #{midx}
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.sname like CONCAT('%',#{searchValue},'%')
+		OR a.rname like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("payN")'>
+		AND r.pay = 'N'
+		</if>
+		<if test='sortType.equals("payY")'>
+		AND r.pay = 'Y'
+		AND r.delyn = 'N'
+		</if>
+	</select>
 	
 	
 	<!-- 예약 추가(business) -->
