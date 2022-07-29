@@ -398,20 +398,33 @@ public class StayController {
 		return stayService.roomRidx(vo);
 	}
 	
-	//예약하기 페이지 이동
-	@RequestMapping(value="/stayReservation.do")
-	public String stayReservation(ResVO res, Model model, HttpServletRequest request, HttpSession session) {
-		//상품 id(다른것과 id가 겹치면 중복된 결제건이라고 결제가 되지 않음)
-		Calendar cal = Calendar.getInstance();
-		String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
-		res.setMerchant(merchant);
-		
+	//가예약 중복 여부 판단
+	@ResponseBody
+	@RequestMapping(value="/resDup.do", produces = "application/json;charset=utf-8")
+	public ResVO resDup(ResVO res, HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
 		res.setMidx(login.getMidx());
 		
-		//예약정보 DB에 넣기
-		stayService.resInsert(res);
+		return stayService.resDup(res);
+	}
+	
+	//예약하기 페이지 이동
+	@RequestMapping(value="/stayReservation.do")
+	public String stayReservation(ResVO res, Model model, HttpServletRequest request, HttpSession session) {
+		if(res.getMerchant() == null) {
+			//상품 id(다른것과 id가 겹치면 중복된 결제건이라고 결제가 되지 않음)
+			Calendar cal = Calendar.getInstance();
+			String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
+			res.setMerchant(merchant);
+			
+			session = request.getSession();
+			UserVO login = (UserVO)session.getAttribute("login");
+			res.setMidx(login.getMidx());
+			
+			//예약정보 DB에 넣기
+			stayService.resInsert(res);
+		}
 		
 		//객실 정보, 선택한 날짜 들고 가기
 		model.addAttribute("res", res);

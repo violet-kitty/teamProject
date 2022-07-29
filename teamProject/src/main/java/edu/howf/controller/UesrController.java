@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,10 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.howf.service.BoardService;
+import edu.howf.service.StayService;
 import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.util.SMTP;
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.ResVO;
 import edu.howf.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -39,6 +43,12 @@ import edu.howf.vo.UserVO;
 public class UesrController {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	BoardService boardService;
+	
+	@Autowired
+	StayService stayService;
 	
 	@Autowired
 	String uploadPath;
@@ -350,6 +360,8 @@ public class UesrController {
 	}
 	
 	
+	/* 마이페이지 */
+	//일반회원
 	
 	//마이페이지 이동(일반회원)
 	@RequestMapping(value="/mypage.do")
@@ -357,17 +369,51 @@ public class UesrController {
 		return "user/mypageNList";
 	}
 	
+	//내 정보 이동
+	
+	
+	//여행이야기 관리 이동
+	
+	
+	//찜 목록 이동
+	
+	
+	//예약한 숙소리스트 이동
+	@RequestMapping(value="/myReservation.do")
+	public String myReservation(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		List<ResVO> vo = stayService.resSelectAll(login.getMidx());
+		model.addAttribute("res", vo);
+		
+		return "stay/myReservation";
+	}
+	
+	
+	//내 리뷰,댓글 보기 이동
+	
+	
+	
+	//공무원
+	
 	//마이페이지 이동(공무원)
 	@RequestMapping(value="/mypageOfficial.do")
 	public String mypageO() {
 		return "user/mypageOList";
 	}
 	
+	
+	//사업자
+	
 	//마이페이지 이동(business)
 	@RequestMapping(value="/mypageBusiness.do")
 	public String mypageB() {
 		return "user/mypageBList";
 	}
+	
+	
+	//관리자
 	
 	//마이페이지 이동(admin)
 	@RequestMapping(value="/mypageAdmin.do")
