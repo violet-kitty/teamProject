@@ -1,11 +1,14 @@
 package edu.howf.vo;
 
+import java.util.List;
+
 public class VoteVO{
 	
 	private int vidx;
 	private int midx;
 	private int ridx;
 	private String vote;
+	private int cnt;
 
 	public int getVidx() {
 		return vidx;
@@ -30,6 +33,12 @@ public class VoteVO{
 	}
 	public void setVote(String vote) {
 		this.vote = vote;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 	

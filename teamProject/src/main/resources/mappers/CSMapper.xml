@@ -177,7 +177,7 @@
 		
 		
 		
-		<!-- 댓글 기능 관련 매퍼 -->
+		<!-- 답변 기능 관련 매퍼 -->
 		<insert id="csReply_write" parameterType="csVO">		
 			INSERT INTO CStable(
 							origincsbidx
@@ -232,7 +232,14 @@
 			WHERE  csbidx = #{csbidx}
 		</update>
 		
-		
+		<!-- 답변 여부 -->
+		<select id="csReply_check" parameterType="int" resultType="int">
+			SELECT	count(2) as answer
+			FROM	cstable
+			WHERE	origincsbidx = #{csbidx}
+			AND		delyn = 'N'
+			
+		</select>
 
 			
 			

@@ -68,6 +68,11 @@ public class CSController {
 			int page = vo.getPage();
 			vo.setMidx(login.getMidx());
 			List<CSVO> cv = csService.CSList(vo, request, session);
+			
+			//답변 여부
+			for(CSVO c : cv) {
+				c.setAnswer(csService.csReply_check(c.getCsbidx()));
+			}
 
 			model.addAttribute("login", login);
 			model.addAttribute("cv", cv);
@@ -80,6 +85,8 @@ public class CSController {
 			pm.setTotalCount(cnt);
 
 			model.addAttribute("pm", pm);
+			
+			
 
 			return "csBoard/csList";
 		}
