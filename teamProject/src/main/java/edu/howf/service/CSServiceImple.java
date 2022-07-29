@@ -99,6 +99,13 @@ public class CSServiceImple implements CSService{
 		
 		return csDao.csList_cnt(csbidx);
 	}
+
+	//답변여부
+	@Override
+	public int csReply_check(int origincsbidx) {
+		
+		return csDao.csReply_check(origincsbidx);
+	}
 	
 	
 }

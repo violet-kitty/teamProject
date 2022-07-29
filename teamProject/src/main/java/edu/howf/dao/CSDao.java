@@ -91,7 +91,11 @@ public class CSDao {
 		return sqlSession.update(namespace + "csReply_delete", vo);
 	}
 	
-
+	//답변 여부
+	public int csReply_check(int csbidx) {
+		
+		return sqlSession.selectOne(namespace +"csReply_check", csbidx);
+	}
 	
 	
 }
