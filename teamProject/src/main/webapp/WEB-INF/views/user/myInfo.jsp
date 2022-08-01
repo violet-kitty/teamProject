@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,17 +20,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<!-- 이미지 자르기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -41,58 +46,52 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- contents 02 -->
-			<style>
-			.feature {text-align:center;}
-			.feature img {margin:auto; margin-bottom:40px;}
-			.feature p {margin-bottom: 56px;}
-			.feature h2 {margin-bottom:24px;}
-			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
-    width: auto;}
-.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
-    width: auto;}
-			</style>
-			
-			<div class="contents lbg-lightestgray">
-				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+					
 					<!-- 페이지 제목 -->
-						<div class="title">
-							<h1>마이페이지</h1>
-						</div>
-					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myInfo.do">내 정보</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myStory.do">내 여행이야기 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myHeart.do">내 찜 목록</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myReservation.do">예약한 숙소</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myComment.do">내 리뷰, 댓글</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">문의 내역</a>
+					<div class="title">
+						<h1>내 정보</h1>
+					</div>
+					
+					<!-- 프로필 이미지 -->
+					<div class="row">
+						<div class="col">
+							
+							<!-- 프로필 이미지 -->
+							<img><br>
+							<button onclick="location.href='profileImg.do'">프로필 이미지 수정하기</button>
+							
 						</div>
 					</div>
-				</div>
+					
+					
+					<!-- 회원정보 -->
+					<div class="row">
+						<div class="col">
+							이름 ${profile.name}<br>
+							닉네임 ${profile.nickname}<br>
+							생년월일 ${profile.jumin}<br>
+							이메일 ${profile.email}<br>
+							연락처 ${profile.phone}<br>
+							주소 ${profile.addr} ${profile.detailaddr}<br>
+							
+							<button onclick="location.href='profile.do'">정보 수정</button>
+							
+						</div>
+					</div>
+					
+				
+				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
-			
+
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
 </body>
 </html>

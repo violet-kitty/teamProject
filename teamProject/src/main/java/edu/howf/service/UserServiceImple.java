@@ -91,4 +91,19 @@ public class UserServiceImple implements UserService{
 		return userDao.autoLogin(midx);
 	}
 	
+	@Override
+	public UserVO profileSelectOne(int midx) {
+		return userDao.profileSelectOne(midx);
+	}
+
+	@Override
+	public int profileImgModify(UserVO vo) {
+		return userDao.profileImgModify(vo);
+	}
+
+	@Override
+	public int profileModify(UserVO vo) {
+		return userDao.profileModify(vo);
+	}
+	
 }

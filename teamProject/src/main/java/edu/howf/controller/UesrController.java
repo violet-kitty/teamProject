@@ -363,6 +363,81 @@ public class UesrController {
 	
 	
 	/* 마이페이지 */
+	//공통
+	//내 정보 이동
+	@RequestMapping(value="/myInfo.do", method=RequestMethod.GET)
+	public String myInfo(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		UserVO vo = userService.profileSelectOne(login.getMidx());
+		
+		model.addAttribute("profile", vo);
+		
+		return "user/myInfo";
+	}
+	
+	//프로필 이미지 수정 이동
+	@RequestMapping(value="/profileImg.do", method=RequestMethod.GET)
+	public String profile(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		UserVO vo = userService.profileSelectOne(login.getMidx());
+		
+		model.addAttribute("profile", vo);
+		
+		return "user/profileImgModify";
+	}
+	
+	//프로필 이미지 수정
+	@ResponseBody
+	@RequestMapping(value="/profileImg.do", method=RequestMethod.POST)
+	public int profileModify(MultipartFile profileImg, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+		//파일 받아오는 처리
+		if(profileImg != null) {
+			File dir = new File(uploadPath);
+			
+			if(!dir.exists()) dir.mkdirs();
+			
+			if(!profileImg.getOriginalFilename().isEmpty()) {
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString()+"_"+profileImg.getOriginalFilename();
+				profileImg.transferTo(new File(uploadPath,fileName));
+				System.out.println("file:"+fileName);
+				
+				session = request.getSession();
+				UserVO login = (UserVO)session.getAttribute("login");
+				login.setImg(fileName);
+				userService.profileImgModify(login);
+				
+				return 1;
+			}
+			else {
+				System.out.println("입력된 파일 없음");
+				return 0;
+			}
+		}
+		return 0;
+	}
+	
+	//내 정보 수정
+	@RequestMapping(value="/profile.do", method=RequestMethod.GET)
+	public String myInfoModify(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		UserVO vo = userService.profileSelectOne(login.getMidx());
+		
+		model.addAttribute("profile", vo);
+		
+		return "user/myInfoModify";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/profile.do", method=RequestMethod.POST)
+	public int myInfoModify(UserVO vo, HttpServletRequest request, HttpSession session) {
+		return 0;
+	}
+	
+	
 	//일반회원
 	
 	//마이페이지 이동(일반회원)
@@ -371,14 +446,19 @@ public class UesrController {
 		return "user/mypageNList";
 	}
 	
-	//내 정보 이동
-	
-	
 	//여행이야기 관리 이동
-	
+	@RequestMapping(value="/myStory.do")
+	public String myStory() {
+		
+		return "story/myStory";
+	}
 	
 	//찜 목록 이동
-	
+	@RequestMapping(value="/myHeart.do")
+	public String myHeart() {
+		
+		return "user/myHeart";
+	}
 	
 	//예약한 숙소리스트 이동
 	@RequestMapping(value="/myReservation.do")
@@ -411,6 +491,10 @@ public class UesrController {
 	
 	
 	//내 리뷰,댓글 보기 이동
+	@RequestMapping(value="/myComment.do")
+	public String myComment() {
+		return "user/myComment";
+	}
 	
 	
 	
@@ -422,6 +506,9 @@ public class UesrController {
 		return "user/mypageOList";
 	}
 	
+	//지역 이벤트 관리 이동
+	
+	
 	
 	//사업자
 	
@@ -431,6 +518,13 @@ public class UesrController {
 		return "user/mypageBList";
 	}
 	
+	//내 숙소 관리 이동
+	
+	
+	//예약자 관리 이동
+	
+	
+	
 	
 	//관리자
 	
@@ -439,6 +533,16 @@ public class UesrController {
 	public String mypageA() {
 		return "user/mypageAList";
 	}
+	
+	//회원 관리 이동
+	
+	
+	//HOWF 추천 관리 이동
+	
+	
+	//HOWF 소식 관리 이동
+	
+	
 	
 	
 	

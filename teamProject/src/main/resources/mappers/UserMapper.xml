@@ -109,6 +109,7 @@
 	<select id="login" parameterType="userVO" resultType="userVO">
 		SELECT midx
 			, nickname
+			, img
 			, role
 			, joinyn
 			, password
@@ -171,14 +172,56 @@
 		   AND token = #{token}
 	</select>
 	
-	<!-- midx로 회원정보 가져오기 -->
+	<!-- midx로 회원정보 가져오기(자동 로그인) -->
 	<select id="autoLoginSelectOne" parameterType="int" resultType="userVO">
 		SELECT midx
 			, nickname
+			, img
 			, role
 			, joinyn
 			, password
 		 FROM usertable
 		 WHERE midx = #{midx}
 	</select>
+	
+	
+	<!-- 마이 페이지 -->
+	
+	
+	<!-- 마이페이지 정보 가져오기 -->
+	<select id="profileSelectOne" parameterType="int" resultType="userVO">
+		SELECT name
+			, email
+			, password
+			, nickname
+			, phone
+			, addr
+			, detailaddr
+			, jumin
+			, img
+			, document
+			,social
+		FROM usertable
+		WHERE midx = #{midx}
+	</select>
+	
+	<!-- 마이페이지 프로필 이미지 수정 -->
+	<update id="profileImgModify" parameterType="userVO">
+		UPDATE usertable
+		SET img = #{img}
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 내 정보 수정 -->
+	<update id="profileModify" parameterType="userVO">
+		UPDATE usertable
+		SET   nickname = #{nickname}
+			, jumin = #{jumin}
+			, email = #{email}
+			, phone = #{phone}
+			, addr = #{addr}
+			, detailaddr = #{detailaddr}
+		WHERE midx = #{midx}
+	</update>
+	
 </mapper>
