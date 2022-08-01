@@ -24,6 +24,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
@@ -37,6 +39,7 @@
 <body>
 
 	<div id="wrap" class="howflist">
+		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		
 		<!-- Side -->
@@ -51,7 +54,7 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- hero -->
 			<div id="carouselExampleIndicators" class="hero content01 carousel slide" data-bs-ride="carousel">
@@ -109,7 +112,7 @@
 			<!-- Nav --><%@include file="../Nav.jsp"%>
 			
 			<!-- pagehead  -->
-			<div class="contents pagehead hbg-lightgray">
+			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 				
 					<!-- pagehead -->
@@ -145,20 +148,18 @@
 						<div class="row grid">
 							<!-- C리스트 14. 반복 -->
 							<c:forEach var="v" items="${howf}">
-							<div class="thumbnailitem col-xs-18 col-sm-6 col-md-4">
+							<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
 								<a style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
-									<div class="thumbnail">
+									<div class="thumbnail hbshadow3">
 
 											<figure class="effect-ming">
 												<!-- 메인이미지 보여주기-->
 												<c:if test="${v.filename != null}">
-													<div class="imgbox"
-														style="background-image: url(<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename}); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename});"></div>
 												</c:if>
 
 												<c:if test="${v.filename == null}">
-													<div class="imgbox"
-														style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 												</c:if>
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
@@ -169,17 +170,17 @@
 											<div class="writerinfo">
 												<p>
 													<c:if test="${v.cate=='숙박추천'}">
-														<span style="background: #54ACA8; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #54ACA8; color: white;">${v.cate}</span>
 													</c:if>
 													<c:if test="${v.cate=='여행지추천'}">
-														<span style="background: #85A548; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #85A548; color: white;">${v.cate}</span>
 													</c:if>
 													<c:if test="${v.cate=='맛집추천'}">
-														<span style="background: #DE8889; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #DE8889; color: white;">${v.cate}</span>
 													</c:if>
-													<span>| ${v.wdate}</span>
+													<span class="hfc-semibold hfc-blackgray"> ${v.wdate}</span>
 												</p>
-												<small class="text-muted"><img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30"><span class="ms-1">${v.heart}</span></small>
+												<div class="small"><img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${v.heart}</span></div>
 											</div>
 											<div class="caption">
 												<h4>${v.title}</h4>
@@ -198,7 +199,14 @@
 									<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
 								</c:if>
 								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-									<a href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
+								<c:choose>
+								<c:when test="${search.page != null && i == search.page}">
+									<a class="hfc-white hbg-pink mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a class="mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+								</c:otherwise>
+								</c:choose>
 								</c:forEach>
 								<c:if test="${pm.next == true}">
 									<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
