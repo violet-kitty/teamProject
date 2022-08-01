@@ -85,7 +85,9 @@
 									<c:choose>
 									
 									<c:when test="${profile.img == null}">
-										<div id="profileAlt"></div>
+										<div id="profileAlt" style="border-radius:50%;width:200px;height:200px;">
+											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:200px;height:200px;">
+										</div>
 										<img src="" id="profileImg" style="display:none">
 									</c:when>
 									

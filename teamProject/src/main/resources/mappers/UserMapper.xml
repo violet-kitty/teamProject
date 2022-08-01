@@ -215,10 +215,12 @@
 	<!-- 내 정보 수정 -->
 	<update id="profileModify" parameterType="userVO">
 		UPDATE usertable
-		SET   nickname = #{nickname}
+		SET   name = #{name}
+			, nickname = #{nickname}
 			, jumin = #{jumin}
 			, email = #{email}
 			, phone = #{phone}
+			, password = #{password}
 			, addr = #{addr}
 			, detailaddr = #{detailaddr}
 		WHERE midx = #{midx}

@@ -60,6 +60,14 @@
 						<div class="col">
 							
 							<!-- 프로필 이미지 -->
+							<c:choose>
+							<c:when test="${login.img ==  null}">
+								<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:200px;height:200px;">
+							</c:when>
+							<c:otherwise>
+								<img src="<%=request.getContextPath()%>/user/displayFile.do?fileName=${login.img}" style="border-radius:50%;width:200px;height:200px;">
+							</c:otherwise>
+							</c:choose>
 							<img><br>
 							<button onclick="location.href='profileImg.do'">프로필 이미지 수정하기</button>
 							

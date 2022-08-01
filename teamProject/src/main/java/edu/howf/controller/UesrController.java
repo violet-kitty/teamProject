@@ -357,7 +357,6 @@ public class UesrController {
 	@RequestMapping(value="/pwdFindComplete.do", method=RequestMethod.POST)
 	public int pwdFind2(UserVO vo) {
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
-		System.out.println("password:"+vo.getPassword());
 		return userService.pwdModify(vo);
 	}
 	
@@ -419,7 +418,7 @@ public class UesrController {
 		return 0;
 	}
 	
-	//내 정보 수정
+	//내 정보 수정 이동
 	@RequestMapping(value="/profile.do", method=RequestMethod.GET)
 	public String myInfoModify(Model model, HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
@@ -431,10 +430,17 @@ public class UesrController {
 		return "user/myInfoModify";
 	}
 	
+	//내 정보 수정
 	@ResponseBody
 	@RequestMapping(value="/profile.do", method=RequestMethod.POST)
 	public int myInfoModify(UserVO vo, HttpServletRequest request, HttpSession session) {
-		return 0;
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+		int result = userService.profileModify(vo);
+		
+		return result;
 	}
 	
 	
