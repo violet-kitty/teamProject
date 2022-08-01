@@ -56,6 +56,7 @@ public class StayController {
 	@RequestMapping(value="/stayList.do")
 	public String stayList(SearchVO vo, Model model) {
 		//히어로
+		List<StayVO> hero = stayService.stayHero();
 		
 		//sort
 		if(vo.getSortType()==null) vo.setSortType("star");
@@ -72,7 +73,7 @@ public class StayController {
 		List<StayVO> stay = stayService.staySelectAll(vo);
 		vo.setPage(page);
 		
-
+		model.addAttribute("hero", hero);
 		model.addAttribute("stay", stay);
 		model.addAttribute("search", vo);
 		model.addAttribute("pm", pm);
@@ -469,7 +470,7 @@ public class StayController {
 		return authNum;
 	}
 	
-	//결제 검증, 예약
+	//예약
 	@ResponseBody
 	@RequestMapping(value="/tradeAuth.do")
 	public String tradeAuth(ResVO vo) {
@@ -483,7 +484,12 @@ public class StayController {
 		}
 	}
 	
-	
+	//예약 취소
+	@ResponseBody
+	@RequestMapping(value="/resDelete.do")
+	public int resDelete(String reidx) {
+		return stayService.resDelete(Integer.parseInt(reidx));
+	}
 	
 	
 	

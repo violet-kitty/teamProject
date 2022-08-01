@@ -17,7 +17,7 @@
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
+			<artifactId>spring-context</artifactId>	
 			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -229,12 +229,26 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- stomp -->
+		<dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-stomp</artifactId>
+		    <version>5.3.2.RELEASE</version>
+		</dependency>
+		
 		<!-- sms 전송 -->
 		<dependency>
             <groupId>net.nurigo</groupId>
             <artifactId>javaSDK</artifactId>
             <version>2.2</version>
         </dependency>
+        
 	 
 	</dependencies>
     <build>

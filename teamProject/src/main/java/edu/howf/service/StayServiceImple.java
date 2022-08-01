@@ -28,6 +28,11 @@ public class StayServiceImple implements StayService{
 	}
 	
 	@Override
+	public List<StayVO> stayHero(){
+		return stayDao.stayHero();
+	}
+	
+	@Override
 	public StayVO staySelectOne(ResVO vo) {
 		//숙박시설 정보 가져오기
 		StayVO stay = stayDao.staySelectOne(vo.getSidx());
@@ -224,8 +229,13 @@ public class StayServiceImple implements StayService{
 	}
 
 	@Override
-	public List<ResVO> resSelectAll(int midx) {
-		return stayDao.resSelectAll(midx);
+	public List<ResVO> resSelectAll(SearchVO vo) {
+		return stayDao.resSelectAll(vo);
+	}
+	
+	@Override
+	public int resCountAll(SearchVO vo) {
+		return stayDao.resCountAll(vo);
 	}
 
 	@Override

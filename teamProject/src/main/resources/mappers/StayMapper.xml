@@ -108,6 +108,9 @@
 		<if test="op.equals('킹베드')">
 		AND e.kbed != 0
 		</if>
+		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		AND e.services like CONCAT ('%',#{op},'%')
+		</if>
 		</foreach>
 		</if>
 		</if>
@@ -194,11 +197,36 @@
 		<if test="op.equals('킹베드')">
 		AND b.kbed != 0
 		</if>
+		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		AND e.services like CONCAT ('%',#{op},'%')
+		</if>
 		</foreach>
 		</if>
 		</if>
 	</select>
 	
+	<!-- 히어로 -->
+	<select id="stayHero" resultType="stayVO">
+		SELECT s.sidx
+			, s.name
+			, s.addr
+			, s.tag
+			, s.photo
+			, d.star
+		FROM stay s
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, count(cbidx) as cnt
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
+		AND delyn = 'N'
+		GROUP BY bidx) d
+		ON s.sidx = d.bidx
+		WHERE s.delyn = 'N'
+		ORDER BY d.star desc
+		LIMIT 0,3
+	</select>
 	
 	<!-- 숙박정보 가져오기 -->
 	<select id="staySelectOne" parameterType="int" resultType="stayVO">
@@ -583,7 +611,7 @@
 	</update>
 	
 	<!-- 예약 목록 가져오기(일반 회원) -->
-	<select id="resSelectAll" parameterType="int" resultType="resVO">
+	<select id="resSelectAll" parameterType="searchVO" resultType="resVO">
 		SELECT r.reidx
 			, r.ridx
 			, r.date1
@@ -610,10 +638,51 @@
 		ON ro.sidx = s.sidx) a
 		ON r.ridx = a.ridx
 		WHERE midx = #{midx}
-		ORDER BY wdate desc
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.sname like CONCAT('%',#{searchValue},'%')
+		OR a.rname like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("payN")'>
+		AND r.pay = 'N'
+		</if>
+		<if test='sortType.equals("payY")'>
+		AND r.pay = 'Y'
+		AND r.delyn = 'N'
+		</if>
+		ORDER BY reidx desc
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
-	
+	<!-- 예약 목록 세기 (일반 회원) -->
+	<select id="resCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(r.reidx)
+		FROM res r
+		JOIN
+		(SELECT ro.ridx
+			, s.sidx
+			, s.name as sname
+			, ro.name as rname
+		FROM room ro
+		JOIN stay s
+		ON ro.sidx = s.sidx) a
+		ON r.ridx = a.ridx
+		WHERE midx = #{midx}
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.sname like CONCAT('%',#{searchValue},'%')
+		OR a.rname like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("payN")'>
+		AND r.pay = 'N'
+		</if>
+		<if test='sortType.equals("payY")'>
+		AND r.pay = 'Y'
+		AND r.delyn = 'N'
+		</if>
+	</select>
 	
 	
 	<!-- 예약 추가(business) -->

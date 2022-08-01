@@ -27,6 +27,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <title>Insert title here</title>
 <style>
 .team_title{
@@ -104,11 +105,13 @@
 					</c:if>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
+			<c:if test="${check.joinyn == 'Y'}">
+				<div class="row">
+					<div class="col">
+						<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="row">
 				<div class="col d-flex justify-content-center">
 					<c:if test="${login!=null && login.midx == tv.midx}">

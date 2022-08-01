@@ -28,6 +28,10 @@ public class StayDao {
 		return sqlSession.selectOne(namespace+"stayCountAll", vo);
 	}
 	
+	public List<StayVO> stayHero(){
+		return sqlSession.selectList(namespace+"stayHero");
+	}
+	
 	public StayVO staySelectOne(int sidx) {
 		return sqlSession.selectOne(namespace+"staySelectOne", sidx);
 	}
@@ -116,8 +120,13 @@ public class StayDao {
 		return sqlSession.update(namespace+"resDelete", reidx);
 	}
 	
-	public List<ResVO> resSelectAll(int midx) {
-		return sqlSession.selectList(namespace+"resSelectAll", midx);
+	public List<ResVO> resSelectAll(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"resSelectAll", vo);
+	}
+	
+	public int resCountAll(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"resCountAll", vo);
 	}
 	
 	public int resInsertB(ResVO vo) {

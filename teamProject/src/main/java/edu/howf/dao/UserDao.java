@@ -93,4 +93,19 @@ public class UserDao {
 	public UserVO autoLogin(int midx) {
 		return sqlSession.selectOne(namespace+"autoLoginSelectOne", midx);
 	}
+	
+	//프로필 정보 가져오기
+	public UserVO profileSelectOne(int midx) {
+		return sqlSession.selectOne(namespace+"profileSelectOne", midx);
+	}
+	
+	//프로필 이미지 수정
+	public int profileImgModify(UserVO vo) {
+		return sqlSession.update(namespace+"profileImgModify", vo);
+	}
+	
+	//프로필 수정
+	public int profileModify(UserVO vo) {
+		return sqlSession.update(namespace+"profileModify", vo);
+	}
 }

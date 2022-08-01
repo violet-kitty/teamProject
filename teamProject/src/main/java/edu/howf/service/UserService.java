@@ -19,4 +19,7 @@ public interface UserService {
 	public int autoLoginDelete(int midx);
 	public int autoLogin(AutoVO vo);
 	public UserVO autoLogin(int midx);
+	public UserVO profileSelectOne(int midx);
+	public int profileImgModify(UserVO vo);
+	public int profileModify(UserVO vo);
 }

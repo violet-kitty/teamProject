@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,12 +25,33 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- sockjs.min.js --><script src="<%=request.getContextPath()%>/js/sockjs.min.js"></script>
+<!-- stomp.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+	
+</script>
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		<!-- 모달예제 
+		<button onclick="modalex()">모달예제</button>
+		<script>
+		function modalex(){
+		
+			/* modalex("모달이 완료되었습니다");
+		      setTimeout(function(){
+		         modalClose();
+		      },3000); */
+		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
+			
+		}
+		</script>
+		-->
+		
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -41,45 +61,26 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- contents 02 -->
-			<style>
-			.feature {text-align:center;}
-			.feature img {margin:auto; margin-bottom:40px;}
-			.feature p {margin-bottom: 56px;}
-			.feature h2 {margin-bottom:24px;}
-			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
-    width: auto;}
-.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
-    width: auto;}
-			</style>
-			
-			<div class="contents lbg-lightestgray">
-				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
-					<!-- 페이지 제목 -->
-						<div class="title">
-							<h1>마이페이지</h1>
-						</div>
-					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myInfo.do">내 정보</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">지역이벤트 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">문의 내역</a>
-						</div>
-					</div>
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+					
 				</div>
+				<!-- /.container -->
 			</div>
-			
+			<!-- / .content01 -->
 
-		</div><!-- / #container -->
+
+		</div>
+		<!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+<script>
+	$(function(){
+		var sock = new SockJS;
+		
+	})
+</script>
 </body>
 </html>
