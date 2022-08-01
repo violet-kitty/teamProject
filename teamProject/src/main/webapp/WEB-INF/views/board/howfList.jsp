@@ -3,7 +3,7 @@
 <%@ page session="true" %>
     
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,13 +32,14 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --> <link href="<%=request.getContextPath()%>/css/board.css" rel="stylesheet">
 <!-- CSS3 - Howf --> <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-	<div id="wrap" class="howflist">
+	<div id="wrap" class="boardlist howf howflist">
 		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		
@@ -58,7 +59,7 @@
 
 			<!-- hero -->
 			<div id="carouselExampleIndicators" class="hero content01 carousel slide" data-bs-ride="carousel">
-				<div class="carousel-indicators">
+				<div class="carousel-indicators onlypc">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -118,14 +119,22 @@
 					<!-- pagehead -->
 					<div class="pageinfo">
 						<!-- 페이지 제목 -->
-						<div class="title">
+						<div class="title onlypc">
 							<a href="<%= request.getContextPath() %>/howf/howfList.do"><h1>HOWF추천</h1></a>
 						</div>
 						
-						<!-- rightbox -->
-						<div class="row rightbox">
+						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
+						<div class="row rightbox onlypc-inline">
 							<!-- sort 버튼 -->
 							<div class="col d-flex justify-content-end filterbtn">
+								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
+								<!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+									<li class="nav-item active"><a class="nav-link" onclick="location.href='howfList.do?sortType=food'">맛집추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=stay'">숙박추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=travel'">여행지추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=heart'">좋아요순</a></li>
+									<li class="nav-item"><a class="nav-link active" onclick="location.href='howfList.do?sortType=new'">최신순</a></li>
+								</ul> -->
 								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
 								<button onclick="location.href='howfList.do?sortType=food'">맛집추천</button>
 								<button onclick="location.href='howfList.do?sortType=stay'">숙박추천</button>
@@ -135,6 +144,23 @@
 							</div>
 							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
 						</div><!-- .rightbox -->
+						
+						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
+						
+						<div class="row rightbox onlytablet">
+							<div class="btn-group">
+								<button class="w-100 dropdown-toggle bluebtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬</button>
+								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+									<li><a class="dropdown-item" href="howfList.do?sortType=new">최신순</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=heart">좋아요순</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=food">맛집추천</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=stay">숙박추천</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=travel">여행지추천</a></li>
+								</ul>
+							</div>
+							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+						</div><!-- .rightbox -->
+						
 					</div><!-- .pageinfo -->
 					<!-- / pagehead -->
 					
@@ -193,23 +219,23 @@
 						<!--/row-->
 						
 						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
-						<div class="row">
+						<div class="row pagenation">
 							<div class="col d-flex justify-content-center">
 								<c:if test="${pm.prev == true}">
-									<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+									<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
 								</c:if>
 								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
 								<c:choose>
 								<c:when test="${search.page != null && i == search.page}">
-									<a class="hfc-white hbg-pink mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
 								</c:when>
 								<c:otherwise>
-									<a class="mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+									<a class="hfc-gray hfc-bold mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
 								</c:otherwise>
 								</c:choose>
 								</c:forEach>
 								<c:if test="${pm.next == true}">
-									<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+									<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
 								</c:if>
 							</div>
 						</div>
