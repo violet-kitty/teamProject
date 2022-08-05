@@ -1,37 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
-<!-- jquery -->
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<!-- css -->
-<link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
-<!-- kakao -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<style>
-	h1{
-		font-size:1.5em;
-		font-weight:bold; 
-	}
-	@media ( max-width : 980px) {
-	#ind{
-		display:none;
-	}
-}
-</style>
+<link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
+<title>HOWF추천</title>
+
+<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Bootstrap5 AwsomeFont -->
+<script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --> <link href="<%=request.getContextPath()%>/css/board.css" rel="stylesheet">
+<!-- CSS3 - Howf --> <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
+
 <script>
 var heartDup = false;
 
@@ -43,120 +46,149 @@ else {
 }
 
 </script>
-</head>
-<body>
-<main>
-	<!-- 글 제목 목록 -->
-	<div id="ind" style="border:1px solid red;position:fixed;width:200px;right:0;top:200px;"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<a href="howfList.do">&lt;목록으로 돌아가기</a>
-			</div>
-		</div><!-- row end -->
-		
-		<!-- 썸네일 이미지 -->
-		<div class="row">
-			<div class="col d-flex justify-content-center">
-				<c:if test="${howf.filename != null}">
-					<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" style="max-height:500px;width:100%;">
-				</c:if>
-			</div>
-		</div>
-		
-		<!-- 카테고리, 작성일, 하트 -->
-		<div class="row">
-			<div class="col-lg-6 d-flex justify-content-start">
-				<c:if test="${howf.cate=='숙박추천'}">
-					<span style="background: #54ACA8; border-radius: 5px; color: white;">${howf.cate}</span>
-				</c:if>
-				<c:if test="${howf.cate=='여행지추천'}">
-					<span style="background: #85A548; border-radius: 5px; color: white;">${howf.cate}</span>
-				</c:if>
-				<c:if test="${howf.cate=='맛집추천'}">
-					<span style="background: #DE8889; border-radius: 5px; color: white;">${howf.cate}</span>
-				</c:if>
-				<span class="ms-1">${howf.wdate}</span>
-			</div>
-			<div class="col-lg-6 d-flex justify-content-end">
-				<c:choose>
-					<c:when test="${login != null}">
-						<c:if test="${heart!=null && heart==1}">
-							<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
-						</c:if>
-						<c:if test="${heart!=null && heart==0}">
-							<img src="<%=request.getContextPath()%>/image/heart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
-						</c:if>
-					</c:when>
-					<c:otherwise>
-						<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
-					</c:otherwise>
-				</c:choose>
-				<span class="ms-1" id="heartNum">${howf.heart}</span>
-			</div>
-		</div>
-		
-		<!-- 글 제목 -->
-		<div class="row">
-			<div class="col">
-				${howf.title}
-			</div>
-		</div>
-		
-		<!-- 태그 -->
-		<div class="row">
-			<div class="col" id="tagArea">
-				
-			</div>
-		</div>
-		<hr class="my-2">
-		
-		<!-- 글 내용 -->
-		<div class="row">
-			<div class="col" id="howfContent">
-				${howf.content}
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-lg-6 d-flex justify-content-start">
-				<c:if test="${login.role=='admin'}">
-				<button onclick="delOk()">삭제</button>
-				<button onclick="location.href='howfModify.do?hbidx=${howf.hbidx}'">수정</button>
-				<button onclick="location.href='howfWrite.do'">글쓰기</button>
-			</c:if>
-			</div>
-			<div class="col-lg-6 d-flex justify-content-end">
-				<button onclick="shareSNS('facebook')">
-					<img src="<%=request.getContextPath()%>/image/facebook.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-				<button onclick="shareSNS('twitter')">
-					<img src="<%=request.getContextPath()%>/image/twitter.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-				<button onclick="shareSNS('kakao')" id="kakaoBtn">
-					<img src="<%=request.getContextPath()%>/image/kakao.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<a href="howfList.do">&lt;목록으로 돌아가기</a>
-			</div>
-		</div><!-- row end -->
-	</div><!-- container end -->
-</main>
 
-<!-- 글 삭제 모달 -->
-<div id="modalDiv">
-	<div id="popupDiv">
-		<h1>게시글  삭제</h1>
-		<p>정말로 게시글을 삭제하시겠습니까?</p>
-		<p>삭제된 게시글은 복구가 되지 않습니다.</p>
-		<button type="button" onclick="delFn('ok')">삭제하기</button>
-		<button type="button" onclick="delFn('cancel')">취소</button>
-	</div>
-</div>
+</head>
+
+<body>
+	<div id="wrap" class="boardview howf howfview">
+	
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Side -->
+		
+		<div class="right-container">
+			<c:if test="${login!=null && login.role=='admin'}">
+				<div class="docctrl">
+					<a href="<%=request.getContextPath()%>/howf/howfWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+				</div>
+			</c:if>
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-whitegray">
+			
+			<!-- pagehead  -->
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+					<!-- <div id="ind" style="border:1px solid red;position:fixed;width:200px;right:0;top:200px;"></div> -->
+					<a class="backto" href="howfList.do">&lt;목록으로 돌아가기</a>
+				
+					
+					<!-- 썸네일 이미지 -->
+					<div class="row">
+						<div class="col d-flex justify-content-center">
+							<c:if test="${howf.filename != null}">
+								<img class="thumbimg" src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" style="max-height:500px;width:100%;">
+							</c:if>
+						</div>
+					</div>
+					
+					<!-- 카테고리, 작성일, 하트 -->
+					<div class="row">
+						<div class="col-lg-6 d-flex justify-content-start">
+							<c:if test="${howf.cate=='숙박추천'}">
+								<span style="background: #54ACA8; border-radius: 5px; color: white;">${howf.cate}</span>
+							</c:if>
+							<c:if test="${howf.cate=='여행지추천'}">
+								<span style="background: #85A548; border-radius: 5px; color: white;">${howf.cate}</span>
+							</c:if>
+							<c:if test="${howf.cate=='맛집추천'}">
+								<span style="background: #DE8889; border-radius: 5px; color: white;">${howf.cate}</span>
+							</c:if>
+							<span class="ms-1">${howf.wdate}</span>
+						</div>
+						<div class="col-lg-6 d-flex justify-content-end">
+							<c:choose>
+								<c:when test="${login != null}">
+									<c:if test="${heart!=null && heart==1}">
+										<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
+									</c:if>
+									<c:if test="${heart!=null && heart==0}">
+										<img src="<%=request.getContextPath()%>/image/heart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
+								</c:otherwise>
+							</c:choose>
+							<span class="ms-1" id="heartNum">${howf.heart}</span>
+						</div>
+					</div>
+					
+					<!-- 글 제목 -->
+					<div class="row">
+						<div class="col">
+							${howf.title}
+						</div>
+					</div>
+					
+					<!-- 태그 -->
+					<div class="row">
+						<div class="col" id="tagArea">
+							
+						</div>
+					</div>
+					<hr class="my-2">
+					
+					<!-- 글 내용 -->
+					<div class="row">
+						<div class="col" id="howfContent">
+							${howf.content}
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-6 d-flex justify-content-start">
+							<c:if test="${login.role=='admin'}">
+							<button onclick="delOk()">삭제</button>
+							<button onclick="location.href='howfModify.do?hbidx=${howf.hbidx}'">수정</button>
+							<button onclick="location.href='howfWrite.do'">글쓰기</button>
+						</c:if>
+						</div>
+						<div class="col-lg-6 d-flex justify-content-end">
+							<button onclick="shareSNS('facebook')">
+								<img src="<%=request.getContextPath()%>/image/facebook.png" width="30" height="30" style="border-radius:5px;">
+							</button>
+							<button onclick="shareSNS('twitter')">
+								<img src="<%=request.getContextPath()%>/image/twitter.png" width="30" height="30" style="border-radius:5px;">
+							</button>
+							<button onclick="shareSNS('kakao')" id="kakaoBtn">
+								<img src="<%=request.getContextPath()%>/image/kakao.png" width="30" height="30" style="border-radius:5px;">
+							</button>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col">
+							<a href="howfList.do">&lt;목록으로 돌아가기</a>
+						</div>
+					</div><!-- /.row end -->
+					
+					<!-- 글 삭제 모달 -->
+					<div id="modalDiv">
+						<div id="popupDiv">
+							<h1>게시글  삭제</h1>
+							<p>정말로 게시글을 삭제하시겠습니까?</p>
+							<p>삭제된 게시글은 복구가 되지 않습니다.</p>
+							<button type="button" onclick="delFn('ok')">삭제하기</button>
+							<button type="button" onclick="delFn('cancel')">취소</button>
+						</div>
+					</div>
+					
+				</div><!-- /.container -->
+			</div><!-- /.contents -->
+			<!-- /pagehead -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
+		</div><!-- / #container -->
+		
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+	
+	</div><!-- /#wrap -->
+
 
 <script>
 	$(function(){
@@ -240,7 +272,7 @@ else {
 		}
 		
 		//사진 크기 조절
-		$("img").each(function(index, item){
+		$(".thumbimg").each(function(index, item){
 			$(item).css("max-width","100%");
 			$(item).css("max-height",500);
 		});
@@ -306,9 +338,5 @@ else {
 	}
 </script>
 
-<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
 </body>
 </html>
