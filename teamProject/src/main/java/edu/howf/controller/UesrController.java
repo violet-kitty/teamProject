@@ -147,7 +147,7 @@ public class UesrController {
 		String social = vo.getSocial();
 		
 		//소셜 로그인 종류가 다르면
-		if(type.equals(social) == false) {
+		if(type != null && type.equals(social) == false) {
 			return "-1";//이메일만 같고 소셜 로그인 종류가 다를시 로그인 안되게
 		}
 		else {
