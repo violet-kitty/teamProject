@@ -29,7 +29,10 @@ public interface UserService {
 	public int profileImgModify(UserVO vo);
 	public int profileModify(UserVO vo);
 	public List<HeartVO> heartSelectHOWF(SearchVO vo);
+	public int heartCountHOWF(SearchVO vo);
 	public List<HeartVO> heartSelectEvent(SearchVO vo);
+	public int heartCountEvent(SearchVO vo);
 	public List<HeartVO> heartSelectStory(SearchVO vo);
 	public List<HeartVO> heartSelectStay(SearchVO vo);
+	public int heartCountStay(SearchVO vo);
 }

@@ -65,7 +65,7 @@
 								<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:200px;height:200px;">
 							</c:when>
 							<c:otherwise>
-								<img src="<%=request.getContextPath()%>/user/displayFile.do?fileName=${login.img}" style="border-radius:50%;width:200px;height:200px;">
+								<img src="<%=request.getContextPath()%>/mypage/displayFile.do?fileName=${login.img}" style="border-radius:50%;width:200px;height:200px;">
 							</c:otherwise>
 							</c:choose>
 							<img><br>

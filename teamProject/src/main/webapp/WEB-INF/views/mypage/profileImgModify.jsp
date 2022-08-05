@@ -92,7 +92,7 @@
 									</c:when>
 									
 									<c:otherwise>
-										<img src="<%= request.getContextPath() %>/user/displayFile.do?fileName=${profile.img}" id="profileImg">
+										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg">
 									</c:otherwise>
 									</c:choose>
 								</div>
