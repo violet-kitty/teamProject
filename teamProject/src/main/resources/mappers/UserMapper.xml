@@ -44,6 +44,13 @@
 		 WHERE email = #{email}
 	</select>
 	
+	<!-- 프로필 이미지 가져오기 -->
+	<select id="imgSelect" parameterType="int" resultType="String">
+		SELECT img
+		FROM usertable
+		WHERE midx = #{midx}
+	</select>
+	
 	<!-- 이메일 중복체크 -->
 	<select id="emailDup" parameterType="String" resultType="int">
 		SELECT COUNT(email)
@@ -109,6 +116,7 @@
 	<select id="login" parameterType="userVO" resultType="userVO">
 		SELECT midx
 			, nickname
+			, img
 			, role
 			, joinyn
 			, password
@@ -171,14 +179,149 @@
 		   AND token = #{token}
 	</select>
 	
-	<!-- midx로 회원정보 가져오기 -->
+	<!-- midx로 회원정보 가져오기(자동 로그인) -->
 	<select id="autoLoginSelectOne" parameterType="int" resultType="userVO">
 		SELECT midx
 			, nickname
+			, img
 			, role
 			, joinyn
 			, password
 		 FROM usertable
 		 WHERE midx = #{midx}
 	</select>
+	
+	
+	<!-- 마이 페이지 -->
+	
+	
+	<!-- 마이페이지 정보 가져오기 -->
+	<select id="profileSelectOne" parameterType="int" resultType="userVO">
+		SELECT name
+			, email
+			, password
+			, nickname
+			, phone
+			, addr
+			, detailaddr
+			, jumin
+			, img
+			, document
+			,social
+		FROM usertable
+		WHERE midx = #{midx}
+	</select>
+	
+	<!-- 마이페이지 프로필 이미지 수정 -->
+	<update id="profileImgModify" parameterType="userVO">
+		UPDATE usertable
+		SET img = #{img}
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 내 정보 수정 -->
+	<update id="profileModify" parameterType="userVO">
+		UPDATE usertable
+		SET   name = #{name}
+			, nickname = #{nickname}
+			, jumin = #{jumin}
+			, email = #{email}
+			, phone = #{phone}
+			, password = #{password}
+			, addr = #{addr}
+			, detailaddr = #{detailaddr}
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 찜목록 가져오기(HOWF 추천) -->
+	<select id="heartSelectHOWF" parameterType="searchVO" resultType="heartVO">
+		SELECT a.*
+			, b.title
+			, b.filename
+			, b.nickname
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'howf'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT h.hbidx
+			, h.title
+			, h.filename
+			, u.nickname
+		FROM howf h
+		JOIN usertable u
+		ON h.midx = u.midx
+		WHERE h.delyn = 'N') b
+		ON a.bidx = b.hbidx
+	</select>
+	
+	<!-- 찜목록 가져오기(지역 이벤트) -->
+	<select id="heartSelectEvent" parameterType="searchVO" resultType="heartVO">
+		SELECT a.*
+			, b.title
+			, b.filename
+			, b.nickname
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'event'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT e.ebidx
+			, e.title
+			, e.filename
+			, u.nickname
+		FROM event e
+		JOIN usertable u
+		ON e.midx = u.midx
+		WHERE e.delyn = 'N') b
+		ON a.bidx = b.ebidx
+	</select>
+	
+	<!-- 찜목록 가져오기(여행이야기) -->
+	<select id="heartSelectStory" parameterType="searchVO" resultType="heartVO">
+		SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'story'
+		AND midx = #{midx}
+	</select>
+	
+	<!-- 찜목록 가져오기(숙박 정보) -->
+	<select id="heartSelectStay" parameterType="searchVO" resultType="heartVO">
+		SELECT a.*
+			, b.name
+			, b.min
+			, b.max
+			, b.addr
+			, b.photo as filename
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT s.sidx
+			, s.name
+			, s.addr
+			, s.photo
+			, min(r.price) as min
+			, max(r.price) as max
+		FROM stay s
+		JOIN room r
+		ON s.sidx = r.sidx
+		WHERE s.delyn = 'N'
+		GROUP BY s.sidx, s.name, s.addr) b
+		ON a.bidx = b.sidx
+	</select>
+	
+	
 </mapper>

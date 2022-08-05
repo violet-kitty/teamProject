@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="true" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -60,15 +61,15 @@
 				<c:set var="index" value="0"/>
 				<c:forEach var="i" items="${hero}">
 					<div class="carousel-item" id="carousel${index}">
-						<img class="d-block w-100" src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${i.filename}">
+						<img class="d-block w-100" src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(i.photo,',')[0]}">
 						<div class="container">
 							<div class="carousel-caption" style="background:rgba(0,0,0,0.3)">
-								<p>${i.title}</p>
-								<p>${i.startday} ~ ${i.endday}</p>
+								<p>${i.name}</p>
+								<p>${fn:split(i.addr,' ')[0]} ${fn:split(i.addr,' ')[1]}</p>
 								<p><script>tagParse('${i.tag}',${index});</script></p>
 								<p id="tagArea${index}"></p>
 								<p>
-									<a class="btn btn-lg btn-primary" href="eventView.do?ebidx=${i.ebidx}">자세히 보기</a>
+									<a class="btn btn-lg btn-primary" href="stayView.do?ebidx=${i.sidx}">자세히 보기</a>
 								</p>
 							</div>
 						</div>
@@ -271,6 +272,51 @@
 				        <div class="form-check form-check-inline">
 				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag28" value="수영장">
 				        	<label class="form-check-label" for="tag28">수영장</label>
+				        </div>
+				        <br>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag29" value="편의점">
+				        	<label class="form-check-label" for="tag29">편의점</label>
+				        </div>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag30" value="커피숍">
+				        	<label class="form-check-label" for="tag30">커피숍</label>
+				        </div>
+				        <br>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag31" value="골프장">
+				        	<label class="form-check-label" for="tag31">골프장</label>
+				        </div>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag32" value="족구장">
+				        	<label class="form-check-label" for="tag32">족구장</label>
+				        </div>
+				        <br>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag33" value="농구장">
+				        	<label class="form-check-label" for="tag33">농구장</label>
+				        </div>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag34" value="실내낚시터">
+				        	<label class="form-check-label" for="tag34">실내낚시터</label>
+				        </div>
+				        <br>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag35" value="산책로">
+				        	<label class="form-check-label" for="tag35">산책로</label>
+				        </div>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag36" value="익스트림체험장">
+				        	<label class="form-check-label" for="tag36">익스트림체험장</label>
+				        </div>
+				        <br>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag27" value="세차장">
+				        	<label class="form-check-label" for="tag27">세차장</label>
+				        </div>
+				        <div class="form-check form-check-inline">
+				        	<input class="form-check-input" type="checkbox" name="filter.option" id="tag28" value="키드존">
+				        	<label class="form-check-label" for="tag28">키드존</label>
 				        </div>
 				        <br>
 				        

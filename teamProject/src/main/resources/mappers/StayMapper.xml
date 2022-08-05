@@ -108,6 +108,9 @@
 		<if test="op.equals('킹베드')">
 		AND e.kbed != 0
 		</if>
+		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		AND e.services like CONCAT ('%',#{op},'%')
+		</if>
 		</foreach>
 		</if>
 		</if>
@@ -194,11 +197,36 @@
 		<if test="op.equals('킹베드')">
 		AND b.kbed != 0
 		</if>
+		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		AND e.services like CONCAT ('%',#{op},'%')
+		</if>
 		</foreach>
 		</if>
 		</if>
 	</select>
 	
+	<!-- 히어로 -->
+	<select id="stayHero" resultType="stayVO">
+		SELECT s.sidx
+			, s.name
+			, s.addr
+			, s.tag
+			, s.photo
+			, d.star
+		FROM stay s
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, count(cbidx) as cnt
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
+		AND delyn = 'N'
+		GROUP BY bidx) d
+		ON s.sidx = d.bidx
+		WHERE s.delyn = 'N'
+		ORDER BY d.star desc
+		LIMIT 0,3
+	</select>
 	
 	<!-- 숙박정보 가져오기 -->
 	<select id="staySelectOne" parameterType="int" resultType="stayVO">

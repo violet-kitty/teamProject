@@ -65,7 +65,6 @@
 					<!-- sort 버튼 -->
 					<div class="row">
 						<div class="col d-flex justify-content-end">
-							<!-- searchVO에 sortType max, min, heart, star 넘김 -->
 							<button onclick="location.href='myReservation.do?sortType=new'">최신순</button>
 							<button onclick="location.href='myReservation.do?sortType=payY'">예약 완료</button>
 							<button onclick="location.href='myReservation.do?sortType=payN'">결제 필요</button>

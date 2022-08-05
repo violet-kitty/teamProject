@@ -28,6 +28,10 @@ public class StayDao {
 		return sqlSession.selectOne(namespace+"stayCountAll", vo);
 	}
 	
+	public List<StayVO> stayHero(){
+		return sqlSession.selectList(namespace+"stayHero");
+	}
+	
 	public StayVO staySelectOne(int sidx) {
 		return sqlSession.selectOne(namespace+"staySelectOne", sidx);
 	}

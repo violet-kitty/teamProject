@@ -3,7 +3,7 @@
 <%@ page session="true" %>
     
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,19 +24,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --> <link href="<%=request.getContextPath()%>/css/board.css" rel="stylesheet">
 <!-- CSS3 - Howf --> <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-	<div id="wrap" class="howflist">
+	<div id="wrap" class="boardlist howf howflist">
+		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		
 		<!-- Side -->
@@ -51,11 +55,11 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- hero -->
 			<div id="carouselExampleIndicators" class="hero content01 carousel slide" data-bs-ride="carousel">
-				<div class="carousel-indicators">
+				<div class="carousel-indicators onlypc">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -109,20 +113,28 @@
 			<!-- Nav --><%@include file="../Nav.jsp"%>
 			
 			<!-- pagehead  -->
-			<div class="contents pagehead hbg-lightgray">
+			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 				
 					<!-- pagehead -->
 					<div class="pageinfo">
 						<!-- 페이지 제목 -->
-						<div class="title">
+						<div class="title onlypc">
 							<a href="<%= request.getContextPath() %>/howf/howfList.do"><h1>HOWF추천</h1></a>
 						</div>
 						
-						<!-- rightbox -->
-						<div class="row rightbox">
+						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
+						<div class="row rightbox onlypc-inline">
 							<!-- sort 버튼 -->
 							<div class="col d-flex justify-content-end filterbtn">
+								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
+								<!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+									<li class="nav-item active"><a class="nav-link" onclick="location.href='howfList.do?sortType=food'">맛집추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=stay'">숙박추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=travel'">여행지추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='howfList.do?sortType=heart'">좋아요순</a></li>
+									<li class="nav-item"><a class="nav-link active" onclick="location.href='howfList.do?sortType=new'">최신순</a></li>
+								</ul> -->
 								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
 								<button onclick="location.href='howfList.do?sortType=food'">맛집추천</button>
 								<button onclick="location.href='howfList.do?sortType=stay'">숙박추천</button>
@@ -132,6 +144,23 @@
 							</div>
 							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
 						</div><!-- .rightbox -->
+						
+						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
+						
+						<div class="row rightbox onlytablet">
+							<div class="btn-group">
+								<button class="w-100 dropdown-toggle bluebtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬</button>
+								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+									<li><a class="dropdown-item" href="howfList.do?sortType=new">최신순</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=heart">좋아요순</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=food">맛집추천</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=stay">숙박추천</a></li>
+									<li><a class="dropdown-item" href="howfList.do?sortType=travel">여행지추천</a></li>
+								</ul>
+							</div>
+							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+						</div><!-- .rightbox -->
+						
 					</div><!-- .pageinfo -->
 					<!-- / pagehead -->
 					
@@ -145,20 +174,18 @@
 						<div class="row grid">
 							<!-- C리스트 14. 반복 -->
 							<c:forEach var="v" items="${howf}">
-							<div class="thumbnailitem col-xs-18 col-sm-6 col-md-4">
+							<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
 								<a style="cursor:pointer" onclick="location.href='howfView.do?hbidx=${v.hbidx}'">
-									<div class="thumbnail">
+									<div class="thumbnail hbshadow3">
 
 											<figure class="effect-ming">
 												<!-- 메인이미지 보여주기-->
 												<c:if test="${v.filename != null}">
-													<div class="imgbox"
-														style="background-image: url(<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename}); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/howf/displayFile.do?fileName=${v.filename});"></div>
 												</c:if>
 
 												<c:if test="${v.filename == null}">
-													<div class="imgbox"
-														style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png); background-size: cover;background-position: center top; height:240px; background-repeat: no-repeat;"></div>
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 												</c:if>
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
@@ -169,17 +196,17 @@
 											<div class="writerinfo">
 												<p>
 													<c:if test="${v.cate=='숙박추천'}">
-														<span style="background: #54ACA8; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #54ACA8; color: white;">${v.cate}</span>
 													</c:if>
 													<c:if test="${v.cate=='여행지추천'}">
-														<span style="background: #85A548; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #85A548; color: white;">${v.cate}</span>
 													</c:if>
 													<c:if test="${v.cate=='맛집추천'}">
-														<span style="background: #DE8889; border-radius: 5px; color: white;">${v.cate}</span>
+														<span class="cate" style="background: #DE8889; color: white;">${v.cate}</span>
 													</c:if>
-													<span>| ${v.wdate}</span>
+													<span class="hfc-semibold hfc-blackgray"> ${v.wdate}</span>
 												</p>
-												<small class="text-muted"><img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30"><span class="ms-1">${v.heart}</span></small>
+												<div class="small"><img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${v.heart}</span></div>
 											</div>
 											<div class="caption">
 												<h4>${v.title}</h4>
@@ -192,16 +219,23 @@
 						<!--/row-->
 						
 						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
-						<div class="row">
+						<div class="row pagenation">
 							<div class="col d-flex justify-content-center">
 								<c:if test="${pm.prev == true}">
-									<a href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+									<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
 								</c:if>
 								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-									<a href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}" class="mx-1">${i}</a>
+								<c:choose>
+								<c:when test="${search.page != null && i == search.page}">
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a class="hfc-gray hfc-bold mx-1" href="howfList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+								</c:otherwise>
+								</c:choose>
 								</c:forEach>
 								<c:if test="${pm.next == true}">
-									<a href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+									<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
 								</c:if>
 							</div>
 						</div>
