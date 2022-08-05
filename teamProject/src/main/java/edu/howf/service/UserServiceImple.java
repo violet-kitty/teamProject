@@ -1,10 +1,14 @@
 package edu.howf.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.UserDao;
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.HeartVO;
+import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
 @Service
@@ -35,6 +39,11 @@ public class UserServiceImple implements UserService{
 	@Override
 	public String nicknameSelect(String email) {
 		return userDao.nicknameSelect(email);
+	}
+	
+	@Override
+	public String imgSelect(int midx) {
+		return userDao.imgSelect(midx);
 	}
 	
 	@Override
@@ -104,6 +113,26 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int profileModify(UserVO vo) {
 		return userDao.profileModify(vo);
+	}
+
+	@Override
+	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
+		return userDao.heartSelectHOWF(vo);
+	}
+
+	@Override
+	public List<HeartVO> heartSelectEvent(SearchVO vo) {
+		return userDao.heartSelectEvent(vo);
+	}
+
+	@Override
+	public List<HeartVO> heartSelectStory(SearchVO vo) {
+		return userDao.heartSelectStory(vo);
+	}
+
+	@Override
+	public List<HeartVO> heartSelectStay(SearchVO vo) {
+		return userDao.heartSelectStay(vo);
 	}
 	
 }

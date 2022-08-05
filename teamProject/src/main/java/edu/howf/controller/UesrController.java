@@ -35,6 +35,7 @@ import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.util.SMTP;
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
@@ -161,6 +162,9 @@ public class UesrController {
 				vo.setNickname(nickname);
 				vo.setMidx(midx);
 				vo.setRole("normal");
+				String img = userService.imgSelect(midx);
+				vo.setImg(img);
+				
 				session = request.getSession();
 				session.setAttribute("login", vo);
 				return "0";
@@ -174,6 +178,8 @@ public class UesrController {
 		//닉네임 업데이트 해주기
 		int result = userService.nicknameInsert(vo);
 		vo.setRole("normal");
+		String img = userService.imgSelect(vo.getMidx());
+		vo.setImg(img);
 		
 		session = request.getSession();
 		session.setAttribute("login", vo);
@@ -436,11 +442,47 @@ public class UesrController {
 	public int myInfoModify(UserVO vo, HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
+		login.setNickname(vo.getNickname());
 		vo.setMidx(login.getMidx());
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 		int result = userService.profileModify(vo);
 		
 		return result;
+	}
+	
+	//찜 목록 이동
+	@RequestMapping(value="/myHeart.do")
+	public String myHeart(String type, SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		if(type == null) type = "howf";
+		
+		if(type.equals("stay")) {
+			List<HeartVO> stay = userService.heartSelectStay(vo);
+			model.addAttribute("stay", stay);
+			return "user/myHeartStay";
+		}
+		else {
+			if(type.equals("howf")) {
+				List<HeartVO> howf = userService.heartSelectHOWF(vo);
+				model.addAttribute("list", howf);
+				model.addAttribute("tabType", "howf");
+			}
+			else if(type.equals("event")) {
+				List<HeartVO> event = userService.heartSelectEvent(vo);
+				model.addAttribute("list", event);
+				model.addAttribute("tabType", "event");
+			}
+			else if(type.equals("story")) {
+				List<HeartVO> story = userService.heartSelectStory(vo);
+				model.addAttribute("list", story);
+				model.addAttribute("tabType", "story");
+			}
+			
+			return "user/myHeart";
+		}
 	}
 	
 	
@@ -457,13 +499,6 @@ public class UesrController {
 	public String myStory() {
 		
 		return "story/myStory";
-	}
-	
-	//찜 목록 이동
-	@RequestMapping(value="/myHeart.do")
-	public String myHeart() {
-		
-		return "user/myHeart";
 	}
 	
 	//예약한 숙소리스트 이동

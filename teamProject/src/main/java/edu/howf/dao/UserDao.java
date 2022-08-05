@@ -1,10 +1,14 @@
 package edu.howf.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.HeartVO;
+import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
 @Repository
@@ -42,6 +46,10 @@ public class UserDao {
 	//닉네임 등록
 	public int nicknameInsert(UserVO vo) {
 		return sqlSession.insert(namespace+"nicknameInsert", vo);
+	}
+	
+	public String imgSelect(int midx) {
+		return sqlSession.selectOne(namespace+"imgSelect", midx);
 	}
 	
 	//일반회원, 사업자 회원가입
@@ -107,5 +115,25 @@ public class UserDao {
 	//프로필 수정
 	public int profileModify(UserVO vo) {
 		return sqlSession.update(namespace+"profileModify", vo);
+	}
+	
+	//찜목록 가져오기(HOWF 추천)
+	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
+		return sqlSession.selectList(namespace+"heartSelectHOWF", vo);
+	}
+	
+	//찜목록 가져오기(지역 이벤트)
+	public List<HeartVO> heartSelectEvent(SearchVO vo) {
+		return sqlSession.selectList(namespace+"heartSelectEvent", vo);
+	}
+	
+	//찜목록 가져오기(여행이야기)
+	public List<HeartVO> heartSelectStory(SearchVO vo) {
+		return sqlSession.selectList(namespace+"heartSelectStory", vo);
+	}
+	
+	//찜목록 가져오기(숙박 정보)
+	public List<HeartVO> heartSelectStay(SearchVO vo) {
+		return sqlSession.selectList(namespace+"heartSelectStay", vo);
 	}
 }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,8 +64,8 @@
 						<li class="nav-item">
 							<a class="nav-link" id="storyTab" aria-current="page" href="myHeart.do?type=story">여행이야기</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="myHeart.do?type=stay">숙박 정보</a>
+						<li class="nav-item active">
+							<a class="nav-link active" aria-current="page" href="myHeart.do?type=stay">숙박 정보</a>
 						</li>
 					</ul>
 					
@@ -71,20 +73,21 @@
 					
 					<!-- 카드 수평 -->
 					<c:choose>
-					<c:when test="${empty list}">
+					<c:when test="${empty stay}">
 					<p>찜 목록이 비었습니다</p>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="v" items="${list}">
+						<c:forEach var="v" items="${stay}">
 							<div class="card mb-3">
 								<div class="row g-0">
-									<div class="col-lg-4" onclick="movePage('${v.bidx}')" style="cursor:pointer;">
-										<img src="<%= request.getContextPath() %>/user/displayFile.do?fileName=${v.filename}" style="width:100%;height:100%;">
+									<div class="col-lg-4" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.bidx}'" style="cursor:pointer;">
+										<img src="<%= request.getContextPath() %>/user/displayFile.do?fileName=${fn:split(v.filename,',')[0]}" style="width:100%;height:100%;">
 									</div>
-									<div class="col-lg-6" onclick="movePage('${v.bidx}')" style="cursor:pointer;">
+									<div class="col-lg-6" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.bidx}'" style="cursor:pointer;">
 										<div class="card-body">
-											<h5 class="card-title">${v.title}</h5>
-											<p class="card-text">${v.nickname}</p>
+											<h5 class="card-title">${v.name}</h5>
+											<p class="card-text">${v.min} ~ ${v.max}</p>
+											<p class="card-text">${v.addr}</p>
 										</div>
 									</div>
 									<div class="col-lg-2 d-flex justify-content-end">
@@ -106,21 +109,5 @@
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 	
-	
-<script>
-	//탭 설정
-	var tabType = "${tabType}";
-	
-	if(tabType == "howf") $("#howfTab").addClass("active");
-	else if(tabType == "event") $("#eventTab").addClass("active");
-	else if(tabType == "story") $("#storyTab").addClass("active");
-	
-	
-	function movePage(bidx){
-		if(tabType == "howf") location.href="<%= request.getContextPath() %>/howf/howfView.do?hbidx="+bidx;
-		else if(tabType == "event") location.href="<%= request.getContextPath() %>/event/eventView.do?ebidx="+bidx;
-		else if(tabType == "story") location.href="";
-	}
-</script>	
 </body>
 </html>
