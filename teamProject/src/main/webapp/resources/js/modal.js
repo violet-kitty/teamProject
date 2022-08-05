@@ -1,7 +1,7 @@
 //모달 띄우는 function
 
 
-function modalFn(msg, btnMsg1, title, btnMsg2){
+function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 	var length = arguments.length;
 	
 	//아무 버튼 없이 글만 뜨는 모달
@@ -71,6 +71,27 @@ function modalFn(msg, btnMsg1, title, btnMsg2){
 					+ '<div class="btnarea">'
 					+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
 					+ '<button type="button" class="bluebtn w-50" onclick="modalOkFn()">'+btnMsg1+'</button>'
+					+ '</div>'
+					+ '</div>'
+					+ '</div>'
+					+ '</div>'; 
+		
+		$("body").prepend(html);
+		
+		$("#modalDiv").show();
+	}
+	//함수를 여러개 써야할 때 쓰는 모달
+	else if(length == 5){
+		var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+					+ '<div class="modal-dialog hbshadow" role="document">'
+					+ '<div class="modal-content">'
+					+ '<h2 class="hfc-bold">'+title+'</h2>'
+					+ '<div class="form-floating ">'
+					+ '<p class="text-muted">'+msg+'</p>'
+					+ '</div>'
+					+ '<div class="btnarea">'
+					+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
+					+ '<button type="button" class="bluebtn w-50" onclick="'+funcName+'()">'+btnMsg1+'</button>'
 					+ '</div>'
 					+ '</div>'
 					+ '</div>'
