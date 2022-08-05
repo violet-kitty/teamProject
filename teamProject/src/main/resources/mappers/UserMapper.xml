@@ -256,6 +256,29 @@
 		ON h.midx = u.midx
 		WHERE h.delyn = 'N') b
 		ON a.bidx = b.hbidx
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 찜 개수(HOWF 추천) -->
+	<select id="heartCountHOWF" parameterType="searchVO" resultType="int">
+		SELECT COUNT(a.hidx)
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'howf'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT h.hbidx
+			, h.title
+			, h.filename
+			, u.nickname
+		FROM howf h
+		JOIN usertable u
+		ON h.midx = u.midx
+		WHERE h.delyn = 'N') b
+		ON a.bidx = b.hbidx
 	</select>
 	
 	<!-- 찜목록 가져오기(지역 이벤트) -->
@@ -264,6 +287,29 @@
 			, b.title
 			, b.filename
 			, b.nickname
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'event'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT e.ebidx
+			, e.title
+			, e.filename
+			, u.nickname
+		FROM event e
+		JOIN usertable u
+		ON e.midx = u.midx
+		WHERE e.delyn = 'N') b
+		ON a.bidx = b.ebidx
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 찜 개수(지역 이벤트) -->
+	<select id="heartCountEvent" parameterType="searchVO" resultType="int">
+		SELECT COUNT(a.hidx)
 		FROM
 		(SELECT hidx
 			, type
@@ -321,6 +367,52 @@
 		WHERE s.delyn = 'N'
 		GROUP BY s.sidx, s.name, s.addr) b
 		ON a.bidx = b.sidx
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 찜 개수(숙박 정보) -->
+	<select id="heartCountStay" parameterType="searchVO" resultType="int">
+		SELECT COUNT(a.hidx)
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT s.sidx
+			, s.name
+			, s.addr
+			, s.photo
+			, min(r.price) as min
+			, max(r.price) as max
+		FROM stay s
+		JOIN room r
+		ON s.sidx = r.sidx
+		WHERE s.delyn = 'N'
+		GROUP BY s.sidx, s.name, s.addr) b
+		ON a.bidx = b.sidx
+	</select>
+	
+	<!-- 내 리뷰 가져오기 -->
+	<select id="myReview">
+		
+	</select>
+	
+	<!-- 내 리뷰 개수 -->
+	<select id="myReviewCount">
+		
+	</select>
+	
+	<!-- 내 댓글 가져오기 -->
+	<select id="myComment">
+		
+	</select>
+	
+	<!-- 내 댓글 개수 -->
+	<select id="myCommentCount">
+		
 	</select>
 	
 	

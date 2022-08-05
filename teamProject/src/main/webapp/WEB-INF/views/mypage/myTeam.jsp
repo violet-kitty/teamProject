@@ -25,6 +25,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
@@ -44,11 +45,6 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-				
-					<!-- 페이지 제목 -->
-					<div class="title">
-						<h1>내 리뷰, 댓글</h1>
-					</div>
 				<!--  
 				
 				

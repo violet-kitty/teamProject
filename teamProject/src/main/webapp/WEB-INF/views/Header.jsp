@@ -81,7 +81,7 @@ function logoutFn(){
 							<li class="nav-item">
 								<div class="navbtn">
 								<c:if test="${login.role=='normal'}">
-									<a href="<%=request.getContextPath()%>/user/mypage.do">
+									<a href="<%=request.getContextPath()%>/mypage/mypage.do">
 										<button class="bluebtn">
 											<div class="cprofile">
 
@@ -100,7 +100,7 @@ function logoutFn(){
 									</a>
 								</c:if>
 								<c:if test="${login.role=='official'}">
-									<a href="<%=request.getContextPath()%>/user/mypageOfficial.do">
+									<a href="<%=request.getContextPath()%>/mypage/mypageOfficial.do">
 										<button class="bluebtn">
 											<div class="cprofile">
 
@@ -123,7 +123,7 @@ function logoutFn(){
 									</a>
 								</c:if>
 								<c:if test="${login.role=='business'}">
-									<a href="<%=request.getContextPath()%>/user/mypageBusiness.do">
+									<a href="<%=request.getContextPath()%>/mypage/mypageBusiness.do">
 										<button class="bluebtn">
 											<div class="cprofile">
 
@@ -146,7 +146,7 @@ function logoutFn(){
 									</a>
 								</c:if>
 								<c:if test="${login.role=='admin'}">
-									<a href="<%=request.getContextPath()%>/user/mypageAdmin.do">
+									<a href="<%=request.getContextPath()%>/mypage/mypageAdmin.do">
 										<button class="bluebtn">
 											<div class="cprofile">
 

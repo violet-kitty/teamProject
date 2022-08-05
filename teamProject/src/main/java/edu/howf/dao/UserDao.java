@@ -119,21 +119,40 @@ public class UserDao {
 	
 	//찜목록 가져오기(HOWF 추천)
 	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"heartSelectHOWF", vo);
+	}
+	
+	//찜 개수(HOWF 추천)
+	public int heartCountHOWF(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"heartCountHOWF", vo);
 	}
 	
 	//찜목록 가져오기(지역 이벤트)
 	public List<HeartVO> heartSelectEvent(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"heartSelectEvent", vo);
+	}
+	
+	//찜 개수(지역 이벤트)
+	public int heartCountEvent(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"heartCountEvent", vo);
 	}
 	
 	//찜목록 가져오기(여행이야기)
 	public List<HeartVO> heartSelectStory(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"heartSelectStory", vo);
 	}
 	
 	//찜목록 가져오기(숙박 정보)
 	public List<HeartVO> heartSelectStay(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"heartSelectStay", vo);
+	}
+	
+	//찜 개수(숙박 정보)
+	public int heartCountStay(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"heartCountStay", vo);
 	}
 }

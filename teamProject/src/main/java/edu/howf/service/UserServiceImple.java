@@ -119,10 +119,20 @@ public class UserServiceImple implements UserService{
 	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
 		return userDao.heartSelectHOWF(vo);
 	}
+	
+	@Override
+	public int heartCountHOWF(SearchVO vo) {
+		return userDao.heartCountHOWF(vo);
+	}
 
 	@Override
 	public List<HeartVO> heartSelectEvent(SearchVO vo) {
 		return userDao.heartSelectEvent(vo);
+	}
+	
+	@Override
+	public int heartCountEvent(SearchVO vo) {
+		return userDao.heartCountEvent(vo);
 	}
 
 	@Override
@@ -133,6 +143,11 @@ public class UserServiceImple implements UserService{
 	@Override
 	public List<HeartVO> heartSelectStay(SearchVO vo) {
 		return userDao.heartSelectStay(vo);
+	}
+	
+	@Override
+	public int heartCountStay(SearchVO vo) {
+		return userDao.heartCountStay(vo);
 	}
 	
 }
