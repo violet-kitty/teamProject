@@ -68,16 +68,16 @@
 								<button onclick="location.href='../notice/notice.do'" >공 지 사 항</button>
 							</div>
 							<hr>	
-							<table border="1" class="tb1">
+							<table border="1" class="table">
 								<tbody>
 									<tr>
-										<th class="tb_category">글번호</th>
-										<th class="tb_category">문의유형</th>
-										<th class="tb_category">작성자</th>
-										<th class="tb_category">제목</th>
-										<th class="tb_category">조회수</th>
-										<th class="tb_category">작성일</th>
-										<th class="tb_category">답변여부</th>				
+										<th class="th_category">글번호</th>
+										<th class="th_category">문의유형</th>
+										<th class="th_category">작성자</th>
+										<th class="th_category">제목</th>
+										<th class="th_category">조회수</th>
+										<th class="th_category">작성일</th>
+										<th class="th_category">답변여부</th>				
 									</tr>
 									<c:if test="${cv.size() == 0}">
 										<tr>

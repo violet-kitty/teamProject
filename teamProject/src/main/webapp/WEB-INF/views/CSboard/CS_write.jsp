@@ -76,7 +76,7 @@
 							<br>
 							<br>
 							<div class="div1">
-								<form id="form1" action="cs_write.do" method="post" enctype="multipart/form-data">
+								<form id="form1" action="CS_write.do" method="post" enctype="multipart/form-data">
 									<table class="tb1">
 										<tbody>
 											<tr>			
@@ -213,9 +213,6 @@
 	    	  
 	      });
 	     
-	    
-	   
-		
 	});
 
 	
@@ -225,23 +222,29 @@
 		var content = $("#summernote");
 		
 		if(title.val() == ""){
-			modalFn("제목을 입력해주세요", "닫기");
+			modalFn("제목을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return;
 		}
 		else if(content.val() == ""){
-			modalFn("내용을 입력해주세요", "닫기");
+			modalFn("내용을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			content.focus();
 			return;
 		}
 		else {
-			function modalOkFn(){
-				modalClose();
-				$("#form1").submit();
-			}
-			modalFn("정말로 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소")		
+			modalFn("1:1 고객문의를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "CS_writeCheck");	
 		}
-	};
+	}
+	
+	function CS_writeCheck(){
+		$("#form1").submit();
+	}
 </script>
 </body>
 </html>

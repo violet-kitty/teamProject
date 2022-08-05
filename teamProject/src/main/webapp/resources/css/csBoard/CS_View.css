@@ -9,41 +9,7 @@ a{
 .div_header{
 	margin-left: 10%;
 	margin-right: 10%;
-	padding-right: 10%;
 	text-align: center;
-}
-.div_header h3{
-	display: inline-block;
-}
-.a_logo{
-	margin-left: 10%;
-	float: left;
-}
-.a_logo img{
-	max-width: 100px;
-	max-height: 100px;
-}
-.div_userInfo{	
-	display: inline-block;
-	float: left;
-	margin-left: 10%;
-}
-.span_userInfo{
-	display: inline-block;
-	font-weight: bold;
-	color : #5B6DCD;
-}
-.div_logout{
-	display: inline-block;
-	float: right;
-	margin-right: 10%;
-}
-.a_logout{
-	color: #5B6DCD;
-	font-weight: bold;
-}
-.div1{
-	
 }
 .tb1{
 	border-top: 2px solid black;
@@ -62,7 +28,6 @@ a{
 	text-align: left;
 	border-top: 2px solid black;
 	padding-left: 10px;
-	
 }
 .tb_content{
 	border-top: 2px solid black;

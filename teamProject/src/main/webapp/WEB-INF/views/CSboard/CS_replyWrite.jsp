@@ -101,7 +101,7 @@
 											</tr>
 											<tr>
 												<td class="btn_td" colspan="4">
-													<input type="button" class="btn1" value="등록" onclick="CS_replyWrite()">
+													<input type="button" class="btn1" value="등록" onclick="CS_replyWriteCheck()">
 													<input type="button" class="btn1" value="취소" id="cancel">
 												</td>
 											</tr>			
@@ -118,6 +118,11 @@
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+	function modalOkFn(){
+		modalClose();
+		history.back();
+	}
+	
 	$(function(){
 		
 		$("#summernote").summernote({
@@ -145,22 +150,14 @@
 		});
 		
 		$("#cancel").click(function(){
+			
 			var title = "${cv.title}";
+			
 			if($("#title").val() != title){
-	    		if(!confirm("작성된 내용이 있습니다. \n\n답변 작성을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+	    		modalFn("작성된 내용이 있습니다.\n\n답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
 	    	}
 			else if($("#summernote").val() != null){
-	    		if(!confirm("작성된 내용이 있습니다. \n\n답변 작성을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("작성된 내용이 있습니다.\n\n답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
 	    	}
 	    	else{
     			history.back();
@@ -169,24 +166,35 @@
 		
 	});
 	
-	function CS_replyWrite(){
+	function CS_replyWriteCheck(){
+		
 		var title = $("#title");
 		var content = $("#summernote");
+		
 		if(title.val() == ""){
-			alert("제목을 입력해주세요");
+			modalFn("제목을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			}, 1000);
 			title.focus();
 			return;
 		}
 		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
+			modalFn("내용을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			}, 1000);
 			content.focus();
 			return;
 		}
 		else {
-			alert("답변 글이 등록되었습니다.");
-			$("#form1").submit();
+			modalFn("1:1 고객문의 답변을 등록하시겠습니까?", "확인", "1:1 고객문의 답변 등록", "취소", "CS_replyWrite");
 		}
-	};
+	}
+	
+	function CS_replyWrite(){
+		$("#form1").submit();
+	}
 </script>
 </body>
 </html>

@@ -25,7 +25,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/csBoard/CS_list.css" />
+<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/csBoard/CS_View.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
@@ -60,22 +60,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-								<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-							</a>
 							<div class="div_header">
 								<h3>1:1 문의 게시글</h3>
 							</div>
-							<br><br>
-							<c:if test="${login != null }">
-								<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
-								<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
-							</c:if>
-							<br>
 							<hr>	
-							<br>
-							<br>
-							<br>
 							<div class="div1">	
 								<table class="tb1">
 									<tbody>
@@ -161,24 +149,22 @@
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+	function modalOkFn(){
+		location.href = "CS_delete.do?origincsbidx=${cv.origincsbidx}";
+	}
+	
+	function CS_replyDelete(){
+		location.href = "CS_replyDelete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx}";
+	}
+	
 	$(function(){	
 		
 		$("#delete").click(function(){
-			if(!confirm("삭제하시면 복구할 수 없습니다. \n\n정말로 삭제하시겠습니까?")){				
-				return false;
-			}
-			else{
-				 location.href = "CS_delete.do?origincsbidx=${cv.origincsbidx}";
-			}			
+			modalFn("삭제하시면 복구할 수 없습니다.\n\n정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");		
 		});
 		
 		$("#reply_delete").click(function(){
-			if(!confirm("정말로 삭제하시겠습니까?")){
-				return false;				
-			}
-			else{
-				location.href = "CS_replyDelete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx}";								 
-			}			
+			modalFn("정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 답변 삭제", "취소", "CS_replyDelete");		
 		});
 		
 	});
