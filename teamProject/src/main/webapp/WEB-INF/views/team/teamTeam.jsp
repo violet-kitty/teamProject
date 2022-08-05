@@ -37,8 +37,8 @@
 		
 		<c:set var="i" value="0"/>
 		<c:forEach var="vv" items="${vote}">
-		li[${i}] = "${vv.vote}";
-		li2[${i}] = "${vv.cnt}";
+			li[${i}] = "${vv.vote}";
+			li2[${i}] = "${vv.cnt}";
 		<c:set var="i" value="${i+1}"/>
 		</c:forEach>
 		

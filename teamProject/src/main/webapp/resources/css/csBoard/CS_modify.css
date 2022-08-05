@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+h3{
+	text-align: center;
+}
+a{
+	text-decoration-line: none;
+}
+.div_header{
+	margin-left: 10%;
+	margin-right: 10%;
+	padding-right: 10%;
+	text-align: center;
+}
+.div_header h3{
+	display: inline-block;
+}
+.a_logo{
+	margin-left: 10%;
+	float: left;
+}
+.a_logo img{
+	max-width: 100px;
+	max-height: 100px;
+}
+.div_userInfo{	
+	display: inline-block;
+	float: left;
+	margin-left: 10%;
+}
+.span_userInfo{
+	display: inline-block;
+	font-weight: bold;
+	color : #5B6DCD;
+}
+.div_logout{
+	display: inline-block;
+	float: right;
+	margin-right: 10%;
+}
+.a_logout{
+	color: #5B6DCD;
+	font-weight: bold;
+}
+.tb1{
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.tb_category{
+	text-align: center;
+	width: 10%;
+	background-color: lightgray;
+	font-weight: bold;
+}
+.span_must_input{
+	color: red;
+}
+.input_title{
+	width: 100%;
+}
+.tb_content{
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.tb_textarea{
+	width: 100%;
+	text-align: left;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+.tb_filename{
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+.div2{
+	text-align: center;
+	width: 80%;
+	margin-top: 5px;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.btn1{
+	width: 100px;
+	height: 30px;
+	margin-left: 1%;
+}
+#img{
+	max-width: 480px;
+	max-height: 270px;
+}
+#div_img1{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#div_img2{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

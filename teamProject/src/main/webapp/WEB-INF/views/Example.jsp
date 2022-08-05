@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
 <title>페이지 제목</title>
-
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -59,19 +57,18 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-				<!--  
-				
-				
-				여기에 html 작성하시믄 댑니다~!
-				
-				 -->	
-				
+					<!--  
+					
+					
+					여기에 html 작성하시믄 댑니다~!
+					
+					 
+					 -->					
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
-
-
-		</div><!-- / #container -->
+		</div>
+		<!-- / #container -->
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->

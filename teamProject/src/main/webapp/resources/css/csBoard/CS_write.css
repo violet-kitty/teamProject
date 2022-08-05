@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+h3{
+	text-align: center;
+}
+a{
+	text-decoration-line: none;
+}
+.div_header{
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: center;
+}
+.tb1{
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.td_category{
+	text-align: center;
+	vertical-align: middle;
+	width: 10%;
+	background-color: lightgray;
+	font-weight: bold;
+}
+.span_must_fill{
+	color: red;
+}
+.input_title{
+	width: 100%;
+}
+.tb_content{
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.tb_filename{
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+#div_img{
+	margin-top: 10px;
+}
+#div_img2{
+	margin-top: 10px;
+}
+.div2{
+	text-align: center;
+	width: 80%;
+	margin-top: 5px;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.btn1{
+	width: 100px;
+	height: 30px;
+	margin-left: 1%;
+}
+#img{
+	max-width: 480px;
+	max-height: 270px;
+}

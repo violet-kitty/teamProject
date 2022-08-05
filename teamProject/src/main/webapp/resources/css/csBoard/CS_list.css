@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+h3{
+	text-align: center;
+}
+a{
+	text-decoration-line: none;
+}
+.tb1 a:visited{
+	color: #ccc;
+}
+.div_header{
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: center;
+}
+.div1{
+	margin-top: 5px;
+	margin-right: 10%;	
+}
+.btn1{
+	float: right;
+	width: 100px;
+	height: 30px;
+}
+.div2{
+	float: right;
+	text-align: center;
+	margin-right: 10%;
+}
+.form1{
+
+}
+.tb1{
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+.tb_category{
+	font-weight: bold;
+	background-color: lightgray;
+}
+.td_not_found{
+	width: 100%;
+	height: 300px;
+	text-align: center;
+	vertical-align: middle; 
+}
+.tb2{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: center;	
+}
+.notice{
+	margin-right: 10%;
+	text-align: right;
+}
+.notice button{
+	width: 10%;
+	height: 20px;
+	border: none;
+	color: white;
+	background-color: #54ACA8;
+	font-weight: bold;
+}

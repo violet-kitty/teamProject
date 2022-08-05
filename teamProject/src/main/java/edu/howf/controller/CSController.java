@@ -37,7 +37,7 @@ import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
 //1:1문의, FAQ
-@RequestMapping(value = "/csBoard")
+@RequestMapping(value = "/CSboard")
 @Controller
 public class CSController {
 
@@ -47,7 +47,7 @@ public class CSController {
 	@Autowired
 	String uploadPath;
 
-	@RequestMapping(value = "/csList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_list.do", method = RequestMethod.GET)
 	public String csList(Model model, SearchVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 
 		session = request.getSession();
@@ -88,18 +88,18 @@ public class CSController {
 			
 			
 
-			return "csBoard/csList";
+			return "CSboard/CS_list";
 		}
 
 	}
 
-	@RequestMapping(value = "/cs_write.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_write.do", method = RequestMethod.GET)
 	public String cs_write() {
 
-		return "csBoard/cs_write";
+		return "CSboard/CS_write";
 	}
 
-	@RequestMapping(value = "/cs_write.do")
+	@RequestMapping(value = "/CS_write.do")
 	public String cs_write(MultipartFile file, CSVO vo, HttpServletRequest request, HttpSession session)
 			throws IllegalStateException, IOException {
 		 
@@ -128,11 +128,11 @@ public class CSController {
 		 int result = csService.CS_write(vo);
 		 
 
-		return "redirect:/csBoard/csList.do";
+		return "redirect:/CSboard/CS_list.do";
 	}
 	
 
-	@RequestMapping(value = "/csList_view.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_view.do", method = RequestMethod.GET)
 	public String csListView(int csbidx, int origincsbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Cookie[] cookies = request.getCookies();
 		int visitor = 0;
@@ -164,21 +164,21 @@ public class CSController {
 		model.addAttribute("cv", cv);
 		model.addAttribute("cvr", cvr);
 
-		return "csBoard/csList_view";
+		return "CSboard/CS_view";
 	}
 
 
-	@RequestMapping(value = "/csList_modify.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_modify.do", method = RequestMethod.GET)
 	public String csListModify(int csbidx, Model model) {
 
 		CSVO cv = csService.csList_view(csbidx);
 
 		model.addAttribute("cv", cv);
 
-		return "csBoard/csList_modify";
+		return "CSboard/CS_modify";
 	}
 
-	@RequestMapping(value = "/csList_modify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/CS_modify.do", method = RequestMethod.POST)
 	public String csListModify(MultipartFile file, CSVO vo, HttpServletRequest request, HttpSession session)
 			throws IllegalStateException, IOException {
 
@@ -204,18 +204,18 @@ public class CSController {
 
 		int result = csService.csList_modify(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getCsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
+		return "redirect:/CSboard/CS_view.do?csbidx=" + vo.getCsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 
-	@RequestMapping(value = "/csList_delete.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_delete.do", method = RequestMethod.GET)
 	public String csListDelete(int origincsbidx) {
 
 		int result = csService.csList_delete(origincsbidx);
 
-		return "redirect:/csBoard/csList.do";
+		return "redirect:/CSboard/CS_list.do";
 	}
 
-	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_replyWrite.do", method = RequestMethod.GET)
 	public String csReply_write(int csbidx, Model model, CSVO vo, HttpServletRequest request, HttpSession session) {
 
 		session = request.getSession();
@@ -230,10 +230,10 @@ public class CSController {
 		model.addAttribute("login", login);
 		model.addAttribute("cv", cv);
 
-		return "csBoard/csReply_write";
+		return "CSboard/CS_replyWrite";
 	}
 
-	@RequestMapping(value = "/csReply_write.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/CS_replyWrite.do", method = RequestMethod.POST)
 	public String csReply_write(CSVO vo, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
@@ -242,32 +242,32 @@ public class CSController {
 		vo.setMidx(login.getMidx());
 		int result = csService.csReply_write(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
+		return "redirect:/CSboard/CS_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
-	@RequestMapping(value = "/csReply_modify.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/CS_replyModify.do", method = RequestMethod.GET)
 	public String csReply_modify(int csbidx, Model model) {
 
 		CSVO cv = csService.csList_view(csbidx);
 
 		model.addAttribute("cv", cv);
 
-		return "csBoard/csReply_modify";
+		return "CSboard/CS_replyModify";
 	}
 
-	@RequestMapping(value = "/csReply_modify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/CS_replyModify.do", method = RequestMethod.POST)
 	public String csReply_modify(CSVO vo, HttpServletRequest request, HttpSession session) {
 
 		int result = csService.csReply_modify(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
+		return "redirect:/CSboard/CS_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 
-	@RequestMapping(value = "/csReply_delete.do")
+	@RequestMapping(value = "/CS_replyDelete.do")
 	public String csReply_delete(CSVO vo) {
 
 		int result = csService.csReply_delete(vo);
 
-		return "redirect:/csBoard/csList_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
+		return "redirect:/CSboard/CS_view.do?csbidx=" + vo.getOrigincsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
 	}
 	
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
@@ -319,34 +319,6 @@ public class CSController {
 		}
 		return entity;
 	}
-	
-//	@PostMapping(value = "/cs_write_summernote.do", produces = "application/json")
-//	@ResponseBody
-//	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
-//		
-//		JsonObject jsonObject new JsonObject();
-//		
-//		String fileRoot = "C:\\upload";
-//		String originalFileName = multipartFile.getOriginalFilename();
-//		String extension = originalFileName.substring(originalFileName.indexOf("."));
-//		
-//		String savedFileName = UUID.randomUUID() + extension;
-//		
-//		File targatFile = new File(fileRoot + savedFileName);
-//		
-//		try {
-//			InputStream filestream = multipartFile.getInputStream();
-//			FileUtils.copyInputStreamToFile(filestream, targatFile);
-//			jsonObject.addProperty("url", "/summernoteImage/" + savedFileName);
-//			jsonObject.addProperty("responseCode", "success");
-//			
-//		} catch(IOException e){
-//			FileUtils.deleteQuietly(targatFile);
-//			jsonObject.addProperty("responseCode", "error");
-//			e.printStackTrace();
-//		}
-//		
-//		return JsonObject;
-//	}
+
 
 }
