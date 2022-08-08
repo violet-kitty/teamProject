@@ -372,11 +372,38 @@ public class MyPageController {
 	}
 	
 	//내 숙소 관리 이동
-	
+	@RequestMapping(value="/myStay.do")
+	public String myStay(Model model, HttpServletRequest request, HttpSession session) {
+		
+		return "mypage/myStay";
+	}
 	
 	//예약자 관리 이동
+	@RequestMapping(value="reservationList.do")
+	public String reservationList(ResVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		List<ResVO> res = stayService.resSelectAllB(vo);
+		
+		model.addAttribute("res", res);
+		
+		return "mypage/reservationList";
+	}
 	
-	
+	//날짜에 맞는 예약 목록 가져오기
+	@ResponseBody
+	@RequestMapping(value="/resList.do")
+	public List<ResVO> resList(ResVO vo, HttpServletRequest request, HttpSession session){
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		List<ResVO> res = stayService.resSelectAllB(vo);
+		
+		return res;
+	}
 	
 	
 	
@@ -392,10 +419,6 @@ public class MyPageController {
 	//회원 관리 이동
 	
 	
-	//HOWF 추천 관리 이동
-	
-	
-	//HOWF 소식 관리 이동
 	
 	
 	

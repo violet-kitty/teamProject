@@ -739,17 +739,16 @@
 			return;
 		}
 		else {
-			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
+			var dd = "sidx="+sidx+"&rname="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
 			//중복 가예약인지 아닌지 여부 판단
 			$.ajax({
 				url:"resDup.do",
 				data:dd,
 				type:"post",
 				success:function(dup){
-					alert(dup.ridx);
 					if(dup.ridx != undefined){
 						alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
-						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2+"&merchant="+dup.merchant;
+						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
 						location.href='stayReservation.do?'+data1;
 						return;
 					}
@@ -761,7 +760,7 @@
 							type:"post",
 							success:function(data){
 								//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜
-								var data2 = "sname="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
+								var data2 = "sname="+stayName+"&ridx="+data+"&rname="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
 								location.href='stayReservation.do?'+data2;
 							}
 						});//ridx 가져오고 이동

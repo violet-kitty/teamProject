@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
@@ -107,10 +108,12 @@
 								</c:otherwise>
 							</c:choose>
 							</p>
-							<c:if test="${i.pay == 'N' && i.delyn == 'N'}">
+							<!-- 오늘 날짜 -->
+							<c:set var="today"><fm:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd"/></c:set>
+							<c:if test="${i.pay == 'N' && i.delyn == 'N' && i.date1>=today}">
 							<button onclick="payment('${i.sname}','${i.ridx}','${i.rname}','${i.price}','${i.date1}','${i.date2}','${i.merchant}')">결제하기</button>
 							</c:if>
-							<c:if test="${i.pay == 'Y' && i.delyn == 'N'}">
+							<c:if test="${i.pay == 'Y' && i.delyn == 'N' && i.date1>today}">
 							<button onclick="resCancel('${i.reidx}')">예약 취소</button>
 							</c:if>
 						</div>
