@@ -155,7 +155,7 @@
 	//에디터
 	$(function(){
 		$("#summernote").summernote({
-			height:1000,
+			height:600,
 			minHeight:null,
 			maxHeight:null,
 			focus:true,
