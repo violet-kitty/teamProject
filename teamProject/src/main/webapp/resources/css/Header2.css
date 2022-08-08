@@ -2,7 +2,7 @@
 
 /* header 세팅 */
 #header{position: relative; width: 100%; z-index: 5000;}
-#header .topnavbar{padding:8px 0px 8px 0px; background: #707070 0% 0% no-repeat padding-box; box-shadow: 0px 3px 6px #00000029;}
+#header .topnavbar{padding:8px 0px 8px 0px; background-position: top; background-position-y: -12px; background-image: linear-gradient( rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3) ), url(../image/picture/picture5-2.jpg); background-size:cover;}
 @media all and (max-width: 992px) {
 	#header .topnavbar {padding:8px 0px 0px 0px;}
 }
