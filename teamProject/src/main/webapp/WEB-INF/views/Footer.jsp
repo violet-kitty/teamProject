@@ -53,6 +53,7 @@
 				<a href="<%=request.getContextPath() %>/null.jsp"><img src="<%= request.getContextPath() %>/image/button/sns3.png"></a>
 				<a href="<%=request.getContextPath() %>/null.jsp"><img src="<%= request.getContextPath() %>/image/button/sns4.png"></a>
 				<a href="<%=request.getContextPath() %>/null.jsp"><img src="<%= request.getContextPath() %>/image/button/sns5.png"></a>
+				<a href="<%=request.getContextPath() %>/null.jsp"><img src="<%= request.getContextPath() %>/image/button/sns6.png"></a>
 			</div>
 			<!-- /.snsarea -->
 

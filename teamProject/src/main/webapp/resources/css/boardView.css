@@ -1,2 +1,39 @@
 @charset "UTF-8";
 @import "reset.css";
+
+/* view setting */
+.boardview .container {max-width: 800px; margin: auto; padding: 40px 0px; padding-bottom: 90px; position:relative;}
+/* view head */
+.boardview .clist {margin-top:20px;}
+.boardview .clist .thumbnailitem { border:none}
+.boardview .clist .thumbnailimg {width:100%;}
+.boardview .clist .thumbnail .writerinfo {padding: 16px 0px 16px 0px;}
+.boardview .clist .writerinfo p {display:inline-block;color:#3D3D3D; font: normal normal bold 13px/19px Noto Sans; letter-spacing: 0.52px;}
+.boardview .clist .writerinfo p .cate {border-radius:25px; margin-right:8px; padding:5px 10px; display:inline-block; font: normal normal 13px/19px Noto Sans; letter-spacing: 0.52px;}
+.boardview .clist .writerinfo .small {float: right; margin-top:6px;}
+.boardview .clist .writerinfo .small span {margin-left:8px; font-size:16px;}
+.boardview .clist .writerinfo .small img { display:inline-block; width:16px;}
+.boardview .clist .writerinfo p span {font-size:16px; line-height:19px;}
+.boardview .clist .caption {margin-bottom:16px;}
+.boardview .clist .caption h4 {padding:0px; color:#3D3D3D; font: normal normal bold 40px/50px Noto Sans;}
+.boardview .clist #tagArea {font-size:16px; line-height:26px;}
+
+.boardview .middleline {margin:24px 0px 32px 0px;}
+.boardview .lastline {margin-bottom:40px;}
+.boardview .clist .contentrow {margin-bottom:48px;}
+.boardview .clist .contentrow p {line-height:30px;}
+
+.boardview .clist .btnarea button {background:none; border:none;}
+.boardview .clist .btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
+.boardview .clist .btnarea img:hover {width:40px; border:none;}
+
+#howfContent {max-width:100%;}
+#howfContent img {max-width:100%;}
+
+@media all and (max-width: 768px) {
+	.boardview .clist .writerinfo p span {font-size:12px; line-height:19px;}
+	.boardview .clist .caption h4 {padding:0px; color:#3D3D3D; font: normal normal bold 24px/38px Noto Sans;}
+	.boardview .container {padding:0px 5%; padding-bottom:32px;}
+	.boardview .clist .thumbnailitem {padding:5px 0px;}
+	.boardview .clist .thumbnail .writerinfo {padding: 16px 0px 16px 0px;}
+}

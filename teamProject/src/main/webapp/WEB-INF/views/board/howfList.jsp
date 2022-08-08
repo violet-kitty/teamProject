@@ -32,8 +32,8 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - Board공용세팅 --> <link href="<%=request.getContextPath()%>/css/board.css" rel="stylesheet">
-<!-- CSS3 - Howf --> <link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
 </head>
 
@@ -47,7 +47,7 @@
 		
 		<div class="right-container">
 			<c:if test="${login!=null && login.role=='admin'}">
-				<div class="docctrl">
+				<div class="docctrl onlypc">
 					<a href="<%=request.getContextPath()%>/howf/howfWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
 				</div>
 			</c:if>
@@ -59,7 +59,7 @@
 
 			<!-- hero -->
 			<div id="carouselExampleIndicators" class="hero content01 carousel slide" data-bs-ride="carousel">
-				<div class="carousel-indicators onlypc">
+				<div class="carousel-indicators onlypc-flex">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -70,7 +70,7 @@
 						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${hero[0].filename});"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold"><${hero[0].cate}> ${hero[0].title}</h5>
+								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[0].cate}></span> ${hero[0].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea0"></p>
 								<button class="greenbtn hbshadow2">자세히보기</button>
 							</div>
@@ -81,7 +81,7 @@
 
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold"><${hero[1].cate}> ${hero[1].title}</h5>
+								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[1].cate}></span> ${hero[1].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea1"></p>
 								<button class="greenbtn hbshadow2">자세히보기</button>
 							</div>
@@ -93,7 +93,7 @@
 
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold"><${hero[2].cate}> ${hero[2].title}</h5>
+								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[2].cate}></span> ${hero[2].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea2"></p>
 								<button class="greenbtn hbshadow2">자세히보기</button>
 							</div>
@@ -147,9 +147,15 @@
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
 						
+						<c:if test="${login!=null && login.role=='admin'}">
+							<div class="docctrl onlytablet" style="margin-top:16px;">
+								<a href="<%=request.getContextPath()%>/howf/howfWrite.do"><button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button></a>
+							</div>
+						</c:if>
+						
 						<div class="row rightbox onlytablet">
 							<div class="btn-group">
-								<button class="w-100 dropdown-toggle bluebtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬</button>
+								<button class="w-100 dropdown-toggle pinkbtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬 &nbsp;</button>
 								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
 									<li><a class="dropdown-item" href="howfList.do?sortType=new">최신순</a></li>
 									<li><a class="dropdown-item" href="howfList.do?sortType=heart">좋아요순</a></li>
@@ -160,7 +166,7 @@
 							</div>
 							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
 						</div><!-- .rightbox -->
-						
+
 					</div><!-- .pageinfo -->
 					<!-- / pagehead -->
 					

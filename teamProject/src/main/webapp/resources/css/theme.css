@@ -73,7 +73,6 @@ form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none
 
 /* 클래스 container 세팅 */ /* 넓이 : 1100% */
 .container {width: 1100px; margin: auto; padding: 80px 0px; padding-bottom: 90px; position:relative;}
-.boardview .container {width: 800px; margin: auto; padding: 80px 0px; padding-bottom: 90px; position:relative;}
 /*  모바일 세팅 : 클래스 container */
 @media all and (max-width: 1200px) {
 	.container {width: 100%; margin: auto; padding:5%;}
@@ -142,6 +141,7 @@ form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none
 }
 
 /* tablet 사이즈 이하에서만 안보이기*/
+.onlypc-flex {display:flex;}
 .onlypc {display:block;}
 .onlypc-inline {display:inline-block;}
 @media all and (max-width: 992px) {
