@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,9 @@ public class TeamController {
 	
 	@Autowired
 	String uploadPath;
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value = "/teamList.do", method = RequestMethod.GET)
 	public String teamList(Model model, SearchVO vo) {
@@ -269,14 +273,6 @@ public class TeamController {
 		
 		return teamService.revote(vv);
 	}
-	
-	
-
-
-	
-	
-	
-	
 
 	
 	

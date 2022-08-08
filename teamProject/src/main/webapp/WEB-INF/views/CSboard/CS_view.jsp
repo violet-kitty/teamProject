@@ -25,7 +25,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/csBoard/CS_View.css" />
+<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/csBoard/CS_view.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
@@ -101,7 +101,7 @@
 									</c:if>
 										<input type="button" value="목록" onclick="location.href='CS_list.do'" class="btn2">
 									<c:if test="${login.midx == cv.midx || login.role == 'admin'}">				
-										<input type="button" value="수정" onclick="location.href='cs_listModify.do?csbidx=${cv.csbidx}'" class="btn2">
+										<input type="button" value="수정" onclick="location.href='CS_modify.do?csbidx=${cv.csbidx}'" class="btn2">
 										<input type="button" id="delete" value="삭제" class="btn2">
 									</c:if>
 								</div>
@@ -160,7 +160,7 @@
 	$(function(){	
 		
 		$("#delete").click(function(){
-			modalFn("삭제하시면 복구할 수 없습니다.\n\n정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");		
+			modalFn("삭제하시면 복구할 수 없습니다. 정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");		
 		});
 		
 		$("#reply_delete").click(function(){

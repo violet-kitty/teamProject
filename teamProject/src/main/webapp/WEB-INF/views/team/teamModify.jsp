@@ -111,6 +111,10 @@
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+	function modalOkFn(){
+		history.back();
+	}
+
 	$(function(){
 		
 		$("#summernote").summernote({
@@ -138,31 +142,18 @@
 		});
 		
 		$("#btn_cancel").click(function(){
+			
 			var title = "${tv.title}";
 			var content = "${tv.content}";
+			
 			if($("#title").val() != title){
-				if(!confirm("제목이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 			}
 			else if($("#summernote").val() != content){
-	    		if(!confirm("내용이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 	    	}
 			else if($("#thumbnail").val() != ""){				
-				if(!confirm("첨부된 파일이 변경되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("첨부된 파일이 변경되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 			}
 	    	else{
 	    		history.back();
@@ -173,24 +164,33 @@
 	});
 	
 	function btn_modify(){
+		
 		var title = $("#title");
 		var content = $("#summernote");
+		
 		if(title.val() == ""){
-			alert("제목을 입력해주세요");
+			modalFn("제목을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return;
 		}
 		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
+			modalFn("내용을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			content.focus();
 			return;
 		}
 		else {
-			if(!confirm("정말로 수정하시겠습니까?")){
-				return false;
-			}
-			$("#form1").submit();
+			modalFn("수정하시겠습니까?", "확인", "팀 페이지", "취소", "teamModifyCheck");
 		}
+	}
+	
+	function teamModifyCheck(){
+		$("#form1").submit();
 	}
 </script>
 </body>

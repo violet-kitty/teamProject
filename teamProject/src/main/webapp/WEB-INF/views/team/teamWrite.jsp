@@ -120,25 +120,52 @@ $(function(){
 	});
 			
 	$("#btn_write").click(function(){
+		
 		var title = $("#title");
 		var content = $("#summernote");
+		
 		if(title.val() == ""){
-			alert("제목을 입력해주세요");
+			modalFn("제목을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return false;
 		}
 		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
+			modalFn("내용을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			content.focus();
 			return false;
 		}
 		else{
-			$("#form1").submit();
+			modalFn("팀 페이지를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "teamWriteCheck");
 		}				
 	});
 	
-	$("#btn_cancel").click(function(){
+	function teamWriteCheck(){
+		$("#form1").submit();
+	}
+	
+	function modalOkFn(){
 		history.back();
+	}
+	
+	$("#btn_cancel").click(function(){
+		if($("#title").val() != ""){
+			modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+		}
+		else if($("#summernote").val() != ""){
+			modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+    	}
+		else if($("#thumbnail").val() != ""){
+			modalFn("첨부된 파일이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+		}
+    	else{
+			history.back();
+		}
 	});
 
 });

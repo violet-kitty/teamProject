@@ -66,41 +66,26 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-								<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-							</a>
+
 							<div class="div_header">
 								<h3>1:1 문의 게시글 답변 작성</h3>
 							</div>
-							<br><br>
-							<c:if test="${login != null }">
-								<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
-								<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
-							</c:if>
-							<br>
 							<hr>	
-							<br>
-							<br>
-							<br>
 							<div class="replies">
 								<form id="form1" action="CS_replyWrite.do?origincsbidx=${cv.origincsbidx}" method="post">
-									<table class="tb2">
-										<tbody>
+									<table class="table tb1">
+										<tbody>			
 											<tr>
-												<td class="reply_category reply_category_title" colspan="6">1:1 문의 답변</td>
-											</tr>				
-											<tr>
-												<td class="reply_category">작성자</td>
-												<td>${login.nickname}<input type="hidden" name="origincsbidx" value="${cv.csbidx}"></td>
 												<td class="reply_category">제목<span class="span_must_input">*</span></td>
 												<td><input type="text" id="title" name="title" class="input_title" value="${cv.title}"></td>
 											</tr>
 											<tr>
-												<td class="reply_category" style="border-top: 2px solid #27c6be;">내용<span class="span_must_input">*</span></td>
-												<td class="reply_content" colspan="3"><textarea id="summernote" name="content" class="content_input_box"></textarea></td>
+												<td class="reply_category">내용<span class="span_must_input">*</span></td>
+												<td class="reply_content" colspan="3"><textarea id="summernote" name="content"></textarea></td>
 											</tr>
 											<tr>
 												<td class="btn_td" colspan="4">
+													<input type="hidden" name="origincsbidx" value="${cv.csbidx}">
 													<input type="button" class="btn1" value="등록" onclick="CS_replyWriteCheck()">
 													<input type="button" class="btn1" value="취소" id="cancel">
 												</td>
@@ -152,12 +137,13 @@
 		$("#cancel").click(function(){
 			
 			var title = "${cv.title}";
+			var content = $("#summernote");
 			
 			if($("#title").val() != title){
-	    		modalFn("작성된 내용이 있습니다.\n\n답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    		modalFn("제목이 변경 되었습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
 	    	}
-			else if($("#summernote").val() != null){
-				modalFn("작성된 내용이 있습니다.\n\n답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+			else if(content.val() != ""){
+				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
 	    	}
 	    	else{
     			history.back();

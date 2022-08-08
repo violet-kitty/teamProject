@@ -95,11 +95,11 @@
 											</tr>
 											<tr>				
 												<td class="td_category">제목<span class="span_must_fill">*</span></td>
-												<td style="padding-right: 9px;"><input type="text" name="title" id="title" class="input_title" placeholder="제목을 입력해주세요"></td>					
+												<td><input type="text" id="title" name="title" class="input_title" placeholder="제목을 입력해주세요"></td>					
 											</tr>
 											<tr>
 												<td class="td_category">내용<span class="span_must_fill">*</span></td>
-												<td><textarea class="tb_textarea" name="content" id="summernote"></textarea></td>
+												<td><textarea id="summernote" name="content" class="tb_textarea"></textarea></td>
 											</tr>
 											<tr>
 												<td class="td_category">이미지 첨부 파일</td>
@@ -158,7 +158,7 @@
 			minHeight:null,
 			maxHeight:null,
 			focus:false,
-			lang:"ko-KR",
+			lang: "ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
 				['style',['style']],

@@ -211,22 +211,13 @@
 
 	function add_option(){
 		if(index > 5){
-			modalFn("선택지는 최대 5개까지만 가능합니다.","확인","타이틀","취소");
+			modalFn("선택지는 최대 5개까지만 가능합니다.", "확인");
 			return;
 		}
 		else{
 			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
 			index++;
 		}
-		
-	}
-	
-	function modalOkFn(){
-		modalClose();
-		modalFn("ddd");
-		setTimeout(function(){
- 			modalClose();
- 		},1500);
 		
 	}
 	

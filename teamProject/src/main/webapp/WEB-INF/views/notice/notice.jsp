@@ -88,18 +88,17 @@
 	<tbody>
 		<c:if test="${list.size() == 0 }">
 			<tr>
-				<td colspan="4">게시글 없어</td>
+				<td colspan="5" style="text-align: center">게시글 없어</td>
 			</tr>
-			</c:if>
+		</c:if>
 		<c:if test="${list.size() > 0 }">
 			<c:set var="i" value="1"/>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-
 					<td>${i}</td>
-					<td>${vo.name} </td>
-					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title }</a></td>
-					<td>${vo.wdate }</td>
+					<td>${vo.name}</td>
+					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title}</a></td>
+					<td>${vo.wdate}</td>
 					<td>${vo.cnt}</td>
 					<c:set var="i" value="${i+1}"/>
 			</c:forEach>
