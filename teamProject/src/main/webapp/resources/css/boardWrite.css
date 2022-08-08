@@ -1,0 +1,46 @@
+@charset "UTF-8";
+@import "reset.css";
+
+/* view setting */
+.howfWrite .container {max-width: 800px; margin: auto; padding: 40px 0px; padding-bottom: 90px; position:relative;}
+
+/* view setting */
+.howfWrite .imgThumbView {width:100%; margin-top:20px;}
+.howfWrite .imgThumbView img {width:100%;}
+.howfWrite .imgThumbView div {cursor:pointer;}
+.howfWrite .imgThumbView .attachimg1 {display:block;}
+.howfWrite .imgThumbView .attachimg2 {display:none;}
+.howfWrite .imgThumbView input {display:none;}
+.howfWrite .imgThumbView #imageArea {display:none;}
+.howfWrite .imgThumbView2 {width:100%; margin-top:20px;}
+.howfWrite .h-input {margin:24px 0px;}
+.howfWrite .h-input input[type=text] { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.howfWrite .h-input .tagcon { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.howfWrite .h-input .form-select {height:100%; border-radius:10px;}
+.howfWrite .h-input .selection {padding-right:20px;}
+.howfWrite .h-input .custom p {margin-bottom:8px;}
+.howfWrite .lastline {margin:32px 0px;}
+.note-control-selection {width:100% !important;}
+.note-editable img {max-width:100% !important;}
+.howfWrite .buttonarea .okbutton {text-align:right;}
+#summernote div {
+    max-width: 100%;
+}
+
+@media all and (max-width: 768px) {
+	.howfWrite .boardWrite .container {padding:0px 5%; padding-bottom:32px;}
+	.howfWrite .h-input .selection {padding-right:0px; padding-bottom:16px;}
+	.howfWrite .buttonarea .okbutton {text-align:center;}
+	.howfWrite .h-input .custom p {padding:0px 5px;}
+	.howfWrite .imgThumbView .attachimg1 {display:none;}
+	.howfWrite .imgThumbView .attachimg2 {display:block;}
+}
+
+.howfWrite .note-editor.note-frame .note-editing-area .note-editable, .note-editor.note-airframe .note-editing-area .note-editable
+{border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white;  height:fit-content; border: none;}
+ 
+.howfWrite .note-editor.note-frame, .note-editor.note-airframe {border:none;}
+.howfWrite .note-editor.note-frame .note-editing-area .note-editable, .note-editor.note-airframe .note-editing-area .note-editable{padding:24px; height:fit-content; line-height:20px;}
+.howfWrite .note-editor.note-frame .note-placeholder, .note-editor.note-airframe .note-placeholder{padding:24px;}
+.howfWrite .note-popover .popover-content, .note-editor .note-toolbar{ border-top-left-radius: 10px; border-top-right-radius: 10px; width: 100%; border: none;}
+ 
