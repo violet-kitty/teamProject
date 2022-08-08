@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.howf.dao.UserDao;
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
@@ -100,6 +101,9 @@ public class UserServiceImple implements UserService{
 		return userDao.autoLogin(midx);
 	}
 	
+	
+	/* 마이 페이지 */
+	
 	@Override
 	public UserVO profileSelectOne(int midx) {
 		return userDao.profileSelectOne(midx);
@@ -148,6 +152,16 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int heartCountStay(SearchVO vo) {
 		return userDao.heartCountStay(vo);
+	}
+
+	@Override
+	public List<CommentVO> myReview(SearchVO vo) {
+		return userDao.myReview(vo);
+	}
+
+	@Override
+	public int myReviewCount(SearchVO vo) {
+		return userDao.myReviewCount(vo);
 	}
 	
 }

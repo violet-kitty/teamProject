@@ -26,6 +26,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 </head>
 <body>
@@ -40,7 +41,6 @@
 		
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
-
 			<!-- contents 02 -->
 			<style>
 			.feature {text-align:center;}
@@ -92,11 +92,11 @@
 				</div>
 			</div>
 			<!-- / .content01 -->
-			
 
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
 </body>
 </html>

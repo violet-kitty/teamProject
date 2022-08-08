@@ -396,24 +396,41 @@
 	</select>
 	
 	<!-- 내 리뷰 가져오기 -->
-	<select id="myReview">
-		
+	<select id="myReview" parameterType="searchVO" resultType="commentVO">
+		SELECT c.cbidx
+			, c.content
+			, c.star
+			, c.bidx
+			, c.photo
+			, DATE_FORMAT(C.wdate,'%Y-%m-%d') as wdate
+			, s.name
+		FROM comment c
+		JOIN stay s
+		ON c.bidx = s.sidx
+		WHERE c.midx = #{midx}
+		AND c.delyn = 'N'
+		AND s.delyn = 'N'
+		AND c.type = 'stay'
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
 	<!-- 내 리뷰 개수 -->
-	<select id="myReviewCount">
-		
+	<select id="myReviewCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE midx = #{midx}
+		AND delyn = 'N'
+		AND type = 'stay'
 	</select>
 	
 	<!-- 내 댓글 가져오기 -->
-	<select id="myComment">
-		
-	</select>
 	
 	<!-- 내 댓글 개수 -->
-	<select id="myCommentCount">
-		
-	</select>
+	
+	<!-- 내 팀 목록 보기 -->
+	
+	
+	<!-- 내 팀 개수 -->
 	
 	
 </mapper>

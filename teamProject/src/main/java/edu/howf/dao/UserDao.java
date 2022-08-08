@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
@@ -102,6 +103,8 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"autoLoginSelectOne", midx);
 	}
 	
+	/* 마이 페이지 */
+	
 	//프로필 정보 가져오기
 	public UserVO profileSelectOne(int midx) {
 		return sqlSession.selectOne(namespace+"profileSelectOne", midx);
@@ -155,4 +158,28 @@ public class UserDao {
 	public int heartCountStay(SearchVO vo) {
 		return sqlSession.selectOne(namespace+"heartCountStay", vo);
 	}
+	
+	//내 리뷰
+	public List<CommentVO> myReview(SearchVO vo) {
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myReview", vo);
+	}
+	
+	//내 리뷰 개수
+	public int myReviewCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myReviewCount", vo);
+	}
+	
+	//내 댓글
+	
+	
+	//내 댓글 개수
+	
+	
+	//내 팀
+	
+	
+	//내 팀 개수
+	
+	
 }

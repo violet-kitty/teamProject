@@ -124,10 +124,6 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">내 찜 목록</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
 							<a class="mainbtn" href="">문의 내역</a>
 						</div>
 					</div>

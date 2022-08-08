@@ -73,16 +73,35 @@
 							<c:forEach var="v" items="${review}">
 								<div class="card mb-3">
 									<div class="row g-0">
-										<div class="col-lg-4" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
-											<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${v.filename}" style="width:100%;height:100%;">
-										</div>
-										<div class="col-lg-8" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
-											<div class="card-body">
-												<h5 class="card-title">${v.title}</h5>
-												<p class="card-text">${v.nickname}</p>
-												<p class="card-text">${v.content}</p>
+										<c:choose>
+										<c:when test="${v.photo != null}">
+											<div class="col-lg-4" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+												<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${v.photo}" style="width:100%;height:100%;">
 											</div>
-										</div>
+											<div class="col-lg-8" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+												<div class="card-body">
+													<h5 class="card-title">${v.name}</h5>
+													<p class="card-text">
+														<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
+														${v.star}
+													</p>
+													<p class="card-text">${v.content}</p>
+													<p class="card-text">${v.wdate} 작성</p>
+												</div>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-lg-12" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+												<div class="card-body">
+													<h5 class="card-title">${v.name}</h5>
+													<p class="card-text">별그림 ${v.star}</p>
+													<p class="card-text">${v.content}</p>
+													<p class="card-text">${v.wdate} 작성</p>
+												</div>
+											</div>
+										</c:otherwise>
+										</c:choose>
+										
 									</div>
 								</div>
 							</c:forEach>
@@ -102,8 +121,7 @@
 									<div class="row g-0">
 										<div class="col" onclick="movePage('comment','${v.bidx}')" style="cursor:pointer;">
 											<div class="card-body">
-												<h5 class="card-title">${v.title}</h5>
-												<p class="card-text">${v.nickname}</p>
+												<h5 class="card-title">글 제목</h5>
 												<p class="card-text">${v.content}</p>
 											</div>
 										</div>
@@ -115,12 +133,33 @@
 					</div>
 					
 					
-					
+					<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+					<div class="row pagenation">
+						<div class="col d-flex justify-content-center" id="pagingArea">
+							<c:if test="${pm.prev == true}">
+								<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.startPage-1}">◀</a>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+							<c:choose>
+							<c:when test="${search.page != null && i == search.page}">
+								<a class="hfc-white hfc-bold hbg-pink mx-1" href="howfList.do?page=${i}">${i}</a>
+							</c:when>
+							<c:otherwise>
+								<a class="hfc-gray hfc-bold mx-1" href="howfList.do?page=${i}">${i}</a>
+							</c:otherwise>
+							</c:choose>
+							</c:forEach>
+							<c:if test="${pm.next == true}">
+								<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.endPage+1}">▶</a>
+							</c:if>
+						</div>
+					</div>
+					<!-- /페이징 -->
 				
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
-
+			
 
 		</div><!-- / #container -->
 		
@@ -145,14 +184,40 @@
 		}
 	}
 	
+	//click 페이지 이동
 	function movePage(type, bidx){
 		if(type == 'review'){
-			
+			location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx='+bidx;
 		}
 		else if(type == 'comment'){
 			
 		}
 	}
+	
+	//페이지 이동
+	function reviewPaging(index){
+		$("#page").val(index);
+		reviewListAjax(index);
+	}
+	
+	//페이징
+	function paging(){
+		$.ajax({
+			url:"reviewPaging.do",
+			success:function(paging){
+				
+			}
+		});
+	}
+	
+	//리뷰 그리기
+	function reviewListAjax(page){
+		
+	}
+	
+	//댓글 그리기
+	
+	
 </script>	
 	
 	

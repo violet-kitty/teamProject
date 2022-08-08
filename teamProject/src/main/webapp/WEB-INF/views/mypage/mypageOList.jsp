@@ -62,10 +62,6 @@
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="myInfo.do">내 정보</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
 							<a class="mainbtn" href="">지역이벤트 관리</a>
 						</div>
 						<div class="feature col">

@@ -2,11 +2,12 @@ package edu.howf.vo;
 
 public class CommentVO extends SearchVO{
 	private int cbidx;
+	private String name;
 	private String content;
 	private String photo;
 	private int star;
 	private String type;
-	private int bidx;
+	private String wdate;
 	private String delyn;
 	
 	public int getCbidx() {
@@ -14,6 +15,12 @@ public class CommentVO extends SearchVO{
 	}
 	public void setCbidx(int cbidx) {
 		this.cbidx = cbidx;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getContent() {
 		return content;
@@ -39,11 +46,11 @@ public class CommentVO extends SearchVO{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getBidx() {
-		return bidx;
+	public String getWdate() {
+		return wdate;
 	}
-	public void setBidx(int bidx) {
-		this.bidx = bidx;
+	public void setWdate(String wdate) {
+		this.wdate = wdate;
 	}
 	public String getDelyn() {
 		return delyn;

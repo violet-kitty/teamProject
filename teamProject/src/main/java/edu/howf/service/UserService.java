@@ -3,6 +3,7 @@ package edu.howf.service;
 import java.util.List;
 
 import edu.howf.vo.AutoVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
@@ -25,6 +26,7 @@ public interface UserService {
 	public int autoLogin(AutoVO vo);
 	public UserVO autoLogin(int midx);
 	
+	/* 마이페이지 */
 	public UserVO profileSelectOne(int midx);
 	public int profileImgModify(UserVO vo);
 	public int profileModify(UserVO vo);
@@ -35,4 +37,6 @@ public interface UserService {
 	public List<HeartVO> heartSelectStory(SearchVO vo);
 	public List<HeartVO> heartSelectStay(SearchVO vo);
 	public int heartCountStay(SearchVO vo);
+	public List<CommentVO> myReview(SearchVO vo);
+	public int myReviewCount(SearchVO vo);
 }

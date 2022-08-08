@@ -477,8 +477,13 @@
 	//리뷰쓰기
 	$("#reviewWriteBtn").on("click",function(){
 		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		var loginRole = '${login.role}';
 		if(login == "null"){
 			alert("로그인이 필요합니다");
+			return;
+		}
+		else if(loginRole != 'normal'){
+			alert("일반회원만 글쓰기가 가능합니다");
 			return;
 		}
 		else {

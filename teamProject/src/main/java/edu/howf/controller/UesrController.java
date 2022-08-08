@@ -48,12 +48,6 @@ public class UesrController {
 	UserService userService;
 	
 	@Autowired
-	BoardService boardService;
-	
-	@Autowired
-	StayService stayService;
-	
-	@Autowired
 	String uploadPath;
 	
 	@Autowired
