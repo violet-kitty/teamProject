@@ -55,7 +55,7 @@
 						<div class="col">
 							숙소이름 : ${res.sname}<br>
 							객실타입/기간<br>
-							${res.name}<br>
+							${res.rname}<br>
 							체크인<br>
 							${res.date1}<br>
 							체크아웃<br>
@@ -157,6 +157,8 @@
 				return;
 			}
 			else {
+				var name = $("#name").val();
+				var phone = $("#phone").val();
 				// IMP.request_pay(param, callback) 결제창 호출
 				IMP.request_pay({ // param
 					pg: 'kcp',
@@ -168,7 +170,7 @@
 					buyer_tel: $("#phone").val()
 				}, function (rsp) { // callback
 				    if (rsp.success) {
-				    	var resData = "merchant="+rsp.merchant_uid+"&price="+rsp.paid_amount;
+				    	var resData = "merchant="+rsp.merchant_uid+"&price="+rsp.paid_amount+"&name="+name+"&phone="+phone;
 				    	$.ajax({
 			    			url:"tradeAuth.do",
 			    			data:resData,
@@ -176,7 +178,7 @@
 			    			success:function(status){
 			    				if(status=="success"){
 			    					alert("예약되었습니다");
-			    					location.href='<%= request.getContextPath() %>/user/myReservation.do';
+			    					location.href='<%= request.getContextPath() %>/mypage/myReservation.do';
 			    					return;
 			    				}
 			    				else {

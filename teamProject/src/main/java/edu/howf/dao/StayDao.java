@@ -108,8 +108,8 @@ public class StayDao {
 		return sqlSession.insert(namespace+"resInsert", vo);
 	}
 	
-	public int resPay(String merchant) {
-		return sqlSession.update(namespace+"resPay", merchant);
+	public int resPay(ResVO vo) {
+		return sqlSession.update(namespace+"resPay", vo);
 	}
 	
 	public ResVO resDup(ResVO vo) {

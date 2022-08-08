@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/* 달력 위쪽 요일 */
+.fc .fc-col-header-cell-cushion{color:black;font-weight:bold;}
+
+/* 월 */
+.fc .fc-toolbar-title{display:inline-block;}
+
+/* 일 */
+.fc .fc-daygrid-day-number{color:black;}
+
+/* 오늘 버튼 */
+.fc .fc-today-button{background:#54ACA8;border:2px solid #54ACA8;}
+.fc .fc-today-button:disabled{color:white; font-weight:700; border:2px solid #9B9B9B; background-color:#9B9B9B;}
+.fc .fc-today-button:enabled:hover{background-color:#2F6764; border:2px solid #2F6764;}
+
+/* 이전달 이동 버튼 */
+.fc .fc-prev-button{color:white; font-weight:700; border:2px solid #54ACA8; background-color:#54ACA8;}
+/* 이전달 이동 버튼(호버) */
+.fc .fc-prev-button:hover{background-color:#2F6764; border:2px solid #2F6764;}
+
+/* 다음달 이동 버튼 */
+.fc .fc-next-button{color:white; font-weight:700; border:2px solid #54ACA8; background-color:#54ACA8;}
+/* 다음달 이동 버튼(호버) */
+.fc .fc-next-button:hover{background-color:#2F6764; border:2px solid #2F6764;}
+
+/* 선 색 */
+.fc .fc-scrollgrid-liquid{border:1px solid black;}
+.fc .fc-daygrid-day{border:1px solid black;}
+.fc .fc-col-header-cell{border:1px solid black;}

@@ -8,7 +8,7 @@
 				<a href="<%= request.getContextPath() %>/howf/howfList.do"><img src="<%= request.getContextPath() %>/image/button/menu1.png"></a>
 			</div>
 			<div class="feature col-2">
-				<a href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/button/menu2.png"></a>
+				<a href="<%= request.getContextPath() %>/story/storyList.do"><img src="<%= request.getContextPath() %>/image/button/menu2.png"></a>
 			</div>
 			<div class="feature col-2">
 				<a href="<%= request.getContextPath() %>/stay/stayList.do"><img src="<%= request.getContextPath() %>/image/button/menu3.png"></a>
