@@ -78,13 +78,16 @@
 			
 		}
 	}
- 	
  	function cancel(){
- 		modalFn("취소되었습니다","","리스트로 이동합니다")
+ 		modalFn("목록으로 가겠습니까?","가기","이동여부","안 감 바이","cancelFn");
+ 	}
+ 	function cancelFn(){
+ 		modalClose();
+ 		modalFn("리스트로 이동합니다")
  		setTimeout(function(){
  			modalClose();
  			location.href="faqboard.do";
- 		},1500);
+ 		},1000);
  		
  	}
 </script>
