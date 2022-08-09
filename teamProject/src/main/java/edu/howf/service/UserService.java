@@ -35,6 +35,7 @@ public interface UserService {
 	public List<HeartVO> heartSelectEvent(SearchVO vo);
 	public int heartCountEvent(SearchVO vo);
 	public List<HeartVO> heartSelectStory(SearchVO vo);
+	public int heartCountStory(SearchVO vo);
 	public List<HeartVO> heartSelectStay(SearchVO vo);
 	public int heartCountStay(SearchVO vo);
 	public List<CommentVO> myReview(SearchVO vo);

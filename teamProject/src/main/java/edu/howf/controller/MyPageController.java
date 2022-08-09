@@ -221,9 +221,15 @@ public class MyPageController {
 				model.addAttribute("pm", pm);
 			}
 			else if(type.equals("story")) {
+				int cnt = userService.heartCountStory(vo);
+				pm.setTotalCount(cnt);
+				
 				List<HeartVO> story = userService.heartSelectStory(vo);
+				vo.setPage(page);
+				
 				model.addAttribute("list", story);
 				model.addAttribute("tabType", "story");
+				model.addAttribute("pm", pm);
 			}
 			
 			return "mypage/myHeart";
