@@ -185,10 +185,6 @@
 		new Tagify(input);
 		
 		//파일 첨부(썸네일)
-		$("#imageArea").click(function(){
-			$("#file").click();
-		});
-		
 		$("#image").click(function(){
 			$("#file").click();
 		});

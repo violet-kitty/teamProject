@@ -35,6 +35,20 @@
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
+<script>
+	function tagParse(tag, hbidx){
+		//리스트 태그 값 넣기
+		var json = tag;
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+		})
+		
+		$("#howftag"+hbidx).html(tagData);
+	}
+</script>
+
 </head>
 
 <body>
@@ -196,8 +210,10 @@
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
 												<figcaption>
-													<p id="howftag">${v.tag}</p>
+													<p id="howftag${v.hbidx}"></p>
 												</figcaption>
+												<!-- 태그 파싱하는 함수 호출 -->
+												<script>tagParse('${v.tag}','${v.hbidx}');</script>
 											</figure>
 											<div class="writerinfo">
 												<p>
