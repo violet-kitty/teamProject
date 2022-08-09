@@ -138,7 +138,11 @@
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
-					alert("이미지 파일만 등록 가능합니다");
+					modalFn("이미지 파일만 등록 가능합니다.");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				

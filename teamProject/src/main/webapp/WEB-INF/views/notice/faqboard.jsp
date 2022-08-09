@@ -28,8 +28,9 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 	<script type="text/javascript">
 	
 	// faq 내용 펼치기 이벤트
@@ -80,10 +81,36 @@
 		$("#content"+index).html(mdf);
 		
 	}
-	
+	//삭제
 	function cancel(){
-		location.href="faqboard.do";
+		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","cancelFn");
 	}
+	function cancelFn(){
+		modalClose();
+		$.ajax({
+			url:"delfaq.do",
+			type:"GET",
+			data:"fbidx=${vo.fbidx}",
+			success:function(data){
+				if(data != 0){
+					modalFn("삭제되었습니다");
+					setTimeout(function(){
+					modalClose();
+					location.href="faqboard.do";	
+					},1500);
+
+				}else {
+					modalFn("삭제 실패");
+					setTimeout(function(){
+					modalClose();
+					},1500);
+				}
+			}
+			
+		});
+	}
+
+
 	
 	//쓰기 후 그려주기
 	function fmodify(index){
@@ -137,17 +164,28 @@ function modify(index){
 		data : "fbidx="+index+"&title="+title+"&content="+content,
 		success: function(result){
 			if(result==1){
-				alert("끝!");
+				modalFn("수정되었습니다");
+				setTimeout(function(){
+				modalClose();
+				},1000);
 			}
 			else {
-				alert(result+", 에러!");
+				modalFn(result + ", 에러!");
+				setTimeout(function(){
+				modalClose();
+				},1000);
+				//alert(result+", 에러!");
 			}
 			
 		}
 	});
 };
-
 	</script>
+	
+	<!-- 모달창 -->
+<script type="text/javascript">
+
+</script>
 
 </head>
 <body>
@@ -207,7 +245,7 @@ function modify(index){
 	</dl>
 	</div>
 </div>
-<button id="btn2" onclick="location.href='faqwrite.do'">faq작성 </button>
+<button class="bluebtn" type="button" onclick="location.href='faqwrite.do'">FAQ작성 </button>
 
 <!--  검색 및 페이징 -->
 <div>

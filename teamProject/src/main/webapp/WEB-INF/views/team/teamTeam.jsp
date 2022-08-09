@@ -140,21 +140,25 @@
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
-								<div id="div_create_vote">
-									<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
-									<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
-									<div id="display" style="display:none">
-										<button onclick="add_option()" class="h-auto">선택지 추가</button>
-										<div id="voteArea">
-											<form id="vote_option">
-												<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-												<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
-												<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
-											</form>
+							<div class="row">
+								<div class="col">
+									<div id="div_create_vote">
+										<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
+										<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
+										<div id="display" style="display:none">
+											<button onclick="add_option()" class="h-auto">선택지 추가</button>
+											<div id="voteArea">
+												<form id="vote_option">
+													<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
+													<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
+													<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
+												</form>
+											</div>
+											<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 										</div>
-										<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 									</div>
 								</div>
+							</div>
 							</c:if>
 							</div>
 						</div>
@@ -211,22 +215,13 @@
 
 	function add_option(){
 		if(index > 5){
-			modalFn("선택지는 최대 5개까지만 가능합니다.","확인","타이틀","취소");
+			modalFn("선택지는 최대 5개까지만 가능합니다.", "확인");
 			return;
 		}
 		else{
 			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
 			index++;
 		}
-		
-	}
-	
-	function modalOkFn(){
-		modalClose();
-		modalFn("ddd");
-		setTimeout(function(){
- 			modalClose();
- 		},1500);
 		
 	}
 	

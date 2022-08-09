@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script type="text/javascript">
 
 	function check() {
@@ -16,18 +17,26 @@
 		var content = $("#content");
 	
 		if (title.val() == ""){
-			alert("제목을 입력하세요");
+			modalFn("제목을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("제목을 입력하세요");
 			title.focus();
 			return ;			
 		}else if (content.val() == ""){
-			alert("내용을 입력하세요");
+			modalFn("내용을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("내용을 입력하세요");
 			content.focus();
 			return ;
 		}else {
 			$("#form").submit();
 		}
 	
-</script>		
+</script>
 </head>
 <body>
 <form id="form" action="faqmodify.do" method="post" enctype="multipart/form-data">

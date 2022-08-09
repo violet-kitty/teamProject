@@ -34,7 +34,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script>
 var nicknameDup = false;
 </script>
@@ -165,16 +165,32 @@ var nicknameDup = false;
 				type:"post",
 				success:function(data){
 					if(data.trim() == "N"){
-						alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
+						modalFn("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
 					}
 					else if(data == "FAIL"){
-						alert("아이디 혹은 비밀번호가 다릅니다.");
+						modalFn("아이디 혹은 비밀번호가 다릅니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("아이디 혹은 비밀번호가 다릅니다.");
 					}
 					else if(data == "FAIL2"){
-						alert("존재하지 않는 회원입니다.");
+						modalFn("존재하지 않는 회원입니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("존재하지 않는 회원입니다.");
 					}
 					else if(data == "SOCIAL"){
-						alert("소셜 회원입니다. 소셜 로그인을 해주세요.")
+						modalFn("소셜 회원입니다. 소셜 로그인을 해주세요.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("소셜 회원입니다. 소셜 로그인을 해주세요.")
 					}
 					else {
 						location.href = "<%= request.getContextPath() %>/";
@@ -208,7 +224,11 @@ var nicknameDup = false;
 							success:function(data){
 								if(data == "-1"){
 									//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
-									alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+									modalFn("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+									setTimeout(function(){
+										modalClose();
+									},1000);
+									//alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 									return;
 								}
 								else if(data == "0"){
@@ -244,7 +264,11 @@ var nicknameDup = false;
 			success:function(data){
 				if(data == "-1"){
 					//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
-					alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+					modalFn("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 					return;
 				}
 				else if(data == "0"){

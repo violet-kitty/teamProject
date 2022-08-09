@@ -44,6 +44,7 @@ import edu.howf.vo.UserVO;
 @RequestMapping(value="/user")
 @Controller
 public class UesrController {
+	
 	@Autowired
 	UserService userService;
 	
@@ -366,7 +367,7 @@ public class UesrController {
 	@RequestMapping(value="/displayFile.do", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
 				
-		System.out.println("fileName:"+fileName);
+		//System.out.println("fileName:"+fileName);
 				
 		InputStream in = null;		
 		ResponseEntity<byte[]> entity = null;

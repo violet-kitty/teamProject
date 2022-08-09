@@ -204,7 +204,11 @@
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
-					alert("이미지 파일만 등록 가능합니다");
+					modalFn("이미지 파일만 등록 가능합니다.");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				
@@ -247,17 +251,29 @@
 		var tag = $("#tag");
 		
 		if(title.val()==""){
-			alert("제목을 입력해 주세요");
+			modalFn("제목을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("제목을 입력해 주세요");
 			title.focus();
 			return;
 		}
 		else if(content.val()==""){
-			alert("내용을 입력해 주세요");
+			modalFn("내용을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("내용을 입력해 주세요");
 			content.focus();
 			return;
 		}
 		else if(tag.val()==""){
-			alert("태그를 입력해 주세요");
+			modalFn("태그를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("태그를 입력해 주세요");
 			tag.focus();
 			return;
 		}

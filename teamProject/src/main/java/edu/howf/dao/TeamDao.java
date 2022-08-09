@@ -10,6 +10,7 @@ import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
+import edu.howf.vo.UserVO;
 import edu.howf.vo.VoteVO;
 
 @Repository
@@ -118,6 +119,7 @@ public class TeamDao {
 		
 		return sqlSession.delete(namespace + "revote", vv);
 	}
+
 
 	
 

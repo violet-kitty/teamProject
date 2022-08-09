@@ -240,7 +240,11 @@
 			var passwordOk = $("#passwordOk");
 			
 			if(email.val().includes('@')==false){
-				alert("올바른 이메일 형식이 아닙니다");
+				modalFn("올바른 이메일 형식이 아닙니다.");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("올바른 이메일 형식이 아닙니다");
 				return;
 			}
 			if (name.val() == "") {

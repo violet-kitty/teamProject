@@ -29,7 +29,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script>
 	var emailDup = false;
 	var nicknameDup = false;
@@ -244,7 +244,11 @@
 			var passwordOk = $("#passwordOk");
 			
 			if(email.val().includes('@')==false){
-				alert("이메일이 아닙니");
+				modalFn("이메일이 아닙니다.");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("이메일이 아닙니다.");
 				return;
 			}
 			if (name.val() == "") {
