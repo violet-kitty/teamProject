@@ -20,10 +20,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<!-- 달력 -->
-<script src="<%= request.getContextPath() %>/js/main.min.js"></script>
-<script src="<%= request.getContextPath() %>/js/locales-all.min.js"></script>
-<link href="<%= request.getContextPath() %>/css/main.min.css" rel="stylesheet">
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
@@ -31,52 +27,6 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 
-<!-- 달력 스크립트 -->
-<script>
-	document.addEventListener('DOMContentLoaded', function(){
-		var calendarEl = document.getElementById('calendar');
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			locale: "ko",
-			selectable: true,
-		    select: function(arg) {
-				var title = prompt('숙소 이름:');
-				if (title) {
-					calendar.addEvent({
-		            title: title,
-		            start: arg.start,
-		            end: arg.end,
-		            allDay: arg.allDay
-		          })
-		        }
-		        calendar.unselect()
-			},
-		    eventClick: function(arg) {
-				if (confirm('정말 삭제하시겠습니까?')) {
-		            arg.event.remove()
-		        }
-		    },
-		    dayMaxEvents: true,
-		    //이벤트. 왜인지 모르지만 끝나는 날짜가 이상하다
-		    events : [{
-		    	title:'qwe'
-		    	,start:'2022-07-21'
-		    	,end:'2022-07-22'
-		    }
-		    ,{
-		    	title:'asd'
-			    ,start:'2022-07-24'
-			    ,end:'2022-07-27'
-		    }],
-/* 		    eventContent: {//이벤트 바꾸기(모양이 아예 바뀜)
-		    	html: '<div style="background:blue;"></div>'
-		    }, */
-		    eventDidMount: function(info){//이벤트 색 바꾸기
-		    	info.el.style.backgroundColor = 'lightGreen';
-		    }
-		});
-		calendar.render();
-	});
-</script>
 </head>
 <body>
 	<div id="wrap">
@@ -116,11 +66,11 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">내 숙소 관리</a>
+							<a class="mainbtn" href="myStay.do">내 숙소 관리</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">예약자 관리</a>
+							<a class="mainbtn" href="reservationList.do">예약자 관리</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
@@ -130,9 +80,6 @@
 				</div>
 			</div>
 			<!-- / .content01 -->
-			<div class="container">
-				<div id="calendar" ></div>
-			</div>
 			
 
 		</div><!-- / #container -->

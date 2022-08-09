@@ -22,6 +22,7 @@
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 <title>Insert title here</title>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -169,7 +170,11 @@
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
-					alert("이미지 파일만 등록 가능합니다");
+					modalFn("이미지 파일만 등록 가능합니다.");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				
@@ -294,39 +299,71 @@
 		var city = $("#city");
 		
 		if(title.val()==""){
-			alert("제목을 입력해 주세요");
+			modalFn("제목을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("제목을 입력해 주세요");
 			title.focus();
 			return;
 		}
 		else if(startday.val()==""){
-			alert("시작 날짜를 입력해 주세요");
+			modalFn("시작 날짜를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("시작 날짜를 입력해 주세요");
 			return;
 		}
 		else if(endday.val()==""){
-			alert("종료 날짜를 입력해 주세요");
+			modalFn("종료 날짜를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("종료 날짜를 입력해 주세요");
 			return;
 		}
 		else if(state.val()==""){
-			alert("도를 선택해 주세요");
+			modalFn("도를 선택해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("도를 선택해 주세요");
 			state.focus();
 			return;
 		}
 		else if(city.val()==""){
-			alert("시를 선택해 주세요");
+			modalFn("시를 선택해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("시를 선택해 주세요");
 			city.focus();
 			return;
 		}
 		else if(tag.val()==""){
-			alert("태그를 입력해 주세요");
+			modalFn("태그를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("태그를 입력해 주세요");
 			tag.focus();
 			return;
 		}
 		else if(file.val()==""){
-			alert("썸네일을 등록해 주세요");
+			modalFn("썸네일을 등록해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("썸네일을 등록해 주세요");
 			return;
 		}
 		else if(content.val()==""){
-			alert("내용을 입력해 주세요");
+			modalFn("내용을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("내용을 입력해 주세요");
 			content.focus();
 			return;
 		}

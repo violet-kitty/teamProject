@@ -225,7 +225,11 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum-1);
-							alert("찜 목록에서 제거되었습니다");
+							modalFn("찜 목록에서 제거되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록에서 제거되었습니다");
 						}
 					}
 				});
@@ -242,10 +246,18 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum+1);
-							alert("찜 목록에 추가되었습니다");
+							modalFn("찜 목록에 추가되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록에 추가되었습니다");
 						}
 						else {
-							alert("찜 목록 추가 오류입니다");
+							modalFn("찜 목록 추가 오류입니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록 추가 오류입니다");
 						}
 					}
 				});

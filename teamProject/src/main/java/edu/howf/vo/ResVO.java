@@ -10,6 +10,7 @@ public class ResVO extends RoomVO{
 	private String wdate;	//예약 날짜
 	private String sname;	//숙소 이름
 	private String rname;	//방 이름
+	private String phone;	//핸드폰 번호
 	
 	public int getReidx() {
 		return reidx;
@@ -64,6 +65,12 @@ public class ResVO extends RoomVO{
 	}
 	public void setRname(String rname) {
 		this.rname = rname;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 }

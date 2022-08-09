@@ -214,8 +214,8 @@ public class StayServiceImple implements StayService{
 	}
 
 	@Override
-	public int resPay(String merchant) {
-		return stayDao.resPay(merchant);
+	public int resPay(ResVO vo) {
+		return stayDao.resPay(vo);
 	}
 	
 	@Override

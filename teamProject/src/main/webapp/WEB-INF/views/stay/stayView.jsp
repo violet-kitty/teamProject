@@ -20,6 +20,7 @@
 	crossorigin="anonymous">
 <!-- 지도 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- 별점 css -->
 <style>
 .star-rating {
@@ -422,7 +423,11 @@
 					type:"post",
 					success:function(data){
 						if(data == 1){
-							alert("글이 삭제되었습니다");
+							modalFn("글이 삭제되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("글이 삭제되었습니다");
 							location.href="stayList.do";
 						}
 					}
@@ -479,17 +484,29 @@
 		var login = '<%= (UserVO)session.getAttribute("login") %>';
 		var loginRole = '${login.role}';
 		if(login == "null"){
-			alert("로그인이 필요합니다");
+			modalFn("로그인이 필요합니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("로그인이 필요합니다");
 			return;
 		}
 		else if(loginRole != 'normal'){
-			alert("일반회원만 글쓰기가 가능합니다");
+			modalFn("일반회원만 글쓰기가 가능합니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("일반회원만 글쓰기가 가능합니다");
 			return;
 		}
 		else {
 			//유효성 검사
 			if($("#reviewContent").val()==""){
-				alert("리뷰 내용을 작성해 주세요");
+				modalFn("리뷰 내용을 작성해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("리뷰 내용을 작성해 주세요");
 				return;
 			}
 			else {
@@ -511,7 +528,11 @@
 								processData:false,
 								success:function(data){
 									if(data==1){
-										alert("글이 작성되었습니다");
+										modalFn("글이 작성되었습니다.");
+										setTimeout(function(){
+											modalClose();
+										},1000);
+										//alert("글이 작성되었습니다");
 										$("#reviewContent").val("");
 										$("#file").val("");
 										$("#file").replaceWith($("#file").clone(true));
@@ -522,7 +543,11 @@
 							
 						}
 						else {
-							alert("리뷰는 한번만 등록할 수 있습니다");
+							modalFn("리뷰는 한번만 등록할 수 있습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("리뷰는 한번만 등록할 수 있습니다");
 							$("#reviewContent").val("");
 							$("#file").val("");
 							$("#file").replaceWith($("#file").clone(true));
@@ -663,7 +688,11 @@
 	function reviewMFn(index){
 		var content = $("#reviewMContent");
 		if(content.val()==""){
-			alert("리뷰 내용을 입력해 주세요");
+			modalFn("리뷰 내용을 입력해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("리뷰 내용을 입력해 주세요");
 			content.focus();
 			return;
 		}
@@ -679,7 +708,11 @@
 				type:"post",
 				success:function(data){
 					if(data == 1){
-						alert("리뷰가 수정되었습니다");
+						modalFn("리뷰가 수정되었습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("리뷰가 수정되었습니다");
 						reviewListAjax(index);
 						return;
 					}
@@ -701,7 +734,11 @@
 				async:false,
 				success:function(data){
 					if(data == 1){
-						alert("리뷰가 삭제되었습니다");
+						modalFn("리뷰가 삭제되었습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("리뷰가 삭제되었습니다");
 						reviewListAjax(1);
 						return;
 					}
@@ -723,33 +760,52 @@
 		
 		var login = '<%= (UserVO)session.getAttribute("login") %>';
 		if(login == "null"){
-			alert("로그인이 필요합니다");
+			modalFn("로그인이 필요합니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("로그인이 필요합니다");
 			return;
 		}
 		else if(date1==""){
-			alert("체크인 날짜를 선택해 주세요");
+			modalFn("체크인 날짜를 선택해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("체크인 날짜를 선택해 주세요");
 			return;
 		}
 		else if(date2==""){
-			alert("체크아웃 날짜를 선택해 주세요");
+			modalFn("체크아웃 날짜를 선택해주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("체크아웃 날짜를 선택해 주세요");
 			return;
 		}
 		else if(date1>date2){
-			alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
+			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
 			return;
 		}
 		else {
-			var dd = "sidx="+sidx+"&name="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
+			var dd = "sidx="+sidx+"&rname="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
 			//중복 가예약인지 아닌지 여부 판단
 			$.ajax({
 				url:"resDup.do",
 				data:dd,
 				type:"post",
 				success:function(dup){
-					alert(dup.ridx);
 					if(dup.ridx != undefined){
-						alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
-						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2+"&merchant="+dup.merchant;
+						modalFn("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
+						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
 						location.href='stayReservation.do?'+data1;
 						return;
 					}
@@ -761,7 +817,7 @@
 							type:"post",
 							success:function(data){
 								//숙소 이름, 객실 이름, 객실 가격, 체크인 날짜, 체크아웃 날짜
-								var data2 = "sname="+stayName+"&ridx="+data+"&name="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
+								var data2 = "sname="+stayName+"&ridx="+data+"&rname="+roomName+"&price="+price+"&date1="+date1+"&date2="+date2;
 								location.href='stayReservation.do?'+data2;
 							}
 						});//ridx 가져오고 이동
@@ -778,7 +834,11 @@
 		var date2 = $("#date2").val();
 		
 		if(date1>date2){
-			alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
+			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
 			return;
 		}
 		else {

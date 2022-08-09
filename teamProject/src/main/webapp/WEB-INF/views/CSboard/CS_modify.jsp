@@ -142,34 +142,26 @@
 	</div><!-- /#wrap -->
 
 <script>
+	function modalOkFn(){
+		modalClose();
+		location.href = "CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	}
+	
 	$(function(){
 		
 		$("#cancel").click(function(){
+			
 			var title = "${cv.title}";
 			var content = "${cv.content}";
+			
 			if($("#title").val() != title){
-				if(!confirm("제목이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
-	    		}
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
 			}
 			else if($("#summernote").val() != content){
-	    		if(!confirm("내용이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
-	    		}
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
 	    	}
 			else if($("#file").val() != ""){				
-				if(!confirm("첨부된 파일이 변경되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
-	    		}
+				modalFn("첨부된 파일이 변경되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
 			}
 	    	else{
     			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
@@ -180,7 +172,7 @@
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:false,
+			focus:true,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -230,7 +222,7 @@
 	         
 	         filesArr.forEach(function(f){
 	            if(!f.type.match(reg)){
-	               alert("이미지 파일만 등록 가능합니다");
+	            	alert("이미지 파일만 등록 가능합니다");
 	               var clone = $("#file").clone();
  	               clone.val("");
 	               $("#file").replaceWith(clone);
@@ -256,25 +248,34 @@
 	});
 	
 	function ModifyFn(){
+		
 		var title = $("#title");
 		var content = $("#summernote");
+		
 		if(title.val() == ""){
-			alert("제목을 입력해주세요");
+			modalFn("제목을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return;
 		}
 		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
-			content.focus();
+			modalFn("내용을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			$("#summernote").summernote('focus');
 			return;
 		}
 		else {
-			if(!confirm("정말로 수정하시겠습니까?")){
-				return false;
-			}			
-			$("#form1").submit();
+			modalFn("수정하시겠습니까?", "확인", "1:1 고객문의 수정", "취소", "CS_modifyCheck");	
 		}
 	};
+	
+	function CS_modifyCheck(){
+		$("#form1").submit();
+	}
 </script>
 </body>
 </html>

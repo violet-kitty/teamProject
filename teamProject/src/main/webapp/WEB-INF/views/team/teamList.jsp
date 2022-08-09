@@ -19,13 +19,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
 
@@ -130,7 +130,7 @@ $(function(){
 	
 	$("#teamWrite").click(function(){
 		if(${login == null}){
-			alert("로그인이 필요한 기능입니다.");
+			modalFn("로그인이 필요한 기능입니다.", "닫기")
 			return false;
 		}
 		$.ajax({
@@ -139,7 +139,7 @@ $(function(){
 			type: "get",
 			success:(function(data){
 				if(data != 0){
-					alert("글은 최대 1개만 작성할 수 있습니다.");
+					modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
 				}
 				else{
 					location.href = "teamWrite.do";

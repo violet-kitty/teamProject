@@ -26,12 +26,17 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
 <!-- /summernote -->
+<style>
+input[type=checkbox]{
+	zoom: 1.5;
+}
+</style>
 </head>
 <body>
 	<div id="wrap">
@@ -73,12 +78,12 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								가입신청 활성화/비활성화 <input type="checkbox" id="check" name="applyyn" value="Y" checked>
+								<span>가입신청 활성화/비활성화</span> <input type="checkbox" id="check" name="applyyn" value="Y" checked>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col d-flex justify-content-center">
-								<button id="btn_write">등록</button>
+								<button type="button" id="btn_write">등록</button>
 								<button type="button" id="btn_cancel">취소</button>
 							</div>
 						</div>
@@ -93,54 +98,83 @@
 	</div><!-- /#wrap -->
 </body>
 <script>
-$(function(){
+	function teamWriteCheck(){
+		$("#form1").submit();
+	}
 	
-	$("#summernote").summernote({
-		height:500,
-		minHeight:null,
-		maxHeight:null,
-		focus:false,
-		lang:"ko-KR",
-		placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
-		toolbar: [
-			['style',['style']],
-		    ['fontname', ['fontname']],
-		    ['fontsize', ['fontsize']],
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    ['color', ['forecolor','color']],
-		    ['table', ['table']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']],
-		    ['insert',['picture','link','video']],
-		    ['view', ['fullscreen', 'help']]
-		],
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-		styleTags: ['h1']
-	});
-			
-	$("#btn_write").click(function(){
-		var title = $("#title");
-		var content = $("#summernote");
-		if(title.val() == ""){
-			alert("제목을 입력해주세요");
-			title.focus();
-			return false;
-		}
-		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
-			content.focus();
-			return false;
-		}
-		else{
-			$("#form1").submit();
-		}				
-	});
-	
-	$("#btn_cancel").click(function(){
+	function modalOkFn(){
+		modalClose();
 		history.back();
+	}
+	
+	$(function(){
+		
+		$("#summernote").summernote({
+			height:500,
+			minHeight: null,
+			maxHeight: null,
+			focus: false,
+			lang:"ko-KR",
+			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
+			toolbar: [
+				['style',['style']],
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			styleTags: ['h1']
+		});
+				
+		$("#btn_write").click(function(){
+			
+			var title = $("#title");
+			var content = $("#summernote");
+			
+			if(title.val() == ""){
+				modalFn("제목을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				title.focus();
+				return false;
+			}
+			else if(content.val() == ""){
+				modalFn("내용을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				$("#summernote").summernote('focus');
+				return false;
+			}
+			else{
+				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "teamWriteCheck");
+			}
+			
+		});
+	
+		$("#btn_cancel").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+	    	}
+			else if($("#thumbnail").val() != ""){
+				modalFn("첨부된 파일이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+			}
+	    	else{
+				history.back();
+			}
+		});
+		
 	});
-
-});
 </script>
 </html>

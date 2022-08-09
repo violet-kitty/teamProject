@@ -27,6 +27,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
@@ -41,6 +42,9 @@
 	color: white;
 	background-color: #54ACA8;
 	border: 1px solid white;
+}
+input[type=checkbox]{
+	zoom: 1.5;
 }
 </style>
 </head>
@@ -89,10 +93,10 @@
 			<div class="row">
 				<div class="col">
 					<c:if test="${tv.applyyn == 'Y'}">
-						가입신청 활성화/비활성화 <input type="checkbox" id="check" name="applyyn" value="Y" checked>
+						<span class="align-self-center">가입신청 활성화/비활성화</span> <input type="checkbox" id="check" name="applyyn" value="Y"  class="align-self-center" checked>
 					</c:if>
 					<c:if test="${tv.applyyn != 'Y'}">
-						가입신청 활성화/비활성화 <input type="checkbox" id="check" name="applyyn" value="Y">
+						<span class="align-self-center">가입신청 활성화/비활성화</span> <input type="checkbox" id="check" name="applyyn" value="Y"  class="align-self-center">
 					</c:if>
 				</div>
 			</div>
@@ -111,13 +115,17 @@
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+	function modalOkFn(){
+		history.back();
+	}
+
 	$(function(){
 		
 		$("#summernote").summernote({
-			height:500,
-			minHeight:null,
-			maxHeight:null,
-			focus:false,
+			height: 500,
+			minHeight: null,
+			maxHeight: null,
+			focus: true,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -138,31 +146,18 @@
 		});
 		
 		$("#btn_cancel").click(function(){
+			
 			var title = "${tv.title}";
 			var content = "${tv.content}";
+			
 			if($("#title").val() != title){
-				if(!confirm("제목이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 			}
 			else if($("#summernote").val() != content){
-	    		if(!confirm("내용이 수정되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 	    	}
 			else if($("#thumbnail").val() != ""){				
-				if(!confirm("첨부된 파일이 변경되었습니다. \n\n수정을 취소하시겠습니까?")){
-	    			return false;
-	    		}
-	    		else{
-	    			history.back();
-	    		}
+				modalFn("첨부된 파일이 변경되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
 			}
 	    	else{
 	    		history.back();
@@ -173,24 +168,33 @@
 	});
 	
 	function btn_modify(){
+		
 		var title = $("#title");
 		var content = $("#summernote");
+		
 		if(title.val() == ""){
-			alert("제목을 입력해주세요");
+			modalFn("제목을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return;
 		}
 		else if(content.val() == ""){
-			alert("내용을 입력해주세요");
-			content.focus();
+			modalFn("내용을 입력해주세요.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			$("#summernote").summernote('focus');
 			return;
 		}
 		else {
-			if(!confirm("정말로 수정하시겠습니까?")){
-				return false;
-			}
-			$("#form1").submit();
+			modalFn("수정하시겠습니까?", "확인", "팀 페이지", "취소", "teamModifyCheck");
 		}
+	}
+	
+	function teamModifyCheck(){
+		$("#form1").submit();
 	}
 </script>
 </body>

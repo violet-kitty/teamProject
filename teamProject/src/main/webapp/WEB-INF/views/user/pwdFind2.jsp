@@ -36,7 +36,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script>
 	var getCookie = function(name){
 		var value = document.cookie.match('(^|;)?'+name+'=([^;]*)(;|$)');
@@ -49,7 +49,11 @@
 			location.href="pwdFindComplete.do?email=${email}";
 		}
 		else {
-			alert("인증번호가 일치하지 않습니다");
+			modalFn("인증번호가 일치하지 않습니다.");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("인증번호가 일치하지 않습니다.");
 		}
 	}
 </script>

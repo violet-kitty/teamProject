@@ -28,6 +28,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script>
 	//본인인증 여부
 	var auth = false;
@@ -55,7 +56,7 @@
 						<div class="col">
 							숙소이름 : ${res.sname}<br>
 							객실타입/기간<br>
-							${res.name}<br>
+							${res.rname}<br>
 							체크인<br>
 							${res.date1}<br>
 							체크아웃<br>
@@ -153,10 +154,16 @@
 		
 		function tradeFn(){
 			if(auth == false){
-				alert("본인인증을 해주세요");
+				modalFn("본인인증을 해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("본인인증을 해주세요");
 				return;
 			}
 			else {
+				var name = $("#name").val();
+				var phone = $("#phone").val();
 				// IMP.request_pay(param, callback) 결제창 호출
 				IMP.request_pay({ // param
 					pg: 'kcp',
@@ -168,26 +175,38 @@
 					buyer_tel: $("#phone").val()
 				}, function (rsp) { // callback
 				    if (rsp.success) {
-				    	var resData = "merchant="+rsp.merchant_uid+"&price="+rsp.paid_amount;
+				    	var resData = "merchant="+rsp.merchant_uid+"&price="+rsp.paid_amount+"&name="+name+"&phone="+phone;
 				    	$.ajax({
 			    			url:"tradeAuth.do",
 			    			data:resData,
 			    			type:"post",
 			    			success:function(status){
 			    				if(status=="success"){
-			    					alert("예약되었습니다");
-			    					location.href='<%= request.getContextPath() %>/user/myReservation.do';
+			    					modalFn("예약되었습니다.");
+			    					setTimeout(function(){
+			    						modalClose();
+			    					},1000);
+			    					//alert("예약되었습니다");
+			    					location.href='<%= request.getContextPath() %>/mypage/myReservation.do';
 			    					return;
 			    				}
 			    				else {
-			    					alert("예약에 실패했습니다.")
+			    					modalFn("예약에 실패했습니다.");
+			    					setTimeout(function(){
+			    						modalClose();
+			    					},1000);
+			    					//alert("예약에 실패했습니다.")
 			    					return;
 			    				}
 			    			}
 			    		});
 				    }
 					else {
-						alert("결제에 실패했습니다. \n 에러 내용:"+rsp.error_msg);
+						modalFn("결제에 실패했습니다. \n 에러 내용 : " + rsp.error_msg);
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("결제에 실패했습니다. \n 에러 내용:"+rsp.error_msg);
 				    }
 				});//callback
 			}

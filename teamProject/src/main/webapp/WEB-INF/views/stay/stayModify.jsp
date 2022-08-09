@@ -33,6 +33,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <style>
 	input::-webkit-inner-spin-button {
 	  appearance: none;
@@ -718,7 +719,11 @@
 				{
 					if(value.indexOf(arr_char[i]) != -1)
 					{
-						window.alert("< > , ' \" 특수문자는 사용하실 수 없습니다.");
+						modalFn("< > , ' \" 특수문자는 사용하실 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//window.alert("< > , ' \" 특수문자는 사용하실 수 없습니다.");
 						value = value.substr(0, value.indexOf(arr_char[i]));
 						$(this).val(value);
 					}
@@ -747,27 +752,47 @@
 			var fileLength = imgArr.length;
 			
 			if(name.val()==""){
-				alert("시설 이름을 입력해 주세요");
+				modalFn("제목을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("시설 이름을 입력해 주세요");
 				name.focus();
 				return;
 			}
 			else if(addr.val()==""){
-				alert("주소를 입력해 주세요");
+				modalFn("주소를 입력해 주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("주소를 입력해 주세요");
 				addr.focus();
 				return;
 			}
 			else if(detailaddr.val()==""){
-				alert("상세주소를 입력해 주세요");
+				modalFn("상세주소를 입력해 주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("상세주소를 입력해 주세요");
 				detailaddr.focus();
 				return;
 			}
 			else if(tag.val()==""){
-				alert("태그를 입력해 주세요");
+				modalFn("태그를 입력해 주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("태그를 입력해 주세요");
 				tag.focus();
 				return;
 			}
 			else if(file.val()=="" && fileLength == 0){//file이 비었고 배열의 길이도 0인 경우
-				alert("적어도 하나의 파일을 업로드 해주세요");
+				modalFn("적어도 하나의 파일을 업로드 해주세요");
+				setTimeout(function(){
+					modalClose();
+				},1000);
+				//alert("적어도 하나의 파일을 업로드 해주세요");
 				return;
 			}
 			else {
@@ -777,7 +802,11 @@
 				$("textarea[name=content]").each(function(index, item){
 					var content = $(item);
 					if(content.val()==""){
-						alert("내용을 입력해 주세요");
+						modalFn("내용을 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("내용을 입력해 주세요");
 						
 						//숙소정보 탭에 있는 content라면 탭 변경
 						if(index>0) tabToggleFn('stay');
@@ -792,7 +821,11 @@
 				
 				//객실 등록 여부 확인
 				if(index == 0){
-					alert("객실이 적어도 하나는 등록되어야 합니다");
+					modalFn("객실이 적어도 하나는 등록되어야 합니다.");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert("객실이 적어도 하나는 등록되어야 합니다");
 					tabToggleFn('room');
 					return;
 				}
@@ -812,72 +845,128 @@
 					var rprice = $("#price"+i);
 					
 					if(rname.val()==""){
-						alert("객실 이름을 등록해 주세요");
+						modalFn("객실 이름을 등록해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("객실 이름을 등록해 주세요");
 						rname.focus();
 						return;
 					}
 					else if(rsquare.val()==""){
-						alert("객실 평수를 입력해 주세요");
+						modalFn("객실 평수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("객실 평수를 입력해 주세요");
 						rsquare.focus();
 						return;
 					}
 					else if(Number(rsquare.val())<1){
-						alert("객실 평수는 0이나 음수가 될 수 없습니다");
+						modalFn("객실 평수는 0이나 음수가 될 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("객실 평수는 0이나 음수가 될 수 없습니다");
 						rsquare.focus();
 						return;
 					}
 					else if(sbed.val()==""){
-						alert("싱글베드 수를 입력해 주세요");
+						modalFn("싱글베드 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("싱글베드 수를 입력해 주세요");
 						sbed.focus();
 						return;
 					}
 					else if(dbed.val()==""){
-						alert("더블베드 수를 입력해 주세요");
+						modalFn("더블베드 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("더블베드 수를 입력해 주세요");
 						dbed.focus();
 						return;
 					}
 					else if(qbed.val()==""){
-						alert("퀸베드 수를 입력해 주세요");
+						modalFn("퀸베드 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("퀸베드 수를 입력해 주세요");
 						qbed.focus();
 						return;
 					}
 					else if(kbed.val()==""){
-						alert("킹베드 수를 입력해 주세요");
+						modalFn("킹베드 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("킹베드 수를 입력해 주세요");
 						kbed.focus();
 						return;
 					}
 					else if(Number(sbed.val())<0 || Number(dbed.val())<0 || Number(qbed.val())<0 || Number(kbed.val())<0){
-						alert("침대 수는 음수가 될 수 없습니다");
+						modalFn("침대 수는 음수가 될 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("침대 수는 음수가 될 수 없습니다");
 						sbed.focus();
 						return;
 					}
 					else if(rcnt.val()==""){
-						alert("같은 형식의 객실 수를 입력해 주세요");
+						modalFn("같은 형식의 객실 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("같은 형식의 객실 수를 입력해 주세요");
 						rcnt.focus();
 						return;
 					}
 					else if(Number(rcnt.val())<1){
-						alert("객실 수는 0이나 음수가 될 수 없습니다");
+						modalFn("객실 수는 0이나 음수가 될 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("객실 수는 0이나 음수가 될 수 없습니다");
 						rcnt.focus();
 						return;
 					}
 					else if(rpeople.val()==""){
-						alert("적정 인원 수를 입력해 주세요");
+						modalFn("적정 인원 수를 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("적정 인원 수를 입력해 주세요");
 						rpeople.focus();
 						return;
 					}
 					else if(Number(rpeople.val())<1){
-						alert("인원 수는 0이나 음수가 될 수 없습니다");
+						modalFn("인원 수는 0이나 음수가 될 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("인원 수는 0이나 음수가 될 수 없습니다");
 						rpeople.focus();
 						return;
 					}
 					else if(rprice.val()==""){
-						alert("가격을 입력해 주세요");
+						modalFn("가격을 입력해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("가격을 입력해 주세요");
 						rprice.focus();
 						return;
 					}
 					else if(Number(rprice.val())<0){
-						alert("가격은 음수가 될 수 없습니다");
+						modalFn("가격은 음수가 될 수 없습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("가격은 음수가 될 수 없습니다");
 						rprice.focus();
 						return;
 					}
