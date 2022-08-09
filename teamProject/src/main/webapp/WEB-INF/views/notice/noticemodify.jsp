@@ -26,6 +26,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
@@ -40,18 +41,67 @@
 		var content = $("#summernote");
 	
 		if (title.val() == ""){
-			alert("제목을 입력하세요");
+			modalFn("제목을 입력하세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			title.focus();
 			return ;			
 		}else if (content.val() == ""){
-			alert("내용을 입력하세요");
+			modalFn("내용을 입력하세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
 			content.focus();
 			return ;
 		}else {
-			$("#form").submit();
+			var formData = new FormData($("#form")[0]);
+			$.ajax({
+				url:"noticemodify.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data != 0){
+						modalFn("수정되었습니다");
+							setTimeout(function(){
+							modalClose();
+							location.href="notice.do";
+						},1500);
+					}else {
+						modalFn("수정 실패");
+						setTimeout(function(){
+							modalClose();
+						},1500);
+					}
+				}
+				
+			});
+			
 		}
-}
-	function filter(options) {
+	}
+	function test(){
+		location.href="notice.do";
+	}
+	
+	function cancel(){
+		modalFn("취소되었습니다")
+		setTimeout(function(){
+			modalClose();
+			location.href="noticeone.do?nbidx=${vo.nbidx}";
+		},1000);
+		
+	}
+ 	function cancellist(){
+			modalFn("목록으로 이동됩니다");
+			setTimeout(function(){
+				modalClose();
+				location.href="notice.do";
+			},1000);
+	}	
+/* 	function filter(options) {
 		var is = true;
 		
 		jQuery(options).each(function(){
@@ -70,11 +120,10 @@
 			
 		});
 		return is;
-	}
+	} */
 
 </script>
 </head>
-<h1>수정</h1>
 <body>
 	<div id="wrap">
 		<!-- Header --><%@include file="../Header.jsp"%>
@@ -92,19 +141,18 @@
 			<div class="contents content01">
 				<div class="container">
 				
+	<!-- 본문 -->			
 	<form id="form" action="noticemodify.do" name="noticemodify" method="post" enctype="multipart/form-data">
+		
 		<input type="hidden" name="nbidx" value="${vo.nbidx }">
 		title : <input type="text"  name="title" id="title" value="${vo.title }"> <br>
 		content : <textarea name="content" id="summernote" cols="50" rows="13">${vo.content}</textarea> <br>
 		<input type="file" name="fileupload" value="${vo.filename }"/> 
-		
-		
-		<button type="button" onclick="check()">수정</button>
-		<input type="reset" value="다시작성">
+		<br>
+		<button class="bluebtn" type="button" onclick="check()">수정</button>
+		<button class="pinkbtn" type="button" onclick="cancel()">취소</button>		
     </form>
     
-<button id="btn1" onclick="location.href='notice.do'"> 리스트</button><br>
-
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -114,7 +162,8 @@
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
-
+	
+<!-- 서머노트 -->
 <script>
 $(function(){
 	$("#summernote").summernote({

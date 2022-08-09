@@ -27,6 +27,64 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
+<!-- 테이블 꾸미기 -->
+<style type="text/css">
+table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+}
+th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+    text-align: center;
+  }
+th {
+    background-color: #bbdefb;
+  }
+td {
+    background-color: #e3f2fd;
+  }
+  
+</style>
+
+<script type="text/javascript">
+
+	function erase() {
+		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","eraseFn");
+	}
+
+	function eraseFn(){
+		modalClose();
+		$.ajax({
+			url:"noticedelete.do",
+			type:"GET",
+			data:"nbidx=${vo.nbidx}",
+			success:function(data){
+				if(data != 0){
+					modalFn("삭제되었습니다");
+						timer = setTimeout(function(){
+						modalClose();
+						location.href="notice.do";
+						},1500);
+						
+				}else {
+						modalFn("삭제 실패");
+						setTimeout(function(){
+						modalClose();
+						},1500);
+				}
+			}
+		});
+	}
+		
+function test(){
+	location.href="notice.do";
+}
+</script>
+
 </head>
 
 <body>
@@ -48,7 +106,8 @@
 			<div class="contents content01">
 				<div class="container">
 <!--  본문  -->
-<table border="1">
+<h2>내용보기</h2>
+<table >
 
 		<tbody>
 			<tr>
@@ -89,16 +148,17 @@
 	</table>
 	
 	<c:if test="${login == null }">
-		<a href="notice.do">목록으로</a>
-		<a href="../user/login.do">로그인하려가기</a>
+		
+		<button class="pinkbtn" type="button" onclick="location.href='../'">메인화면</button>
+		<button class="bluebtn" type="button" onclick="location.href='../user/login.do'">로그인하려가기</button>
 	</c:if>
 	<c:if test="${login.midx == vo.midx }">
-		<a href="noticemodify.do?nbidx=${vo.nbidx }">수정</a>
-		<a href="noticedelete.do?nbidx=${vo.nbidx }">없어져라!</a>
+		<button class="bluebtn" type="button" onclick="location.href='noticemodify.do?nbidx='+${vo.nbidx }">수정</button>
+		<button class="pinkbtn" type="button" onclick="erase()">없어져라!</button>
 	</c:if>
+		<button class="bluebtn" type="button" onclick="location.href='notice.do'">리스트</button>
 	
-	<button id="btn1" onclick="location.href='notice.do'"> 리스트</button><br>
-	<button id="btn1" onclick="location.href='../user/login.do'">로그인하려가기</button><br>
+
 					</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->

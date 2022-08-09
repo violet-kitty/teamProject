@@ -24,13 +24,14 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+
 <script type="text/javascript">
  	function check() {
 		
@@ -38,25 +39,60 @@
 		var content = $("#summernote");
 		
 		if (title.val() == ""){
-			alert("제목을 입력하세요");
-			title.focus();
+			modalFn("제목을 입력하세요");
+			setTimeout(function(){
+				modalClose();
+				},1000);
+				title.focus();
 			return ;			
 		}else if (content.val() == ""){
-			alert("내용을 입력하세요");
-			content.focus();
+			modalFn("내용을 입력하세요");
+			setTimeout(function(){
+				modalClose();
+				},1000);
+				content.focus();
 			return ;
 		}else {
-			$("#form").submit();
+			var formData = new FormData($("#form")[0]);
+			$.ajax({
+				url:"noticewrite.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data == 1){
+						//modalFn("메시지","확인텍스트","타이틀","취소텍스트","test");
+						modalFn("등록되었습니다");
+						setTimeout(function(){
+							modalClose();
+							location.href="notice.do";
+						},1500);
+					}
+					else {
+						modalFn("등록 실패");
+						setTimeout(function(){
+							modalClose();
+						},1500);
+					}
+				}
+			});
 		}
 	}
-/* 	function check() {
-		alert("wwww");
-		var is = filter([
-				{ target : 'title' ,filter : 'empty' ,title : '제목'},
-				{ target : 'content' ,filter : 'empty' ,title : '내용'}
-		]);
-		
-	} */
+
+ 	function test(){
+ 		location.href="notice.do";
+ 	}
+ 	
+ 	function cancel(){
+ 				modalFn("취소되었습니다");
+ 				setTimeout(function(){
+ 					modalClose();
+ 					location.href="notice.do";
+ 				},1000);
+ 	}
+ 	
 	function filter(options) {
 		var is = true;
 		
@@ -77,6 +113,22 @@
 		});
 		return is;
 	}
+	// 스마트에디터 textarea 유효성검사 라는데...
+ 	function submitContents() {
+        var elClickedObj = $("#form");
+        oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+        var ir1 = $("#ir1").val();
+
+        if( ir1 == ""  || ir1 == null || ir1 == '&nbsp;' || ir1 == '<p>&nbsp;</p>')  {
+             alert("내용을 입력하세요.");
+             oEditors.getById["ir1"].exec("FOCUS"); //포커싱
+             return;
+        }
+
+        try {
+            elClickedObj.submit();
+        } catch(e) {}
+    }
 	
 
 </script>
@@ -98,43 +150,42 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
+				
+<!-- 본문 -->
 <form id="form" action="noticewrite.do" method="post" enctype="multipart/form-data">
-<table>
- <tr>
-  <td>
-
-   <table>
-    <tr>
-     <td>공지사항</td>
-    </tr>
+	<table>
+ 		<tr>
+  		<td>
+   	<table>
+    	<tr>
+     	<td><h2>공지사항</h2></td>
+    	</tr>
    </table>
 
    <table>
-   
-    <tr>
-    	<td>제목</td>
-    	<td><input name="title" id="title" size="50" maxlength="100"></td>
-    </tr>
-    <tr>
-    	<td>내용</td>
-    	<td><textarea name="content" id="summernote" cols="80" rows="20"></textarea></td>
-    </tr>
-    
+    	<tr>
+    		<td>제목</td>
+    		<td><input name="title" id="title" size="50" maxlength="100"></td>
+    	</tr>
+    	<tr>
+    		<td>내용</td>
+    		<td><textarea name="content" id="summernote" cols="80" rows="20"></textarea></td>
+   	 	</tr>
    </table>
-   
 		<input type="file" name="fileupload" />
-   <table>
-    <tr>
-     <td><button type="button" onclick="check()">저장</button></td>
-     <td><a href="notice.do">취소</a></td>
-    </tr>
-   </table>
+		
+	<table>
+	<tr>
+		<td><button class="bluebtn" type="button" onclick="check()">저장</button></td>
+		<td><button class="pinkbtn" type="button" onclick="cancel()">취소</button></td>
+	</tr>
+	</table>
 
-  </td>
- </tr>
-</table>
-
+		</td>
+		</tr>
+	</table>
 </form>
+
 
 				</div><!-- /.container -->
 			</div>
@@ -146,8 +197,8 @@
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 	
+<!-- 서머노트 -->	
 <script>
-
 $(function(){
 	$("#summernote").summernote({
 		height:300,
