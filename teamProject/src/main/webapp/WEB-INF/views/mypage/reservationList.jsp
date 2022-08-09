@@ -21,6 +21,8 @@
 <script src="<%= request.getContextPath() %>/js/main.min.js"></script>
 <script src="<%= request.getContextPath() %>/js/locales-all.min.js"></script>
 <link href="<%= request.getContextPath() %>/css/main.min.css" rel="stylesheet">
+<!-- 결제 api -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
@@ -59,11 +61,11 @@
 		    		data:"date1="+arg.startStr+"&date2="+dateRel(arg.endStr),
 		    		type:"post",
 		    		success:function(list){
-		    			var html = "";
+		    			var html = "<input type='hidden' id='reidx'>"
+		    					+ "<input type='hidden' id='pay'>";
 		    			
 		    			for(var i=0;i<list.length;i++){
 		    				html = html
-							+ "예약번호 " + list[i].reidx +"<br>"
 	    					+ "숙소 이름 " + list[i].sname +"<br>"
 	    					+ "방 이름 " + list[i].rname +"<br>"
 	    					+ "체크인 " + list[i].date1 +"<br>"
@@ -72,7 +74,9 @@
 	    					+ "예약 날짜 " + list[i].wdate +"<br>"
 	    					+ "결제 여부 " + list[i].pay +"<br>"
 	    					+ "예약자 이름 " + list[i].name + "<br>"
-							+ "핸드폰 번호 " + list[i].phone + "<br><br>";
+							+ "핸드폰 번호 " + list[i].phone + "<br>"
+							+ "<button onclick='resDelete("+list[i].reidx+","+list[i].pay+")'>예약 취소</button>"
+							+ "<br><br>";
 		    			}
 		    			
 		    			
@@ -106,6 +110,67 @@
 	    var resultDate = y + "-" + m + "-" + d;
 	   return resultDate;
 	}
+	
+	//예약 추가
+	function resInsert(){
+		
+	}
+	
+	//예약 취소
+	function resDelete(reidx, pay){
+		$("#reidx").val(reidx);
+		$("#pay").val(pay);
+		modalFn("정말 예약을 취소하시겠습니까? 예약을 취소하시려면 사유를 입력해 주세요.","예약 취소","예약 취소","닫기","inputModal");
+	}
+	
+	//예약 취소 insert
+	function inputModal(){
+		var input = $("#textInput").val();
+		modalClose();
+		var reidx = $("#reidx").val();
+		var pay = $("#pay").val();
+		
+		//예약 취소 메시지 처리 및 merchant 가져오기
+		$.ajax({
+			url:"resDelete.do",
+			data:"reidx="+reidx+"&content="+input+"&bidx="+reidx,
+			type:"post",
+			success:function(re){
+				//결제를 한 경우 환불 처리
+				if(pay == 'Y'){
+					//환불
+					$.ajax({
+						url:"payCancel.do",
+						data:"merchant="+re,
+						type:"post",
+						success:function(result){
+							if(result==1){
+								modalFn("예약 취소 되었습니다");
+								setTimeout(function(){
+									modalClose();
+									location.reload();
+								},1000);
+							}
+							else {
+								modalFn("예약 취소에 실패했습니다");
+								setTimeout(function(){
+									modalClose();
+									location.reload();
+								},1000);
+							}
+						}
+					});
+				}
+				else{//결제하지 않은 경우 예약취소만 처리
+					modalFn("예약 취소 되었습니다");
+					setTimeout(function(){
+						modalClose();
+						location.reload();
+					},1000);
+				}
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -131,11 +196,13 @@
 				
 				<!-- 날짜가 출력되는 div -->
 				<div id="dateArea"></div>
+				<button onclick="resInsert()">선택한 날짜 예약 추가하기</button>
 				
 				<!-- 예약 목록이 출력되는 div -->
 				<div id="listArea">
+					<!-- reidx 담는 input -->
+					<input type="hidden" id="reidx">
 					<c:forEach var="i" items="${res}">
-						예약 번호 ${i.reidx}<br>
 						숙소 이름 ${i.sname}<br>
 						방 이름 ${i.rname}<br>
 						체크인 ${i.date1}<br>
@@ -144,7 +211,8 @@
 						예약 날짜 ${i.wdate}<br>
 						결제 여부 ${i.pay}<br>
 						예약자 이름 ${i.name}<br>
-						핸드폰 번호 ${i.phone}
+						핸드폰 번호 ${i.phone}<br>
+						<button onclick="resDelete('${i.reidx}')">예약 취소</button>
 						<br><br>
 					</c:forEach>
 				</div>

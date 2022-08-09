@@ -491,8 +491,9 @@ public class StayController {
 	//예약 취소
 	@ResponseBody
 	@RequestMapping(value="/resDelete.do")
-	public int resDelete(String reidx) {
-		return stayService.resDelete(Integer.parseInt(reidx));
+	public String resDelete(String reidx) {
+		stayService.resDelete(Integer.parseInt(reidx));
+		return stayService.merchantSelect(Integer.parseInt(reidx));
 	}
 	
 	

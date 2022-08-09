@@ -129,6 +129,10 @@ public class StayDao {
 		return sqlSession.selectOne(namespace+"resCountAll", vo);
 	}
 	
+	public String resCancelComment(int reidx) {
+		return sqlSession.selectOne(namespace+"resCancelComment", reidx);
+	}
+	
 	public int resInsertB(ResVO vo) {
 		return sqlSession.insert(namespace+"resInsertB", vo);
 	}
@@ -137,8 +141,17 @@ public class StayDao {
 		return sqlSession.update(namespace+"resDeleteB", reidx);
 	}
 	
+	public int resDelComment(CommentVO vo) {
+		return sqlSession.insert(namespace+"resDelComment", vo);
+	}
+	
+	public String merchantSelect(int reidx) {
+		return sqlSession.selectOne(namespace+"merchantSelect", reidx);
+	}
+	
 	public List<ResVO> resSelectAllB(ResVO vo) {
 		return sqlSession.selectList(namespace+"resSelectAllB", vo);
 	}
 	
+
 }

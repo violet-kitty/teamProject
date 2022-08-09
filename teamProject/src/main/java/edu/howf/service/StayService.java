@@ -33,6 +33,7 @@ public interface StayService {
 	public List<ResVO> resSelectAll(SearchVO vo);
 	public int resCountAll(SearchVO vo);
 	public int resInsertB(ResVO vo);
-	public int resDeleteB(int reidx);
+	public int resDeleteB(int reidx, CommentVO vo);
+	public String merchantSelect(int reidx);
 	public List<ResVO> resSelectAllB(ResVO vo);
 }

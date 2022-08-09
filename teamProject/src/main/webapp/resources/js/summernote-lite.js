@@ -9850,7 +9850,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     // By default, dialogs are attached in container.
     dialogsInBody: false,
     dialogsFade: false,
-    maximumImageFileSize: null,
+    maximumImageFileSize: 1024*1024*5,
     callbacks: {
       onBeforeCommand: null,
       onBlur: null,

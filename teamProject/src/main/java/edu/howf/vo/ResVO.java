@@ -11,6 +11,7 @@ public class ResVO extends RoomVO{
 	private String sname;	//숙소 이름
 	private String rname;	//방 이름
 	private String phone;	//핸드폰 번호
+	private String content;	//취소사유
 	
 	public int getReidx() {
 		return reidx;
@@ -71,6 +72,12 @@ public class ResVO extends RoomVO{
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }
