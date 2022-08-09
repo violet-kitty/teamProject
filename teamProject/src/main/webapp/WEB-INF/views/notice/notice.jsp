@@ -27,8 +27,12 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<<<<<<< HEAD
 
 <!-- 테이블 꾸미기 -->
+=======
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+>>>>>>> branch 'master' of https://github.com/violet-kitty/teamProject.git
 <style>
 table {
     width: 100%;
@@ -129,18 +133,17 @@ thead tr {
 	<tbody>
 		<c:if test="${list.size() == 0 }">
 			<tr>
-				<td colspan="4">게시글 없어</td>
+				<td colspan="5" style="text-align: center">게시글 없어</td>
 			</tr>
-			</c:if>
+		</c:if>
 		<c:if test="${list.size() > 0 }">
 			<c:set var="i" value="1"/>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-
 					<td>${i}</td>
-					<td>${vo.name} </td>
-					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title }</a></td>
-					<td>${vo.wdate }</td>
+					<td>${vo.name}</td>
+					<td><a href="noticeone.do?nbidx=${vo.nbidx}">${vo.title}</a></td>
+					<td>${vo.wdate}</td>
 					<td>${vo.cnt}</td>
 					<c:set var="i" value="${i+1}"/>
 			</c:forEach>

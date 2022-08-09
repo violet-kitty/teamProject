@@ -30,7 +30,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 	<script type="text/javascript">
 	
 	// faq 내용 펼치기 이벤트
@@ -166,11 +166,15 @@ function modify(index){
 			if(result==1){
 				modalFn("수정되었습니다");
 				setTimeout(function(){
-					modalClose();
+				modalClose();
 				},1000);
 			}
 			else {
-				alert(result+", 에러!");
+				modalFn(result + ", 에러!");
+				setTimeout(function(){
+				modalClose();
+				},1000);
+				//alert(result+", 에러!");
 			}
 			
 		}

@@ -24,8 +24,10 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
@@ -39,18 +41,24 @@
 		var content = $("#summernote");
 		
 		if (title.val() == ""){
-			modalFn("제목을 입력하세요");
+
+			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
-				},1000);
-				title.focus();
-			return ;			
+			},1000);
+			//alert("제목을 입력하세요");
+			title.focus();
+			return ;
+			
 		}else if (content.val() == ""){
-			modalFn("내용을 입력하세요");
+
+			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
-				modalClose();
-				},1000);
-				content.focus();
+			modalClose();
+			},1000);
+			//alert("내용을 입력하세요");
+			content.focus();
+
 			return ;
 		}else {
 			var formData = new FormData($("#form")[0]);
@@ -88,8 +96,8 @@
  	function cancel(){
  				modalFn("취소되었습니다");
  				setTimeout(function(){
- 					modalClose();
- 					location.href="notice.do";
+ 				modalClose();
+ 				location.href="notice.do";
  				},1000);
  	}
  	
@@ -103,7 +111,11 @@
 			case 'empty' :
 				var val = jQuery(item.target).val();
 				if (val == ''){
-					alert(item.title + '을(를) 입력하세요');
+					modalFn(item.title + "을(를) 입력하세요");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+					//alert(item.title + '을(를) 입력하세요');
 					jQuery(item.target).focus();
 					is = false;
 				}

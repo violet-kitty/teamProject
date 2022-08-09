@@ -35,17 +35,19 @@
 		var content = $("#content");
 		
 		if (title.val() == ""){
-			modalFn("제목을 입력하세요");
+			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
-				modalClose();
+			modalClose();
 			},1000);
+			//alert("제목을 입력하세요");
 			title.focus();
 			return ;			
 		}else if (content.val() == ""){
-			modalFn("내용을 입력하세요");
+			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
-				modalClose();
+			modalClose();
 			},1000);
+			//alert("내용을 입력하세요");
 			content.focus();
 			return ;
 		}else {
