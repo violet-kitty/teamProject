@@ -22,6 +22,7 @@
 <link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
 <!-- kakao -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <style>
 	h1{
 		font-size:1.5em;
@@ -190,7 +191,11 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum-1);
-							alert("찜 목록에서 제거되었습니다");
+							modalFn("찜 목록에서 제거되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록에서 제거되었습니다");
 						}
 					}
 				});
@@ -207,10 +212,18 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum+1);
-							alert("찜 목록에 추가되었습니다");
+							modalFn("찜 목록에 추가되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록에 추가되었습니다");
 						}
 						else {
-							alert("찜 목록 추가 오류입니다");
+							modalFn("찜 목록 추가 오류입니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+							//alert("찜 목록 추가 오류입니다");
 						}
 					}
 				});
@@ -267,7 +280,11 @@ else {
 				type:"post",
 				success:function(data){
 					if(data == 1){
-						alert("글이 삭제되었습니다.");
+						modalFn("글이 삭제되었습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("글이 삭제되었습니다.");
 						location.href="eventList.do";
 					}
 				}

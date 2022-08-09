@@ -36,7 +36,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - user --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
 
@@ -160,11 +160,19 @@
 				type:"post",
 				success:function(data){
 					if(data==0){
-						alert("비밀번호 변경에 실패했습니다. 다시 시도해 주세요");
+						modalFn("비밀번호 변경에 실패했습니다. 다시 시도해 주세요");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("비밀번호 변경에 실패했습니다. 다시 시도해 주세요");
 						return;
 					}
 					else {
-						alert("비밀번호가 변경되었습니다");
+						modalFn("비밀번호가 변경되었습니다.");
+						setTimeout(function(){
+							modalClose();
+						},1000);
+						//alert("비밀번호가 변경되었습니다");
 						location.href='login.do';
 					}
 				}

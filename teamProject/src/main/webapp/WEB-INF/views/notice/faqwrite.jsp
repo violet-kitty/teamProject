@@ -24,7 +24,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <!-- 유효성 -->
 <script type="text/javascript">
@@ -35,11 +35,19 @@
 		var content = $("#content");
 		
 		if (title.val() == ""){
-			alert("제목을 입력하세요");
+			modalFn("제목을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("제목을 입력하세요");
 			title.focus();
 			return ;			
 		}else if (content.val() == ""){
-			alert("내용을 입력하세요");
+			modalFn("내용을 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			//alert("내용을 입력하세요");
 			content.focus();
 			return ;
 		}else {

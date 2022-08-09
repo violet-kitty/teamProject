@@ -140,13 +140,13 @@
 		
 		$("#cancel").click(function(){
 			if($("#title").val() != ""){
-				modalFn("작성된 제목이 있습니다.\n\n글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
 			}
 			else if($("#summernote").val() != ""){
-				modalFn("작성된 내용이 있습니다.\n\n글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
 	    	}
 			else if($("#file").val() != ""){
-				modalFn("첨부된 파일이 있습니다.\n\n글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("첨부된 파일이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
 			}
 	    	else{
     			history.back();
@@ -157,7 +157,7 @@
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:false,
+			focus: false,
 			lang: "ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -222,7 +222,7 @@
 		var content = $("#summernote");
 		
 		if(title.val() == ""){
-			modalFn("제목을 입력해주세요");
+			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
 			},1000);
@@ -230,11 +230,11 @@
 			return;
 		}
 		else if(content.val() == ""){
-			modalFn("내용을 입력해주세요");
+			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
 			},1000);
-			content.focus();
+			$("#summernote").summernote('focus');
 			return;
 		}
 		else {

@@ -114,7 +114,7 @@
 			height:300,
 			minHeight:null,
 			maxHeight:null,
-			focus:false,
+			focus:true,
 			lang:"ko-KR",
 			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
@@ -170,7 +170,7 @@
 			setTimeout(function(){
 				modalClose();
 			}, 1000);
-			content.focus();
+			$("#summernote").summernote('focus');
 			return;
 		}
 		else {
