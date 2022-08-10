@@ -159,23 +159,8 @@
 function modify(index){
 	var title = $("#title").val();
 	var content = $("#content").val();
-	if (title.val() == ""){
-		modalFn("제목을 입력해 주세요");
-		setTimeout(function(){
-		modalClose();
-		},1000);
-		//alert("제목을 입력하세요");
-		title.focus();
-		return ;			
-	}else if (content.val() == ""){
-		modalFn("내용을 입력해 주세요");
-		setTimeout(function(){
-		modalClose();
-		},1000);
-		//alert("내용을 입력하세요");
-		content.focus();
-		return ;
-	}else (){}
+	
+	
 	$.ajax({
 		url: "faqmodify.do",
 		type : 'POST',
@@ -198,9 +183,6 @@ function modify(index){
 		}
 	});
 };
-
-
-
 	</script>
 	
 	<!-- 모달창 -->
