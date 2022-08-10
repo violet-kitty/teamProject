@@ -91,13 +91,13 @@ public class FaqController {
 	//faq 삭제
 	@ResponseBody
 	@RequestMapping(value = "/notice/delfaq.do" , method = RequestMethod.GET)
-	public String delfaq(int fbidx){
+	public int delfaq(int fbidx){
 		
 		System.out.println("삭제전 좀가져와라 답답하다 너 진짜");
 		int result = faqService.delfaq(fbidx);
 		System.out.println("삭제후");
 		
-		return "redirect:/notice/faqboard.do";
+		return result;
 	}
 	
 	//리스트

@@ -30,7 +30,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 	<script type="text/javascript">
 	
 	// faq 내용 펼치기 이벤트
@@ -82,15 +82,17 @@
 		
 	}
 	//삭제
-	function cancel(){
+	function cancel(fbidx){
+		$("#fbidx").val(fbidx);
 		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","cancelFn");
 	}
 	function cancelFn(){
 		modalClose();
+		var fbidx = $("#fbidx").val();
 		$.ajax({
 			url:"delfaq.do",
 			type:"GET",
-			data:"fbidx=${vo.fbidx}",
+			data:"fbidx="+fbidx,
 			success:function(data){
 				if(data != 0){
 					modalFn("삭제되었습니다");
@@ -158,6 +160,7 @@ function modify(index){
 	var title = $("#title").val();
 	var content = $("#content").val();
 	
+	
 	$.ajax({
 		url: "faqmodify.do",
 		type : 'POST',
@@ -221,7 +224,7 @@ function modify(index){
 <!-- <form id="form" action="delfaq.do" name="delfaq" method="get" > -->
 <div class="container">
 	<div id="faqboard">
-		<input type="hidden" id="fbidx" name="fbidx" value="${vo.fbidx }" >
+		<input type="hidden" id="fbidx" name="fbidx">
 	<!-- faq 영역 -->
 	<dl class="faq" style="border:8px groove black; background-color:skyblue;">
  	
@@ -236,9 +239,7 @@ function modify(index){
   	
   		<br>
 		<button type="button" id="modify" class="modify" onclick="wmodify(${vo.fbidx})" >테스트수정</button>
-  	
-  		<button onclick="location.href='delfaq.do?fbidx=${vo.fbidx}'">삭제</button>
-
+		<button onclick="cancel('${vo.fbidx}')">삭제쓰</button>
   		</c:if>
   			</dd>
 		</c:forEach>
