@@ -43,7 +43,7 @@
 .boardlist .pagehead .search select {cursor:pointer;border: 3.2px solid #3E3E3E;background-color: #3E3E3E;padding: 10px;color: white;}
 .boardlist .pagehead .search input[type=submit] {color: white; position:relative; top: 0px; right: 0px;margin-left: -5px; height: 48.5px; background: #3E3E3E; padding: 10px;border: 2px solid #3E3E3E; margin-left: -5px;
 }
-.howflist .pagehead .filterbtn button{color:#9B9B9B; font-size:12px;font-weight:600; padding: 8px 24px 8px 24px; margin:8px 4px; border:2px solid #9B9B9B; background-color:white;}
+.boardlist .pagehead .filterbtn button{color:#9B9B9B; font-size:12px;font-weight:600; padding: 8px 24px 8px 24px; margin:8px 4px; border:2px solid #9B9B9B; background-color:white;}
 @media all and (max-width: 992px){
 	.boardlist .pagehead .rightbox {margin-top:16px; width:100%;}
 	.boardlist .pagehead .rightbox .btn-group {margin-bottom:16px;}
@@ -107,6 +107,7 @@
 
 /* 페이지네이션 */
 .boardlist .pagenation a {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px;}
+.boardlist .pagenation a:hover {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px; color:white; background-color:#A4C266;}
 @media all and (max-width: 576px) {
 	.boardlist .pagenation {width:100%; margin:20px 0px;}
 	}
