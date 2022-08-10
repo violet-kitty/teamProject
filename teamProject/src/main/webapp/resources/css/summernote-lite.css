@@ -10,6 +10,8 @@
  * Date: 2020-05-20T18:09Z
  * 
  */
+ 
+.dropdown-toggle::after{display:none;}
 @font-face {
 	font-family: "summernote";
 	font-style: normal;
