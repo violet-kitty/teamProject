@@ -86,7 +86,7 @@
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[0].cate}></span> ${hero[0].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea0"></p>
-								<button class="greenbtn hbshadow2">자세히보기</button>
+								<a href="howfView.do?hbidx=${hero[0].hbidx}"><button class="greenbtn hbshadow2">자세히보기</button></a>
 							</div>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[1].cate}></span> ${hero[1].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea1"></p>
-								<button class="greenbtn hbshadow2">자세히보기</button>
+								<a href="howfView.do?hbidx=${hero[1].hbidx}"><button class="greenbtn hbshadow2">자세히보기</button></a>
 							</div>
 
 						</div>
@@ -109,7 +109,7 @@
 							<div class="captionset">
 								<h5 class="hfc-blackgray hfc-bold"><span class="onlypc"><${hero[2].cate}></span> ${hero[2].title}</h5>
 								<p class="hfc-semibold hfc-darkgray" id="tagArea2"></p>
-								<button class="greenbtn hbshadow2">자세히보기</button>
+								<a href="howfView.do?hbidx=${hero[2].hbidx}"><button class="greenbtn hbshadow2">자세히보기</button></a>
 							</div>
 
 						</div>
