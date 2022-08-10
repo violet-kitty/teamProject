@@ -531,7 +531,6 @@ else {
 							setTimeout(function(){
 								modalClose();
 							},1000);
-							//alert("찜 목록 추가 오류입니다");
 						}
 					}
 				});
@@ -836,33 +835,30 @@ else {
 			modalFn("로그인이 필요합니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("로그인이 필요합니다");
-			return;
 		}
 		else if(date1==""){
 			modalFn("체크인 날짜를 선택해주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크인 날짜를 선택해 주세요");
-			return;
 		}
 		else if(date2==""){
 			modalFn("체크아웃 날짜를 선택해주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크아웃 날짜를 선택해 주세요");
-			return;
 		}
 		else if(date1>date2){
 			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
 			setTimeout(function(){
 				modalClose();
-			},1000);
-			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
-			return;
+				return;
+			},1000)
+			
 		}
 		else {
 			var dd = "sidx="+sidx+"&rname="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
@@ -876,11 +872,11 @@ else {
 						modalFn("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
 						setTimeout(function(){
 							modalClose();
+							var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
+							location.href='stayReservation.do?'+data1;
+							return;
 						},1000);
-						//alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
-						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
-						location.href='stayReservation.do?'+data1;
-						return;
+						
 					}
 					else {
 						//ajax로 해당 유형의 숙소 ridx 가져오기
@@ -910,9 +906,8 @@ else {
 			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
-			return;
 		}
 		else {
 			location.href='stayView.do?sidx=${stay.sidx}&date1='+date1+'&date2='+date2;
