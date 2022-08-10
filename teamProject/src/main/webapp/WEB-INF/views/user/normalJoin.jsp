@@ -250,6 +250,21 @@
 				},1000);
 				//alert("이메일이 아닙니다.");
 				return;
+			}else if (name.val() == ""){
+				modalFn("이름을 써주세요");
+				setTimeout(function(){
+				modalClose();
+				},1000);
+			}else if (nickname.val() == ""){
+				modalFn("닉네임을 써주세요");
+				setTimeout(function(){
+				modalClose();	
+				},1000);
+			}else if (password.val() == ""){
+				modalFn("비밀번호을 입력해주세요");
+				setTimeout(function(){
+				modalClose();	
+				},1000);
 			}
 			if (name.val() == "") {
 				$("#nameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
