@@ -98,10 +98,10 @@
 						</div><!-- /row -->
 						
 						<!-- 카테고리 선택, 제목 입력 -->
-						<div class="row h-input ">
-							<div class="col-lg-2">
+						<div class="row h-input">
+							<div class=" col-6 col-lg-2 select-area">
 								<select class="form-control form-select2" name="state" id="state" onchange="visible(this)">
-									<option selected>도 선택</option>
+									<option selected>도 선택&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x25BE;</option>
 									<option value="서울특별시">서울특별시</option>
 									<option value="인천광역시">인천광역시</option>
 									<option value="경기도">경기도</option>
@@ -121,12 +121,12 @@
 									<option value="제주도">제주도</option>
 								</select>
 							</div>
-							<div class="col-lg-2">
+							<div class="col-6 col-lg-2 select-area">
 								<select class="form-control form-select3" name="city" id="city">
-									<option selected>시 선택</option>
+									<option selected>시 선택&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x25BE;</option>
 								</select>
 							</div>
-							<div class="col-lg-8">
+							<div class="col-lg-8 titlearea">
 								<input class="form-control textinput2" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
 							</div>
 						</div><!-- row end -->

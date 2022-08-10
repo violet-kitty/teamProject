@@ -248,6 +248,9 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		AND a.title like CONCAT('%',#{searchValue},'%')
 		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
 		<if test='searchType != null and searchType.equals("area")'>
 		AND (a.state like CONCAT('%',#{searchValue},'%')
 		OR a.city like CONCAT('%',#{searchValue},'%'))

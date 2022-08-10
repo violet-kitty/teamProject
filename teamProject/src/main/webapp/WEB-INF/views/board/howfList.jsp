@@ -156,7 +156,20 @@
 								<button onclick="location.href='howfList.do?sortType=heart'">좋아요순</button>
 								<button  class="active"  onclick="location.href='howfList.do?sortType=new'">최신순</button>
 							</div>
-							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+							<!-- 검색창 -->
+							<form name="frm2" action="howfList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
 						</div><!-- .rightbox -->
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
@@ -178,7 +191,20 @@
 									<li><a class="dropdown-item" href="howfList.do?sortType=travel">여행지추천</a></li>
 								</ul>
 							</div>
-							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+							<!-- 검색창 -->
+							<form name="frm2" action="howfList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
 						</div><!-- .rightbox -->
 
 					</div><!-- .pageinfo -->
@@ -308,6 +334,11 @@
 				tags = tags+jsonParse[idx]["value"]+" ";
 			})
 			$("#tagArea2").text(tags);
+			
+			//검색시 카테고리
+			var sfilter = "${search.searchType}";
+			if(sfilter != "")
+			$("#sfilterID").val(sfilter).prop("selected", true);
 		});
 	</script>
 

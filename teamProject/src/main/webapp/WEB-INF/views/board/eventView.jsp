@@ -1,39 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="true" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
-<!-- jquery -->
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<!-- css -->
-<link href="<%=request.getContextPath()%>/css/howf.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/modal.css?ver0.1" rel="stylesheet">
-<!-- kakao -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
+<title>지역이벤트</title>
+
+<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Bootstrap5 AwsomeFont -->
+<script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<style>
-	h1{
-		font-size:1.5em;
-		font-weight:bold; 
-	}
-	@media ( max-width : 980px) {
-	#ind{
-		display:none;
-	}
-}
-</style>
+
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardView공용세팅 --> <link href="<%=request.getContextPath()%>/css/boardView.css" rel="stylesheet">
+
+
+
 <script>
 var heartDup = false;
 
@@ -45,124 +48,154 @@ else {
 }
 
 </script>
-</head>
-<body>
-<main>
-	<!-- 글 제목 목록 -->
-	<div id="ind" style="border:1px solid red;position:fixed;width:200px;right:0;top:200px;"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<a href="eventList.do">&lt;목록으로 돌아가기</a>
-			</div>
-		</div><!-- row end -->
-		
-		<!-- 썸네일 이미지 -->
-		<div class="row">
-			<div class="col d-flex justify-content-center">
-				<c:if test="${event.filename != null}">
-					<img src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.filename}" style="max-height:500px;width:100%;">
-				</c:if>
-			</div>
-		</div>
-		
-		<!-- 진행 여부, 시작일, 종료일, 하트 -->
-		<div class="row">
-			<div class="col-lg-6 d-flex justify-content-start">
-				<c:set var="now" value="<%=new java.util.Date()%>"/>
-				<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
-				<c:choose>
-					<c:when test="${(today < event.endday) && (event.startday < today)}">
-						<span style="background: #85A548; border-radius: 5px; color: white;">진행중</span>
-					</c:when>
-					<c:when test="${today < event.startday}">
-						<span style="background: #54ACA8; border-radius: 5px; color: white;">진행예정</span>
-					</c:when>
-					<c:when test="${event.endday < today}">
-						<span style="background: #C1C1C1; border-radius: 5px; color: white;">종료</span>
-					</c:when>
-				</c:choose>
-				<span class="ms-1">${event.startday} ~ ${event.endday}</span>
-			</div>
-			<div class="col-lg-6 d-flex justify-content-end">
-				<c:choose>
-					<c:when test="${login != null}">
-						<c:if test="${heart!=null && heart==1}">
-							<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
-						</c:if>
-						<c:if test="${heart!=null && heart==0}">
-							<img src="<%=request.getContextPath()%>/image/heart.png" width="30" height="30" style="cursor:pointer;" id="heartBtn">
-						</c:if>
-					</c:when>
-					<c:otherwise>
-						<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
-					</c:otherwise>
-				</c:choose>
-				<span class="ms-1" id="heartNum">${event.heart}</span>
-			</div>
-		</div>
-		
-		<!-- 글 제목 -->
-		<div class="row">
-			<div class="col">
-				&lt;${event.state}&gt;${event.title}
-			</div>
-		</div>
-		
-		<!-- 태그 -->
-		<div class="row">
-			<div class="col" id="tagArea">
-				
-			</div>
-		</div>
-		<hr class="my-2">
-		
-		<!-- 글 내용 -->
-		<div class="row">
-			<div class="col" id="eventContent">
-				${event.content}
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-lg-6 d-flex justify-content-start">
-				<c:if test="${login.role=='admin' || event.midx==login.midx}">
-				<button onclick="delOk()">삭제</button>
-				<button onclick="location.href='eventModify.do?ebidx=${event.ebidx}'">수정</button>
-				<button onclick="location.href='eventWrite.do'">글쓰기</button>
-			</c:if>
-			</div>
-			<div class="col-lg-6 d-flex justify-content-end">
-				<button onclick="shareSNS('facebook')">
-					<img src="<%=request.getContextPath()%>/image/facebook.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-				<button onclick="shareSNS('twitter')">
-					<img src="<%=request.getContextPath()%>/image/twitter.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-				<button onclick="shareSNS('kakao')" id="kakaoBtn">
-					<img src="<%=request.getContextPath()%>/image/kakao.png" width="30" height="30" style="border-radius:5px;">
-				</button>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<a href="eventList.do">&lt;목록으로 돌아가기</a>
-			</div>
-		</div><!-- row end -->
-	</div><!-- container end -->
-</main>
 
-<!-- 글 삭제 모달 -->
-<div id="modalDiv">
-	<div id="popupDiv">
-		<h1>게시글  삭제</h1>
-		<p>정말로 게시글을 삭제하시겠습니까?</p>
-		<p>삭제된 게시글은 복구가 되지 않습니다.</p>
-		<button type="button" onclick="delFn('ok')">삭제하기</button>
-		<button type="button" onclick="delFn('cancel')">취소</button>
-	</div>
-</div>
+</head>
+
+<body>
+	<div id="wrap" class="boardview event eventview">
+	
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Side -->
+		
+		<div class="right-container">
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-whitegray">
+			
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+				    <!-- pagehead  -->
+					<a class=" onlypc" href="eventList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
+					
+					<!-- 뷰 -->
+					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
+					<div class="clist">
+						
+							<!-- C리스트 14. 반복 -->
+							<div class="thumbnailitem">
+								
+									<div class="thumbnail">
+
+											<!-- 메인이미지 보여주기-->
+											<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
+												<c:if test="${event.filename != null}">
+													<img class="thumbnailimg" src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.filename}">
+												</c:if>
+
+												<c:if test="${event.filename == null}">
+													<img class="thumbnailimg" src="<%=request.getContextPath()%>/image/null/null_thumbnail.png">
+												</c:if>
+
+											
+											<div class="writerinfo">
+												<p>
+													<c:if test="${event.img != null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.img});"></div>
+													</c:if>
+													<c:if test="${event.img == null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+													</c:if>
+													<span class="">${event.nickname}</span>
+													<span class="hfc-semibold hfc-darkgray"> ${event.wdate}</span>
+												</p>
+												<div class="small">
+													<div class="col-lg-6 d-flex justify-content-end">
+														<c:choose>
+															<c:when test="${login != null}">
+																<c:if test="${heart!=null && heart==1}">
+																	<img src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor:pointer;" id="heartBtn">
+																</c:if>
+																<c:if test="${heart!=null && heart==0}">
+																<img src="<%=request.getContextPath()%>/image/button/lineheart.png" style="cursor:pointer;" id="heartBtn">
+																</c:if>
+															</c:when>
+															<c:otherwise>
+																<img src="<%=request.getContextPath()%>/image/button/heart.png">
+															</c:otherwise>
+														</c:choose>
+														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${event.heart}</span>
+													</div>
+												</div>
+											</div>
+											<div class="caption">
+												<h4>${event.title}</h4>
+											</div>
+
+											<!-- 태그 -->
+											<div class="row">
+												<div class="col hfc-darkgray" id="tagArea"></div>
+											</div>
+											<hr class="middleline">
+											<!-- 글 내용 -->
+											<div class="row contentrow">
+												<div class="col" id="eventContent">
+													${event.content}
+												</div>
+											</div>
+								
+					<div class="row btnarea">
+						<div class="col-6 d-flex justify-content-start">
+							<c:if test="${login.midx == event.midx}">
+								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+								<button onclick="location.href='eventModify.do?ebidx=${event.ebidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+							</c:if>
+							<button onclick="location.href='eventWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+						</div>
+						<div class="col-6 d-flex justify-content-end">
+							<%-- <button onclick="shareSNS('facebook')">
+								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
+							</button>
+							<button onclick="shareSNS('twitter')">
+								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
+							</button> --%>
+							<button onclick="shareSNS('kakao')" id="kakaoBtn">
+								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+							</button>
+						</div>
+					</div>
+					
+
+								
+								
+							</div><!-- /.thumbnail -->
+										
+							</div><!--/. thumbnailitem -->
+					
+					</div>
+					<!-- /.clist -->
+					<hr class="lastline">
+					
+					<a class=" onlypc" href="eventList.do">
+					<div class="backto">
+						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+					</div>
+					</a>
+					<!-- 리스트 카드 -->
+					
+					
+		
+					
+				</div><!-- /.container -->
+			</div><!-- /.contents -->
+			<!-- /pagehead -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
+		</div><!-- / #container -->
+		
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+	
+	</div><!-- /#wrap -->
+
+
 
 <script>
 	$(function(){
@@ -171,7 +204,7 @@ else {
 		var jsonParse = JSON.parse(json);
 		var tags = "";
 		$.each(jsonParse,function(idx){
-			tags = tags+jsonParse[idx]["value"]+" ";
+			tags = tags+"  "+jsonParse[idx]["value"]+"  ";
 		})
 		$("#tagArea").text(tags);
 		
@@ -187,15 +220,11 @@ else {
 					success:function(data){
 						if(data==1){
 							heartDup = false;
-							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/heart.png");
+							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/button/lineheart.png");
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum-1);
-							modalFn("찜 목록에서 제거되었습니다.");
-							setTimeout(function(){
-								modalClose();
-							},1000);
-							//alert("찜 목록에서 제거되었습니다");
+							alert("찜 목록에서 제거되었습니다");
 						}
 					}
 				});
@@ -208,22 +237,14 @@ else {
 					success:function(data){
 						if(data==1){
 							heartDup = true;
-							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/redheart.png");
+							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/button/heart.png");
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum+1);
-							modalFn("찜 목록에 추가되었습니다.");
-							setTimeout(function(){
-								modalClose();
-							},1000);
-							//alert("찜 목록에 추가되었습니다");
+							alert("찜 목록에 추가되었습니다");
 						}
 						else {
-							modalFn("찜 목록 추가 오류입니다.");
-							setTimeout(function(){
-								modalClose();
-							},1000);
-							//alert("찜 목록 추가 오류입니다");
+							alert("찜 목록 추가 오류입니다");
 						}
 					}
 				});
@@ -239,7 +260,7 @@ else {
 				var offset = $(this).offset();
 				titleIndex[i] = offset.top;
 				$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
-				$("#index"+num).on("click",function(){
+				$("#index"+num).on("click",function() {
 					$('html, body').animate({scrollTop : offset.top}, 200);
 				});
 				num++;
@@ -257,50 +278,43 @@ else {
 			});
 		}
 		
-		//사진 크기 조절
-		$("img").each(function(index, item){
-			$(item).css("max-width","100%");
-			$(item).css("max-height",500);
-		});
+	
 		
 	});
+
 	
 	//글 삭제
 	function delOk(){
 		//모달창 띄우기
-		$("#modalDiv").show();
+	modalFn("정말 게시글을 삭제하시겠습니까? \n 삭제된 게시글은 복구가 되지 않습니다.","삭제하기","글 삭제","아니오")
 	}
 	
-	function delFn(e){
-		if(e == 'ok'){
-			var ebidx = "${event.ebidx}";
-			$.ajax({
-				url:"eventDelete.do",
-				data:"ebidx="+ebidx,
-				type:"post",
-				success:function(data){
-					if(data == 1){
-						modalFn("글이 삭제되었습니다.");
-						setTimeout(function(){
-							modalClose();
-						},1000);
-						//alert("글이 삭제되었습니다.");
-						location.href="eventList.do";
-					}
+	function modalOkFn(){
+		modalClose();
+		var ebidx = "${event.ebidx}";
+		$.ajax({
+			url:"eventDelete.do",
+			data:"ebidx="+ebidx,
+			type:"post",
+			success:function(data){
+				if(data == 1){
+					modalFn("글이 삭제되었습니다.");
+					setTimeout(function(){
+						modalClose();
+					},1500);
+					location.href="eventList.do";
 				}
-			});
-		}
-		else if(e == 'cancel'){
-			$("#modalDiv").hide();
-		}
+			}
+		});
 	}
+
 	
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
 		var snsTitle = "${event.title}";
 		if(sns=='facebook'){
-			var url = "http://www.facebook.com/sharer.php?u="+encodeURIComponent(thisUrl);
+			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
 		}
 		else if(sns=='twitter'){
@@ -309,7 +323,7 @@ else {
 		}
 		else if(sns=='kakao'){
 			Kakao.init('35c7c8bf307063859390df8e61188fbf');
-			Kakao.isInitialized();
+			//Kakao.isInitialized();
 			
 			Kakao.Link.createDefaultButton({
 				container:'#kakaoBtn',
@@ -327,11 +341,6 @@ else {
 		}
 	}
 </script>
-<!-- 페이스북 공유 스크립트 -->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v14.0" nonce="QaB4N6W2"></script>
-<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
+
 </body>
 </html>
