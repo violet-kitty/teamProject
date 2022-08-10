@@ -90,7 +90,7 @@
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<c:forEach var="i" items="${res}">
 						<div class="feature col">
-							<img src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${i.photo}" style="width:56px;">
+							<img src="<%=request.getContextPath() %>/mypage/displayFile.do?fileName=${i.photo}" style="width:56px;">
 							<h2>숙소이름 : ${i.sname}</h2>
 							<h3>객실 이름 : ${i.rname}</h3>
 							<p>예약한 날짜 : ${i.wdate}<br>
