@@ -55,6 +55,7 @@ p {line-height:22px;}
 
 /* 태그 반응 세팅 */
 input:focus {outline:none; border:none; box-shadow:none;}
+.form-control:focus {border-color: #ced4da; box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 
 /* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
