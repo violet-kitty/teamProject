@@ -74,6 +74,10 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="">사업자 가입 승인</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
 							<a class="mainbtn" href="">고객 지원</a>
 						</div>
 					</div>

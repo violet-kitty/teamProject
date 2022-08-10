@@ -710,6 +710,7 @@
 			, merchant
 			, pay
 			, price
+			, name
 			, wdate
 			, delyn
 		)
@@ -721,6 +722,7 @@
 			, #{merchant}
 			, 'B'
 			, #{price}
+			, '사업자 임의 추가 예약'
 			, now()
 			, 'N'
 		)
@@ -801,5 +803,16 @@
 		ORDER BY s.name asc, re.wdate desc
 	</select>
 	
+	<!-- 본인 소유 숙소 목록 가져오기 -->
+	<select id="myStayAll" parameterType="int" resultType="stayVO">
+		SELECT sidx
+			, name
+			, addr
+			, detailaddr
+			, photo
+		FROM stay
+		WHERE midx = #{midx}
+		AND delyn = 'N'
+	</select>
 	
 </mapper>

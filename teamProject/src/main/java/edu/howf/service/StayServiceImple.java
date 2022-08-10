@@ -246,7 +246,7 @@ public class StayServiceImple implements StayService{
 
 	@Override
 	public int resInsertB(ResVO vo) {
-		return stayDao.resInsert(vo);
+		return stayDao.resInsertB(vo);
 	}
 
 	@Override
@@ -264,6 +264,11 @@ public class StayServiceImple implements StayService{
 	@Override
 	public List<ResVO> resSelectAllB(ResVO vo) {
 		return stayDao.resSelectAllB(vo);
+	}
+
+	@Override
+	public List<StayVO> myStayAll(int midx) {
+		return stayDao.myStayAll(midx);
 	}
 	
 	

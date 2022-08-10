@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StayVO;
 import edu.howf.vo.UserVO;
 
 //마이 페이지
@@ -427,11 +429,43 @@ public class MyPageController {
 		return res;
 	}
 	
+	//예약 추가 이동
+	@RequestMapping(value="/resInsert.do", method=RequestMethod.GET)
+	public String resInsert(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		//본인 소유 숙소 목록
+		List<StayVO> stay = stayService.myStayAll(login.getMidx());
+		
+		model.addAttribute("stay", stay);
+		
+		return "mypage/resInsert";
+	}
+	
+	//방 정보 가져오기
+	@ResponseBody
+	@RequestMapping(value="/roomSelect.do")
+	public StayVO roomSelect(ResVO vo) {
+		StayVO stay = stayService.staySelectOne(vo);
+		
+		return stay;
+	}
+	
 	//예약 추가
 	@ResponseBody
-	@RequestMapping(value="/resInsert.do")
-	public int resInsert(ResVO vo) {
-		return stayService.resInsertB(vo);
+	@RequestMapping(value="/resInsert.do", method=RequestMethod.POST)
+	public int resInsertAction(ResVO res, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		res.setMidx(login.getMidx());
+		
+		//상품 id
+		Calendar cal = Calendar.getInstance();
+		String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
+		res.setMerchant(merchant);
+		
+		return stayService.resInsertB(res);
 	}
 	
 	//예약 취소
