@@ -37,6 +37,31 @@
 
 </head>
 
+<script>
+	var tagArray = new Array();
+	function tagParse(json,index){
+		var jsonParse = JSON.parse(json);
+		var tags = "";
+		$.each(jsonParse,function(idx){
+			tags = tags+jsonParse[idx]["value"]+" ";
+		})
+		tagArray[index] = tags;
+	}
+</script>
+<script>
+	function tagParse(tag, sbidx){
+		//리스트 태그 값 넣기
+		var json = tag;
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+		})
+		
+		$("#storytag"+sbidx).html(tagData);
+	}
+</script>
+
 <body>
 
 	<div id="wrap" class="boardlist story storylist">
@@ -87,7 +112,7 @@
 							<!-- 검색창 Search -->
 							<form name="frm2" action="storyList.do" method="post">
 							<div class="search">
-								<select name="searchType">
+								<select name="searchType" id="sfilterID">
 									<option value="total" selected>전체</option>
 									<option value="title">제목 검색</option>
 									<option value="tag">태그 검색</option>
@@ -122,7 +147,7 @@
 							<!-- 검색창 -->
 							<form name="frm2" action="storyList.do" method="post">
 							<div class="search">
-								<select name="searchType">
+								<select name="searchType"id="sfilterID">
 									<option value="total" selected>전체</option>
 									<option value="title">제목 검색</option>
 									<option value="tag">태그 검색</option>
@@ -165,8 +190,10 @@
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
 												<figcaption>
-													<p id="howftag">${s.tag}</p>
+													<p id="storytag${s.sbidx}"></p>
 												</figcaption>
+												<!-- 태그 파싱하는 함수 호출 -->
+												<script>tagParse('${s.tag}','${s.sbidx}');</script>
 											</figure>
 											<div class="writerinfo">
 												<c:if test="${s.img != null}">
@@ -243,7 +270,12 @@
 	</div>
 	<!-- /#wrap -->
 
-
+	<script>
+		//검색시 카테고리
+		var sfilter = "${search.searchType}";
+		if (sfilter != "")
+			$("#sfilterID").val(sfilter).prop("selected", true);
+	</script>
 
 </body>
 </html>

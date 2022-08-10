@@ -97,7 +97,7 @@
 								<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/event/displayFile.do?fileName=${i.filename});"></div>
 								<div class="carousel-caption d-md-block">
 									<a href="eventView.do?ebidx=${i.ebidx}">
-									<div class="captionset hbshadow">
+									<div class="captionset">
 										<h5 class="hfc-blackgray hfc-bold">${i.title}</h5>
 										<p class="hfc-semibold hfc-pink datep">${i.startday} ~ ${i.endday}</p>
 										<script>tagParse('${i.tag}',${index});</script>
@@ -149,7 +149,20 @@
 								<button onclick="location.href='eventList.do?sortType=heart'">좋아요순</button>
 								<button class="active" onclick="location.href='eventList.do?sortType=new'">최신순</button>
 							</div>
-							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+							<!-- 검색창 Search -->
+							<form name="frm2" action="eventList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="area">지역 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
 						</div><!-- .rightbox -->
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
@@ -173,7 +186,7 @@
 							<!-- 검색창 Search -->
 							<form name="frm2" action="eventList.do" method="post">
 							<div class="search">
-								<select name="searchType">
+								<select name="searchType" id="sfilterID">
 									<option value="total" selected>전체</option>
 									<option value="title">제목 검색</option>
 									<option value="tag">태그 검색</option>
@@ -216,7 +229,6 @@
 												</c:if>
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
-												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
 												<figcaption>
 													<p id="eventtag${v.ebidx}"></p>
 												</figcaption>
@@ -241,7 +253,7 @@
 												<div class="small"><img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${v.heart}</span></div>
 											</div>
 											<div class="caption">
-												<h4>&lt;${v.state}&gt; ${v.title}</h4>
+												<h4>&lt;${v.city}&gt; ${v.title}</h4>
 											</div>
 										</div><!-- /.thumbnail -->
 									</a>
@@ -290,10 +302,16 @@
 	</div><!-- /#wrap -->
 	<script>
 		$(function(){
+			//부트스트랩 슬라이더
 			$("#carousel0").addClass("active");
 			for(var i=0;i<3;i++){
 				$("#tagArea"+i).text(tagArray[i]);
 			}
+			
+			//검색시 카테고리
+			var sfilter = "${search.searchType}";
+			if(sfilter != "")
+			$("#sfilterID").val(sfilter).prop("selected", true);
 		});
 	</script>
 </body>
