@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.howf.mapper.chatMapper">
+	<select id="selectChatList" resultType="chat">
+		<![CDATA[
+			SELECT	cidx
+					,midx
+					,nickname
+					,tidx
+					,content
+					,sdate
+					,delyn
+			FROM	chatting
+			WHERE	tidx = #{tidx}
+			AND		cidx <= #{startNo}
+			ORDER BY cidx DESC
+		]]>
+	</select>
+	
+	<select id="selectFirstChatList" resultType="chat">
+		<![CDATA[  
+			SELECT	cidx
+					,midx
+					,nickname
+					,tidx
+					,content
+					,sdate
+					,delyn
+			FROM	chatting
+			WHERE	tidx = #{tidx}
+			ORDER BY cidx
+		  ]]> 
+	</select>
+	
+	<insert id="insertChat" parameterType="chat">
+		<![CDATA[
+			INSERT INTO chatting(
+							midx
+							,nickname
+							,tidx
+							,content
+							,sdate
+							,delyn
+			)
+			VALUES	(
+							#{midx}
+							,#{nickname}
+							,#{tidx}
+							,#{content}
+							,now()
+							'N'
+			)
+		]]>
+		<selectKey resultType="int" keyProperty="cidx" order="AFTER">
+			SELECT  max(cidx)
+			FROM	chatting
+		</selectKey>
+	</insert>
+</mapper>

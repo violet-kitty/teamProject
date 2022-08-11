@@ -27,6 +27,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	private final Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 
 	private static int i;
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;

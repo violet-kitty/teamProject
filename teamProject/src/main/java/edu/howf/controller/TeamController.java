@@ -37,9 +37,6 @@ public class TeamController {
 	@Autowired
 	String uploadPath;
 	
-	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
-	
 	@RequestMapping(value = "/teamList.do", method = RequestMethod.GET)
 	public String teamList(Model model, SearchVO vo) {
 		if(vo.getPage() < 1) {
@@ -272,6 +269,14 @@ public class TeamController {
 		
 		
 		return teamService.revote(vv);
+	}
+	
+	@GetMapping("teamChatting.do")
+	public String teamChatting(int tidx, Model model) {
+		
+		model.addAttribute("tidx", tidx);
+		
+		return "team/teamChatting";
 	}
 
 	
