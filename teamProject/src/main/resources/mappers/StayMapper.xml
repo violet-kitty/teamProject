@@ -351,6 +351,7 @@
 			, a.midx
 			, a.photo
 			, b.nickname
+			, b.img
 		FROM comment a, usertable b
 		WHERE a.midx = b.midx
 		AND a.bidx = #{bidx}

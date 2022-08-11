@@ -13,6 +13,7 @@
 					s.sbidx,
 					s.midx,
 					u.nickname,
+					u.img,
 					s.title,
 					s.content,
 					DATE_FORMAT(s.wdate,'%Y-%m-%d') as wdate,

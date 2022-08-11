@@ -69,7 +69,8 @@ public class HomeController {
 		model.addAttribute("story", story);
 		
 		//숙박 정보
-		vo.setPerPageNum(6);
+		vo.setPerPageNum(20);
+		vo.setSortType("star");
 		List<StayVO> stay = stayService.staySelectAll(vo);
 		vo.setPage(1);
 		model.addAttribute("stay", stay);
@@ -97,7 +98,8 @@ public class HomeController {
 		model.addAttribute("story", story);
 		
 		//숙박 정보
-		vo.setPerPageNum(6);
+		vo.setPerPageNum(20);
+		vo.setSortType("star");
 		List<StayVO> stay = stayService.staySelectAll(vo);
 		vo.setPage(1);
 		model.addAttribute("stay", stay);

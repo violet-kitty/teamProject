@@ -98,6 +98,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col d-flex justify-content-center text-center">
+						<button type="button" onclick="javascript:location.href='teamChatting.do?tidx=${tidx}'">팀 채팅</button><br>
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
 							<c:if test="${rv != null && result != 0}">
@@ -264,8 +265,6 @@
 			success:function(){
 				location.reload();
 			}
-		
-			
 		})
 		
 	}
@@ -277,7 +276,6 @@
 			success: function(){
 				modalFn("삭제되었습니다.","확인");
 				location.reload();
-				
 			}
 		});
 	}
