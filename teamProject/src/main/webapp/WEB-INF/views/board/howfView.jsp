@@ -229,7 +229,6 @@ else {
 							setTimeout(function(){
 								modalClose();
 							},1000);
-							//alert("찜 목록에서 제거되었습니다");
 						}
 					}
 				});
@@ -250,14 +249,12 @@ else {
 							setTimeout(function(){
 								modalClose();
 							},1000);
-							//alert("찜 목록에 추가되었습니다");
 						}
 						else {
 							modalFn("찜 목록 추가 오류입니다.");
 							setTimeout(function(){
 								modalClose();
 							},1000);
-							//alert("찜 목록 추가 오류입니다");
 						}
 					}
 				});
@@ -299,7 +296,7 @@ else {
 	//글 삭제
 	function delOk(){
 		//모달창 띄우기
-	modalFn("정말 게시글을 삭제하시겠습니까? \n 삭제된 게시글은 복구가 되지 않습니다.","삭제하기","글 삭제","아니오")
+	modalFn("정말 게시글을 삭제하시겠습니까? \n 삭제된 게시글은 복구가 되지 않습니다.","삭제하기","글 삭제","아니오");
 	}
 	
 	function modalOkFn(){
@@ -314,9 +311,9 @@ else {
 					modalFn("글이 삭제되었습니다.");
 					setTimeout(function(){
 						modalClose();
-					return;
+						location.href="howfList.do";
+						return;
 					},1500);
-					location.href="howfList.do";
 				}
 			}
 		});

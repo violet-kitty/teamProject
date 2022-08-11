@@ -432,7 +432,32 @@
 
 		}
 		else {
-			$("#frm").submit();
+			var formData = new FormData($("#frm")[0]);
+			$.ajax({
+				url:"eventWrite.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data != 0){
+						modalFn("등록되었습니다");
+						setTimeout(function(){
+							modalClose();
+							location.href="eventView.do?ebidx="+data;
+							return;
+						},1500);
+					}
+					else {
+						modalFn("등록 실패");
+						setTimeout(function(){
+							modalClose();
+							return;
+						},1500);
+					}
+				}
+			});
 		}
 	}
 </script>

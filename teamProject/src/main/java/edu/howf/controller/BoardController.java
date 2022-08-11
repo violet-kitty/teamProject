@@ -94,8 +94,9 @@ public class BoardController {
 		return "board/howfWrite";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/howfWrite.do", method=RequestMethod.POST)
-	public String howfWrite(MultipartFile file, HOWFVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+	public int howfWrite(MultipartFile file, HOWFVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
 		//파일 업로드
 		File dir = new File(uploadPath);
 		
@@ -118,7 +119,7 @@ public class BoardController {
 		
 		int result = boardService.howfWrite(vo);
 		
-		return "redirect:/howf/howfView.do?hbidx="+vo.getHbidx();
+		return vo.getHbidx();
 	}
 	
 	@RequestMapping(value="/howfView.do")
@@ -152,8 +153,9 @@ public class BoardController {
 		return "board/howfModify";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/howfModify.do", method=RequestMethod.POST)
-	public String howfModify(MultipartFile file, HOWFVO vo) throws IllegalStateException, IOException {
+	public int howfModify(MultipartFile file, HOWFVO vo) throws IllegalStateException, IOException {
 		if(!file.isEmpty()) {
 			//파일 업로드
 			File dir = new File(uploadPath);
@@ -172,9 +174,8 @@ public class BoardController {
 			}
 		}
 		int result = boardService.howfModify(vo);
-		System.out.println("수정 : "+result);
 		
-		return "redirect:/howf/howfView.do?hbidx="+vo.getHbidx();
+		return vo.getHbidx();
 	}
 	
 	@ResponseBody
@@ -242,8 +243,9 @@ public class BoardController {
 		return "board/eventWrite";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/eventWrite.do", method=RequestMethod.POST)
-	public String eventWrite(MultipartFile file, EventVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+	public int eventWrite(MultipartFile file, EventVO vo, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
 		//파일 업로드
 		File dir = new File(uploadPath);
 				
@@ -266,7 +268,7 @@ public class BoardController {
 				
 		int result = boardService.eventWrite(vo);
 		
-		return "redirect:/event/eventView.do?ebidx="+vo.getEbidx();
+		return vo.getEbidx();
 	}
 	
 	@RequestMapping(value="/eventModify.do", method=RequestMethod.GET)
@@ -278,10 +280,30 @@ public class BoardController {
 		return "board/eventModify";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/eventModify.do", method=RequestMethod.POST)
-	public String eventModify(MultipartFile file, EventVO vo) {
+	public int eventModify(MultipartFile file, EventVO vo) throws IllegalStateException, IOException {
+		if(!file.isEmpty()) {
+			//파일 업로드
+			File dir = new File(uploadPath);
+			
+			if(!dir.exists()) dir.mkdirs();
+			
+			if(!file.getOriginalFilename().isEmpty()) {
+				System.out.println("파일 저장 경로 : "+uploadPath);
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString()+"_"+file.getOriginalFilename();
+				file.transferTo(new File(uploadPath,fileName));
+				vo.setFilename(fileName);
+			}
+			else {
+				System.out.println("업로드된 파일 없음");
+			}
+		}
+		
 		int result = boardService.eventModify(vo);
-		return "redirect:/event/eventView.do?ebidx="+vo.getEbidx();
+		
+		return vo.getEbidx();
 	}
 	
 	@ResponseBody
