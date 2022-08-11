@@ -87,7 +87,7 @@
 </update>
 
 
-	<update id="delfaq" parameterType="faqVO">
+	<update id="delfaq" parameterType="int">
 			update faqboard
 			SET delyn = 'Y'
 			WHERE fbidx = #{fbidx}

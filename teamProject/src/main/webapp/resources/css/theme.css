@@ -33,10 +33,7 @@ a:focus {color:auto;}
 .modal input[type=text] {border-radius:10px;width:100%;box-shadow: inset 0px 2px 5px #00000029; background-color: white;border: none; padding: 16px;font-size: 16px;font-weight: 600;}
 .modal button {display:inline-block; width:30%;}
 .modal button:last-child {width:70%; float:right;}
-.modal .btnarea {    position: absolute;
-    bottom: 0;
-    width: 100%;
-    left: 0;}
+.modal .btnarea {    position: absolute;bottom: 0; width: 100%;left: 0;}
 @media (max-width: 576px){
 	.modal-dialog {max-width:415px;}
 	.modal-content {padding:55px 50px 100px 55px;}
@@ -55,6 +52,7 @@ p {line-height:22px;}
 
 /* 태그 반응 세팅 */
 input:focus {outline:none; border:none; box-shadow:none;}
+.form-control:focus {border-color: #ced4da; box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 
 /* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
@@ -147,6 +145,7 @@ form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none
 @media all and (max-width: 992px) {
 	.onlypc {display:none!important;}
 	.onlypc-inline {display:none!important;}
+	.onlypc-flex {display:none!important;}
 }
 
 /* tablet 사이즈 이하에서만 보이기*/

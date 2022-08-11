@@ -331,12 +331,50 @@
 	
 	<!-- 찜목록 가져오기(여행이야기) -->
 	<select id="heartSelectStory" parameterType="searchVO" resultType="heartVO">
-		SELECT hidx
+		SELECT a.*
+			, b.title
+			, b.filename
+			, b.nickname
+		FROM
+		(SELECT hidx
 			, type
 			, bidx
 		FROM heart
 		WHERE type = 'story'
-		AND midx = #{midx}
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT e.sbidx
+			, e.title
+			, e.filename
+			, u.nickname
+		FROM story e
+		JOIN usertable u
+		ON e.midx = u.midx
+		WHERE e.delyn = 'N') b
+		ON a.bidx = b.sbidx
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 찜 개수 가져오기(여행이야기) -->
+	<select id="heartCountStory" parameterType="searchVO" resultType="int">
+		SELECT COUNT(a.hidx)
+		FROM
+		(SELECT hidx
+			, type
+			, bidx
+		FROM heart
+		WHERE type = 'story'
+		AND midx = #{midx}) a
+		JOIN 
+		(SELECT e.sbidx
+			, e.title
+			, e.filename
+			, u.nickname
+		FROM story e
+		JOIN usertable u
+		ON e.midx = u.midx
+		WHERE e.delyn = 'N') b
+		ON a.bidx = b.sbidx
 	</select>
 	
 	<!-- 찜목록 가져오기(숙박 정보) -->

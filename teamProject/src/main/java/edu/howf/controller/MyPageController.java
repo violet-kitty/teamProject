@@ -4,13 +4,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,6 +39,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.howf.service.BoardService;
 import edu.howf.service.CSService;
 import edu.howf.service.NoticeService;
@@ -38,6 +55,7 @@ import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StayVO;
 import edu.howf.vo.UserVO;
 
 //마이 페이지
@@ -205,9 +223,15 @@ public class MyPageController {
 				model.addAttribute("pm", pm);
 			}
 			else if(type.equals("story")) {
+				int cnt = userService.heartCountStory(vo);
+				pm.setTotalCount(cnt);
+				
 				List<HeartVO> story = userService.heartSelectStory(vo);
+				vo.setPage(page);
+				
 				model.addAttribute("list", story);
 				model.addAttribute("tabType", "story");
+				model.addAttribute("pm", pm);
 			}
 			
 			return "mypage/myHeart";
@@ -405,7 +429,116 @@ public class MyPageController {
 		return res;
 	}
 	
+	//예약 추가 이동
+	@RequestMapping(value="/resInsert.do", method=RequestMethod.GET)
+	public String resInsert(Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		//본인 소유 숙소 목록
+		List<StayVO> stay = stayService.myStayAll(login.getMidx());
+		
+		model.addAttribute("stay", stay);
+		
+		return "mypage/resInsert";
+	}
 	
+	//방 정보 가져오기
+	@ResponseBody
+	@RequestMapping(value="/roomSelect.do")
+	public StayVO roomSelect(ResVO vo) {
+		StayVO stay = stayService.staySelectOne(vo);
+		
+		return stay;
+	}
+	
+	//예약 추가
+	@ResponseBody
+	@RequestMapping(value="/resInsert.do", method=RequestMethod.POST)
+	public int resInsertAction(ResVO res, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		res.setMidx(login.getMidx());
+		
+		//상품 id
+		Calendar cal = Calendar.getInstance();
+		String merchant = "ridx_"+res.getRidx()+"_"+(int)(Math.floor(Math.random()*900)+100)+"_"+cal.get(Calendar.YEAR)+(cal.get(Calendar.MONTH)+1)+cal.get(Calendar.HOUR_OF_DAY);
+		res.setMerchant(merchant);
+		
+		return stayService.resInsertB(res);
+	}
+	
+	//예약 취소
+	@ResponseBody
+	@RequestMapping(value="/resDelete.do")
+	public String resDelete(int reidx, CommentVO vo, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		stayService.resDeleteB(reidx, vo);
+		
+		return stayService.merchantSelect(reidx);
+	}
+	
+	//아임포트 토큰 받는 함수
+	public String getImportToken() {
+		String result = "";
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost("https://api.iamport.kr/users/getToken");
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("imp_key", "6762610013000254");
+		m.put("imp_secret", "46VnDhH7paaluPlh5mW5dPktisxPccy2omZZvJHrjsod6KhkwbOuUTOIETzPx3FA5SkWqVM1ZHme5HlX");
+		
+		try {
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String body = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(body);
+			JsonNode resNode = rootNode.get("response");
+			result = resNode.get("access_token").asText();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//Map을 사용해 Http 요청 파라미터를 만들어 주는 함수
+	private List<NameValuePair> convertParameter(Map<String, String> paramMap){
+		List<NameValuePair> paramList = new ArrayList<NameValuePair>();
+		Set<Entry<String, String>> entries = paramMap.entrySet();
+		for(Entry<String, String> entry : entries) {
+			paramList.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+		}
+		return paramList;
+	}
+	
+	//결제 취소
+	@ResponseBody
+	@RequestMapping(value="/payCancel.do")
+	public int payCancel(String merchant) {
+		String token = getImportToken();
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost("https://api.iamport.kr/payments/cancel");
+		Map<String, String> map = new HashMap<String, String>();
+		post.setHeader("Authorization", token);
+		map.put("merchant_uid", merchant);
+		String asd = "";
+		try {
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String enty = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(enty);
+			asd = rootNode.get("response").asText();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		if(asd.equals("null")) return -1;
+		else return 1;
+	}
 	
 	
 	//관리자

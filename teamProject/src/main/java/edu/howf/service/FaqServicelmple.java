@@ -47,9 +47,9 @@ public class FaqServicelmple implements FaqService{
 	}
 
 	@Override
-	public int delfaq(FaqVO vo) {
+	public int delfaq(int fbidx) {
 		// TODO Auto-generated method stub
-		return faqDao.delfaq(vo);
+		return faqDao.delfaq(fbidx);
 	}
 
 

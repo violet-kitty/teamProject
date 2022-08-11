@@ -90,7 +90,7 @@
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<c:forEach var="i" items="${res}">
 						<div class="feature col">
-							<img src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${i.photo}" style="width:56px;">
+							<img src="<%=request.getContextPath() %>/mypage/displayFile.do?fileName=${i.photo}" style="width:56px;">
 							<h2>숙소이름 : ${i.sname}</h2>
 							<h3>객실 이름 : ${i.rname}</h3>
 							<p>예약한 날짜 : ${i.wdate}<br>
@@ -99,6 +99,10 @@
 							<c:choose>
 								<c:when test="${i.delyn == 'Y'}">
 									예약 취소됨
+									<c:if test="${i.pay == 'B'}">
+									<br>
+									취소 사유 : ${i.content}
+									</c:if>
 								</c:when>
 								<c:when test="${i.pay == 'N'}">
 									결제 필요
@@ -110,9 +114,11 @@
 							</p>
 							<!-- 오늘 날짜 -->
 							<c:set var="today"><fm:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd"/></c:set>
+							<!-- 결제 안했고 삭제 안됐고 체크인이 오늘 이후이면 -->
 							<c:if test="${i.pay == 'N' && i.delyn == 'N' && i.date1>=today}">
 							<button onclick="payment('${i.sname}','${i.ridx}','${i.rname}','${i.price}','${i.date1}','${i.date2}','${i.merchant}')">결제하기</button>
 							</c:if>
+							<!-- 결제 했고 삭제 안됐고 체크인이 오늘보다 크면(당일 예약 취소 안됨) -->
 							<c:if test="${i.pay == 'Y' && i.delyn == 'N' && i.date1>today}">
 							<button onclick="resCancel('${i.reidx}')">예약 취소</button>
 							</c:if>
@@ -120,6 +126,7 @@
 						</c:forEach>
 						<!-- 예약 취소를 위한 hidden input -->
 						<input type="hidden" name="reidx" id="reidx">
+						<input type="hidden" id="pay">
 					</div>
 					
 					<!-- 페이징 -->
@@ -156,19 +163,45 @@
 	}
 	
 	//예약 취소
-	function resCancel(reidx){
+	function resCancel(reidx, pay){
 		$("#reidx").val(reidx);
+		$("#pay").val(pay);
 		modalFn("정말 예약을 취소하시겠습니까?","예약 취소", "예약 취소","닫기");
 	}
 	
 	function modalOkFn(){
 		modalClose();
+		var pay = $("#pay").val();
+		
 		$.ajax({
 			url:"<%= request.getContextPath() %>/stay/resDelete.do",
 			data:"reidx="+$("#reidx").val(),
 			type:"post",
 			success:function(data){
-				if(data == 1){
+				if(pay == "Y"){//환불 처리
+					$.ajax({
+						url:"payCancel.do",
+						data:"merchant="+data,
+						type:"post",
+						success:function(result){
+							if(result==1){
+								modalFn("예약 취소 되었습니다");
+								setTimeout(function(){
+									modalClose();
+									location.reload();
+								},1000);
+							}
+							else {
+								modalFn("예약 취소에 실패했습니다");
+								setTimeout(function(){
+									modalClose();
+									location.reload();
+								},1000);
+							}
+						}
+					});
+				}
+				else {
 					modalFn("예약이 취소되었습니다");
 					setTimeout(function(){
 						modalClose();

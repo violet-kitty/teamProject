@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -60,8 +61,9 @@ public class NoticeController {
 		return "notice/noticewrite";
 	}
 	//공지사항 등록
+	@ResponseBody
 	@RequestMapping(value = "noticewrite.do", method = RequestMethod.POST)
-	public void insertnotice(MultipartFile fileupload,NoticeVO vo,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws IOException {
+	public int insertnotice(MultipartFile fileupload,NoticeVO vo,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws IOException {
 		 
 		session = request.getSession();
 		UserVO login = (UserVO) session.getAttribute("login");
@@ -88,22 +90,21 @@ public class NoticeController {
 		}
 		
 		int result = noticeService.insertnotice(vo);
+		
+		return result;
 		 
-		 response.setContentType("text/html;charset=utf-8");
-		 PrintWriter pw = response.getWriter();
-		 
-		 if(result <= 0) {
-				//성공 실패 여부
-				
-				pw.append("<script>alert('등록 불가');location.href='notice.do';</script>");
-				pw.flush();
-				pw.close();
-			}else {
-				
-				pw.append("<script>alert('등록 완료 ');location.href='notice.do';</script>");
-				pw.flush();
-				pw.close();
-			}
+		/*
+		 * response.setContentType("text/html;charset=utf-8"); PrintWriter pw =
+		 * response.getWriter();
+		 * 
+		 * if(result <= 0) { //성공 실패 여부
+		 * 
+		 * pw.append("<script>alert('등록 불가');location.href='notice.do';</script>");
+		 * pw.flush(); pw.close(); }else {
+		 * 
+		 * pw.append("<script>alert('등록 완료');location.href='notice.do';</script>");
+		 * pw.flush(); pw.close(); }
+		 */
 	}
 
 	//공지사항 리스트
@@ -171,6 +172,7 @@ public class NoticeController {
 		return "notice/noticemodify";
 	}
 	//수정하기
+	@ResponseBody
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.POST)
 	public String noticemodify(MultipartFile fileupload, NoticeVO vo,HttpServletResponse response, HttpServletRequest request ,HttpSession session) throws IOException {
 		
@@ -203,10 +205,13 @@ public class NoticeController {
 			
 	}
 	//제거하기
+	@ResponseBody
 	@RequestMapping(value = "noticedelete.do", method = RequestMethod.GET)
 	public String noticedelete(int nbidx) throws Exception {
 		
-		noticeService.noticedelete(nbidx);
+		//noticeService.noticedelete(nbidx);
+		
+		int result = noticeService.noticedelete(nbidx);
 		
 		return "redirect:/notice/notice.do";
 	}

@@ -46,10 +46,21 @@ public class BoardController {
 	@Autowired
 	String uploadPath;
 	
+	
+	/* 이벤트 히어로 */
+	@ResponseBody
+	@RequestMapping(value="eventHero.do")
+	public List<EventVO> eventHero() {
+		//이벤트 히어로
+		List<EventVO> eventHero = boardService.eventHero();
+		return eventHero;
+	}
+	
+	
 	/* howf 추천 */
 	@RequestMapping(value="/howfList.do")
 	public String howfList(SearchVO vo, Model model) {
-		//히어로
+		//howf 히어로
 		//글이 각각 하나 이상씩 있지 않으면 에러남 주의!
 		List<HOWFVO> hero = boardService.howfHero();
 		

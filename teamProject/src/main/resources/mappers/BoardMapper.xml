@@ -248,6 +248,9 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		AND a.title like CONCAT('%',#{searchValue},'%')
 		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
 		<if test='searchType != null and searchType.equals("area")'>
 		AND (a.state like CONCAT('%',#{searchValue},'%')
 		OR a.city like CONCAT('%',#{searchValue},'%'))
@@ -308,7 +311,6 @@
 	
 	<!-- 지역 이벤트 히어로 용 글 가져오기(최대 3개) -->
 	<select id="eventHero" resultType="eventVO">
-	<![CDATA[
 		SELECT ebidx
 			, title
 			, DATE_FORMAT(startday, '%Y-%m-%d') as startday
@@ -317,11 +319,9 @@
 			, tag
 		FROM event
 		WHERE delyn = 'N'
-		AND startday < now()
-		AND endday > now()
+		AND endday <![CDATA[>=]]> now()
 		ORDER BY wdate desc
 		LIMIT 0,3
-	]]>
 	</select>
 	
 	<!-- 지역 이벤트 글 보기 -->

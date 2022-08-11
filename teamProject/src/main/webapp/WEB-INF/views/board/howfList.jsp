@@ -35,6 +35,20 @@
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
+<script>
+	function tagParse(tag, hbidx){
+		//리스트 태그 값 넣기
+		var json = tag;
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+		})
+		
+		$("#howftag"+hbidx).html(tagData);
+	}
+</script>
+
 </head>
 
 <body>
@@ -142,7 +156,20 @@
 								<button onclick="location.href='howfList.do?sortType=heart'">좋아요순</button>
 								<button  class="active"  onclick="location.href='howfList.do?sortType=new'">최신순</button>
 							</div>
-							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+							<!-- 검색창 -->
+							<form name="frm2" action="howfList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
 						</div><!-- .rightbox -->
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
@@ -164,7 +191,20 @@
 									<li><a class="dropdown-item" href="howfList.do?sortType=travel">여행지추천</a></li>
 								</ul>
 							</div>
-							<!-- 검색창 Search --><%@include file="../Search.jsp"%>
+							<!-- 검색창 -->
+							<form name="frm2" action="howfList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
 						</div><!-- .rightbox -->
 
 					</div><!-- .pageinfo -->
@@ -196,8 +236,10 @@
 
 												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
 												<figcaption>
-													<p id="howftag">${v.tag}</p>
+													<p id="howftag${v.hbidx}"></p>
 												</figcaption>
+												<!-- 태그 파싱하는 함수 호출 -->
+												<script>tagParse('${v.tag}','${v.hbidx}');</script>
 											</figure>
 											<div class="writerinfo">
 												<p>
@@ -292,6 +334,11 @@
 				tags = tags+jsonParse[idx]["value"]+" ";
 			})
 			$("#tagArea2").text(tags);
+			
+			//검색시 카테고리
+			var sfilter = "${search.searchType}";
+			if(sfilter != "")
+			$("#sfilterID").val(sfilter).prop("selected", true);
 		});
 	</script>
 

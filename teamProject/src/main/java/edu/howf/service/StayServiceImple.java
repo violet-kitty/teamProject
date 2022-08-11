@@ -230,7 +230,13 @@ public class StayServiceImple implements StayService{
 
 	@Override
 	public List<ResVO> resSelectAll(SearchVO vo) {
-		return stayDao.resSelectAll(vo);
+		List<ResVO> res = stayDao.resSelectAll(vo);
+		for(ResVO r : res) {
+			if(r.getPay().equals("B")) {
+				r.setContent(stayDao.resCancelComment(r.getReidx()));
+			}
+		}
+		return res;
 	}
 	
 	@Override
@@ -240,17 +246,29 @@ public class StayServiceImple implements StayService{
 
 	@Override
 	public int resInsertB(ResVO vo) {
-		return stayDao.resInsert(vo);
+		return stayDao.resInsertB(vo);
 	}
 
 	@Override
-	public int resDeleteB(int reidx) {
-		return stayDao.resDeleteB(reidx);
+	public int resDeleteB(int reidx, CommentVO vo) {
+		int result = stayDao.resDeleteB(reidx);
+		result = stayDao.resDelComment(vo);
+		return result;
+	}
+	
+	@Override
+	public String merchantSelect(int reidx) {
+		return stayDao.merchantSelect(reidx);
 	}
 
 	@Override
 	public List<ResVO> resSelectAllB(ResVO vo) {
 		return stayDao.resSelectAllB(vo);
+	}
+
+	@Override
+	public List<StayVO> myStayAll(int midx) {
+		return stayDao.myStayAll(midx);
 	}
 	
 	

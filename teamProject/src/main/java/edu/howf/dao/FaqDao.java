@@ -42,9 +42,9 @@ public class FaqDao {
 		
 		return sqlSession.selectOne(namespace+"selectone",fbidx);
 	}
-	public int delfaq(FaqVO vo) {
+	public int delfaq(int fbidx) {
 		
-		return sqlSession.update(namespace+"delfaq",vo);
+		return sqlSession.update(namespace+"delfaq",fbidx);
 	}
 	
 }

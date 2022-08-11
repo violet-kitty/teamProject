@@ -12,6 +12,6 @@ public interface FaqService {
 	public int pagecount(SearchVO searchVO);
 	public int faqmodify(FaqVO vo);
 	public FaqVO selectone(int fbidx);
-	public int delfaq(FaqVO vo);
+	public int delfaq(int fbidx);
 	
 }

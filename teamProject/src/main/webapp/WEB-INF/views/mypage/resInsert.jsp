@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +46,7 @@
 			locale: "ko",
 			selectable: true,
 		    select: function(arg) {//클릭시 이벤트
+		    	$("#roomArea").html("");
 		    	
 		    	 $(".fc .fc-daygrid-day").each(function(index, item){
 		    		var t = $(this);
@@ -56,35 +58,6 @@
 		    	$("#date1").text(arg.startStr);
 		    	$("#date2").text(dateRel(arg.endStr));
 		    	
-		    	//해당 날짜의 예약 목록 가져오기
-		    	$.ajax({
-		    		url:"resList.do",
-		    		data:"date1="+arg.startStr+"&date2="+dateRel(arg.endStr),
-		    		type:"post",
-		    		success:function(list){
-		    			var html = "<input type='hidden' id='reidx'>"
-		    					+ "<input type='hidden' id='pay'>";
-		    			
-		    			for(var i=0;i<list.length;i++){
-		    				html = html
-	    					+ "숙소 이름 " + list[i].sname +"<br>"
-	    					+ "방 이름 " + list[i].rname +"<br>"
-	    					+ "체크인 " + list[i].date1 +"<br>"
-	    					+ "체크 아웃 " + list[i].date2 +"<br>"
-	    					+ "가격 " + list[i].price +"<br>"
-	    					+ "예약 날짜 " + list[i].wdate +"<br>"
-	    					+ "결제 여부 " + list[i].pay +"<br>"
-	    					+ "예약자 이름 " + list[i].name + "<br>"
-							+ "핸드폰 번호 " + list[i].phone + "<br>"
-							+ "<button onclick='resDelete("+list[i].reidx+","+list[i].pay+")'>예약 취소</button>"
-							+ "<br><br>";
-		    			}
-		    			
-		    			
-		    			$("#listArea").html(html);
-		    		}
-		    	});
-		    	
 		    	calendar.unselect()
 			}
 		});
@@ -92,7 +65,7 @@
 	});
 	
 	//특정일자 하루전
-	function dateRel(date){ 
+	function dateRel(date){
 	  var selectDate = date.split("-");
 	  var changeDate = new Date();
 	  changeDate.setFullYear(selectDate[0], selectDate[1]-1, selectDate[2]-1);
@@ -112,63 +85,90 @@
 	   return resultDate;
 	}
 	
-	//예약 추가
-	function resInsert(){
-		location.href="resInsert.do?date1="+$("#date1").text()+"&date2="+$("#date2").text();
-	}
-	
-	//예약 취소
-	function resDelete(reidx, pay){
-		$("#reidx").val(reidx);
-		$("#pay").val(pay);
-		modalFn("정말 예약을 취소하시겠습니까? 예약을 취소하시려면 사유를 입력해 주세요.","예약 취소","예약 취소","닫기","inputModal");
-	}
-	
-	//예약 취소 insert
-	function inputModal(){
-		var input = $("#textInput").val();
-		modalClose();
-		var reidx = $("#reidx").val();
-		var pay = $("#pay").val();
+	//선택된 숙소의 남은 방 목록 보여주기
+	function staySelect(sidx){
+		var date1 = $("#date1").text();
+		var date2 = $("#date2").text();
 		
-		//예약 취소 메시지 처리 및 merchant 가져오기
+		if(date1 == ""){
+			modalFn("날짜를 선택해 주세요");
+			setTimeout(function(){
+				modalClose();
+			},1000);
+			return;
+		}
+		else {
+			//방 목록 보여주기
+			//해당 날짜의 방 목록 가져오기
+	    	$.ajax({
+	    		url:"roomSelect.do",
+	    		data:"sidx="+sidx+"&date1="+date1+"&date2="+date2,
+	    		type:"post",
+	    		success:function(list){
+	    			var html = "";
+	    			
+	    			for(var r of list.room){
+	    				var txt = "'"+list.sidx+"','"+list.name+"','"+r.name+"','"+r.price+"','"+r.people+"','"+r.square+"','"+r.tags+"'";
+	    				html = html
+	    				+ '<div class="card mb-3">'
+	    				+ '<div class="row g-0">'
+	    				+ '<div class="col-lg-4">'
+	    				+ '<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName='+r.photo+'" style="width:100%;height:100%;">'
+	    				+ '</div>'
+	    				+ '<div class="col-lg-8">'
+	    				+ '<div class="card-body">'
+	    				+ '<h5 class="card-title">방 이름'+r.name+'</h5>'
+	    				+ '<p class="card-text">가격'+r.price+'</p>'
+	    				+ '<p class="card-text">남은 방 '+r.cnt+' 개</p>';
+	    				
+	    				if(r.cnt != 0){
+	    					html = html
+		    				+ '<button onclick="resInsert('+txt+')">선택</button>';
+	    				}
+	    				
+	    				html = html
+	    				+ '</div>'
+	    				+ '</div>'
+	    				+ '</div>'
+	    				+ '</div>';
+	    			}
+	    			$("#roomArea").html(html);
+	    		}
+	    	});
+		}
+	}
+	
+	//방 예약
+	function resInsert(sidx, stayName, roomName, price, people, square, tags){
+		var date1 = $("#date1").text();
+		var date2 = $("#date2").text();
+		var dd = "sidx="+sidx+"&rname="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
+		//ridx 알아오기
 		$.ajax({
-			url:"resDelete.do",
-			data:"reidx="+reidx+"&content="+input+"&bidx="+reidx,
+			url:"<%= request.getContextPath() %>/stay/roomRidx.do",
+			data:dd,
 			type:"post",
-			success:function(re){
-				//결제를 한 경우 환불 처리
-				if(pay == 'Y'){
-					//환불
-					$.ajax({
-						url:"payCancel.do",
-						data:"merchant="+re,
-						type:"post",
-						success:function(result){
-							if(result==1){
-								modalFn("예약 취소 되었습니다");
-								setTimeout(function(){
-									modalClose();
-									location.reload();
-								},1000);
-							}
-							else {
-								modalFn("예약 취소에 실패했습니다");
-								setTimeout(function(){
-									modalClose();
-									location.reload();
-								},1000);
-							}
+			success:function(ridx){
+				$.ajax({
+					url:"<%= request.getContextPath() %>/mypage/resInsert.do",
+					data:"ridx="+ridx+"&date1="+date1+"&date2="+date2+"&price="+price,
+					type:"post",
+					success:function(data){
+						if(data == 1){
+							modalFn("예약을 추가했습니다");
+							setTimeout(function(){
+								modalClose();
+								location.href="reservationList.do";
+							},1000);
 						}
-					});
-				}
-				else{//결제하지 않은 경우 예약취소만 처리
-					modalFn("예약 취소 되었습니다");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
+						else {
+							modalFn("예약 추가에 실패했습니다");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+					}
+				});
 			}
 		});
 	}
@@ -192,6 +192,11 @@
 			
 				<!-- 달력 -->
 				<div class="container">
+					
+					<div class="title">
+						<h1>예약 추가하기</h1>
+					</div>
+				
 					<div class="container">
 						<div id="calendar" ></div>
 						
@@ -201,28 +206,41 @@
 							<span id="date1"></span>
 							<span> ~ </span>
 							<span id="date2"></span>
-							<button onclick="resInsert()">예약 추가</button>
 						</div>
 						
+						<div class="title">
+							<h1>내 숙소 목록</h1>
+						</div>
 						
-						<!-- 예약 목록이 출력되는 div -->
-						<div id="listArea">
+						<!-- 숙소 목록이 출력되는 div -->
+						<div id="stayArea">
 							<!-- reidx 담는 input -->
 							<input type="hidden" id="reidx">
-							<input type="hidden" id="pay">
-							<c:forEach var="i" items="${res}">
-								숙소 이름 ${i.sname}<br>
-								방 이름 ${i.rname}<br>
-								체크인 ${i.date1}<br>
-								체크 아웃 ${i.date2}<br>
-								가격 ${i.price}<br>
-								예약 날짜 ${i.wdate}<br>
-								결제 여부 ${i.pay}<br>
-								예약자 이름 ${i.name}<br>
-								핸드폰 번호 ${i.phone}<br>
-								<button onclick="resDelete('${i.reidx}')">예약 취소</button>
-								<br><br>
+							<c:forEach var="i" items="${stay}">
+								<div class="card mb-3">
+									<div class="row g-0">
+										<div class="col-lg-4">
+											<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${fn:split(i.photo,',')[0]}" style="width:100%;height:100%;">
+										</div>
+										<div class="col-lg-8">
+											<div class="card-body">
+												<h5 class="card-title">숙소 이름 ${i.name}</h5>
+												<p class="card-text">주소 ${i.addr} ${i.detailaddr}</p>
+												<button onclick="staySelect('${i.sidx}')">선택</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</c:forEach>
+						</div>
+						
+						<div class="title">
+							<h1>방 목록</h1>
+						</div>
+						
+						<!-- 방 목록이 출력되는 div -->
+						<div id="roomArea">
+							
 						</div>
 						
 						

@@ -37,7 +37,7 @@
 		if (title.val() == ""){
 			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
-				modalClose();
+			modalClose();
 			},1000);
 			//alert("제목을 입력하세요");
 			title.focus();
@@ -45,15 +45,51 @@
 		}else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
-				modalClose();
+			modalClose();
 			},1000);
 			//alert("내용을 입력하세요");
 			content.focus();
 			return ;
 		}else {
-			$("#form").submit();
+			var formData = new FormData($("#form")[0]);
+			$.ajax({
+				url:"faqwrite.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data != 0){
+						modalFn("작성 완료");
+							setTimeout(function(){
+							modalClose();
+							location.href="faqboard.do";
+						},1500);
+					}else {
+						modalFn("작성 실패");
+						setTimeout(function(){
+							modalClose();
+						},1500);
+					}
+				}
+				
+			});
+			
 		}
 	}
+ 	function cancel(){
+ 		modalFn("목록으로 가겠습니까?","가기","이동여부","안 감 바이","cancelFn");
+ 	}
+ 	function cancelFn(){
+ 		modalClose();
+ 		modalFn("리스트로 이동합니다")
+ 		setTimeout(function(){
+ 			modalClose();
+ 			location.href="faqboard.do";
+ 		},1000);
+ 		
+ 	}
 </script>
 </head>
 <body>
@@ -77,16 +113,16 @@
 <form id="form" action="faqwrite.do" method="post" enctype="multipart/form-data">
 <table>
     	<tr>
-     		<td>FAQ</td>
+     		<td><h2>FAQ</h2></td>
     	</tr>
 </table>
    <table>
     	<tr>
-    		<td>제목</td>
+    		<td>제목 :</td>
     		<td><input name="title" id="title" size="50" maxlength="100"></td>
     	</tr>
     	<tr>
-    		<td>내용</td>
+    		<td style="font-size:15px">내용 :</td>
     		<td><textarea name="content" id="content" cols="80" rows="20"></textarea></td>
    	 	</tr>
     
@@ -94,8 +130,8 @@
    
    	<table>
     	<tr>
-    		<td><button type="button" onclick="check()">저장</button></td>
-     		<td><a href="notice.do">취소</a></td>
+    		<td><button class="bluebtn" type="button" onclick="check()">저장</button></td>
+     		<td><button class="pinkbtn" type="button" onclick="cancel()">취소</button></td>
     	</tr>
    </table>
 

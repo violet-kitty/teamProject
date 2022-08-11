@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>지역이벤트</title>
+<title>여행이야기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -52,7 +52,7 @@ else {
 </head>
 
 <body>
-	<div id="wrap" class="boardview event eventview">
+	<div id="wrap" class="boardview story storyview">
 	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
@@ -69,7 +69,7 @@ else {
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 				    <!-- pagehead  -->
-					<a class=" onlypc" href="eventList.do">
+					<a class=" onlypc" href="storyList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -86,25 +86,25 @@ else {
 
 											<!-- 메인이미지 보여주기-->
 											<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
-												<c:if test="${event.filename != null}">
-													<img class="thumbnailimg" src="<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.filename}">
+												<c:if test="${story.filename != null}">
+													<img class="thumbnailimg" src="<%=request.getContextPath() %>/story/displayFile.do?fileName=${story.filename}">
 												</c:if>
 
-												<c:if test="${event.filename == null}">
+												<c:if test="${story.filename == null}">
 													<img class="thumbnailimg" src="<%=request.getContextPath()%>/image/null/null_thumbnail.png">
 												</c:if>
 
 											
 											<div class="writerinfo">
 												<p>
-													<c:if test="${event.img != null}">
-														<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/event/displayFile.do?fileName=${event.img});"></div>
+													<c:if test="${story.img != null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${story.img});"></div>
 													</c:if>
-													<c:if test="${event.img == null}">
+													<c:if test="${story.img == null}">
 														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 													</c:if>
-													<span class="">${event.nickname}</span>
-													<span class="hfc-semibold hfc-darkgray"> ${event.wdate}</span>
+													<span class="">${story.nickname}</span>
+													<span class="hfc-semibold hfc-darkgray"> ${story.wdate}</span>
 												</p>
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
@@ -121,12 +121,12 @@ else {
 																<img src="<%=request.getContextPath()%>/image/button/heart.png">
 															</c:otherwise>
 														</c:choose>
-														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${event.heart}</span>
+														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${story.heart}</span>
 													</div>
 												</div>
 											</div>
 											<div class="caption">
-												<h4>${event.title}</h4>
+												<h4>${story.title}</h4>
 											</div>
 
 											<!-- 태그 -->
@@ -136,18 +136,18 @@ else {
 											<hr class="middleline">
 											<!-- 글 내용 -->
 											<div class="row contentrow">
-												<div class="col" id="eventContent">
-													${event.content}
+												<div class="col" id="storyContent">
+													${story.content}
 												</div>
 											</div>
 								
 					<div class="row btnarea">
 						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login.midx == event.midx}">
+							<c:if test="${login.midx == story.midx}">
 								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-								<button onclick="location.href='eventModify.do?ebidx=${event.ebidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+								<button onclick="location.href='storyModify.do?sbidx=${story.sbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
 							</c:if>
-							<button onclick="location.href='eventWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+							<button onclick="location.href='storyWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
 						</div>
 						<div class="col-6 d-flex justify-content-end">
 							<%-- <button onclick="shareSNS('facebook')">
@@ -173,7 +173,7 @@ else {
 					<!-- /.clist -->
 					<hr class="lastline">
 					
-					<a class=" onlypc" href="eventList.do">
+					<a class=" onlypc" href="storyList.do">
 					<div class="backto">
 						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 					</div>
@@ -200,7 +200,7 @@ else {
 <script>
 	$(function(){
 		//태그 파싱
-		var json = '${event.tag}';
+		var json = '${story.tag}';
 		var jsonParse = JSON.parse(json);
 		var tags = "";
 		$.each(jsonParse,function(idx){
@@ -210,13 +210,13 @@ else {
 		
 		//찜 버튼 이벤트
 		$("#heartBtn").click(function(){
-			var bidx = "${event.ebidx}";
+			var bidx = "${story.sbidx}";
 			
 			if(heartDup == true){
 				$.ajax({
 					url:"heartDelete.do",
 					type:"post",
-					data:"type=event&bidx="+bidx,
+					data:"type=story&bidx="+bidx,
 					success:function(data){
 						if(data==1){
 							heartDup = false;
@@ -233,7 +233,7 @@ else {
 				$.ajax({
 					url:"heartInsert.do",
 					type:"post",
-					data:"type=event&bidx="+bidx,
+					data:"type=story&bidx="+bidx,
 					success:function(data){
 						if(data==1){
 							heartDup = true;
@@ -254,9 +254,9 @@ else {
 		//h1 태그 가진 텍스트로 제목 만들기
 		var titleIndex = [];
 		var num = 0;
-		if($("#eventContent h1").length == 0) $("#ind").css("display","none");
+		if($("#storyContent h1").length == 0) $("#ind").css("display","none");
 		else {
-			$("#eventContent h1").each(function(i,e){
+			$("#storyContent h1").each(function(i,e){
 				var offset = $(this).offset();
 				titleIndex[i] = offset.top;
 				$("#ind").append("<p id='index"+num+"' style='cursor:pointer'>"+$(this).text()+"</p><br>");
@@ -291,10 +291,10 @@ else {
 	
 	function modalOkFn(){
 		modalClose();
-		var ebidx = "${event.ebidx}";
+		var sbidx = "${story.sbidx}";
 		$.ajax({
-			url:"eventDelete.do",
-			data:"ebidx="+ebidx,
+			url:"storyDelete.do",
+			data:"sbidx="+sbidx,
 			type:"post",
 			success:function(data){
 				if(data == 1){
@@ -302,7 +302,7 @@ else {
 					setTimeout(function(){
 						modalClose();
 					},1500);
-					location.href="eventList.do";
+					location.href="storyList.do";
 				}
 			}
 		});
@@ -312,7 +312,7 @@ else {
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
-		var snsTitle = "${event.title}";
+		var snsTitle = "${story.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -329,8 +329,8 @@ else {
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
-					title:'${event.title}',
-					description:'${event.title}',
+					title:'${story.title}',
+					description:'${story.title}',
 					imageUrl:thisUrl,
 					link:{
 						mobileWebUrl:thisUrl,

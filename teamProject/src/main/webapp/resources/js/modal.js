@@ -3,7 +3,6 @@
 
 function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 	var length = arguments.length;
-	
 	//아무 버튼 없이 글만 뜨는 모달
 	if(length == 1){
 		var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
@@ -82,24 +81,49 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 	}
 	//함수를 여러개 써야할 때 쓰는 모달
 	else if(length == 5){
-		var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
-					+ '<div class="modal-dialog hbshadow" role="document">'
-					+ '<div class="modal-content">'
-					+ '<h2 class="hfc-bold">'+title+'</h2>'
-					+ '<div class="form-floating ">'
-					+ '<p class="text-muted">'+msg+'</p>'
-					+ '</div>'
-					+ '<div class="btnarea">'
-					+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
-					+ '<button type="button" class="bluebtn w-50" onclick="'+funcName+'()">'+btnMsg1+'</button>'
-					+ '</div>'
-					+ '</div>'
-					+ '</div>'
-					+ '</div>'; 
+		if(funcName == 'inputModal'){
+			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+						+ '<div class="modal-dialog hbshadow" role="document">'
+						+ '<div class="modal-content">'
+						+ '<h2 class="hfc-bold">'+title+'</h2>'
+						+ '<div class="form-floating ">'
+						+ '<p class="text-muted">'+msg+'</p>'
+						+ '<input type="text" name="textInput" id="textInput">'
+						+ '</div>'
+						+ '<div class="btnarea">'
+						+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
+						+ '<button type="button" class="bluebtn w-50" onclick="'+funcName+'()">'+btnMsg1+'</button>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'; 
+			
+			$("body").prepend(html);
+			
+			$("#modalDiv").show();
+		}
+		else {
+			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+						+ '<div class="modal-dialog hbshadow" role="document">'
+						+ '<div class="modal-content">'
+						+ '<h2 class="hfc-bold">'+title+'</h2>'
+						+ '<div class="form-floating ">'
+						+ '<p class="text-muted">'+msg+'</p>'
+						+ '<p>'+funcName+'</p>'
+						+ '</div>'
+						+ '<div class="btnarea">'
+						+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
+						+ '<button type="button" class="bluebtn w-50" onclick="'+funcName+'()">'+btnMsg1+'</button>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'; 
+			
+			$("body").prepend(html);
+			
+			$("#modalDiv").show();
+		}
 		
-		$("body").prepend(html);
-		
-		$("#modalDiv").show();
 	}
 }
 

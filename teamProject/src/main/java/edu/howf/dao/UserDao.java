@@ -148,6 +148,11 @@ public class UserDao {
 		return sqlSession.selectList(namespace+"heartSelectStory", vo);
 	}
 	
+	//찜 개수(여행이야기)
+	public int heartCountStory(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"heartCountStory",vo);
+	}
+	
 	//찜목록 가져오기(숙박 정보)
 	public List<HeartVO> heartSelectStay(SearchVO vo) {
 		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());

@@ -690,6 +690,15 @@
 		</if>
 	</select>
 	
+	<!-- 취소 사유 가져오기 -->
+	<select id="resCancelComment" parameterType="int" resultType="String">
+		SELECT content
+		FROM comment
+		WHERE type = 'res'
+		AND delyn = 'N'
+		AND bidx = #{reidx}
+	</select>
+	
 	
 	<!-- 예약 추가(business) -->
 	<insert id="resInsertB" parameterType="resVO">
@@ -700,6 +709,8 @@
 			, date2
 			, merchant
 			, pay
+			, price
+			, name
 			, wdate
 			, delyn
 		)
@@ -709,7 +720,9 @@
 			, #{date1}
 			, #{date2}
 			, #{merchant}
-			, 'N'
+			, 'B'
+			, #{price}
+			, '사업자 임의 추가 예약'
 			, now()
 			, 'N'
 		)
@@ -719,8 +732,36 @@
 	<update id="resDeleteB" parameterType="int">
 		UPDATE res
 		   SET delyn = 'Y'
+		   	, pay = 'B'
 		 WHERE reidx = #{reidx}
 	</update>
+	
+	<!-- 예약 삭제시 comment -->
+	<insert id="resDelComment" parameterType="commentVO">
+		INSERT INTO comment(
+			content
+			, type
+			, midx
+			, bidx
+			, wdate
+			, delyn
+		)
+		VALUES(
+			#{content}
+			, 'res'
+			, #{midx}
+			, #{bidx}
+			, now()
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 주문번호 가져오기 -->
+	<select id="merchantSelect" parameterType="int" resultType="String">
+		SELECT merchant
+		FROM res
+		WHERE reidx = #{reidx}
+	</select>
 	
 	<!-- 예약 목록 가져오기(business / 본인 소유 시설 목록 전체 ) -->
 	<select id="resSelectAllB" parameterType="resVO" resultType="resVO">
@@ -762,5 +803,16 @@
 		ORDER BY s.name asc, re.wdate desc
 	</select>
 	
+	<!-- 본인 소유 숙소 목록 가져오기 -->
+	<select id="myStayAll" parameterType="int" resultType="stayVO">
+		SELECT sidx
+			, name
+			, addr
+			, detailaddr
+			, photo
+		FROM stay
+		WHERE midx = #{midx}
+		AND delyn = 'N'
+	</select>
 	
 </mapper>

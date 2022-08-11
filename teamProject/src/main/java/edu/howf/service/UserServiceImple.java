@@ -143,6 +143,11 @@ public class UserServiceImple implements UserService{
 	public List<HeartVO> heartSelectStory(SearchVO vo) {
 		return userDao.heartSelectStory(vo);
 	}
+	
+	@Override
+	public int heartCountStory(SearchVO vo) {
+		return userDao.heartCountStory(vo);
+	}
 
 	@Override
 	public List<HeartVO> heartSelectStay(SearchVO vo) {

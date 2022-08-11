@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF추천</title>
+<title>여행이야기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -45,7 +45,7 @@
 </head>
 
 <body>
-	<div id="wrap" class="boardWrite howf howfWrite">
+	<div id="wrap" class="boardWrite story storyWrite">
 	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
@@ -62,7 +62,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="howfList.do">
+					<a class=" onlypc" href="storyList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -72,28 +72,24 @@
 					
 					<form method="post" enctype="multipart/form-data" id="frm">
 						<!-- 파일 첨부, 이미지 미리보기 -->
-						<div class="row imgThumbView2">
+						<div class="row imgThumbView">
 							<div class="col">
-								<input type="file" name="file" id="file" style="display:none">
+								<div id="imageAttach">
+								    <img class="attachimg1" src="<%=request.getContextPath()%>/image/null/attach.png">
+									<img class="attachimg2" src="<%=request.getContextPath()%>/image/null/mattach.png">
+								</div>
+								<input type="file" name="file" id="file">
 								<div id="imageArea">
-									<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" width="100%" height="100%" id="image" style="cursor:pointer">
-									<input type="hidden" name="hbidx" value="${howf.hbidx}">
+									<img id="image">
 								</div>
 							</div>
 						</div><!-- row end -->
 						
 						<!-- 카테고리 선택, 제목 입력 -->
 						<div class="row h-input ">
-							<div class="col-lg-4 selection">
-								<select class="form-control form-select" name="cate" id="cate">
-									<option value="여행지추천" selected>카테고리 선택</option>
-									<option value="여행지추천">여행지추천</option>
-									<option value="숙박추천">숙박추천</option>
-									<option value="맛집추천">맛집추천</option>
-								</select>
-							</div>
-							<div class="col-lg-8">
-								<input class="form-control" type="text" name="title" id="title" value="${howf.title}">
+							
+							<div class="col">
+								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
 							</div>
 						</div><!-- row end -->
 						
@@ -110,7 +106,7 @@
 						<!-- 에디터 -->
 						<div class="row h-input">
 							<div class="col">
-								<textarea id="summernote" name="content">${howf.content}</textarea>
+								<textarea id="summernote" name="content"></textarea>
 							</div>
 						</div><!-- row end -->
 						
@@ -122,14 +118,14 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="howfList.do">
+								<a class=" onlypc" href="storyList.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
 								</a>
 							</div>
 							<div class="col-lg-6 okbutton">
-								<button type="button" class="bluebtn" onclick="modifyFn()">글 작성 완료</button>
+								<button type="button" class="bluebtn" onclick="writeFn()">글 작성 완료</button>
 							</div>
 						</div><!-- row end -->
 					<!-- 리스트 카드 -->
@@ -160,7 +156,7 @@
 			maxHeight:null,
 			focus:true,
 			lang:"ko-KR",
-			placeholder:"최대 2000자까지 쓸 수 있습니다.",
+			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
 			toolbar: [
 				['style',['style']],
 			    ['fontname', ['fontname']],
@@ -176,8 +172,6 @@
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 			styleTags: ['h1']
-		
-		
 		});
 		
 		//tagify
@@ -185,6 +179,10 @@
 		new Tagify(input);
 		
 		//파일 첨부(썸네일)
+		$("#imageAttach").click(function(){
+			$("#file").click();
+		});
+		
 		$("#image").click(function(){
 			$("#file").click();
 		});
@@ -193,84 +191,52 @@
 		$("#file").on("change",upload);
 		
 		function upload(e){
-			console.log("file name : ",e.value);
 			var files = e.target.files;
 			var filesArr = Array.prototype.slice.call(files);
 			var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;//이미지 확장자만 받음
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
-					modalFn("이미지 파일만 등록 가능합니다.");
-					setTimeout(function(){
-						modalClose();
-					},1000);
-					//alert("이미지 파일만 등록 가능합니다");
+					alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				
 				sel_file = f;
 				
 				var reader = new FileReader();
+				$("#imageAttach").css("display","none");
+				$("#imageArea").css("display","block");
 				reader.onload = function(e){
 					$("#image").attr("src",e.target.result);//이미지 변경
 				}
 				reader.readAsDataURL(f);
 			});
 		}
-		
-		//태그 값 넣기
-		var json = '${howf.tag}';
-		var jsonParse = JSON.parse(json);
-		var tagData = "";
-		$.each(jsonParse,function(idx){
-			tagData = tagData+jsonParse[idx]["value"];
-		})
-		
-		var tags = tagData.split("#");
-		
-		for(var i=0;i<tags.length;i++){
-			tags[i] = "#"+tags[i];
-			console.log(tags[i]);
-		}
-		
-		$("#tag").val(tags.slice(1));
-		
 	});
 	
-	//카테고리 선택 변경
-	var cate = "${howf.cate}";
-	$("#cate").val(cate).prop("selected",true);
-	
-	function modifyFn(){
+	function writeFn(){
 		var title = $("#title");
 		var content = $("#summernote");
 		var tag = $("#tag");
+		var file = $("#file");
 		
 		if(title.val()==""){
-			modalFn("제목을 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("제목을 입력해 주세요");
+			alert("제목을 입력해 주세요");
 			title.focus();
 			return;
 		}
 		else if(content.val()==""){
-			modalFn("내용을 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("내용을 입력해 주세요");
+			alert("내용을 입력해 주세요");
 			content.focus();
 			return;
 		}
 		else if(tag.val()==""){
-			modalFn("태그를 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("태그를 입력해 주세요");
+			alert("태그를 입력해 주세요");
 			tag.focus();
+			return;
+		}
+		else if(file.val()==""){
+			alert("썸네일을 등록해 주세요");
 			return;
 		}
 		else {

@@ -51,6 +51,16 @@
 	  color:#fc0;
 	}
 </style>
+<script>
+var heartDup = false;
+
+if(${heart!=null && heart==1}){
+	var heartDup = true;
+}
+else {
+	var heartDup = false;
+}
+</script>
 </head>
 <body>
 	<div class="wrap">
@@ -145,11 +155,13 @@
 									<button onclick="roomInfoFn('${index}')">객실 이용 안내</button>
 								</div>
 								<div class="d-flex justify-content-start">
+									<c:if test="${login != null && login.role == 'normal'}">
 									<c:if test="${v.cnt != 0}">
 										<button onclick="stayReservation('${stay.sidx}','${stay.name}','${v.name}','${v.price}','${v.people}','${v.square}','${v.tags}')">예약하기</button>
 									</c:if>
 									<c:if test="${v.cnt == 0}">
 										<button style="cursor:default">예약불가</button>
+									</c:if>
 									</c:if>
 									
 								</div>

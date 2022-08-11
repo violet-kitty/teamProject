@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF추천</title>
+<title>여행이야기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -45,7 +45,7 @@
 </head>
 
 <body>
-	<div id="wrap" class="boardWrite howf howfWrite">
+	<div id="wrap" class="boardWrite story storyWrite">
 	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
@@ -62,7 +62,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="howfList.do">
+					<a class=" onlypc" href="storyList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -76,24 +76,16 @@
 							<div class="col">
 								<input type="file" name="file" id="file" style="display:none">
 								<div id="imageArea">
-									<img src="<%=request.getContextPath() %>/howf/displayFile.do?fileName=${howf.filename}" width="100%" height="100%" id="image" style="cursor:pointer">
-									<input type="hidden" name="hbidx" value="${howf.hbidx}">
+									<img src="<%=request.getContextPath() %>/story/displayFile.do?fileName=${story.filename}" width="100%" height="100%" id="image" style="cursor:pointer">
+									<input type="hidden" name="sbidx" value="${story.sbidx}">
 								</div>
 							</div>
 						</div><!-- row end -->
 						
 						<!-- 카테고리 선택, 제목 입력 -->
 						<div class="row h-input ">
-							<div class="col-lg-4 selection">
-								<select class="form-control form-select" name="cate" id="cate">
-									<option value="여행지추천" selected>카테고리 선택</option>
-									<option value="여행지추천">여행지추천</option>
-									<option value="숙박추천">숙박추천</option>
-									<option value="맛집추천">맛집추천</option>
-								</select>
-							</div>
-							<div class="col-lg-8">
-								<input class="form-control" type="text" name="title" id="title" value="${howf.title}">
+							<div class="col">
+								<input class="form-control" type="text" name="title" id="title" value="${story.title}">
 							</div>
 						</div><!-- row end -->
 						
@@ -110,7 +102,7 @@
 						<!-- 에디터 -->
 						<div class="row h-input">
 							<div class="col">
-								<textarea id="summernote" name="content">${howf.content}</textarea>
+								<textarea id="summernote" name="content">${story.content}</textarea>
 							</div>
 						</div><!-- row end -->
 						
@@ -122,7 +114,7 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="howfList.do">
+								<a class=" onlypc" href="storyList.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -185,6 +177,10 @@
 		new Tagify(input);
 		
 		//파일 첨부(썸네일)
+		$("#imageArea").click(function(){
+			$("#file").click();
+		});
+		
 		$("#image").click(function(){
 			$("#file").click();
 		});
@@ -200,11 +196,7 @@
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
-					modalFn("이미지 파일만 등록 가능합니다.");
-					setTimeout(function(){
-						modalClose();
-					},1000);
-					//alert("이미지 파일만 등록 가능합니다");
+					alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				
@@ -219,7 +211,7 @@
 		}
 		
 		//태그 값 넣기
-		var json = '${howf.tag}';
+		var json = '${story.tag}';
 		var jsonParse = JSON.parse(json);
 		var tagData = "";
 		$.each(jsonParse,function(idx){
@@ -237,39 +229,24 @@
 		
 	});
 	
-	//카테고리 선택 변경
-	var cate = "${howf.cate}";
-	$("#cate").val(cate).prop("selected",true);
-	
+
 	function modifyFn(){
 		var title = $("#title");
 		var content = $("#summernote");
 		var tag = $("#tag");
 		
 		if(title.val()==""){
-			modalFn("제목을 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("제목을 입력해 주세요");
+			alert("제목을 입력해 주세요");
 			title.focus();
 			return;
 		}
 		else if(content.val()==""){
-			modalFn("내용을 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("내용을 입력해 주세요");
+			alert("내용을 입력해 주세요");
 			content.focus();
 			return;
 		}
 		else if(tag.val()==""){
-			modalFn("태그를 입력해 주세요");
-			setTimeout(function(){
-				modalClose();
-			},1000);
-			//alert("태그를 입력해 주세요");
+			alert("태그를 입력해 주세요");
 			tag.focus();
 			return;
 		}
