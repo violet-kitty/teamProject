@@ -302,7 +302,7 @@
 					return;
 				},1000);
 			} else if (password.val() == "") {
-				modalFn("비밀번호을 입력해주세요");
+				modalFn("비밀번호를 입력해주세요");
 				setTimeout(function(){
 					modalClose();
 					$("#pwdTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
@@ -326,7 +326,31 @@
 					return;
 				},1000);
 			} else {
-				$("#frm").submit();
+				var formData = new FormData($("#frm")[0]);
+				$.ajax({
+					url:"join.do",
+					data:formData,
+					type:"post",
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(data){
+						if(data == 1){
+							modalFn("회원가입이 완료되었습니다");
+							setTimeout(function(){
+								modalClose();
+								location.href="login.do";
+							},1000);
+						}
+						else {
+							modalFn("회원가입에 실패하였습니다");
+							setTimeout(function(){
+								modalClose();
+								return;
+							},1000);
+						}
+					}
+				});
 			}
 		}
 	</script>
