@@ -238,9 +238,8 @@
 					modalFn("이미지 파일만 등록 가능합니다.");
 					setTimeout(function(){
 						modalClose();
+						return;
 					},1000);
-					//alert("이미지 파일만 등록 가능합니다");
-					return;
 				}
 				
 				sel_file = f;
@@ -367,70 +366,70 @@
 			modalFn("제목을 입력해주세요");
 			setTimeout(function(){
 				modalClose();
+				title.focus();
+				return;
 			},1000);
-			//alert("제목을 입력해 주세요");
-			title.focus();
-			return;
 		}
 		else if(startday.val()==""){
 			modalFn("시작 날짜를 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("시작 날짜를 입력해 주세요");
-			return;
+
 		}
 		else if(endday.val()==""){
 			modalFn("종료 날짜를 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("종료 날짜를 입력해 주세요");
-			return;
+
 		}
 		else if(state.val()==""){
 			modalFn("도를 선택해 주세요");
 			setTimeout(function(){
 				modalClose();
+				state.focus();
+				return;
 			},1000);
-			//alert("도를 선택해 주세요");
-			state.focus();
-			return;
+
 		}
 		else if(city.val()==""){
 			modalFn("시를 선택해 주세요");
 			setTimeout(function(){
 				modalClose();
+				city.focus();
+				return;
 			},1000);
-			//alert("시를 선택해 주세요");
-			city.focus();
-			return;
+
 		}
 		else if(tag.val()==""){
 			modalFn("태그를 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				tag.focus();
+				return;
 			},1000);
-			//alert("태그를 입력해 주세요");
-			tag.focus();
-			return;
+
 		}
 		else if(file.val()==""){
 			modalFn("썸네일을 등록해 주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("썸네일을 등록해 주세요");
-			return;
+
+
 		}
 		else if(content.val()==""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				content.focus();
+				return;
 			},1000);
-			//alert("내용을 입력해 주세요");
-			content.focus();
-			return;
+
 		}
 		else {
 			$("#frm").submit();

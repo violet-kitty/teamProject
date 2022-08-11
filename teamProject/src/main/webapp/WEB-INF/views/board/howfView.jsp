@@ -314,6 +314,7 @@ else {
 					modalFn("글이 삭제되었습니다.");
 					setTimeout(function(){
 						modalClose();
+					return;
 					},1500);
 					location.href="howfList.do";
 				}

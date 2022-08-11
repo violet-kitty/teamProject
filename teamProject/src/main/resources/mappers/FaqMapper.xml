@@ -42,7 +42,8 @@
 		  	 AND n.content like concat('%',#{searchValue},'%')
 		   	 OR u.name like concat('%',#{searchType},'%')
 			 </if>
-
+			 
+			ORDER BY fbidx desc
 			 
 			LIMIT #{page}, #{perPageNum}
 	</select>

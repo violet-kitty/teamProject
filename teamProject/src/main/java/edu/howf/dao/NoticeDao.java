@@ -62,5 +62,9 @@ public class NoticeDao {
 
 		return sqlSession.update(namespace+"noticecnt",nbidx);
 	}
-
+	//pop 창
+	public NoticeVO noticepop(int nbidx) {
+		
+		return sqlSession.selectOne(namespace+"noticepop",nbidx);
+	}
 }
