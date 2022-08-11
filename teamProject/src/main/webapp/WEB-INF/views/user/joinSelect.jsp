@@ -48,7 +48,7 @@
 							<a onclick="location.href='normalJoin.do'">
 					
 									<img class="onlypc" src="<%= request.getContextPath() %>/image/button/joinselect1.png">
-									<img class="onlymobile" src="<%= request.getContextPath() %>/image/button/joinselectm1.png">
+									<img class="onlytablet" src="<%= request.getContextPath() %>/image/button/joinselectm1.png">
 						
 						    </a>
 					    </div>	
@@ -56,7 +56,7 @@
 							<a onclick="location.href='businessJoin.do'">
 							
 									<img class="onlypc"src="<%= request.getContextPath() %>/image/button/joinselect2.png">
-									<img class="onlymobile"src="<%= request.getContextPath() %>/image/button/joinselectm2.png">
+									<img class="onlytablet"src="<%= request.getContextPath() %>/image/button/joinselectm2.png">
 						
 						    </a>
 					    </div>	
