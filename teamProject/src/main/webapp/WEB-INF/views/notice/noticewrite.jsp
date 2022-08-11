@@ -41,26 +41,20 @@
 		var content = $("#summernote");
 		
 		if (title.val() == ""){
-
 			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				title.focus();
+				return;
 			},1000);
-			//alert("제목을 입력하세요");
-			title.focus();
-			return ;
-			
-		}else if (content.val() == ""){
-
+		} else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 			modalClose();
-			},1000);
-			//alert("내용을 입력하세요");
 			content.focus();
-
 			return ;
-		}else {
+			},1000);
+		} else {
 			var formData = new FormData($("#form")[0]);
 			$.ajax({
 				url:"noticewrite.do",
@@ -76,12 +70,14 @@
 						setTimeout(function(){
 							modalClose();
 							location.href="notice.do";
+							return;
 						},1500);
 					}
 					else {
 						modalFn("등록 실패");
 						setTimeout(function(){
 							modalClose();
+							return;
 						},1500);
 					}
 				}
@@ -94,11 +90,12 @@
  	}
  	
  	function cancel(){
- 				modalFn("취소되었습니다");
- 				setTimeout(function(){
- 				modalClose();
- 				location.href="notice.do";
- 				},1000);
+ 		modalFn("취소되었습니다");
+ 			setTimeout(function(){
+ 			modalClose();
+ 			location.href="notice.do";
+ 			return;
+ 		},1000);
  	}
  	
 	function filter(options) {

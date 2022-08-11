@@ -256,17 +256,19 @@
 			modalFn("제목을 입력해주세요.");
 			setTimeout(function(){
 				modalClose();
+				title.focus();
+				return;
 			},1000);
-			title.focus();
-			return;
+
 		}
 		else if(content.val() == ""){
 			modalFn("내용을 입력해주세요.");
 			setTimeout(function(){
 				modalClose();
+				$("#summernote").summernote('focus');
+				return;
 			},1000);
-			$("#summernote").summernote('focus');
-			return;
+
 		}
 		else {
 			modalFn("수정하시겠습니까?", "확인", "1:1 고객문의 수정", "취소", "CS_modifyCheck");	

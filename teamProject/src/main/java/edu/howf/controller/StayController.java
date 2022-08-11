@@ -31,9 +31,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.howf.service.BoardService;
 import edu.howf.service.StayService;
 import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.RoomVO;
@@ -50,6 +52,9 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class StayController {
 	@Autowired
 	StayService stayService;
+	
+	@Autowired
+	BoardService boardService;
 	
 	@Autowired
 	String uploadPath;
@@ -149,7 +154,7 @@ public class StayController {
 	}
 	
 	@RequestMapping(value="/stayView.do")
-	public String stayView(ResVO res, SearchVO vo, Model model) {
+	public String stayView(ResVO res, SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
 		//날짜 검색 기본값
 		Calendar cal = Calendar.getInstance();
 		String format = "yyyy-MM-dd";
@@ -181,6 +186,19 @@ public class StayController {
 		if(vo.getPage()==0) vo.setPage(1);
 		List<CommentVO> review = stayService.reviewSelect(vo);
 		vo.setPage(page);
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		if(login != null) {
+			//만약 로그인 된 상태라면 찜한 여부 가져오기
+			HeartVO heart = new HeartVO();
+			heart.setMidx(login.getMidx());
+			heart.setBidx(res.getSidx());
+			heart.setType("stay");
+			int result = boardService.heartDup(heart);
+			model.addAttribute("heart", result);
+		}
 		
 		model.addAttribute("stay", stay);
 		model.addAttribute("review", review);

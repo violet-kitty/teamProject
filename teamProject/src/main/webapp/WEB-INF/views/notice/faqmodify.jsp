@@ -20,18 +20,18 @@
 			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				title.focus();
+				return ;	
 			},1000);
-			//alert("제목을 입력하세요");
-			title.focus();
-			return ;			
+
 		}else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				content.focus();
+				return ;
 			},1000);
-			//alert("내용을 입력하세요");
-			content.focus();
-			return ;
+
 		}else {
 			$("#form").submit();
 		}

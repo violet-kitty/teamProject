@@ -142,17 +142,19 @@ input[type=checkbox]{
 				modalFn("제목을 입력해주세요");
 				setTimeout(function(){
 					modalClose();
+					title.focus();
+					return false;
 				},1000);
-				title.focus();
-				return false;
+
 			}
 			else if(content.val() == ""){
 				modalFn("내용을 입력해주세요");
 				setTimeout(function(){
 					modalClose();
+					$("#summernote").summernote('focus');
+					return false;
 				},1000);
-				$("#summernote").summernote('focus');
-				return false;
+
 			}
 			else{
 				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "teamWriteCheck");

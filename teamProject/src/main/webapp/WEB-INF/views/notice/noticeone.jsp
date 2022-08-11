@@ -68,12 +68,14 @@ td {
 						timer = setTimeout(function(){
 						modalClose();
 						location.href="notice.do";
+						return;
 						},1500);
 						
 				}else {
 						modalFn("삭제 실패");
 						setTimeout(function(){
 						modalClose();
+						return;
 						},1500);
 				}
 			}

@@ -20,6 +20,7 @@
 	crossorigin="anonymous">
 <!-- 지도 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- 별점 css -->
 <style>
@@ -83,13 +84,26 @@ else {
 				</div>
 				<div class="col-lg-6">
 					<div class="col-lg-8 d-flex justify-content-start">
+						<c:choose>
+							<c:when test="${login != null && login.role == 'normal'}">
+								<c:if test="${heart!=null && heart==1}">
+									<img src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor:pointer;" id="heartBtn">
+								</c:if>
+								<c:if test="${heart!=null && heart==0}">
+								<img src="<%=request.getContextPath()%>/image/button/lineheart.png" style="cursor:pointer;" id="heartBtn">
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<img src="<%=request.getContextPath()%>/image/button/heart.png">
+							</c:otherwise>
+						</c:choose>
 						${stay.name}
 					</div>
 					<div class="col-lg-4 d-flex justify-content-end">
 						<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
 						<span class="ms-1" id="stayStarArea">${stay.star}</span>
 						<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
-						<span class="ms-1">${stay.heart}</span>
+						<span class="ms-1" id="heartNum">${stay.heart}</span>
 					</div>
 					<div class="col-lg-6">
 						<div class="col-lg-12 d-flex justify-content-start">
@@ -170,7 +184,7 @@ else {
 					</div>
 					
 					<div class="col" style="display:none" id="roomInfoModal${index}">
-						<div><button onclick="modalClose('${index}')">x</button></div>
+						<div><button onclick="roomInfoClose('${index}')">x</button></div>
 			    		<p>객실 이용 안내</p>
 			    		<hr>
 			    		<p>기본 정보</p>
@@ -438,9 +452,10 @@ else {
 							modalFn("글이 삭제되었습니다.");
 							setTimeout(function(){
 								modalClose();
+								location.href="stayList.do";
 							},1000);
 							//alert("글이 삭제되었습니다");
-							location.href="stayList.do";
+							
 						}
 					}
 				});
@@ -468,6 +483,59 @@ else {
 			var startday = $("#date1").val();
 			$("#date2").attr("min",startday);
 		});
+		
+		
+		//찜 버튼 이벤트
+		$("#heartBtn").click(function(){
+			var bidx = "${stay.sidx}";
+			
+			if(heartDup == true){
+				$.ajax({
+					url:"<%= request.getContextPath() %>/howf/heartDelete.do",
+					type:"post",
+					data:"type=stay&bidx="+bidx,
+					success:function(data){
+						if(data==1){
+							heartDup = false;
+							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/button/lineheart.png");
+							var n = $("#heartNum").text();
+							var heartNum = Number(n);
+							$("#heartNum").text(heartNum-1);
+							modalFn("찜 목록에서 제거되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+					}
+				});
+			}
+			else if(heartDup == false){
+				$.ajax({
+					url:"<%= request.getContextPath() %>/howf/heartInsert.do",
+					type:"post",
+					data:"type=stay&bidx="+bidx,
+					success:function(data){
+						if(data==1){
+							heartDup = true;
+							$("#heartBtn").attr("src","<%=request.getContextPath()%>/image/button/heart.png");
+							var n = $("#heartNum").text();
+							var heartNum = Number(n);
+							$("#heartNum").text(heartNum+1);
+							modalFn("찜 목록에 추가되었습니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+						else {
+							modalFn("찜 목록 추가 오류입니다.");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+					}
+				});
+			}
+		});
 	});
 	
 	//객실이용 안내 보이기
@@ -475,7 +543,7 @@ else {
 		$("#roomInfoModal"+index).show();
 	}
 	//객실 이용 안내 닫기
-	function modalClose(index){
+	function roomInfoClose(index){
 		$("#roomInfoModal"+index).hide();
 	}
 	
@@ -499,17 +567,15 @@ else {
 			modalFn("로그인이 필요합니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("로그인이 필요합니다");
-			return;
 		}
 		else if(loginRole != 'normal'){
 			modalFn("일반회원만 글쓰기가 가능합니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("일반회원만 글쓰기가 가능합니다");
-			return;
 		}
 		else {
 			//유효성 검사
@@ -517,9 +583,8 @@ else {
 				modalFn("리뷰 내용을 작성해주세요");
 				setTimeout(function(){
 					modalClose();
+					return;
 				},1000);
-				//alert("리뷰 내용을 작성해 주세요");
-				return;
 			}
 			else {
 				//리뷰 중복 체크 ajax
@@ -543,12 +608,11 @@ else {
 										modalFn("글이 작성되었습니다.");
 										setTimeout(function(){
 											modalClose();
+											$("#reviewContent").val("");
+											$("#file").val("");
+											$("#file").replaceWith($("#file").clone(true));
+											reviewListAjax(1);
 										},1000);
-										//alert("글이 작성되었습니다");
-										$("#reviewContent").val("");
-										$("#file").val("");
-										$("#file").replaceWith($("#file").clone(true));
-										reviewListAjax(1);
 									}
 								}
 							});//리뷰 작성 ajax
@@ -558,12 +622,11 @@ else {
 							modalFn("리뷰는 한번만 등록할 수 있습니다.");
 							setTimeout(function(){
 								modalClose();
+								$("#reviewContent").val("");
+								$("#file").val("");
+								$("#file").replaceWith($("#file").clone(true));
+								return;
 							},1000);
-							//alert("리뷰는 한번만 등록할 수 있습니다");
-							$("#reviewContent").val("");
-							$("#file").val("");
-							$("#file").replaceWith($("#file").clone(true));
-							return;
 						}
 					}
 				});//리뷰 중복 체크 ajax
@@ -703,10 +766,9 @@ else {
 			modalFn("리뷰 내용을 입력해주세요");
 			setTimeout(function(){
 				modalClose();
+				content.focus();
+				return;
 			},1000);
-			//alert("리뷰 내용을 입력해 주세요");
-			content.focus();
-			return;
 		}
 		else {
 			var formData = new FormData($("#reviewM")[0]);
@@ -723,10 +785,9 @@ else {
 						modalFn("리뷰가 수정되었습니다.");
 						setTimeout(function(){
 							modalClose();
+							reviewListAjax(index);
+							return;
 						},1000);
-						//alert("리뷰가 수정되었습니다");
-						reviewListAjax(index);
-						return;
 					}
 				}
 			});
@@ -749,10 +810,9 @@ else {
 						modalFn("리뷰가 삭제되었습니다.");
 						setTimeout(function(){
 							modalClose();
+							reviewListAjax(1);
+							return;
 						},1000);
-						//alert("리뷰가 삭제되었습니다");
-						reviewListAjax(1);
-						return;
 					}
 				}
 			});
@@ -775,33 +835,30 @@ else {
 			modalFn("로그인이 필요합니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("로그인이 필요합니다");
-			return;
 		}
 		else if(date1==""){
 			modalFn("체크인 날짜를 선택해주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크인 날짜를 선택해 주세요");
-			return;
 		}
 		else if(date2==""){
 			modalFn("체크아웃 날짜를 선택해주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크아웃 날짜를 선택해 주세요");
-			return;
 		}
 		else if(date1>date2){
 			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
 			setTimeout(function(){
 				modalClose();
-			},1000);
-			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
-			return;
+				return;
+			},1000)
+			
 		}
 		else {
 			var dd = "sidx="+sidx+"&rname="+roomName+"&price="+price+"&people="+people+"&square="+square+"&tags="+tags+"&date1="+date1+"&date2="+date2;
@@ -815,11 +872,11 @@ else {
 						modalFn("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
 						setTimeout(function(){
 							modalClose();
+							var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
+							location.href='stayReservation.do?'+data1;
+							return;
 						},1000);
-						//alert("예약이 진행중인 건이 있습니다. 해당 건의 결제를 완료해주세요");
-						var data1 = "sname="+stayName+"&ridx="+dup.ridx+"&rname="+roomName+"&price="+price+"&date1="+dup.date1+"&date2="+dup.date2+"&merchant="+dup.merchant;
-						location.href='stayReservation.do?'+data1;
-						return;
+						
 					}
 					else {
 						//ajax로 해당 유형의 숙소 ridx 가져오기
@@ -849,9 +906,8 @@ else {
 			modalFn("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다.");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("체크인 날짜가 체크아웃 날짜보다 이후일 수 없습니다");
-			return;
 		}
 		else {
 			location.href='stayView.do?sidx=${stay.sidx}&date1='+date1+'&date2='+date2;
