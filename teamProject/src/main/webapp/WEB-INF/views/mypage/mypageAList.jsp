@@ -66,11 +66,11 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">HOWF 추천 관리</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/howf/howfList.do">HOWF 추천 관리</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">HOWF 소식 관리</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/notice/notice.do">HOWF 소식 관리</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
@@ -78,7 +78,7 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">고객 지원</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">고객 지원</a>
 						</div>
 					</div>
 				</div>

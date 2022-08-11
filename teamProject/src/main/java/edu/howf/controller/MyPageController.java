@@ -196,8 +196,9 @@ public class MyPageController {
 			vo.setPage(page);
 			
 			model.addAttribute("stay", stay);
+			model.addAttribute("tabType", "stay");
 			model.addAttribute("pm", pm);
-			return "mypage/myHeartStay";
+			model.addAttribute("search", vo);
 		}
 		else {
 			if(type.equals("howf")) {
@@ -210,6 +211,7 @@ public class MyPageController {
 				model.addAttribute("list", howf);
 				model.addAttribute("tabType", "howf");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
 			else if(type.equals("event")) {
 				int cnt = userService.heartCountEvent(vo);
@@ -221,6 +223,7 @@ public class MyPageController {
 				model.addAttribute("list", event);
 				model.addAttribute("tabType", "event");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
 			else if(type.equals("story")) {
 				int cnt = userService.heartCountStory(vo);
@@ -232,10 +235,10 @@ public class MyPageController {
 				model.addAttribute("list", story);
 				model.addAttribute("tabType", "story");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
-			
-			return "mypage/myHeart";
 		}
+		return "mypage/myHeart";
 	}
 	
 	

@@ -109,7 +109,6 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 						+ '<h2 class="hfc-bold">'+title+'</h2>'
 						+ '<div class="form-floating ">'
 						+ '<p class="text-muted">'+msg+'</p>'
-						+ '<p>'+funcName+'</p>'
 						+ '</div>'
 						+ '<div class="btnarea">'
 						+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'

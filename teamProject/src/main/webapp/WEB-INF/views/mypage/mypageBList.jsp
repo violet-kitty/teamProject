@@ -74,7 +74,7 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">문의 내역</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">문의 내역</a>
 						</div>
 					</div>
 				</div>
