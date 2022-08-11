@@ -113,78 +113,38 @@
 					<p class="title hfc-bold hfc-blackgray">행복하고 만족했던 <br class="onlymobile"> 여행리뷰를 들려주세요!</p>
 					<p class="subtitle hfc-medium hfc-darkgray">성공적인 여행을 위해 여행전 열람 필수!! <br class="onlymobile">  진정한 여행러들이 나누는 이야기와 팁을 확인하세요! <a class="hfc-pink hfc-bold" href="story/storyList.do">‘여행이야기’ 가기</a></p>
 					<div class="row row-cols-1 row-cols-lg-2">
+						
+						<!-- 여행 이야기 글 없을 떄! -->
+						<c:if test="${empty story}">
+						글이 없어요!
+						</c:if>
+						<c:forEach var="s" items="${story}">
 						<a class="colitem" href="#">
 					      <div class="col d-flex align-items-start">
 					        <div class="icon-square bg-light text-dark d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					          <div style="background-image: url(<%= request.getContextPath() %>/image/picture/picture10.jpeg); width: 160px; height: 160px; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
+					          <div style="background-image: url(<%= request.getContextPath() %>/howf/displayFile.do?fileName=${s.filename}); width: 160px; height: 160px; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
 					        </div>
 					        <div>
 					          	<div class="cprofile">
 									<span class="round">
 										<!-- 사용자 프로필 보여주기-->
-										<div style="background-image: url(<%= request.getContextPath() %>/image/picture/back.jpg); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
+										<c:choose>
+										<c:when test="${s.img != null}">
+										<div style="background-image: url(<%= request.getContextPath() %>/howf/displayFile.do?fileName=${s.img}); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
+										</c:when>
+										<c:otherwise>
+										<div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
+										</c:otherwise>
+										</c:choose>
 									</span>
-									<p class="profile hfc-regular hfc-blackgray">아임쏘TMI</p>
+									<p class="profile hfc-regular hfc-blackgray">${s.nickname}</p>
 								</div>
-					          <h2 class="hfc-bold hfc-blackgray">직접가본 남해 독일마을 생각보다 평화롭지는 않았음… 살짝 실망한 남해 여행</h2>
+					          <h2 class="hfc-bold hfc-blackgray">${s.title}</h2>
 					          <p class="hfc-regular hfc-darkgray">#남해 #여행 #독일마을 #비밀 #갈등 #실망 #분위기 #힐링 #실패 #맛있는 #음식</p>
 					        </div>
 					      </div>
 				      	</a>
-				      	<a class="colitem" href="#">
-					      <div class="col d-flex align-items-start">
-					        <div class="icon-square bg-light text-dark d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					          <div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 160px; height: 160px; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-					        </div>
-					        <div>
-					          	<div class="cprofile">
-									<span class="round">
-										<!-- 사용자 프로필 보여주기-->
-										<div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-									</span>
-									<p class="profile hfc-regular hfc-blackgray">닉네임</p>
-								</div>
-					          <h2 class="hfc-bold hfc-blackgray">제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정</h2>
-					          <p class="hfc-regular hfc-darkgray">#태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그</p>
-					        </div>
-					      </div>
-					    </a>
-					    <a class="colitem" href="#">
-					      <div class="col d-flex align-items-start">
-					        <div class="icon-square bg-light text-dark d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					          <div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 160px; height: 160px; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-					        </div>
-					        <div>
-					          	<div class="cprofile">
-									<span class="round">
-										<!-- 사용자 프로필 보여주기-->
-										<div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-									</span>
-									<p class="profile hfc-regular hfc-blackgray">닉네임</p>
-								</div>
-					          <h2 class="hfc-bold hfc-blackgray">제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정</h2>
-					          <p class="hfc-regular hfc-darkgray">#태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그</p>
-					        </div>
-					      </div>
-					    </a>
-					    <a class="colitem" href="#">
-					      <div class="col d-flex align-items-start">
-					        <div class="icon-square bg-light text-dark d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					          <div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 160px; height: 160px; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-					        </div>
-					        <div>
-					          	<div class="cprofile">
-									<span class="round">
-										<!-- 사용자 프로필 보여주기-->
-										<div style="background-image: url(<%= request.getContextPath() %>/image/null/null_thumbnail.png); width: 32px; height: 32px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;"></div>
-									</span>
-									<p class="profile hfc-regular hfc-blackgray">닉네임</p>
-								</div>
-					          <h2 class="hfc-bold hfc-blackgray">제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정제목지정 제목지정</h2>
-					          <p class="hfc-regular hfc-darkgray">#태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그 #태그</p>
-					        </div>
-					      </div>
-					    </a>
+				      	</c:forEach>
 				    </div><!-- /.row -->
 			    </div><!-- /.container -->
 		    </div><!-- /.contents -->
