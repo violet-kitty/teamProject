@@ -218,6 +218,10 @@
 							}
 						}
 					});
+			
+			//생년월일 오늘 날짜 이후 선택 못하게 하기
+			var nowDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -14);//오늘날짜
+			$("#jumin").attr("max",nowDate);
 
 		});
 
@@ -266,72 +270,94 @@
 		function joinFn() {
 			var name = $("#name");
 			var nickname = $("#nickname");
+			var jumin = $("#jumin");
 			var email = $("#email");
 			var password = $("#password");
 			var passwordOk = $("#passwordOk");
 			
-			if(email.val().includes('@')==false){
-				modalFn("이메일이 아닙니다.");
-				setTimeout(function(){
-					modalClose();
-				}, 1000);
-				//alert("이메일이 아닙니다.");
-				return;
-			}else if (name.val() == ""){
+			
+			if (name.val() == "") {
 				modalFn("이름을 써주세요");
 				setTimeout(function(){
-				modalClose();
+					modalClose();
+					$("#nameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					name.focus();
+				return;
 				},1000);
-			}else if (nickname.val() == ""){
+			} else if (nickname.val() == "") {
 				modalFn("닉네임을 써주세요");
 				setTimeout(function(){
-				modalClose();	
+					modalClose();
+					$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					nickname.focus();
+					return;
 				},1000);
-			}else if (password.val() == ""){
-				modalFn("비밀번호을 입력해주세요");
-				setTimeout(function(){
-				modalClose();	
-				},1000);
-			}
-
-			if (name.val() == "") {
-				$("#nameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				name.focus();
-				return;
-			} else if (nickname.val() == "") {
-				$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				nickname.focus();
-				return;
 			} else if (nicknameDup == true) {
-				$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				nickname.focus();
-				return;
+				modalFn("중복된 닉네임입니다");
+				setTimeout(function(){
+					modalClose();
+					$("#nicknameTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					nickname.focus();
+					return;
+				},1000);
+			} else if (jumin.val() == ""){
+				modalFn("생년월일을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					return;
+				},1000);
 			} else if (email.val() == "") {
-				$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				email.focus();
-				return;
+				modalFn("이메일을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					email.focus();
+					return;
+				},1000);
+			} else if(email.val().includes('@')==false){
+				modalFn("이메일이 아닙니다.");
+					setTimeout(function(){
+					modalClose();
+					return;
+				}, 1000);			
 			} else if (emailDup == true) {
-				$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				email.focus();
-				return;
+				modalFn("중복된 이메일입니다");
+				setTimeout(function(){
+					modalClose();
+					$("#emailTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					email.focus();
+					return;
+				},1000);
 			} else if (password.val() == "") {
-				$("#pwdTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				password.focus();
-				return;
+				modalFn("비밀번호를 입력해주세요");
+				setTimeout(function(){
+					modalClose();	
+					$("#pwdTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					password.focus();
+					return;
+				},1000);
 			} else if (passwordOk.val() == "") {
-				$("#pwdOkTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				passwordOk.focus();
-				return;
+				modalFn("비밀번호 확인을 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					$("#pwdOkTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					passwordOk.focus();
+					return;
+				},1000);
 			} else if (password.val() != passwordOk.val()) {
-				$("#pwdOkTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
-				passwordOk.focus();
-				return;
+				modalFn("비밀번호가 일치하지 않습니다");
+				setTimeout(function(){
+					modalClose();
+					$("#pwdOkTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
+					passwordOk.focus();
+					return;
+				},1000);
 			} else if($("#document").val()==""){
 				modalFn("사업자 등록증을 등록해 주세요.");
 				setTimeout(function(){
 					modalClose();
+					return;
 				}, 1000);
-				//alert("사업자 등록증을 등록해 주세요");
 			} else {
 				$("#frm").submit();
 			}

@@ -208,11 +208,10 @@
 					modalFn("이미지 파일만 등록 가능합니다.");
 					setTimeout(function(){
 						modalClose();
+						return;
 					},1000);
-					//alert("이미지 파일만 등록 가능합니다");
-					return;
 				}
-				
+		
 				sel_file = f;
 				
 				var reader = new FileReader();
@@ -236,36 +235,34 @@
 			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				title.focus();
+				return;
 			},1000);
-			//alert("제목을 입력해 주세요");
-			title.focus();
-			return;
 		}
 		else if(content.val()==""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				content.focus();
+				return;
 			},1000);
-			//alert("내용을 입력해 주세요");
-			content.focus();
-			return;
+
 		}
 		else if(tag.val()==""){
 			modalFn("태그를 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
+				tag.focus();
+				return;
 			},1000);
-			//alert("태그를 입력해 주세요");
-			tag.focus();
-			return;
+
 		}
 		else if(file.val()==""){
 			modalFn("썸네일을 등록해 주세요");
 			setTimeout(function(){
 				modalClose();
+				return;
 			},1000);
-			//alert("썸네일을 등록해 주세요");
-			return;
 		}
 		else {
 			$("#frm").submit();
