@@ -150,11 +150,11 @@
 									<li class="nav-item"><a class="nav-link active" onclick="location.href='howfList.do?sortType=new'">최신순</a></li>
 								</ul> -->
 								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
-								<button onclick="location.href='howfList.do?sortType=food'">맛집추천</button>
-								<button onclick="location.href='howfList.do?sortType=stay'">숙박추천</button>
-								<button onclick="location.href='howfList.do?sortType=travel'">여행지추천</button>
-								<button onclick="location.href='howfList.do?sortType=heart'">좋아요순</button>
-								<button  class="active"  onclick="location.href='howfList.do?sortType=new'">최신순</button>
+								<button onclick="location.href='howfList.do?sortType=food'" id="foodBtn">맛집추천</button>
+								<button onclick="location.href='howfList.do?sortType=stay'" id="stayBtn">숙박추천</button>
+								<button onclick="location.href='howfList.do?sortType=travel'" id="travelBtn">여행지추천</button>
+								<button onclick="location.href='howfList.do?sortType=heart'" id="heartBtn">좋아요순</button>
+								<button  class="active"  onclick="location.href='howfList.do?sortType=new'" id="newBtn">최신순</button>
 							</div>
 							<!-- 검색창 -->
 							<form name="frm2" action="howfList.do" method="post">
@@ -339,6 +339,14 @@
 			var sfilter = "${search.searchType}";
 			if(sfilter != "")
 			$("#sfilterID").val(sfilter).prop("selected", true);
+			
+			//sort 버튼
+			var sortBtn = "${search.sortType}";
+			if(sortBtn != ""){
+				$("#"+sortBtn+"Btn").css("background","none");
+				$("#"+sortBtn+"Btn").css("color","#DE8889");
+				$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+			}
 		});
 	</script>
 
