@@ -138,7 +138,7 @@
 		
 	</update>
 	
-	<select id="selectpop" resultType="noticeVO" parameterType="int">
+	<select id="noticepop" resultType="noticeVO">
 			SELECT	n.nbidx
 					,n.title
 					,n.content
@@ -146,12 +146,10 @@
 					,n.filename
 					,n.midx
 					,n.cnt
-					,u.email
-					,u.name
-					,u.midx
-			FROM notice n , usertable u
-			WHERE n.midx = u.midx
-			AND   n.nbidx = #{nbidx}
+			FROM notice n
+			WHERE delyn = 'N'
+			ORDER BY wdate desc
+			LIMIT 0,1
 	</select>
 
 

@@ -177,8 +177,9 @@ thead tr {
     	</c:if> 
 
 </div>
-
+<c:if test="${login.role == 'admin'}" >
 <button class="bluebtn" onclick="location.href='noticewrite.do'">글 쓸꺼얌</button>
+</c:if>
 <button class="pinkbtn" onclick="location.href='../'">메인화면</button>
 <button class="bluebtn" onclick="location.href='chattingview.do'">채팅(미구현)</button>
 <button class="pinkbtn" onclick="location.href='faqboard.do'">FAQ</button>
