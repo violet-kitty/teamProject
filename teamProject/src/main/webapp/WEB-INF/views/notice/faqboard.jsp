@@ -188,6 +188,33 @@ function modify(index){
 <script type="text/javascript">
 
 </script>
+<!-- 페이징 꾸미기 -->
+<style type="text/css">
+#paging {
+	padding: 20px 0 5px;
+	line-height: 160%;
+	font-size: 16px;
+	font-size:1.6em;
+	text-align:center;
+	cursor: default;
+}
+#paging a {
+	display:inline-block;
+	margin: 0 1px 0;
+	padding: 0 7px;
+	vertical-align:top;
+}
+#paging .no-more-prev ,#paging .no-more-next {
+	color: #aaa;
+	cursor: default;
+}
+#paging .selected {
+	 padding: 4px 9px 4px;
+	 border-radius: 100%;
+	 background-color:#07a;
+	 cursor: default;
+	 color: #fff;
+</style>
 
 </head>
 <body>
@@ -234,8 +261,7 @@ function modify(index){
 			<dd style="margin-left:20px; border:8px groove black; background-color:lightpink; font-size:1.5em" id="content${vo.fbidx}">
   			${fn:replace(vo.content, newLineChar, "<br/>")}
   		
-  		<c:if test="${login != null}">
-  	
+  		<c:if test="${login.role == 'admin'}">
   		<br>
 		<button type="button" id="modify" class="modify" onclick="wmodify(${vo.fbidx})" >테스트수정</button>
 		<button onclick="cancel('${vo.fbidx}')">삭제쓰</button>
@@ -245,16 +271,30 @@ function modify(index){
 	</dl>
 	</div>
 </div>
+<c:if test="${login.role == 'admin'}">
 <button class="bluebtn" type="button" onclick="location.href='faqwrite.do'">FAQ작성 </button>
-
+</c:if>
+<button class="pinkbtn" type="button" onclick="location.href='notice.do'">공지사항</button>
+<button class="bluebtn" type="button" onclick="location.href='../'">메인화면</button>
 <!--  검색 및 페이징 -->
-<div>
+<div id="paging">
 		<c:if test="${pageMaker.prev == true} ">
 			<a href="faqboard.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">이전</a>
 		</c:if>
+		
+		<c:set var="index" value="1"/>
 		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx" step="1">
-    		<a href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
+			<c:choose>
+			<c:when test="${searchVO.page == index}">
+				<a style="color:gray" href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
+			</c:when>
+			<c:otherwise>
+				<a href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
+			</c:otherwise>
+			</c:choose>
+			<c:set var="index" value="${index+1}"/>
     	</c:forEach>
+  
     	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
     		<a href="faqboard.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">다음</a>
     	</c:if> 

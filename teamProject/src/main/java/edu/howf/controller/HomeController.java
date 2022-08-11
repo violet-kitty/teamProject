@@ -55,7 +55,9 @@ public class HomeController {
 	public String home(SearchVO vo, Model model) {
 		vo.setSortType("new");
 		//공지사항 가져오기
-		
+		NoticeVO notice = noticeService.noticepop();
+		vo.setPage(1);
+		model.addAttribute("notice",notice);
 		
 		//HOWF 추천
 		List<HOWFVO> howf = boardService.howfHero();

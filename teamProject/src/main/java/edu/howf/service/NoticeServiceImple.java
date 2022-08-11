@@ -59,9 +59,9 @@ public class NoticeServiceImple implements NoticeService{
 	}
 	
 	@Override
-	public NoticeVO noticepop(int nbidx) {
+	public NoticeVO noticepop() {
 		
-		return noticeDao.noticepop(nbidx);
+		return noticeDao.noticepop();
 	}
 
 }
