@@ -109,7 +109,7 @@ else {
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
 														<c:choose>
-															<c:when test="${login != null}">
+															<c:when test="${login != null && login.role == 'normal'}">
 																<c:if test="${heart!=null && heart==1}">
 																	<img src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor:pointer;" id="heartBtn">
 																</c:if>
@@ -147,7 +147,9 @@ else {
 								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
 								<button onclick="location.href='eventModify.do?ebidx=${event.ebidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
 							</c:if>
+							<c:if test="${login != null && login.role == 'official'}">
 							<button onclick="location.href='eventWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+							</c:if>
 						</div>
 						<div class="col-6 d-flex justify-content-end">
 							<%-- <button onclick="shareSNS('facebook')">
