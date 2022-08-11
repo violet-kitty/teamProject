@@ -238,7 +238,7 @@
 											<div class="writerinfo">
 												<p>
 													<c:choose>
-														<c:when test="${(today < v.endday) && (v.startday < today)}">
+														<c:when test="${(today <= v.endday) && (v.startday <= today)}">
 															<span class="cate" style="background: #54ACA8; color: white;">진행중</span>
 														</c:when>
 														<c:when test="${today < v.startday}">

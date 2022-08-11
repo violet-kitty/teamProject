@@ -44,21 +44,19 @@
 
 			modalFn("제목을 입력해 주세요");
 			setTimeout(function(){
-			modalClose();
+				modalClose();
+				title.focus();
+				return ;	
 			},1000);
-			//alert("제목을 입력하세요");
 
-			title.focus();
-			return ;			
 		}else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
-			modalClose();
+				modalClose();
+				content.focus();
+				return ;
 			},1000);
-			//alert("내용을 입력하세요");
 
-			content.focus();
-			return ;
 		}else {
 			var formData = new FormData($("#form")[0]);
 			$.ajax({
@@ -74,11 +72,13 @@
 							setTimeout(function(){
 							modalClose();
 							location.href="notice.do";
+							return;
 						},1500);
 					}else {
 						modalFn("수정 실패");
 						setTimeout(function(){
 							modalClose();
+							return;
 						},1500);
 					}
 				}
@@ -96,15 +96,17 @@
 		setTimeout(function(){
 			modalClose();
 			location.href="noticeone.do?nbidx=${vo.nbidx}";
+			return;
 		},1000);
 		
 	}
  	function cancellist(){
-			modalFn("목록으로 이동됩니다");
-			setTimeout(function(){
-				modalClose();
-				location.href="notice.do";
-			},1000);
+		modalFn("목록으로 이동됩니다");
+		setTimeout(function(){
+			modalClose();
+			location.href="notice.do";
+			return;
+		},1000);
 	}	
 /* 	function filter(options) {
 		var is = true;

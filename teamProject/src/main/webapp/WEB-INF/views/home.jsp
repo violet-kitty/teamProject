@@ -57,40 +57,40 @@
 				<div class="carousel-inner" id="news">
 
 					<div class="carousel-item active" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture1.jpg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${howf[0].filename});"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold">갬성자극! 제주도 여행은 ‘나미송 머무는 곳’</h5>
+								<h5 class="hfc-blackgray hfc-bold">${howf[0].title}</h5>
 								<p class="hfc-semibold hfc-darkgray">
 									#민박 #고향민박 #독채<br>#정원 #주방기구 #자연경관
 								</p>
-								<button class="greenbtn hbshadow2">HOWF 숙박추천</button>
+								<button class="greenbtn hbshadow2" onclick="location.href='<%= request.getContextPath() %>/howf/howfView.do?hbidx=${howf[0].hbidx}'">HOWF 숙박추천</button>
 							</div>
 
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture2.jpg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${howf[1].filename});"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold">벚꽃 여행 떠나보자! 2022년 추천 벚꽃여행지와 지역별 벚꽃명소</h5>
+								<h5 class="hfc-blackgray hfc-bold">${howf[1].title}</h5>
 								<p class="hfc-semibold hfc-darkgray">
 									#축제 #힐링 #자연<br>#여행 #봄 #드라이브
 								</p>
-								<button class="greenbtn hbshadow2">HOWF 여행지추천</button>
+								<button class="greenbtn hbshadow2" onclick="location.href='<%= request.getContextPath() %>/howf/howfView.do?hbidx=${howf[1].hbidx}'">HOWF 여행지추천</button>
 							</div>
 
 						</div>
 					</div>
 					<div class="carousel-item" data-bs-interval="3000">
-						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/image/picture/picture4.jpeg);"></div>
+						<div class="imgset" style="background-image: url(<%=request.getContextPath()%>/howf/displayFile.do?fileName=${howf[2].filename});"></div>
 						<div class="carousel-caption d-md-block">
 							<div class="captionset">
-								<h5 class="hfc-blackgray hfc-bold">맛있게 먹으면 피자도 0칼로리~ 피자의 축제! ’그라덴피자’ 남해 독일마을!</h5>
+								<h5 class="hfc-blackgray hfc-bold">${howf[2].title}</h5>
 								<p class="hfc-semibold hfc-darkgray">
 									#남해 #독일마을 #피자<br>#이국적 #이색여행 #미슐랭
 								</p>
-								<button class="greenbtn hbshadow2">HOWF 맛집추천</button>
+								<button class="greenbtn hbshadow2" onclick="location.href='<%= request.getContextPath() %>/howf/howfView.do?hbidx=${howf[2].hbidx}'">HOWF 맛집추천</button>
 							</div>
 
 						</div>
@@ -111,7 +111,7 @@
 			<div class="contents content02 hbg-lightgray">
 				<div class="container" id="featured-2">
 					<p class="title hfc-bold hfc-blackgray">행복하고 만족했던 <br class="onlymobile"> 여행리뷰를 들려주세요!</p>
-					<p class="subtitle hfc-medium hfc-darkgray">성공적인 여행을 위해 여행전 열람 필수!! <br class="onlymobile">  진정한 여행러들이 나누는 이야기와 팁을 확인하세요! <a class="hfc-pink hfc-bold">‘여행이야기’ 가기</a></p>
+					<p class="subtitle hfc-medium hfc-darkgray">성공적인 여행을 위해 여행전 열람 필수!! <br class="onlymobile">  진정한 여행러들이 나누는 이야기와 팁을 확인하세요! <a class="hfc-pink hfc-bold" href="story/storyList.do">‘여행이야기’ 가기</a></p>
 					<div class="row row-cols-1 row-cols-lg-2">
 						<a class="colitem" href="#">
 					      <div class="col d-flex align-items-start">

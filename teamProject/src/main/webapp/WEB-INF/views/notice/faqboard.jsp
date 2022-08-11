@@ -98,13 +98,15 @@
 					modalFn("삭제되었습니다");
 					setTimeout(function(){
 					modalClose();
-					location.href="faqboard.do";	
+					location.href="faqboard.do";
+					return;
 					},1500);
 
 				}else {
 					modalFn("삭제 실패");
 					setTimeout(function(){
 					modalClose();
+					return;
 					},1500);
 				}
 			}
@@ -112,8 +114,6 @@
 		});
 	}
 
-
-	
 	//쓰기 후 그려주기
 	function fmodify(index){
 		modify(index);
@@ -160,7 +160,6 @@ function modify(index){
 	var title = $("#title").val();
 	var content = $("#content").val();
 	
-	
 	$.ajax({
 		url: "faqmodify.do",
 		type : 'POST',
@@ -169,17 +168,17 @@ function modify(index){
 			if(result==1){
 				modalFn("수정되었습니다");
 				setTimeout(function(){
-				modalClose();
+					modalClose();
+					return;
 				},1000);
 			}
 			else {
 				modalFn(result + ", 에러!");
 				setTimeout(function(){
-				modalClose();
+					modalClose();
+					return;				
 				},1000);
-				//alert(result+", 에러!");
-			}
-			
+			}	
 		}
 	});
 };

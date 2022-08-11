@@ -94,7 +94,10 @@
 											<div class="col-lg-12" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
 												<div class="card-body">
 													<h5 class="card-title">${v.name}</h5>
-													<p class="card-text">별그림 ${v.star}</p>
+													<p class="card-text">
+														<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
+														${v.star}
+													</p>
 													<p class="card-text">${v.content}</p>
 													<p class="card-text">${v.wdate} 작성</p>
 												</div>
@@ -107,6 +110,32 @@
 							</c:forEach>
 						</c:otherwise>
 						</c:choose>
+						
+						
+						<!-- 리뷰 페이징 -->
+						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+						<div class="row pagenation">
+							<div class="col d-flex justify-content-center" id="pagingArea">
+								<c:if test="${pm.prev == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm.startPage-1}">◀</a>
+								</c:if>
+								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<c:choose>
+								<c:when test="${search.page != null && i == search.page}">
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="myComment.do?page=${i}">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a class="hfc-gray hfc-bold mx-1" href="myComment.do?page=${i}">${i}</a>
+								</c:otherwise>
+								</c:choose>
+								</c:forEach>
+								<c:if test="${pm.next == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm.endPage+1}">▶</a>
+								</c:if>
+							</div>
+						</div>
+						<!-- /페이징 -->
+						
 					</div>
 					
 					<!-- 댓글 -->
@@ -130,31 +159,12 @@
 							</c:forEach>
 						</c:otherwise>
 						</c:choose>
+						
+						<!-- 댓글 페이징 -->
+						
+						
+						
 					</div>
-					
-					
-					<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
-					<div class="row pagenation">
-						<div class="col d-flex justify-content-center" id="pagingArea">
-							<c:if test="${pm.prev == true}">
-								<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.startPage-1}">◀</a>
-							</c:if>
-							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-							<c:choose>
-							<c:when test="${search.page != null && i == search.page}">
-								<a class="hfc-white hfc-bold hbg-pink mx-1" href="howfList.do?page=${i}">${i}</a>
-							</c:when>
-							<c:otherwise>
-								<a class="hfc-gray hfc-bold mx-1" href="howfList.do?page=${i}">${i}</a>
-							</c:otherwise>
-							</c:choose>
-							</c:forEach>
-							<c:if test="${pm.next == true}">
-								<a class="hfc-gray hfc-bold" href="howfList.do?page=${pm.endPage+1}">▶</a>
-							</c:if>
-						</div>
-					</div>
-					<!-- /페이징 -->
 				
 				</div><!-- /.container -->
 			</div>

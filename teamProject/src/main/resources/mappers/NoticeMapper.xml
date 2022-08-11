@@ -137,6 +137,22 @@
 		WHERE nbidx = #{nbidx}
 		
 	</update>
+	
+	<select id="selectpop" resultType="noticeVO" parameterType="int">
+			SELECT	n.nbidx
+					,n.title
+					,n.content
+					,n.wdate
+					,n.filename
+					,n.midx
+					,n.cnt
+					,u.email
+					,u.name
+					,u.midx
+			FROM notice n , usertable u
+			WHERE n.midx = u.midx
+			AND   n.nbidx = #{nbidx}
+	</select>
 
 
 	

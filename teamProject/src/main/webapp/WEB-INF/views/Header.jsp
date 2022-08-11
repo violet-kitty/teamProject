@@ -57,9 +57,11 @@ function logoutFn(){
 
 						<li class="nav-item">
 							<!-- 검색창 -->
-							<div class="search">
-								<img src="<%= request.getContextPath() %>/image/icon/search.png"> <input type="text" name="keyword" placeholder="모두가 나누는 여행정보 HOWF!"> <input type="submit" value="검색">
-							</div>
+							<form action="<%= request.getContextPath() %>/search.do" method="post">
+								<div class="search">
+									<img src="<%= request.getContextPath() %>/image/icon/search.png"> <input type="text" name="searchValue" value="${searchValue}" placeholder="모두가 나누는 여행정보 HOWF!"> <input type="submit" value="검색">
+								</div>
+							</form>
 						</li>
 						<!-- 로그인 로그아웃 회원가입 -->
 						<c:if test="${login == null}">
