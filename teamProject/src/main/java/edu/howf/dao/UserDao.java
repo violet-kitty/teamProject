@@ -68,6 +68,16 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"socialLogin", vo);
 	}
 	
+	//소셜 밴 여부
+	public String socialBan(UserVO vo) {
+		return sqlSession.selectOne(namespace+"socialBan",vo);
+	}
+	
+	//밴 사유
+	public String banComment(UserVO vo) {
+		return sqlSession.selectOne(namespace+"banComment", vo);
+	}
+	
 	//소셜 로그인 소셜 종류
 	public String socialType(UserVO vo) {
 		return sqlSession.selectOne(namespace+"socialType", vo);

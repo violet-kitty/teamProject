@@ -67,6 +67,16 @@ public class UserServiceImple implements UserService{
 	}
 	
 	@Override
+	public String socialBan(UserVO vo) {
+		return userDao.socialBan(vo);
+	}
+	
+	@Override
+	public String banComment(UserVO vo) {
+		return userDao.banComment(vo);
+	}
+	
+	@Override
 	public String socialType(UserVO vo) {
 		return userDao.socialType(vo);
 	}
@@ -185,12 +195,8 @@ public class UserServiceImple implements UserService{
 	}
 
 	@Override
-	public int userBan(int midx) {
-		return userDao.userBan(midx);
-	}
-
-	@Override
-	public int userBanComment(CommentVO vo) {
+	public int userBan(CommentVO vo) {
+		userDao.userBan(vo.getMidx());
 		return userDao.userBanComment(vo);
 	}
 	

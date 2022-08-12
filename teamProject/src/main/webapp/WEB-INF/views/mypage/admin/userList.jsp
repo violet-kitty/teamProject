@@ -54,11 +54,12 @@
 						<div class="row rightbox onlypc-inline">
 							<!-- sort 버튼 -->
 							<div class="col d-flex justify-content-end filterbtn">
-								<button onclick="location.href='userList.do?sortType=dely'" id="ingBtn">탈퇴o</button>
-								<button onclick="location.href='userList.do?sortType=deln'" id="willBtn">탈퇴x</button>
-								<button onclick="location.href='userList.do?sortType=normal'" id="newBtn">일반회원</button>
-								<button onclick="location.href='userList.do?sortType=business'" id="newBtn">사업자</button>
-								<button onclick="location.href='userList.do?sortType=official'" id="newBtn">공무원</button>
+								<button onclick="location.href='userList.do?sortType=dely'" id="delyBtn">탈퇴o</button>
+								<button onclick="location.href='userList.do?sortType=deln'" id="delnBtn">탈퇴x</button>
+								<button onclick="location.href='userList.do?sortType=dela'" id="delaBtn">밴</button>
+								<button onclick="location.href='userList.do?sortType=normal'" id="normalBtn">일반회원</button>
+								<button onclick="location.href='userList.do?sortType=business'" id="businessBtn">사업자</button>
+								<button onclick="location.href='userList.do?sortType=official'" id="officialBtn">공무원</button>
 							</div>
 							<!-- 검색창 Search -->
 							<form name="frm2" action="userList.do" method="post">
@@ -84,6 +85,7 @@
 								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
 									<li><a class="dropdown-item" href="userList.do?sortType=dely">탈퇴o</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=deln">탈퇴x</a></li>
+									<li><a class="dropdown-item" href="userList.do?sortType=delb">밴</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=normal">일반회원</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=business">사업자</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=official">공무원</a></li>
@@ -172,7 +174,11 @@
 								<td>${u.joinyn}</td>
 								<td>${u.joindate}</td>
 								<td>${u.delyn} ${u.deldate}</td>
-								<td><button onclick="banFn('${u.nickname}','${u.midx}')">밴</button></td>
+								<td>
+								<c:if test="${u.delyn != 'A'}">
+								<button onclick="banFn('${u.nickname}','${u.midx}')">밴</button>
+								</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 						</tbody>
@@ -220,7 +226,7 @@
 		modalFn(str, "밴", "회원 밴", "취소", "inputModal");
 	}
 	
-	function modalOkFn(){
+	function inputModal(){
 		var text = $("#textInput").val();
 		
 		if(text == ""){

@@ -18,6 +18,8 @@ public interface UserService {
 	public int userInsert(UserVO vo);
 	public UserVO login(UserVO vo);
 	public int socialLogin(UserVO vo);
+	public String socialBan(UserVO vo);
+	public String banComment(UserVO vo);
 	public String socialType(UserVO vo);
 	public String nameToEmail(UserVO vo);
 	public int pwdModify(UserVO vo);
@@ -45,6 +47,5 @@ public interface UserService {
 	
 	public List<UserVO> userList(SearchVO vo);
 	public int userListCount(SearchVO vo);
-	public int userBan(int midx);
-	public int userBanComment(CommentVO vo);
+	public int userBan(CommentVO vo);
 }

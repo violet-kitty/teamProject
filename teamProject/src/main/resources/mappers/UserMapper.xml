@@ -123,6 +123,7 @@
 			, img
 			, role
 			, joinyn
+			, delyn
 			, password
 		 FROM usertable
 		WHERE email = #{email}
@@ -133,6 +134,24 @@
 		SELECT midx
 		FROM usertable
 		WHERE email = #{email}
+	</select>
+	
+	<!-- 소셜 로그인 밴 여부 -->
+	<select id="socialBan" parameterType="userVO" resultType="String">
+		SELECT delyn
+		FROM usertable
+		WHERE email = #{email}
+	</select>
+	
+	<!-- 밴 사유 -->
+	<select id="banComment" parameterType="userVO" resultType="String">
+		SELECT c.content
+		FROM usertable u
+		JOIN comment c
+		ON u.midx = c.midx
+		WHERE u.email = #{email}
+		AND c.type = 'ban'
+		AND c.delyn = 'N'
 	</select>
 	
 	<!-- 소셜 로그인 소셜 종류 -->
@@ -612,6 +631,9 @@
 		</if>
 		<if test='sortType != null and sortType.equals("deln")'>
 		AND delyn = 'N'
+		</if>
+		<if test='sortType != null and sortType.equals("delb")'>
+		AND delyn = 'A'
 		</if>
 		<if test='sortType != null and sortType.equals("normal")'>
 		AND role = 'normal'

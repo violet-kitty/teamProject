@@ -107,7 +107,7 @@
 	
 <script>
 	function delyn(){
-		modalFn("정말 탈퇴하시겠습니까?","취소","회원 탈퇴","탈퇴");
+		modalFn("정말 탈퇴하시겠습니까?","탈퇴","회원 탈퇴","취소");
 	}
 	
 	function modalOkFn(){

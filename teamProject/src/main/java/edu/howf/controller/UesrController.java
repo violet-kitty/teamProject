@@ -68,8 +68,14 @@ public class UesrController {
 		
 		//로그인 정보 있다면
 		if(login != null) {
+			if(login.getDelyn().equals("Y")) {
+				return "FAIL2";
+			}
+			else if(login.getDelyn().equals("A")) {
+				return "BAN";
+			}
 			//비밀번호가 null인 경우(소셜 회원)
-			if(login.getPassword() == null) {
+			else if(login.getPassword() == null) {
 				return "SOCIAL";
 			}
 			//만약 승인된 경우
@@ -146,23 +152,32 @@ public class UesrController {
 			return "-1";//이메일만 같고 소셜 로그인 종류가 다를시 로그인 안되게
 		}
 		else {
-			int midx = userService.socialLogin(vo);
-			session.setAttribute("token", accessToken);
-			String nickname = userService.nicknameSelect(vo.getEmail());
-			
-			if(nickname == null) {//닉네임이 없다면(첫 로그인)
-				return midx+"";
+			String ban = userService.socialBan(vo);
+			if(ban.equals("A")) {
+				return "-2";
 			}
-			else {//닉네임이 존재하면
-				vo.setNickname(nickname);
-				vo.setMidx(midx);
-				vo.setRole("normal");
-				String img = userService.imgSelect(midx);
-				vo.setImg(img);
+			else if(ban.equals("Y")) {
+				return "-3";
+			}
+			else {
+				int midx = userService.socialLogin(vo);
+				session.setAttribute("token", accessToken);
+				String nickname = userService.nicknameSelect(vo.getEmail());
 				
-				session = request.getSession();
-				session.setAttribute("login", vo);
-				return "0";
+				if(nickname == null) {//닉네임이 없다면(첫 로그인)
+					return midx+"";
+				}
+				else {//닉네임이 존재하면
+					vo.setNickname(nickname);
+					vo.setMidx(midx);
+					vo.setRole("normal");
+					String img = userService.imgSelect(midx);
+					vo.setImg(img);
+					
+					session = request.getSession();
+					session.setAttribute("login", vo);
+					return "0";
+				}
 			}
 		}
 	}
@@ -180,6 +195,13 @@ public class UesrController {
 		session.setAttribute("login", vo);
 		
 		return "redirect:/";
+	}
+	
+	//밴 사유 가져오기
+	@ResponseBody
+	@RequestMapping(value="/banComment.do", produces = "application/text; charset=UTF-8")
+	public String ban(UserVO vo) {
+		return userService.banComment(vo);
 	}
 	
 	//회원가입 - 회원 종류 선택 페이지로 이동
@@ -216,12 +238,12 @@ public class UesrController {
 	}
 	
 	//이메일 중복 체크
-		@ResponseBody
-		@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
-		public int emailDup(String email) {
-			int result = userService.emailDup(email);
-			return result;
-		}
+	@ResponseBody
+	@RequestMapping(value="/emailDup.do", method=RequestMethod.POST)
+	public int emailDup(String email) {
+		int result = userService.emailDup(email);
+		return result;
+	}
 	
 	//닉네임 중복 체크
 	@ResponseBody

@@ -632,15 +632,10 @@ public class MyPageController {
 	//회원 밴
 	@ResponseBody
 	@RequestMapping(value="/userBan.do")
-	public int userBan() {
+	public int userBan(CommentVO vo) {
+		int result = userService.userBan(vo);
 		
-		//회원 밴!
-		
-		
-		//밴 사유 넣기
-		
-		
-		return 0;
+		return result;
 	}
 	
 	//사업자 가입 승인 이동
