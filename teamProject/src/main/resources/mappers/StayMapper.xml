@@ -805,15 +805,118 @@
 	</select>
 	
 	<!-- 본인 소유 숙소 목록 가져오기 -->
-	<select id="myStayAll" parameterType="int" resultType="stayVO">
-		SELECT sidx
-			, name
-			, addr
-			, detailaddr
-			, photo
-		FROM stay
-		WHERE midx = #{midx}
+	<select id="myStayAll" parameterType="searchVO" resultType="stayVO">
+		SELECT e.*
+			, f.star
+		FROM
+		(SELECT c.*
+			, d.heart
+		FROM
+		(SELECT distinct(a.sidx) as sidx
+			, a.midx
+			, a.name
+			, a.addr
+			, a.detailaddr
+			, a.tag
+			, a.photo
+			, a.services
+			, a.delyn
+			, b.min
+			, b.max
+			, b.people
+			, b.sbed
+			, b.dbed
+			, b.qbed
+			, b.kbed
+		FROM stay a
+		JOIN
+		(SELECT sidx
+			, MIN(price) as min
+			, MAX(price) as max
+			, MAX(people) as people
+			, IFNULL(MAX(sbed),0) as sbed
+			, IFNULL(MAX(dbed),0) as dbed
+			, IFNULL(MAX(qbed),0) as qbed
+			, IFNULL(MAX(kbed),0) as kbed
+		FROM room
+		WHERE delyn = 'N'
+		GROUP BY sidx) b
+		ON a.sidx = b.sidx) c
+		LEFT OUTER JOIN
+		(SELECT COUNT(hidx) as heart
+			, bidx
+		FROM heart
+		WHERE type = 'stay'
+		GROUP BY bidx) d
+		ON c.sidx = d.bidx) e
+		LEFT OUTER JOIN
+		(SELECT avg(star) as star
+			, bidx
+		FROM comment
+		WHERE type = 'stay'
 		AND delyn = 'N'
+		GROUP BY bidx) f
+		ON e.sidx = f.bidx
+		WHERE e.delyn = 'N'
+		AND e.midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (e.name like CONCAT('%',#{searchValue},'%')
+		OR e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("name")'>
+		AND e.name like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (e.addr like CONCAT('%',#{searchValue},'%')
+		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("name")'>
+		ORDER BY e.name asc
+		</if>
+		<if test='sortType.equals("star")'>
+		ORDER BY f.star desc
+		</if>
+		<if test='sortType.equals("heart")'>
+		ORDER BY e.heart desc
+		</if>
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 본인 소유 숙소 개수 -->
+	<select id="myStayCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(DISTINCT(a.sidx))
+		FROM stay a
+		JOIN
+		(SELECT sidx
+			, MIN(price) as min
+			, MAX(price) as max
+			, MAX(people) as people
+			, IFNULL(MAX(sbed),0) as sbed
+			, IFNULL(MAX(dbed),0) as dbed
+			, IFNULL(MAX(qbed),0) as qbed
+			, IFNULL(MAX(kbed),0) as kbed
+		FROM room
+		WHERE delyn = 'N'
+		GROUP BY sidx) b
+		ON a.sidx = b.sidx
+		WHERE a.delyn = 'N'
+		AND a.midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.name like CONCAT('%',#{searchValue},'%')
+		OR a.addr like CONCAT('%',#{searchValue},'%')
+		OR a.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("name")'>
+		AND a.name like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (a.addr like CONCAT('%',#{searchValue},'%')
+		OR a.detailaddr like CONCAT('%',#{searchValue},'%'))
+		</if>
 	</select>
 	
 </mapper>

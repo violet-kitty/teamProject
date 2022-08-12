@@ -30,8 +30,8 @@
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -62,7 +62,15 @@
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">지역이벤트 관리</a>
+							<a class="mainbtn" href="myInfo.do">내 정보</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="myStay.do">내 숙소 관리</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="reservationList.do">예약자 관리</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
@@ -71,11 +79,12 @@
 					</div>
 				</div>
 			</div>
+			<!-- / .content01 -->
 			
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 </body>
 </html>

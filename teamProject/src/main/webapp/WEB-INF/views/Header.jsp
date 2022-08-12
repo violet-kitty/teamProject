@@ -106,18 +106,14 @@ function logoutFn(){
 											<div class="cprofile">
 
 												<!-- 사용자 프로필 보여주기-->
-												<%
-														if (session.getAttribute("community_writerp") != null) {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
-												<%
-														} else {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
-												<%
-														}
-													%>
-
+												<c:choose>
+												<c:when test="${login.img != null}">
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/user/displayFile.do?fileName=${login.img});"></div>
+												</c:when>
+												<c:otherwise>
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:otherwise>
+												</c:choose>
 												${login.nickname}
 											</div>
 										</button>
@@ -129,18 +125,14 @@ function logoutFn(){
 											<div class="cprofile">
 
 												<!-- 사용자 프로필 보여주기-->
-												<%
-														if (session.getAttribute("community_writerp") != null) {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
-												<%
-														} else {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
-												<%
-														}
-													%>
-
+												<c:choose>
+												<c:when test="${login.img != null}">
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/user/displayFile.do?fileName=${login.img});"></div>
+												</c:when>
+												<c:otherwise>
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:otherwise>
+												</c:choose>
 												${login.nickname}
 											</div>
 										</button>
@@ -152,18 +144,14 @@ function logoutFn(){
 											<div class="cprofile">
 
 												<!-- 사용자 프로필 보여주기-->
-												<%
-														if (session.getAttribute("community_writerp") != null) {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/프로필이미지.png);"></div>
-												<%
-														} else {
-													%>
-												<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
-												<%
-														}
-													%>
-
+												<c:choose>
+												<c:when test="${login.img != null}">
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/user/displayFile.do?fileName=${login.img});"></div>
+												</c:when>
+												<c:otherwise>
+													<div class="profile" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:otherwise>
+												</c:choose>
 												${login.nickname}
 											</div>
 										</button>

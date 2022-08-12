@@ -267,8 +267,13 @@ public class StayServiceImple implements StayService{
 	}
 
 	@Override
-	public List<StayVO> myStayAll(int midx) {
-		return stayDao.myStayAll(midx);
+	public List<StayVO> myStayAll(SearchVO vo) {
+		return stayDao.myStayAll(vo);
+	}
+
+	@Override
+	public int myStayCount(SearchVO vo) {
+		return stayDao.myStayCount(vo);
 	}
 	
 	
