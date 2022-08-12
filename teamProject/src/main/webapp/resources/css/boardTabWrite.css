@@ -1,0 +1,93 @@
+@charset "UTF-8";
+@import "reset.css";
+
+/* view setting */
+.boardWrite .container {max-width: 800px; margin: auto; padding: 90px 0px; padding-bottom: 90px; position:relative;}
+@media all and (max-width:900px) {
+	.boardWrite .container { width: 100%;margin: auto;padding: 5px 5%; padding-bottom:32px;}
+}
+
+.boardWrite .pageinfo {margin-bottom:50px;}
+.boardWrite .title {margin-top:0px; margin:auto;width:130px; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
+.boardWrite .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
+
+/* boardTabList 공용세팅 */
+.parallax-window {
+    min-height: 250px;
+    background: transparent;
+    background-repeat:no-repeat;
+}
+.parallax-window img {width:50%;background-repeat:no-repeat;}
+
+@media all and (max-width: 768px) {
+	.parallax-window {
+    min-height: 100px;
+    background: transparent;
+    background-repeat:no-repeat;
+}
+	
+}
+
+
+/* Tab */
+.boardWrite .cstopNav {z-index:3;position:absolute; text-align:center;width: 100%; margin-top: -78px;}
+.boardWrite .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {background-color:#FBFBFB; border: 1px solid #dee2e6;}
+.boardWrite .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {background-color:#FBFBFB; border-color: #dee2e6 #dee2e6 #FBFBFB;}
+.boardWrite .cstopNav .nav-tabs {margin:auto; width:fit-content; text-align:center;}
+.boardWrite .cstopNav .nav-tabs a {cursor:pointer;}
+.boardWrite .cstopNav .nav-tabs a img {margin-top:5px;cursor:pointer;max-width:50px;}
+.boardWrite .cstopNav .nav-tabs .nav-link.active img { margin-top:0px;cursor:pointer;max-width:60px;}
+.boardWrite .cstopNav .nav-tabs .nav-link img:hover {margin-top:0px;cursor:pointer;max-width:60px;}
+
+
+/* view setting */
+.boardWrite .imgThumbView {width:100%; margin-top:20px;}
+.boardWrite .imgThumbView img {width:100%;}
+.boardWrite .imgThumbView div {cursor:pointer;}
+.boardWrite .imgThumbView .attachimg1 {display:block;}
+.boardWrite .imgThumbView .attachimg2 {display:none;}
+.boardWrite .imgThumbView input {display:none;}
+.boardWrite .imgThumbView #imageArea {display:none;}
+.boardWrite .imgThumbView2 {width:100%; margin-top:20px;}
+.boardWrite .h-input {margin:24px 0px;}
+.boardWrite .h-input p {margin-top:20px;}
+.boardWrite .h-input textarea {border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .h-input input[type=text] { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .h-input .textinput2 { border-radius:10px; border-top-left-radius: 0px!important; border-bottom-left-radius:0px!important; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .h-input input[type=date] {cursor:pointer; padding: 16px; height: 100%;border-radius: 10px;}
+.boardWrite .h-input .tagcon { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .h-input .form-select {height:100%; border-radius:10px;}
+.boardWrite .h-input .form-select3 {height:100%; border-radius:0px;}
+.boardWrite .h-input .form-select2 {height:100%; border-radius:10px; border-top-right-radius:0px; border-bottom-right-radius:0px;}
+.boardWrite .h-input .selection {padding-right:20px;}
+.boardWrite .h-input .custom p {margin-bottom:8px;}
+.boardWrite .lastline {margin:32px 0px;}
+.boardWrite .note-control-selection {width:100% !important;}
+.boardWrite .note-editable img {max-width:100% !important;}
+.boardWrite .buttonarea .okbutton {text-align:right;}
+
+@media all and (max-width: 768px) {
+	.boardWrite .boardWrite .container {padding:0px 5%; padding-bottom:32px;}
+	.boardWrite .h-input .selection {padding-right:0px; padding-bottom:16px;}
+	.boardWrite .buttonarea .okbutton {text-align:center;}
+	.boardWrite .h-input .custom p {padding:0px 5px;}
+	.boardWrite .h-input  .titlearea {margin-top:16px;}
+	.boardWrite .h-input  .select-area {padding-left:8px;}
+	.boardWrite .h-input  .select-area:first-child {padding-left:0px; padding-right:8px;}
+	
+	.boardWrite .h-input .textinput2 {border-radius: 10px; border-top-left-radius: 10px!important; border-top-right-radius: 10px!important;border-bottom-left-radius: 10px!important;}
+	.boardWrite .h-input p:first-child{margin-top:0; margin-bottom: 16px;padding-left: 5px;}
+	.boardWrite .h-input .form-select3 {height:100%; border-radius:10px; padding:16px;}
+	.boardWrite .h-input .form-select2 {height:100%; border-radius:10px; padding:16px;}
+	.boardWrite .imgThumbView .attachimg1 {display:none;}
+	.boardWrite .imgThumbView .attachimg2 {display:block;}
+}
+
+.boardWrite .note-editor.note-frame .note-editing-area .note-editable, .note-editor.note-airframe .note-editing-area .note-editable
+{border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white;  height:fit-content; border: none;}
+ 
+.boardWrite .note-editor.note-frame, .note-editor.note-airframe {border:none;}
+.boardWrite .note-editor.note-frame .note-editing-area .note-editable, .note-editor.note-airframe .note-editing-area .note-editable{padding:24px; height:fit-content; line-height:20px;}
+.boardWrite .note-editor.note-frame .note-placeholder, .note-editor.note-airframe .note-placeholder{padding:24px;}
+.boardWrite .note-popover .popover-content, .note-editor .note-toolbar{ border-top-left-radius: 10px; border-top-right-radius: 10px; width: 100%; border: none;}
+ 

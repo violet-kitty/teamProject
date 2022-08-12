@@ -106,7 +106,7 @@ public class FaqController {
 		session = request.getSession();
 		int page = searchVO.getPage();
 		
-		searchVO.setPerPageNum(5);
+		searchVO.setPerPageNum(13);
 		
 
 		PageMaker pageMaker = new PageMaker();
