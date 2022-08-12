@@ -109,7 +109,7 @@
 					<div class="row">
 						<div class="col">
 							<button onclick="profileModify()">이미지 수정</button>
-							<button>취소</button>
+							<button onclick="location.href='myInfo.do'">취소</button>
 						</div>
 					</div>
 					

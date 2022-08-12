@@ -135,6 +135,7 @@ public class MyPageController {
 				session = request.getSession();
 				UserVO login = (UserVO)session.getAttribute("login");
 				login.setImg(fileName);
+				
 				userService.profileImgModify(login);
 				
 				return 1;
@@ -173,6 +174,23 @@ public class MyPageController {
 		return result;
 	}
 	
+	
+	
+	//일반회원
+	
+	//마이페이지 이동(일반회원)
+	@RequestMapping(value="/mypage.do")
+	public String mypageN() {
+		return "mypage/normal/mypageNList";
+	}
+	
+	//여행이야기 관리 이동
+	@RequestMapping(value="/myStory.do")
+	public String myStory() {
+		
+		return "mypage/normal/myStory";
+	}
+	
 	//찜 목록 이동
 	@RequestMapping(value="/myHeart.do")
 	public String myHeart(String type, SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
@@ -196,8 +214,9 @@ public class MyPageController {
 			vo.setPage(page);
 			
 			model.addAttribute("stay", stay);
+			model.addAttribute("tabType", "stay");
 			model.addAttribute("pm", pm);
-			return "mypage/myHeartStay";
+			model.addAttribute("search", vo);
 		}
 		else {
 			if(type.equals("howf")) {
@@ -210,6 +229,7 @@ public class MyPageController {
 				model.addAttribute("list", howf);
 				model.addAttribute("tabType", "howf");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
 			else if(type.equals("event")) {
 				int cnt = userService.heartCountEvent(vo);
@@ -221,6 +241,7 @@ public class MyPageController {
 				model.addAttribute("list", event);
 				model.addAttribute("tabType", "event");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
 			else if(type.equals("story")) {
 				int cnt = userService.heartCountStory(vo);
@@ -232,28 +253,10 @@ public class MyPageController {
 				model.addAttribute("list", story);
 				model.addAttribute("tabType", "story");
 				model.addAttribute("pm", pm);
+				model.addAttribute("search", vo);
 			}
-			
-			return "mypage/myHeart";
 		}
-	}
-	
-	
-	
-	
-	//일반회원
-	
-	//마이페이지 이동(일반회원)
-	@RequestMapping(value="/mypage.do")
-	public String mypageN() {
-		return "mypage/mypageNList";
-	}
-	
-	//여행이야기 관리 이동
-	@RequestMapping(value="/myStory.do")
-	public String myStory() {
-		
-		return "mypage/myStory";
+		return "mypage/normal/myHeart";
 	}
 	
 	//예약한 숙소리스트 이동
@@ -282,7 +285,7 @@ public class MyPageController {
 		model.addAttribute("search", search);
 		model.addAttribute("pm", pm);
 		
-		return "mypage/myReservation";
+		return "mypage/normal/myReservation";
 	}
 	
 	
@@ -312,7 +315,7 @@ public class MyPageController {
 		//댓글 페이징
 		
 		
-		return "mypage/myComment";
+		return "mypage/normal/myComment";
 	}
 	
 	//리뷰 그리기
@@ -367,7 +370,7 @@ public class MyPageController {
 	@RequestMapping(value="/myTeam.do")
 	public String myTeam(SearchVO vo, Model model) {
 		
-		return "mypage/myTeam";
+		return "mypage/normal/myTeam";
 	}
 	
 	
@@ -378,11 +381,14 @@ public class MyPageController {
 	//마이페이지 이동(공무원)
 	@RequestMapping(value="/mypageOfficial.do")
 	public String mypageO() {
-		return "mypage/mypageOList";
+		return "mypage/official/mypageOList";
 	}
 	
 	//지역 이벤트 관리 이동
-	
+	@RequestMapping(value="/myEvent.do")
+	public String myEvent() {
+		return "mypage/official/myEvent";
+	}
 	
 	
 	
@@ -392,15 +398,35 @@ public class MyPageController {
 	//마이페이지 이동(business)
 	@RequestMapping(value="/mypageBusiness.do")
 	public String mypageB() {
-		return "mypage/mypageBList";
+		return "mypage/business/mypageBList";
 	}
 	
 	//내 숙소 관리 이동
 	@RequestMapping(value="/myStay.do")
-	public String myStay(Model model, HttpServletRequest request, HttpSession session) {
+	public String myStay(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
 		
-		return "mypage/myStay";
+		//페이징
+		int page = vo.getPage();
+		int cnt = stayService.myStayCount(vo);
+		vo.setPerPageNum(9);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		if(vo.getSortType() == null) vo.setSortType("name");
+		List<StayVO> stay = stayService.myStayAll(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("stay", stay);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
+		return "mypage/business/myStay";
 	}
+	
 	
 	//예약자 관리 이동
 	@RequestMapping(value="reservationList.do")
@@ -413,7 +439,7 @@ public class MyPageController {
 		
 		model.addAttribute("res", res);
 		
-		return "mypage/reservationList";
+		return "mypage/business/reservationList";
 	}
 	
 	//날짜에 맞는 예약 목록 가져오기
@@ -436,11 +462,14 @@ public class MyPageController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		
 		//본인 소유 숙소 목록
-		List<StayVO> stay = stayService.myStayAll(login.getMidx());
+		SearchVO vo = new SearchVO();
+		vo.setMidx(login.getMidx());
+		vo.setSortType("name");
+		List<StayVO> stay = stayService.myStayAll(vo);
 		
 		model.addAttribute("stay", stay);
 		
-		return "mypage/resInsert";
+		return "mypage/business/resInsert";
 	}
 	
 	//방 정보 가져오기
@@ -546,11 +575,48 @@ public class MyPageController {
 	//마이페이지 이동(admin)
 	@RequestMapping(value="/mypageAdmin.do")
 	public String mypageA() {
-		return "mypage/mypageAList";
+		return "mypage/admin/mypageAList";
 	}
 	
 	//회원 관리 이동
+	@RequestMapping(value="/userList.do")
+	public String userList() {
+		return "mypage/admin/userList";
+	}
 	
+	//회원 밴
+	@ResponseBody
+	@RequestMapping(value="/userBan.do")
+	public int userBan() {
+		return 0;//밴한 유저 midx
+	}
+	
+	//사업자 가입 승인 이동
+	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.GET)
+	public String joinB() {
+		return "mypage/admin/joinBusiness";
+	}
+	
+	//사업자 가입 승인
+	@ResponseBody
+	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.POST)
+	public int joinOK() {
+		return 0;
+	}
+	
+	//리뷰 관리 이동
+	@RequestMapping(value="/reviewList.do")
+	public String reviewList() {
+		return "mypage/admin/reviewList";
+	}
+	
+	
+	
+	//댓글 관리 이동
+	@RequestMapping(value="/commentList.do")
+	public String commentList() {
+		return "mypage/admin/commentList";
+	}
 	
 	
 	

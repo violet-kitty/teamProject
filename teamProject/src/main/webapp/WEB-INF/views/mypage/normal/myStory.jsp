@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
 <title>페이지 제목</title>
-
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -26,12 +23,13 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -41,54 +39,17 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- contents 02 -->
-			<style>
-			.feature {text-align:center;}
-			.feature img {margin:auto; margin-bottom:40px;}
-			.feature p {margin-bottom: 56px;}
-			.feature h2 {margin-bottom:24px;}
-			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
-    width: auto;}
-.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
-    width: auto;}
-			</style>
-			
-			<div class="contents lbg-lightestgray">
-				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
-					<!-- 페이지 제목 -->
-						<div class="title">
-							<h1>마이페이지</h1>
-						</div>
-					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">회원 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">HOWF 추천 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">HOWF 소식 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">사업자 가입 승인</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">고객 지원</a>
-						</div>
-					</div>
-				</div>
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+									
+				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
-			
-
-		</div><!-- / #container -->
+		</div>
+		<!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 </body>
 </html>

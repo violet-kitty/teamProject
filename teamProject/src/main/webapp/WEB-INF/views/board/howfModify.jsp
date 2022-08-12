@@ -270,7 +270,32 @@
 			},1000);
 		}
 		else {
-			$("#frm").submit();
+			var formData = new FormData($("#frm")[0]);
+			$.ajax({
+				url:"howfModify.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data != 0){
+						modalFn("수정되었습니다");
+						setTimeout(function(){
+							modalClose();
+							location.href="howfView.do?hbidx="+data;
+							return;
+						},1500);
+					}
+					else {
+						modalFn("등록 실패");
+						setTimeout(function(){
+							modalClose();
+							return;
+						},1500);
+					}
+				}
+			});
 		}
 	}
 </script>

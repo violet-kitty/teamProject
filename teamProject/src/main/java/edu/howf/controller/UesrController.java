@@ -232,8 +232,9 @@ public class UesrController {
 	}
 	
 	//회원가입 액션
+	@ResponseBody
 	@RequestMapping(value="/join.do")
-	public String join(MultipartFile file, UserVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
+	public int join(MultipartFile file, UserVO vo, HttpServletRequest request) throws IllegalStateException, IOException {
 		//파일 받아오는 처리
 		if(file != null) {
 			File dir = new File(uploadPath+"\\document");
@@ -257,14 +258,7 @@ public class UesrController {
 		
 		//DB에 저장
 		int result = userService.userInsert(vo);
-		
-		//회원가입 성공시
-		if(result >= 1) {
-			return "redirect:/";
-		}
-		else {//회원가입 실패시
-			return "redirect:/user/login.do";
-		}
+		return result;
 	}
 	
 	//로그아웃

@@ -144,10 +144,10 @@
 									<li class="nav-item"><a class="nav-link active" onclick="location.href='eventList.do?sortType=new'">최신순</a></li>
 								</ul> -->
 								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
-								<button onclick="location.href='eventList.do?sortType=ing'">진행중</button>
-								<button onclick="location.href='eventList.do?sortType=will'">진행예정</button>
-								<button onclick="location.href='eventList.do?sortType=heart'">좋아요순</button>
-								<button class="active" onclick="location.href='eventList.do?sortType=new'">최신순</button>
+								<button onclick="location.href='eventList.do?sortType=ing'" id="ingBtn">진행중</button>
+								<button onclick="location.href='eventList.do?sortType=will'" id="willBtn">진행예정</button>
+								<button onclick="location.href='eventList.do?sortType=heart'" id="heartBtn">좋아요순</button>
+								<button class="active" onclick="location.href='eventList.do?sortType=new'" id="newBtn">최신순</button>
 							</div>
 							<!-- 검색창 Search -->
 							<form name="frm2" action="eventList.do" method="post">
@@ -312,6 +312,14 @@
 			var sfilter = "${search.searchType}";
 			if(sfilter != "")
 			$("#sfilterID").val(sfilter).prop("selected", true);
+			
+			//sort 버튼
+			var sortBtn = "${search.sortType}";
+			if(sortBtn != ""){
+				$("#"+sortBtn+"Btn").css("background","none");
+				$("#"+sortBtn+"Btn").css("color","#DE8889");
+				$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+			}
 		});
 	</script>
 </body>

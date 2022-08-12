@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +26,10 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 </head>
 <body>
 	<div id="wrap">
-		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
@@ -41,83 +41,58 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-				
+			<!-- contents 02 -->
+			<style>
+			.feature {text-align:center;}
+			.feature img {margin:auto; margin-bottom:40px;}
+			.feature p {margin-bottom: 56px;}
+			.feature h2 {margin-bottom:24px;}
+			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
+    width: auto;}
+.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
+    width: auto;}
+			</style>
+			
+			<div class="contents lbg-lightestgray">
+				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
 					<!-- 페이지 제목 -->
-					<div class="title">
-						<h1>찜 목록</h1>
+						<div class="title">
+							<h1>마이페이지</h1>
+						</div>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="userList.do">회원 관리</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="joinBusiness.do">사업자 가입 승인</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do?type=report">신고 목록</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="reviewList.do">리뷰 관리</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="commentList.do">댓글 관리</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">고객 지원</a>
+						</div>
 					</div>
-					
-					
-					<!-- 게시판 별 탭 -->
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a class="nav-link" id="howfTab" aria-current="page" href="myHeart.do?type=howf">HOWF 추천</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="eventTab" aria-current="page" href="myHeart.do?type=event">지역 이벤트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="storyTab" aria-current="page" href="myHeart.do?type=story">여행이야기</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="myHeart.do?type=stay">숙박 정보</a>
-						</li>
-					</ul>
-					
-					<br>
-					
-					<!-- 찜목록 보여주기 -->
-					<c:choose>
-					<c:when test="${empty list}">
-					<p>찜 목록이 비었습니다</p>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="v" items="${list}">
-							<div class="card mb-3">
-								<div class="row g-0">
-									<div class="col-lg-4" onclick="movePage('${v.bidx}')" style="cursor:pointer;">
-										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${v.filename}" style="width:100%;height:100%;">
-									</div>
-									<div class="col-lg-8" onclick="movePage('${v.bidx}')" style="cursor:pointer;">
-										<div class="card-body">
-											<h5 class="card-title">${v.title}</h5>
-											<p class="card-text">${v.nickname}</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</c:otherwise>
-					</c:choose>
-				
-				</div><!-- /.container -->
+				</div>
 			</div>
 			<!-- / .content01 -->
-
+			
 
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
-	
-	
-<script>
-	//탭 설정
-	var tabType = "${tabType}";
-	
-	if(tabType == "howf") $("#howfTab").addClass("active");
-	else if(tabType == "event") $("#eventTab").addClass("active");
-	else if(tabType == "story") $("#storyTab").addClass("active");
-	
-	
-	function movePage(bidx){
-		if(tabType == "howf") location.href="<%= request.getContextPath() %>/howf/howfView.do?hbidx="+bidx;
-		else if(tabType == "event") location.href="<%= request.getContextPath() %>/event/eventView.do?ebidx="+bidx;
-		else if(tabType == "story") location.href="";
-	}
-</script>	
 </body>
 </html>

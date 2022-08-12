@@ -47,9 +47,45 @@
 		$("#"+id).html(tagData);
 	}
 </script>
+
+	
+<!-- 모달 팝업창 -->
+	<script type="text/javascript">
+		var getCookie = function(name){
+			var value = document.cookie.match('(^|;)?'+name+'=([^;]*)(;|$)');
+			return value? value[2] : null;
+		}
+		
+		function noticepop(){
+			//쿠키에 저장된 값 있는지 가져오기
+			var val = getCookie("timemodal");
+			
+			if(val == null){
+				modalFn('${notice.content}',"닫기",'${notice.title}',"3days");
+			}
+		}
+		
+		function setCookie(cookie_name, value, days) {
+			  var exdate = new Date();
+			  exdate.setDate(exdate.getDate() + days);
+			  // 설정 일수만큼 현재시간에 만료값으로 지정
+
+			  var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+			  document.cookie = cookie_name + '=' + cookie_value;
+			}
+		
+		//3일 동안 안보기
+		function timeCloseModal(){
+			//쿠키에 저장하기
+			setCookie("timemodal","timemodal",3);
+			modalClose();
+		}
+
+	</script>
+
 </head>
 
-<body>
+<body onLoad="noticepop()">
 
 	<div id="wrap">
 		<!-- Header --><%@include file="Header.jsp"%>
@@ -229,6 +265,7 @@
 	</div><!-- /#wrap -->
 
 </body>
+
 </html>
 
 

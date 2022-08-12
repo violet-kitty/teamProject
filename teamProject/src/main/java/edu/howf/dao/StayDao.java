@@ -153,9 +153,12 @@ public class StayDao {
 		return sqlSession.selectList(namespace+"resSelectAllB", vo);
 	}
 	
-	public List<StayVO> myStayAll(int midx){
-		return sqlSession.selectList(namespace+"myStayAll", midx);
+	public List<StayVO> myStayAll(SearchVO vo){
+		return sqlSession.selectList(namespace+"myStayAll", vo);
 	}
 	
+	public int myStayCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myStayCount",vo);
+	}
 
 }

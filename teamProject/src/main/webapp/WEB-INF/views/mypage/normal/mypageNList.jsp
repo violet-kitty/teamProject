@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,12 +26,13 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -40,7 +41,6 @@
 		
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
-
 			<!-- contents 02 -->
 			<style>
 			.feature {text-align:center;}
@@ -62,20 +62,41 @@
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">지역이벤트 관리</a>
+							<a class="mainbtn" href="myInfo.do">내 정보</a>
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">문의 내역</a>
+							<a class="mainbtn" href="myStory.do">내 여행이야기 관리</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="myHeart.do">내 찜 목록</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="myReservation.do">예약한 숙소</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="myComment.do">내 리뷰, 댓글</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="myTeam.do">너나들이</a>
+						</div>
+						<div class="feature col">
+							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">문의 내역</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			
+			<!-- / .content01 -->
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
 </body>
 </html>
