@@ -271,12 +271,20 @@ public class TeamController {
 		return teamService.revote(vv);
 	}
 	
-	@GetMapping("teamChatting.do")
+	@GetMapping("chatList.do")
 	public String teamChatting(int tidx, Model model) {
 		
 		model.addAttribute("tidx", tidx);
 		
-		return "team/teamChatting";
+		return "team/chatList";
+	}
+	
+	@GetMapping("chatRoom.do")
+	public String enterChatRoom(int tidx, Model model) {
+		
+		model.addAttribute("tidx", tidx);
+		
+		return "team/chatRoom";
 	}
 
 	

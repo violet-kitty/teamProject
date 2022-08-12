@@ -14,6 +14,7 @@ import edu.howf.vo.SearchVO;
 
 @Repository
 public class BoardDao {
+	
 	@Autowired
 	SqlSession sqlSession;
 	

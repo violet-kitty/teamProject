@@ -6,11 +6,16 @@ import org.springframework.stereotype.Service;
 
 import edu.howf.vo.ChatVO;
 
-@Service
-public interface ChatService {
-	
-	public void addChatRoom(ChatVO cv) throws IOException;
-	
-	
 
+@Service
+public class ChatServiceImple implements ChatService {
+
+	@Override
+	public void addChatRoom(ChatVO cv) throws IOException {
+		
+	}
+	
+	
+	
+	
 }

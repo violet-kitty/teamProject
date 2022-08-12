@@ -96,9 +96,14 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
+				<div class="row">
+					<div class="col">
+						<button type="button" onclick="javascript:location.href='chatList.do?'">팀 채팅</button><br>
+						<button type="button" onclick="javascript:location.href='chatList.do?'">팀 채팅</button><br>
+					</div>
+				</div>
 					<div class="row">
 						<div class="col d-flex justify-content-center text-center">
-						<button type="button" onclick="javascript:location.href='teamChatting.do?tidx=${tidx}'">팀 채팅</button><br>
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
 							<c:if test="${rv != null && result != 0}">
