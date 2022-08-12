@@ -118,6 +118,11 @@ public class UserServiceImple implements UserService{
 	public int profileModify(UserVO vo) {
 		return userDao.profileModify(vo);
 	}
+	
+	@Override
+	public int userDel(int midx) {
+		return userDao.userDel(midx);
+	}
 
 	@Override
 	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
@@ -167,6 +172,26 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int myReviewCount(SearchVO vo) {
 		return userDao.myReviewCount(vo);
+	}
+
+	@Override
+	public List<UserVO> userList(SearchVO vo) {
+		return userDao.userList(vo);
+	}
+
+	@Override
+	public int userListCount(SearchVO vo) {
+		return userDao.userListCount(vo);
+	}
+
+	@Override
+	public int userBan(int midx) {
+		return userDao.userBan(midx);
+	}
+
+	@Override
+	public int userBanComment(CommentVO vo) {
+		return userDao.userBanComment(vo);
 	}
 	
 }

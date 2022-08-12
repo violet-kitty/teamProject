@@ -51,6 +51,7 @@ import edu.howf.service.TeamService;
 import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.EventVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
@@ -172,6 +173,15 @@ public class MyPageController {
 		int result = userService.profileModify(vo);
 		
 		return result;
+	}
+	
+	//회원 탈퇴
+	@ResponseBody
+	@RequestMapping(value="/delyn.do")
+	public int delyn(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		return userService.userDel(login.getMidx());
 	}
 	
 	
@@ -386,7 +396,27 @@ public class MyPageController {
 	
 	//지역 이벤트 관리 이동
 	@RequestMapping(value="/myEvent.do")
-	public String myEvent() {
+	public String myEvent(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("new");
+		
+		//페이징
+		int page = vo.getPage();
+		int cnt = boardService.myEventCount(vo);
+		vo.setPerPageNum(9);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<EventVO> event = boardService.myEvent(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("event", event);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
 		return "mypage/official/myEvent";
 	}
 	
@@ -407,6 +437,7 @@ public class MyPageController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("name");
 		
 		//페이징
 		int page = vo.getPage();
@@ -416,7 +447,6 @@ public class MyPageController {
 		pm.setSearch(vo);
 		pm.setTotalCount(cnt);
 		
-		if(vo.getSortType() == null) vo.setSortType("name");
 		List<StayVO> stay = stayService.myStayAll(vo);
 		vo.setPage(page);
 		
@@ -580,7 +610,22 @@ public class MyPageController {
 	
 	//회원 관리 이동
 	@RequestMapping(value="/userList.do")
-	public String userList() {
+	public String userList(SearchVO vo, Model model) {
+		//페이징
+		int page = vo.getPage();
+		int cnt = userService.userListCount(vo);
+		vo.setPerPageNum(10);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<UserVO> user = userService.userList(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
 		return "mypage/admin/userList";
 	}
 	
@@ -588,7 +633,14 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping(value="/userBan.do")
 	public int userBan() {
-		return 0;//밴한 유저 midx
+		
+		//회원 밴!
+		
+		
+		//밴 사유 넣기
+		
+		
+		return 0;
 	}
 	
 	//사업자 가입 승인 이동

@@ -90,6 +90,10 @@
 						</div>
 					</div>
 					
+					
+					<!-- 탈퇴 버튼 -->
+					<button onclick="delyn()">회원 탈퇴</button>
+					
 				
 				</div><!-- /.container -->
 			</div>
@@ -100,6 +104,35 @@
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
+<script>
+	function delyn(){
+		modalFn("정말 탈퇴하시겠습니까?","취소","회원 탈퇴","탈퇴");
+	}
+	
+	function modalOkFn(){
+		modalClose();
+		$.ajax({
+			url:"delyn.do",
+			success:function(data){
+				if(data == 1){
+					modalFn("탈퇴가 완료되었습니다");
+					setTimeout(function(){
+						modalClose();
+						location.href="<%= request.getContextPath() %>/user/logout.do";
+					},1000);
+				}
+				else {
+					modalFn("탈퇴 실패!");
+					setTimeout(function(){
+						modalClose();
+						location.reload();
+					},1000);
+				}
+			}
+		});
+	}
+</script>
 	
 </body>
 </html>

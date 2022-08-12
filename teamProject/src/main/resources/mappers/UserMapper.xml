@@ -14,6 +14,7 @@
 			, role
 			, social
 			, joinyn
+			, joindate
 			, delyn
 		)
 		VALUES(
@@ -22,6 +23,7 @@
 			, 'normal'
 			, #{social}
 			, 'Y'
+			, now()
 			, 'N'
 		)
 		]]>
@@ -84,6 +86,7 @@
 			, detailaddr
 			, jumin
 			, delyn
+			, joindate
 			, role
 			, joinyn
 		<if test="document != null">
@@ -100,6 +103,7 @@
 			, #{detailaddr}
 			, #{jumin}
 			, 'N'
+			, now()
 		<if test="document == null">
 			, 'normal'
 			, 'Y'
@@ -230,6 +234,13 @@
 			, password = #{password}
 			, addr = #{addr}
 			, detailaddr = #{detailaddr}
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="userDel" parameterType="int">
+		UPDATE usertable
+		SET delyn = 'Y'
 		WHERE midx = #{midx}
 	</update>
 	
@@ -463,12 +474,183 @@
 	
 	<!-- 내 댓글 가져오기 -->
 	
+	
 	<!-- 내 댓글 개수 -->
+	
 	
 	<!-- 내 팀 목록 보기 -->
 	
 	
 	<!-- 내 팀 개수 -->
+	
+	
+	
+	
+	
+	<!-- 회원 목록 -->
+	<select id="userList" parameterType="searchVO" resultType="userVO">
+		SELECT midx
+			, name
+			, email
+			, nickname
+			, phone
+			, addr
+			, detailaddr
+			, jumin
+			, role
+			, img
+			, document
+			, social
+			, joinyn
+			, joindate
+			, delyn
+			, deldate
+		FROM usertable
+		WHERE role != 'admin'
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (name like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType != null and sortType.equals("dely")'>
+		AND delyn = 'Y'
+		</if>
+		<if test='sortType != null and sortType.equals("deln")'>
+		AND delyn = 'N'
+		</if>
+		<if test='sortType != null and sortType.equals("normal")'>
+		AND role = 'normal'
+		</if>
+		<if test='sortType != null and sortType.equals("business")'>
+		AND role = 'business'
+		</if>
+		<if test='sortType != null and sortType.equals("official")'>
+		AND role = 'official'
+		</if>
+		
+		<if test='sortType != null and sortType.equals("midxA")'>
+		ORDER BY midx asc
+		</if>
+		<if test='sortType != null and sortType.equals("midxD")'>
+		ORDER BY midx desc
+		</if>
+		<if test='sortType != null and sortType.equals("nameA")'>
+		ORDER BY name asc
+		</if>
+		<if test='sortType != null and sortType.equals("nameD")'>
+		ORDER BY name desc
+		</if>
+		<if test='sortType != null and sortType.equals("emailA")'>
+		ORDER BY email asc
+		</if>
+		<if test='sortType != null and sortType.equals("emailD")'>
+		ORDER BY email desc
+		</if>
+		<if test='sortType != null and sortType.equals("nicknameA")'>
+		ORDER BY nickname asc
+		</if>
+		<if test='sortType != null and sortType.equals("nicknameD")'>
+		ORDER BY nickname desc
+		</if>
+		<if test='sortType != null and sortType.equals("juminA")'>
+		ORDER BY jumin asc
+		</if>
+		<if test='sortType != null and sortType.equals("juminD")'>
+		ORDER BY jumin desc
+		</if>
+		<if test='sortType != null and sortType.equals("roleA")'>
+		ORDER BY role asc
+		</if>
+		<if test='sortType != null and sortType.equals("roleD")'>
+		ORDER BY role desc
+		</if>
+		<if test='sortType != null and sortType.equals("socialA")'>
+		ORDER BY social asc
+		</if>
+		<if test='sortType != null and sortType.equals("socialD")'>
+		ORDER BY social desc
+		</if>
+		<if test='sortType != null and sortType.equals("joinA")'>
+		ORDER BY joinyn asc
+		</if>
+		<if test='sortType != null and sortType.equals("joinD")'>
+		ORDER BY joinyn desc
+		</if>
+		<if test='sortType != null and sortType.equals("jdateA")'>
+		ORDER BY joindate asc
+		</if>
+		<if test='sortType != null and sortType.equals("jdateD")'>
+		ORDER BY joindate desc
+		</if>
+		<if test='sortType != null and sortType.equals("delA")'>
+		ORDER BY delyn asc, deldate asc
+		</if>
+		<if test='sortType != null and sortType.equals("delD")'>
+		ORDER BY delyn desc, deldate desc
+		</if>
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 회원 목록 수 -->
+	<select id="userListCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(midx)
+		FROM usertable
+		WHERE role != 'admin'
+		<!-- 검색 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.title like CONCAT('%',#{searchValue},'%')
+		OR a.tag like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType != null and sortType.equals("dely")'>
+		AND delyn = 'Y'
+		</if>
+		<if test='sortType != null and sortType.equals("deln")'>
+		AND delyn = 'N'
+		</if>
+		<if test='sortType != null and sortType.equals("normal")'>
+		AND role = 'normal'
+		</if>
+		<if test='sortType != null and sortType.equals("business")'>
+		AND role = 'business'
+		</if>
+		<if test='sortType != null and sortType.equals("official")'>
+		AND role = 'official'
+		</if>
+		<if test='sortType != null and sortType.equals("name")'>
+		ORDER BY name asc
+		</if>
+	</select>
+	
+	<!-- 회원 밴 -->
+	<update id="userBan" parameterType="int">
+		UPDATE usertable
+		SET delyn = 'A'
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 회원 밴 사유 -->
+	<insert id="userBanComment" parameterType="commentVO">
+		INSERT INTO comment(
+			content
+			, type
+			, midx
+			, wdate
+			, delyn
+		)
+		VALUES(
+			#{content}
+			, 'ban'
+			, #{midx}
+			, now()
+			, 'N'
+		)
+	</insert>
 	
 	
 </mapper>

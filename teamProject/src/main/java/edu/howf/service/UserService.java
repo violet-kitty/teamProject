@@ -30,6 +30,8 @@ public interface UserService {
 	public UserVO profileSelectOne(int midx);
 	public int profileImgModify(UserVO vo);
 	public int profileModify(UserVO vo);
+	public int userDel(int midx);
+	
 	public List<HeartVO> heartSelectHOWF(SearchVO vo);
 	public int heartCountHOWF(SearchVO vo);
 	public List<HeartVO> heartSelectEvent(SearchVO vo);
@@ -40,4 +42,9 @@ public interface UserService {
 	public int heartCountStay(SearchVO vo);
 	public List<CommentVO> myReview(SearchVO vo);
 	public int myReviewCount(SearchVO vo);
+	
+	public List<UserVO> userList(SearchVO vo);
+	public int userListCount(SearchVO vo);
+	public int userBan(int midx);
+	public int userBanComment(CommentVO vo);
 }

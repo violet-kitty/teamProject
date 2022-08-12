@@ -37,7 +37,7 @@
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
 <script>
-	function tagParse(tag, hbidx){
+	function tagParse(tag, bidx){
 		//리스트 태그 값 넣기
 		var json = tag;
 		var jsonParse = JSON.parse(json);
@@ -46,7 +46,7 @@
 			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
 		})
 		
-		$("#howftag"+hbidx).html(tagData);
+		$("#tag"+bidx).html(tagData);
 	}
 </script>
 
@@ -76,7 +76,7 @@
 					<div class="pageinfo">
 						<!-- 페이지 제목 -->
 						<div class="title onlypc">
-							<a href="<%= request.getContextPath() %>/howf/howfList.do"><h1>내 숙소</h1></a>
+							<a href="<%= request.getContextPath() %>/mypage/myStay.do"><h1>내 숙소</h1></a>
 						</div>
 						
 						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
@@ -88,13 +88,12 @@
 								<button onclick="location.href='myStay.do?sortType=star'" id="starBtn">별점순</button>
 							</div>
 							<!-- 검색창 -->
-							<form name="frm2" action="howfList.do" method="post">
+							<form name="frm2" action="myStay.do" method="post">
 							<div class="search">
 								<select name="searchType" id="sfilterID">
 									<option value="total" selected>전체</option>
-									<option value="title">제목 검색</option>
-									<option value="tag">태그 검색</option>
-									<option value="writer">작성자 검색</option>
+									<option value="name">이름 검색</option>
+									<option value="area">지역 검색</option>
 									
 								</select> 
 								<input type="text" name="searchValue" value="${search.searchValue}">
@@ -104,12 +103,6 @@
 						</div><!-- .rightbox -->
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
-						
-						<c:if test="${login!=null && login.role=='admin'}">
-							<div class="docctrl onlytablet" style="margin-top:16px;">
-								<a href="<%=request.getContextPath()%>/howf/howfWrite.do"><button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button></a>
-							</div>
-						</c:if>
 						
 						<div class="row rightbox onlytablet">
 							<div class="btn-group">
@@ -125,9 +118,8 @@
 							<div class="search">
 								<select name="searchType" id="sfilterID">
 									<option value="total" selected>전체</option>
-									<option value="title">제목 검색</option>
-									<option value="tag">태그 검색</option>
-									<option value="writer">작성자 검색</option>
+									<option value="name">이름 검색</option>
+									<option value="area">지역 검색</option>
 									
 								</select> 
 								<input type="text" name="searchValue" value="${search.searchValue}">
@@ -176,6 +168,7 @@
 											</div>
 											<div class="caption">
 												<h4>${v.name}</h4>
+												<p>${v.addr} ${v.detailaddr}</p>
 											</div>
 										</div><!-- /.thumbnail -->
 									</a>
@@ -231,6 +224,14 @@
 			var sfilter = "${search.searchType}";
 			if(sfilter != "")
 			$("#sfilterID").val(sfilter).prop("selected", true);
+			
+			//sort 버튼
+			var sortBtn = "${search.sortType}";
+			if(sortBtn != ""){
+				$("#"+sortBtn+"Btn").css("background","none");
+				$("#"+sortBtn+"Btn").css("color","#DE8889");
+				$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+			}
 		});
 	</script>
 

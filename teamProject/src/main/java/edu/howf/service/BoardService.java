@@ -27,4 +27,7 @@ public interface BoardService {
 	public int heartInsert(HeartVO vo);
 	public int heartDelete(HeartVO vo);
 	public int heartDup(HeartVO vo);
+	
+	public List<EventVO> myEvent(SearchVO vo);
+	public int myEventCount(SearchVO vo);
 }
