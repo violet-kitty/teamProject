@@ -199,5 +199,15 @@ public class UserServiceImple implements UserService{
 		userDao.userBan(vo.getMidx());
 		return userDao.userBanComment(vo);
 	}
+
+	@Override
+	public List<UserVO> addrData() {
+		return userDao.addrData();
+	}
+
+	@Override
+	public List<UserVO> ageData() {
+		return userDao.ageData();
+	}
 	
 }

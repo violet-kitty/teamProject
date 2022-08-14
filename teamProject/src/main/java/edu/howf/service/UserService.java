@@ -48,4 +48,6 @@ public interface UserService {
 	public List<UserVO> userList(SearchVO vo);
 	public int userListCount(SearchVO vo);
 	public int userBan(CommentVO vo);
+	public List<UserVO> addrData();
+	public List<UserVO> ageData();
 }

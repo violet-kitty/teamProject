@@ -223,4 +223,14 @@ public class UserDao {
 	public int userBanComment(CommentVO vo) {
 		return sqlSession.insert(namespace+"userBanComment", vo);
 	}
+	
+	//지역별 데이터
+	public List<UserVO> addrData() {
+		return sqlSession.selectList(namespace+"addrData");
+	}
+	
+	//나이별 데이터
+	public List<UserVO> ageData(){
+		return sqlSession.selectList(namespace+"ageData");
+	}
 }

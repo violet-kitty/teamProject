@@ -17,6 +17,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<!-- chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
@@ -210,6 +213,10 @@
 					<!-- /페이징 -->
 					
 					
+					<!-- 주소, 나이 차트 -->
+					<canvas id="myChart"></canvas>
+					<canvas id="myChart2"></canvas>
+					
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -220,6 +227,65 @@
 	</div><!-- /#wrap -->
 	
 <script>
+	$(function(){
+		Chart.defaults.scales.linear.min = 0;
+		//지역 별 차트
+		var addrL = [];
+		var addrD = [];
+		<c:forEach var="a" items="${addrData}">
+		addrL.push('${a.addr}');
+		addrD.push('${a.midx}');
+		</c:forEach>
+		
+		var ctx = document.getElementById("myChart").getContext("2d");
+		var chart = new Chart(ctx, {
+			type:"line",
+			data:{
+				labels:addrL,
+				datasets:[{
+					label:"지역별 유저 수",
+					backgroundColor:"#DE8889",
+					borderColor:"#54ACA8",
+					data:addrD,
+					options:{
+						responsive:true,
+						plugins:{
+							legend:false
+						}
+					}
+				}]
+			}
+		});//지역별 차트
+		
+		//나이 별 차트
+		var ageL = [];
+		var ageD = [];
+		<c:forEach var="g" items="${ageData}">
+		ageL.push('${g.jumin}');
+		ageD.push('${g.midx}');
+		</c:forEach>
+		
+		var ctx2 = document.getElementById("myChart2").getContext("2d");
+		var chart2 = new Chart(ctx2, {
+			type:"line",
+			data:{
+				labels:ageL,
+				datasets:[{
+					label:"나이별 유저 수",
+					backgroundColor:"#DE8889",
+					borderColor:"#54ACA8",
+					data:ageD,
+					options:{
+						responsive:true,
+						plugins:{
+							legend:false
+						}
+					}
+				}]
+			}
+		});//나이별 차트
+	});
+
 	function banFn(nickname, midx){
 		$("#midx").val(midx);
 		var str = "정말 "+nickname+" 회원을 밴 하시겠습니까? 밴 사유를 입력해주세요";

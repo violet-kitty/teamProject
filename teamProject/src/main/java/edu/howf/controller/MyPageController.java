@@ -626,6 +626,13 @@ public class MyPageController {
 		model.addAttribute("pm", pm);
 		model.addAttribute("search", vo);
 		
+		//지역, 나이별 차트 데이터
+		List<UserVO> addrData = userService.addrData();
+		List<UserVO> ageData = userService.ageData();
+		
+		model.addAttribute("addrData", addrData);
+		model.addAttribute("ageData", ageData);
+		
 		return "mypage/admin/userList";
 	}
 	
