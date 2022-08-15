@@ -24,11 +24,10 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 </head>
 <body>
 	<div id="wrap">
-		
-		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
@@ -44,35 +43,10 @@
 			<div class="contents content01">
 				<div class="container">
 					
-					<table>
-						<thead>
-							<tr><th>회원번호</th><th>이름</th><th>닉네임</th><th>사업자 등록증</th><th>승인하기</th></tr>
-						</thead>
-						<tbody>
-							<c:forEach var="i" items="${user}">
-							<tr>
-								<td>
-								${i.midx}
-								</td>
-								<td>
-								${i.name}
-								</td>
-								<td>
-								${i.nickname}
-								</td>
-								<td>
-								<button onclick="busView('${i.document}')">보기</button>
-								</td>
-								<td>
-								<button onclick="okFn('${i.midx}')">승인</button>
-								<button onclick="delFn('${i.midx}')">거절</button>
-								</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<!-- 승인 거부용 midx -->
-					<input type="hidden" id="midx">
+					<div id="listArea">
+					
+					</div>
+								
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -83,65 +57,65 @@
 	</div><!-- /#wrap -->
 	
 <script>
-	//사업자 등록증 보기
-	function busView(document){
-		var photo = "<p><img src='displayFile.do?fileName="+document+"'></p>";
-		modalFn(photo,"닫기");
-	}
-	//승인
-	function okFn(midx){
-		$.ajax({
-			url:"joinBusiness.do",
-			type:"post",
-			data:"midx="+midx,
-			success:function(data){
-				if(data == 1){
-					modalFn("승인이 완료되었습니다");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-				else {
-					modalFn("승인 에러!");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-			}
+	//채팅 api 초기화
+	const nc = new ncloudchat.Chat();
+	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
+	
+	//채팅 이벤트 핸들러
+	// 메시지 수신
+	nc.bind('onMessageReceived',function(channel, message) {       
+		
+	});
+	// 오류 메시지
+	nc.bind('onErrorReceived',function(error) {
+		console.log("에러 : "+error);
+	});
+	// 접속 성공
+	nc.bind('onConnected',function(socket) {
+		console.log("접속 성공");
+		$("#listArea").html("");
+		listReturn();
+	});
+	// 접속 종료
+	nc.bind('onDisconnected',function(reason) { 
+		console.log("접속 종료 : "+reason);
+	});
+	
+	var re = userConnect();
+	
+	async function userConnect(){
+		const user = await nc.connect({
+		    id: "howf_${login.midx}",
+		    name: "${login.nickname}"
 		});
+		return 1;
 	}
-	//거절
-	function delFn(midx){
-		$("#midx").val(midx);
-		modalFn("정말 가입을 거절하시겠습니까?","확인","가입 거절","취소");
-	}
-	//거절 ajax
-	function modalOkFn(){
-		var midx = $("#midx").val();
-		$.ajax({
-			url:"denyBusiness.do",
-			type:"post",
-			data:"midx="+midx,
-			success:function(data){
-				if(data == 1){
-					modalFn("가입 거절이 완료되었습니다");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-				else {
-					modalFn("가입 거절 실패!");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
+	
+	async function listReturn(){
+			const filter = {state:true};
+			const sort = {created_at:-1};
+			const option = { offset:0, per_page:100};
+			const channels = await nc.getChannels(filter,sort,option);
+			console.log(channels);
+			
+			//채팅 리스트 그리기
+			for(var cha of channels){
+				var cha_id = '"'+cha.id+'"';
+				var html = "<form action='chatOne.do' method='post'>"
+						+ "<input type='hidden' name='cidx' value='"+cha.id+"'>"
+						+ "<button>"+cha.name+"</button>"
+						+ "<button type='button' onclick='chatchat("+cha_id+")'>채팅참여</button>"
+						+ "</form><br>";
+				$("#listArea").append(html);
 			}
-		});
+			return channels;
 	}
+	
+	async function chatchat(CHANNEL_ID){
+		await nc.subscribe(CHANNEL_ID);
+		return 1;
+	}
+	
 </script>	
 	
 </body>

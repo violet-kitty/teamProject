@@ -90,6 +90,47 @@ public class MyPageController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	//채팅 목록 이동
+	@RequestMapping(value="/chatList.do")
+	public String chatList(HttpServletRequest request, HttpSession session) {
+		
+		
+		return "mypage/chatList";
+	}
+	
+	//각 채팅방 이동
+	@RequestMapping(value="/chatOne.do")
+	public String chat(String cidx, Model model, HttpServletRequest request, HttpSession session) {
+		model.addAttribute("cidx", cidx);
+		
+		return "mypage/chat";
+	}
+	
+	//채팅방 만들기
+	@ResponseBody
+	@RequestMapping(value="/chatCreate.do")
+	public int chatCreate() {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost("https://dashboard-api.gamechat.naverncp.com/v1/api/project/2fb80b8f-4e45-4268-9f83-a53f27587f47/channel");
+		Map<String, String> map = new HashMap<String, String>();
+		post.setHeader("Content-Type", "application/json");
+		post.addHeader("x-api-key", "c0d0b6d63b7b51e03c1b205d611d128f920bc83dac0bc7d2");
+		map.put("name", "#All");
+		String asd = "";
+		try {
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String enty = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(enty);
+			asd = rootNode.get("response").asText();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		if(asd.equals("null")) return -1;
+		else return 1;
+	}
 	
 	
 	//공통
@@ -647,14 +688,22 @@ public class MyPageController {
 	
 	//사업자 가입 승인 이동
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.GET)
-	public String joinB() {
+	public String joinB(Model model) {
+		
 		return "mypage/admin/joinBusiness";
 	}
 	
 	//사업자 가입 승인
 	@ResponseBody
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.POST)
-	public int joinOK() {
+	public int joinOK(int midx) {
+		return 0;
+	}
+	
+	//사업자 가입 거절
+	@ResponseBody
+	@RequestMapping(value="/denyBusiness.do")
+	public int joinDeny(int midx) {
 		return 0;
 	}
 	

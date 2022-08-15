@@ -702,4 +702,48 @@
 		ORDER BY jumin asc
 	</select>
 	
+	<!-- 사업자 등록 목록 -->
+	
+	
+	<!-- 사업자 가입 승인 -->
+	
+	
+	<!-- 사업자 가입 거절 -->
+	
+	
+	
+	
+	<!-- 채팅방 만들기 -->
+	<insert id="createChat" parameterType="teamVO">
+		INSERT INTO team(
+			title
+			, delyn
+		)
+		VALUES(
+			#{title}
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 채팅 기록 저장 -->
+	<insert id="insertChat" parameterType="chatVO">
+		INSERT INTO chatting(
+			midx
+			, tidx
+			, content
+			, sdate
+			, delyn
+		)
+		VALUES(
+			#{midx}
+			, #{tidx}
+			, #{content}
+			, now()
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 채팅 기록 불러오기 -->
+	
+	
 </mapper>

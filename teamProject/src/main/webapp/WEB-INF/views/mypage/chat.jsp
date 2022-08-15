@@ -24,11 +24,10 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 </head>
 <body>
 	<div id="wrap">
-		
-		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
@@ -44,35 +43,14 @@
 			<div class="contents content01">
 				<div class="container">
 					
-					<table>
-						<thead>
-							<tr><th>회원번호</th><th>이름</th><th>닉네임</th><th>사업자 등록증</th><th>승인하기</th></tr>
-						</thead>
-						<tbody>
-							<c:forEach var="i" items="${user}">
-							<tr>
-								<td>
-								${i.midx}
-								</td>
-								<td>
-								${i.name}
-								</td>
-								<td>
-								${i.nickname}
-								</td>
-								<td>
-								<button onclick="busView('${i.document}')">보기</button>
-								</td>
-								<td>
-								<button onclick="okFn('${i.midx}')">승인</button>
-								<button onclick="delFn('${i.midx}')">거절</button>
-								</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<!-- 승인 거부용 midx -->
-					<input type="hidden" id="midx">
+					<!-- 채팅창 -->
+					<div id="chatArea">
+						
+					</div>
+					<input type="text" id="textInput">
+					<button onclick="sendMsg()">보내기</button>
+					
+								
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -83,65 +61,64 @@
 	</div><!-- /#wrap -->
 	
 <script>
-	//사업자 등록증 보기
-	function busView(document){
-		var photo = "<p><img src='displayFile.do?fileName="+document+"'></p>";
-		modalFn(photo,"닫기");
-	}
-	//승인
-	function okFn(midx){
-		$.ajax({
-			url:"joinBusiness.do",
-			type:"post",
-			data:"midx="+midx,
-			success:function(data){
-				if(data == 1){
-					modalFn("승인이 완료되었습니다");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-				else {
-					modalFn("승인 에러!");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-			}
+	//채팅 api 초기화
+	const nc = new ncloudchat.Chat();
+	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
+	
+	//채팅 이벤트 핸들러
+	// 메시지 수신
+	nc.bind('onMessageReceived',function(channel, message) {
+		$("#chatArea").append("<div><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+	});
+	// 오류 메시지
+	nc.bind('onErrorReceived',function(error) {
+		console.log("에러 : "+error);
+	});
+	// 접속 성공
+	nc.bind('onConnected',function(socket) {
+		console.log("접속 성공");
+		loadMsg();
+	});
+	// 접속 종료
+	nc.bind('onDisconnected',function(reason) { 
+		console.log("접속 종료 : "+reason);
+	});
+	
+	var re = userConnect();
+	
+	async function userConnect(){
+		const user = await nc.connect({
+		    id: "howf_${login.midx}",
+		    name: "${login.nickname}"
 		});
+		return 1;
 	}
-	//거절
-	function delFn(midx){
-		$("#midx").val(midx);
-		modalFn("정말 가입을 거절하시겠습니까?","확인","가입 거절","취소");
+	
+	async function loadMsg(){
+		const filter = {channel_id: "${cidx}"};
+		const sort = {created_at:-1}; 
+		const option = { offset:0, per_page:100};
+		const messages = await nc.getMessages(filter, sort, option);
+		console.log(messages);
+		
+		for(var m of messages){
+			$("#chatArea").prepend("<div><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
+			//if문으로 sender id와 현재 로그인 한 회원의 howf_(midx) 비교해서 왼쪽, 오른쪽 띄우는것 구분하기!
+		}
+		
+		
+		return 1;
 	}
-	//거절 ajax
-	function modalOkFn(){
-		var midx = $("#midx").val();
-		$.ajax({
-			url:"denyBusiness.do",
-			type:"post",
-			data:"midx="+midx,
-			success:function(data){
-				if(data == 1){
-					modalFn("가입 거절이 완료되었습니다");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-				else {
-					modalFn("가입 거절 실패!");
-					setTimeout(function(){
-						modalClose();
-						location.reload();
-					},1000);
-				}
-			}
+	
+	async function sendMsg(){
+		await nc.sendMessage("${cidx}", {
+		      type: "text", 
+		      message: $("#textInput").val()
 		});
+		$("#textInput").val("");
+		return 1;
 	}
+	
 </script>	
 	
 </body>

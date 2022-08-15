@@ -29,6 +29,7 @@
         <typeAlias type="edu.howf.vo.VoteVO" alias="voteVO"/>
         <typeAlias type="edu.howf.vo.FaqVO" alias="faqVO"/>
         <typeAlias type="edu.howf.vo.Chat" alias="chat"/>
+        <typeAlias type="edu.howf.vo.ChatVO" alias="chatVO"/>
         
     </typeAliases>
 
