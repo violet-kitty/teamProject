@@ -27,6 +27,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
@@ -98,8 +99,47 @@ input[type=checkbox]{
 	</div><!-- /#wrap -->
 </body>
 <script>
+	//채팅 api 초기화
+	const nc = new ncloudchat.Chat();
+	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
+
+	var re = userConnect();
+	
+	async function userConnect(){
+		const user = await nc.connect({
+		    id: "howf_${login.midx}",
+		    name: "${login.nickname}"
+		});
+		return 1;
+	}
+	
 	function teamWriteCheck(){
-		$("#form1").submit();
+		modalClose();
+		var frm = $("#form1").serialize();
+		$.ajax({
+			url:	"teamWrite.do",
+			data:frm,
+			type:"post",
+			success:	function(data){
+				createChat(data);
+				setTimeout(function(){
+					modalFn("글이 등록되었습니다");
+					setTimeout(function(){
+						modalClose();
+						location.href="teamView.do?tidx="+data;
+					},1000);
+				},1000);
+			}
+				
+		})
+		
+		
+	}
+	
+	async function createChat(tidx){
+		var cha_id = "HOWF_"+tidx;
+		const channel = await nc.createChannel({type:"PUBLIC", name:cha_id, id:cha_id});
+		return 1;
 	}
 	
 	function modalOkFn(){
@@ -157,7 +197,7 @@ input[type=checkbox]{
 
 			}
 			else{
-				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "teamWriteCheck");
+				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "팀 페이지 등록", "취소", "teamWriteCheck");
 			}
 			
 		});

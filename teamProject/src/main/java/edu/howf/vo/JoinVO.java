@@ -1,6 +1,6 @@
 package edu.howf.vo;
 
-public class JoinVO {
+public class JoinVO extends TeamVO{
 	
 	private int jidx;
 	private int tidx;

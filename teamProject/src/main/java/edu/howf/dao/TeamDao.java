@@ -38,6 +38,11 @@ public class TeamDao {
 		return sqlSession.insert(namespace + "teamWrite", tv);
 	}
 	
+	public int team_channel_update(TeamVO tv) {
+		
+		return sqlSession.update(namespace + "team_channel_update", tv);
+	}
+	
 	public TeamVO teamView(int tidx) {
 		
 		return sqlSession.selectOne(namespace + "teamView", tidx);
@@ -118,6 +123,11 @@ public class TeamDao {
 	public int revote(VoteVO vv) {
 		
 		return sqlSession.delete(namespace + "revote", vv);
+	}
+	
+	public TeamVO team_channel_id_select(int tidx) {
+		
+		return sqlSession.selectOne(namespace + "team_channel_id_select", tidx);
 	}
 
 
