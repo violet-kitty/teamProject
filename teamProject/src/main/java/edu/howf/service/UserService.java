@@ -50,4 +50,9 @@ public interface UserService {
 	public int userBan(CommentVO vo);
 	public List<UserVO> addrData();
 	public List<UserVO> ageData();
+	
+	public List<UserVO> joinBSelect(SearchVO vo);
+	public int joinBCount(SearchVO vo);
+	public int joinBY(int midx);
+	public int joinBN(int midx);
 }

@@ -703,13 +703,53 @@
 	</select>
 	
 	<!-- 사업자 등록 목록 -->
+	<select id="joinBSelect" parameterType="searchVO" resultType="userVO">
+		SELECT midx
+			, name
+			, nickname
+			, document
+		FROM usertable
+		WHERE delyn = 'N'
+		AND role = 'business'
+		AND joinyn = 'N'
+		ORDER BY joindate asc
+		LIMIT #{page}, #{perPageNum}
+	</select>
 	
+	<!-- 사업자 등록 목록 개수 -->
+	<select id="joinBCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(midx)
+		FROM usertable
+		WHERE delyn = 'N'
+		AND role = 'business'
+		AND joinyn = 'N'
+	</select>
 	
 	<!-- 사업자 가입 승인 -->
+	<update id="joinBY" parameterType="int">
+		UPDATE usertable
+		SET joinyn = 'Y'
+		WHERE midx = #{midx}
+	</update>
 	
 	
 	<!-- 사업자 가입 거절 -->
+	<update id="joinBN" parameterType="int">
+		UPDATE usertable
+		SET delyn = 'Y'
+		WHERE midx = #{midx}
+	</update>
 	
+	<!-- 리뷰 목록 -->
+	
+	
+	<!-- 리뷰 목록 개수 -->
+	
+	
+	<!-- 댓글 목록 -->
+	
+	
+	<!-- 댓글 목록 개수 -->
 	
 	
 	

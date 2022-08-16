@@ -233,4 +233,26 @@ public class UserDao {
 	public List<UserVO> ageData(){
 		return sqlSession.selectList(namespace+"ageData");
 	}
+	
+	//사업자 목록
+	public List<UserVO> joinBSelect(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"joinBSelect", vo);
+	}
+	
+	//사업자 목록 개수
+	public int joinBCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"joinBCount", vo);
+	}
+	
+	//사업자 가입 승인
+	public int joinBY(int midx) {
+		return sqlSession.update(namespace+"joinBY", midx);
+	}
+	
+	//사업자 가입 거절
+	public int joinBN(int midx) {
+		return sqlSession.update(namespace+"joinBN", midx);
+	}
+	
 }

@@ -209,5 +209,25 @@ public class UserServiceImple implements UserService{
 	public List<UserVO> ageData() {
 		return userDao.ageData();
 	}
+
+	@Override
+	public List<UserVO> joinBSelect(SearchVO vo) {
+		return userDao.joinBSelect(vo);
+	}
+	
+	@Override
+	public int joinBCount(SearchVO vo) {
+		return userDao.joinBCount(vo);
+	}
+
+	@Override
+	public int joinBY(int midx) {
+		return userDao.joinBY(midx);
+	}
+
+	@Override
+	public int joinBN(int midx) {
+		return userDao.joinBN(midx);
+	}
 	
 }

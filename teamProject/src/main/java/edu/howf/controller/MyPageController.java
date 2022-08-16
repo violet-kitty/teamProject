@@ -90,48 +90,6 @@ public class MyPageController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
-	//채팅 목록 이동
-	@RequestMapping(value="/chatList.do")
-	public String chatList(HttpServletRequest request, HttpSession session) {
-		
-		
-		return "mypage/chatList";
-	}
-	
-	//각 채팅방 이동
-	@RequestMapping(value="/chatOne.do")
-	public String chat(String cidx, Model model, HttpServletRequest request, HttpSession session) {
-		model.addAttribute("cidx", cidx);
-		
-		return "mypage/chat";
-	}
-	
-	//채팅방 만들기
-	@ResponseBody
-	@RequestMapping(value="/chatCreate.do")
-	public int chatCreate() {
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpPost post = new HttpPost("https://dashboard-api.gamechat.naverncp.com/v1/api/project/2fb80b8f-4e45-4268-9f83-a53f27587f47/channel");
-		Map<String, String> map = new HashMap<String, String>();
-		post.setHeader("Content-Type", "application/json");
-		post.addHeader("x-api-key", "c0d0b6d63b7b51e03c1b205d611d128f920bc83dac0bc7d2");
-		map.put("name", "#All");
-		String asd = "";
-		try {
-			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
-			HttpResponse res = client.execute(post);
-			ObjectMapper mapper = new ObjectMapper();
-			String enty = EntityUtils.toString(res.getEntity());
-			JsonNode rootNode = mapper.readTree(enty);
-			asd = rootNode.get("response").asText();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-		if(asd.equals("null")) return -1;
-		else return 1;
-	}
-	
 	
 	//공통
 	//내 정보 이동
@@ -426,7 +384,6 @@ public class MyPageController {
 	
 	
 	
-	
 	//공무원
 	
 	//마이페이지 이동(공무원)
@@ -688,7 +645,21 @@ public class MyPageController {
 	
 	//사업자 가입 승인 이동
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.GET)
-	public String joinB(Model model) {
+	public String joinB(Model model, SearchVO vo) {
+		//페이징
+		int page = vo.getPage();
+		int cnt = userService.joinBCount(vo);
+		vo.setPerPageNum(10);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<UserVO> user = userService.joinBSelect(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm", pm);
 		
 		return "mypage/admin/joinBusiness";
 	}
@@ -697,14 +668,14 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.POST)
 	public int joinOK(int midx) {
-		return 0;
+		return userService.joinBY(midx);
 	}
 	
 	//사업자 가입 거절
 	@ResponseBody
 	@RequestMapping(value="/denyBusiness.do")
 	public int joinDeny(int midx) {
-		return 0;
+		return userService.joinBN(midx);
 	}
 	
 	//리뷰 관리 이동
@@ -747,6 +718,56 @@ public class MyPageController {
 					
 			//bean에 주입한 물리경로 uploadPath
 			in = new FileInputStream(uploadPath+fileName);
+					
+			//파일 확장자가 있다면
+			if(mType != null){
+						
+				//만약 다운로드를 하고 싶다면 매개변수 down에 1을 넘겨줘서 호출하면 됨
+				if (down==1) {
+					fileName = fileName.substring(fileName.indexOf("_")+1);
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+					headers.add("Content-Disposition", "attachment; filename=\""+
+							new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");	
+							
+				}else {
+					//down에 1이 넘어오지 않았다면 사진 보여주기
+					headers.setContentType(mType);
+				}
+						
+			}else{//파일 확장자가 없다면
+				fileName = fileName.substring(fileName.indexOf("_")+1);
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition", "attachment; filename=\""+
+						new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");				
+			}
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,
+					HttpStatus.CREATED);
+					
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally{
+			in.close();
+		}
+		return entity;
+	}
+	
+	//사업자 등록증 보여주기 위한 코드
+	@RequestMapping(value="/displayDocument.do", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> displayDocument(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
+		InputStream in = null;		
+		ResponseEntity<byte[]> entity = null;
+				
+		try{
+			//파일 타입 체크
+			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+					
+			HttpHeaders headers = new HttpHeaders();		
+					
+			//bean에 주입한 물리경로 uploadPath
+			in = new FileInputStream(uploadPath+"document/"+fileName);
 					
 			//파일 확장자가 있다면
 			if(mType != null){

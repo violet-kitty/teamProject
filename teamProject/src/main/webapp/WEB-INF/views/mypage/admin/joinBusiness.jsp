@@ -44,7 +44,7 @@
 			<div class="contents content01">
 				<div class="container">
 					
-					<table>
+					<table class="table">
 						<thead>
 							<tr><th>회원번호</th><th>이름</th><th>닉네임</th><th>사업자 등록증</th><th>승인하기</th></tr>
 						</thead>
@@ -73,6 +73,31 @@
 					</table>
 					<!-- 승인 거부용 midx -->
 					<input type="hidden" id="midx">
+					
+					
+					<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+					<div class="row pagenation">
+						<div class="col d-flex justify-content-center">
+							<c:if test="${pm.prev == true}">
+								<a class="hfc-gray hfc-bold" href="joinBusiness.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+							<c:choose>
+							<c:when test="${search.page != null && i == search.page}">
+								<a class="hfc-white hfc-bold hbg-pink mx-1" href="joinBusiness.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+							</c:when>
+							<c:otherwise>
+								<a class="hfc-gray hfc-bold mx-1" href="joinBusiness.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+							</c:otherwise>
+							</c:choose>
+							</c:forEach>
+							<c:if test="${pm.next == true}">
+								<a class="hfc-gray hfc-bold" href="joinBusiness.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+							</c:if>
+						</div>
+					</div>
+					<!-- /페이징 -->
+					
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -85,7 +110,7 @@
 <script>
 	//사업자 등록증 보기
 	function busView(document){
-		var photo = "<p><img src='displayFile.do?fileName="+document+"'></p>";
+		var photo = "<div><img src='displayDocument.do?fileName="+document+"' style='width:100%'></div>";
 		modalFn(photo,"닫기");
 	}
 	//승인
@@ -120,6 +145,7 @@
 	//거절 ajax
 	function modalOkFn(){
 		var midx = $("#midx").val();
+		modalClose();
 		$.ajax({
 			url:"denyBusiness.do",
 			type:"post",
