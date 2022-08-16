@@ -504,7 +504,7 @@
 		JOIN jointable j
 		ON j.tidx = t.tidx
 		WHERE j.midx = #{midx}
-		AND t.delyn = 'N';
+		AND t.delyn = 'N'
 	</select>
 	
 	<!-- 내 팀 개수 -->
