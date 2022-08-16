@@ -68,7 +68,13 @@
 	//채팅 이벤트 핸들러
 	// 메시지 수신
 	nc.bind('onMessageReceived',function(channel, message) {
-		$("#chatArea").append("<div><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+		if(message.sender.name == "${login.nickname}"){
+			$("#chatArea").append("<div style='text-align:right;background:aliceblue;'><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+		}
+		else {
+			$("#chatArea").append("<div style='background:white;'><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+		}
+		window.scrollTo(0,document.body.scrollHeight);
 	});
 	// 오류 메시지
 	nc.bind('onErrorReceived',function(error) {
@@ -102,10 +108,14 @@
 		console.log(messages);
 		
 		for(var m of messages){
-			$("#chatArea").prepend("<div><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
-			//if문으로 sender id와 현재 로그인 한 회원의 howf_(midx) 비교해서 왼쪽, 오른쪽 띄우는것 구분하기!
+			if(m.sender.name == "${login.nickname}"){
+				$("#chatArea").prepend("<div style='text-align:right;background:aliceblue;'><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
+			}
+			else {
+				$("#chatArea").prepend("<div style='background:white;'><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
+			}
 		}
-		
+		window.scrollTo(0,document.body.scrollHeight);
 		
 		return 1;
 	}
