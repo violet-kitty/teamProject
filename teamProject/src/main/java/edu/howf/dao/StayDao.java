@@ -154,6 +154,7 @@ public class StayDao {
 	}
 	
 	public List<StayVO> myStayAll(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"myStayAll", vo);
 	}
 	

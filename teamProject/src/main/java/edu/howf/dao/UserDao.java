@@ -68,6 +68,16 @@ public class UserDao {
 		return sqlSession.selectOne(namespace+"socialLogin", vo);
 	}
 	
+	//소셜 밴 여부
+	public String socialBan(UserVO vo) {
+		return sqlSession.selectOne(namespace+"socialBan",vo);
+	}
+	
+	//밴 사유
+	public String banComment(UserVO vo) {
+		return sqlSession.selectOne(namespace+"banComment", vo);
+	}
+	
 	//소셜 로그인 소셜 종류
 	public String socialType(UserVO vo) {
 		return sqlSession.selectOne(namespace+"socialType", vo);
@@ -118,6 +128,11 @@ public class UserDao {
 	//프로필 수정
 	public int profileModify(UserVO vo) {
 		return sqlSession.update(namespace+"profileModify", vo);
+	}
+	
+	//회원 탈퇴
+	public int userDel(int midx) {
+		return sqlSession.update(namespace+"userDel",midx);
 	}
 	
 	//찜목록 가져오기(HOWF 추천)
@@ -187,4 +202,35 @@ public class UserDao {
 	//내 팀 개수
 	
 	
+	
+	//회원 목록
+	public List<UserVO> userList(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"userList", vo);
+	}
+	
+	//회원 목록 수
+	public int userListCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"userListCount", vo);
+	}
+	
+	//유저 밴
+	public int userBan(int midx) {
+		return sqlSession.update(namespace+"userBan", midx);
+	}
+	
+	//유저 밴 사유
+	public int userBanComment(CommentVO vo) {
+		return sqlSession.insert(namespace+"userBanComment", vo);
+	}
+	
+	//지역별 데이터
+	public List<UserVO> addrData() {
+		return sqlSession.selectList(namespace+"addrData");
+	}
+	
+	//나이별 데이터
+	public List<UserVO> ageData(){
+		return sqlSession.selectList(namespace+"ageData");
+	}
 }

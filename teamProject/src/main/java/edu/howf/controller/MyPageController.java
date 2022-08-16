@@ -51,6 +51,7 @@ import edu.howf.service.TeamService;
 import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.EventVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
@@ -89,6 +90,47 @@ public class MyPageController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	//채팅 목록 이동
+	@RequestMapping(value="/chatList.do")
+	public String chatList(HttpServletRequest request, HttpSession session) {
+		
+		
+		return "mypage/chatList";
+	}
+	
+	//각 채팅방 이동
+	@RequestMapping(value="/chatOne.do")
+	public String chat(String cidx, Model model, HttpServletRequest request, HttpSession session) {
+		model.addAttribute("cidx", cidx);
+		
+		return "mypage/chat";
+	}
+	
+	//채팅방 만들기
+	@ResponseBody
+	@RequestMapping(value="/chatCreate.do")
+	public int chatCreate() {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost("https://dashboard-api.gamechat.naverncp.com/v1/api/project/2fb80b8f-4e45-4268-9f83-a53f27587f47/channel");
+		Map<String, String> map = new HashMap<String, String>();
+		post.setHeader("Content-Type", "application/json");
+		post.addHeader("x-api-key", "c0d0b6d63b7b51e03c1b205d611d128f920bc83dac0bc7d2");
+		map.put("name", "#All");
+		String asd = "";
+		try {
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String enty = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(enty);
+			asd = rootNode.get("response").asText();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		if(asd.equals("null")) return -1;
+		else return 1;
+	}
 	
 	
 	//공통
@@ -172,6 +214,15 @@ public class MyPageController {
 		int result = userService.profileModify(vo);
 		
 		return result;
+	}
+	
+	//회원 탈퇴
+	@ResponseBody
+	@RequestMapping(value="/delyn.do")
+	public int delyn(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		return userService.userDel(login.getMidx());
 	}
 	
 	
@@ -386,7 +437,27 @@ public class MyPageController {
 	
 	//지역 이벤트 관리 이동
 	@RequestMapping(value="/myEvent.do")
-	public String myEvent() {
+	public String myEvent(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("new");
+		
+		//페이징
+		int page = vo.getPage();
+		int cnt = boardService.myEventCount(vo);
+		vo.setPerPageNum(9);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<EventVO> event = boardService.myEvent(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("event", event);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
 		return "mypage/official/myEvent";
 	}
 	
@@ -407,6 +478,7 @@ public class MyPageController {
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("name");
 		
 		//페이징
 		int page = vo.getPage();
@@ -416,7 +488,6 @@ public class MyPageController {
 		pm.setSearch(vo);
 		pm.setTotalCount(cnt);
 		
-		if(vo.getSortType() == null) vo.setSortType("name");
 		List<StayVO> stay = stayService.myStayAll(vo);
 		vo.setPage(page);
 		
@@ -580,27 +651,59 @@ public class MyPageController {
 	
 	//회원 관리 이동
 	@RequestMapping(value="/userList.do")
-	public String userList() {
+	public String userList(SearchVO vo, Model model) {
+		//페이징
+		int page = vo.getPage();
+		int cnt = userService.userListCount(vo);
+		vo.setPerPageNum(10);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<UserVO> user = userService.userList(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
+		//지역, 나이별 차트 데이터
+		List<UserVO> addrData = userService.addrData();
+		List<UserVO> ageData = userService.ageData();
+		
+		model.addAttribute("addrData", addrData);
+		model.addAttribute("ageData", ageData);
+		
 		return "mypage/admin/userList";
 	}
 	
 	//회원 밴
 	@ResponseBody
 	@RequestMapping(value="/userBan.do")
-	public int userBan() {
-		return 0;//밴한 유저 midx
+	public int userBan(CommentVO vo) {
+		int result = userService.userBan(vo);
+		
+		return result;
 	}
 	
 	//사업자 가입 승인 이동
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.GET)
-	public String joinB() {
+	public String joinB(Model model) {
+		
 		return "mypage/admin/joinBusiness";
 	}
 	
 	//사업자 가입 승인
 	@ResponseBody
 	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.POST)
-	public int joinOK() {
+	public int joinOK(int midx) {
+		return 0;
+	}
+	
+	//사업자 가입 거절
+	@ResponseBody
+	@RequestMapping(value="/denyBusiness.do")
+	public int joinDeny(int midx) {
 		return 0;
 	}
 	

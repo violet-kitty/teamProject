@@ -106,4 +106,15 @@ public class BoardServiceImple implements BoardService{
 	public int heartDup(HeartVO vo) {
 		return boardDao.heartDup(vo);
 	}
+
+	
+	@Override
+	public List<EventVO> myEvent(SearchVO vo) {
+		return boardDao.myEvent(vo);
+	}
+
+	@Override
+	public int myEventCount(SearchVO vo) {
+		return boardDao.myEventCount(vo);
+	}
 }
