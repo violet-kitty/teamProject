@@ -96,6 +96,12 @@
 		</selectKey>
 	</insert>
 	
+	<update id="team_channel_update" parameterType="teamVO">
+		UPDATE  team
+		SET		team_channel_ID = #{team_channel_ID}
+		WHERE	tidx = #{tidx}
+	</update>
+	
 	<select id="teamView" parameterType="int" resultType="teamVO">
 		SELECT a.*, u.nickname
 		FROM
@@ -198,6 +204,12 @@
 		FROM	recommend
 		WHERE	tidx = #{tidx}
 		AND		delyn = 'N'
+	</select>
+	
+	<select id="team_channel_id_select" parameterType="int" resultType="teamVO">
+		SELECT	team_channel_ID
+		FROM 	team
+		WHERE	tidx = #{tidx}
 	</select>
 	
 	<insert id="upload_vote" parameterType="recommendVO">

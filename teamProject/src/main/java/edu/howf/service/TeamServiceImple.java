@@ -38,6 +38,12 @@ public class TeamServiceImple implements TeamService{
 		tv.setJoinyn("Y");
 		return teamDao.insert_join_apply(tv);
 	}
+	
+	@Override
+	public int team_channel_update(TeamVO tv) {
+		
+		return teamDao.team_channel_update(tv);
+	}
 
 	@Override
 	public TeamVO teamView(int tidx) {
@@ -178,6 +184,14 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.revote(vv);
 	}
+
+	@Override
+	public TeamVO team_channel_id_select(int tidx) {
+		
+		return teamDao.team_channel_id_select(tidx);
+	}
+
+	
 
 	
 	
