@@ -56,15 +56,6 @@
 		<beans:constructor-arg value="C:/upload/" />
 	</beans:bean>
 	
-	<!-- 이메일 인증 아이디, 비밀번호 -->
-	<beans:bean id="emailAuthId" class="java.lang.String">
-		<beans:constructor-arg value="han418hi" />
-	</beans:bean>
-	
-	<beans:bean id="emailAuthPwd" class="java.lang.String">
-		<beans:constructor-arg value="wb0815hyj0406" />
-	</beans:bean>
-	
 	<!-- 결제 아임포트 API KEY -->
 	<beans:bean id="iamportKey" class="java.lang.String">
 		<beans:constructor-arg value="6762610013000254" />
@@ -83,11 +74,6 @@
 	<!-- SMS SECRET API KEY -->
 	<beans:bean id="smsSecretKey" class="java.lang.String">
 		<beans:constructor-arg value="G89QGA76EDVCLYIP7XJ0TFXEBEOUWALN" />
-	</beans:bean>
-	
-	<!-- 채팅 API KEY -->
-	<beans:bean id="chatKey" class="java.lang.String">
-		<beans:constructor-arg value="c0d0b6d63b7b51e03c1b205d611d128f920bc83dac0bc7d2" />
 	</beans:bean>
 	
 	<context:component-scan base-package="edu.howf.controller" />

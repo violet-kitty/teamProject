@@ -54,6 +54,7 @@ public class UesrController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	
 	//로그인 페이지로 이동
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String login() {

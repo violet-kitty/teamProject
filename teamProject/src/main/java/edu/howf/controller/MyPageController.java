@@ -90,6 +90,12 @@ public class MyPageController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	String iamportKey;
+	
+	@Autowired
+	String iamportSecretKey;
+	
 	
 	//공통
 	//내 정보 이동
@@ -544,8 +550,8 @@ public class MyPageController {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost("https://api.iamport.kr/users/getToken");
 		Map<String, String> m = new HashMap<String, String>();
-		m.put("imp_key", "6762610013000254");
-		m.put("imp_secret", "46VnDhH7paaluPlh5mW5dPktisxPccy2omZZvJHrjsod6KhkwbOuUTOIETzPx3FA5SkWqVM1ZHme5HlX");
+		m.put("imp_key", iamportKey);
+		m.put("imp_secret", iamportSecretKey);
 		
 		try {
 			post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
