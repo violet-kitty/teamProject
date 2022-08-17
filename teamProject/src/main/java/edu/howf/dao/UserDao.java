@@ -203,6 +203,23 @@ public class UserDao {
 		return sqlSession.selectList(namespace + "myTeamList", vo);
 	}
 	
+	//내가 만든 팀에 들어온 가입신청 목록
+	public List<JoinVO> myTeam_applyList(int tidx){
+		
+		return sqlSession.selectList(namespace + "myTeam_applyList", tidx);
+	}
+	
+	//내가 만든 팀에 들어온 가입신청 수락
+	public int apply_Y(int jidx) {
+		
+		return sqlSession.update(namespace + "apply_Y", jidx);
+	}
+	//내가 만든 팀에 들어온 가입신청 거절(테이블에서 삭제)
+	public int apply_N(int jidx) {
+		
+		return sqlSession.delete(namespace + "apply_N", jidx);
+	}
+	
 	//내 팀 개수
 	
 	

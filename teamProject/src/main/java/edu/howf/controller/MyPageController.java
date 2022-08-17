@@ -33,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -396,6 +397,30 @@ public class MyPageController {
 		model.addAttribute("login", login);
 		
 		return "mypage/normal/myTeam";
+	}
+	
+	//내가 만든 팀에 들어온 가입신청 목록 불러옴(모달창)
+	@ResponseBody
+	@PostMapping("applyList.do")
+	public List<JoinVO> applyList(int tidx) {
+		
+		List<JoinVO> jv = userService.myTeam_applyList(tidx);
+		
+		return jv;
+	}
+	//가입신청 승인
+	@ResponseBody
+	@PostMapping("apply_Y.do")
+	public int apply_Y(int jidx) {
+		
+		return userService.apply_Y(jidx);
+	}
+	//가입신청 거절
+	@ResponseBody
+	@PostMapping("apply_N.do")
+	public int apply_N(int jidx) {
+		
+		return userService.apply_N(jidx);
 	}
 	
 	

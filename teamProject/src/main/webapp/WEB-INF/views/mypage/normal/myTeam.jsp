@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,12 +50,16 @@
 			<div class="contents content01">
 				<div class="container">
 				<table class="table text-center">
-					<tbody>
+					<thead>
 						<tr>
-							<th width="60%">너나들이 팀 이름</th>
-							<th width="20%">너나들이 팀 가입신청</th>
-							<th width="20%">너나들이 팀 가입신청일</th>
+							<th width="30%">너나들이 이름</th>
+							<th width="20%">관리자</th>
+							<th width="20%">가입여부</th>
+							<th width="20%">가입 신청일</th>
+							<th width="10%">신청목록</th>
 						</tr>
+					</thead>
+					<tbody>
 						<c:if test="${jv.size() == 0}">
 							<tr>
 								<td colspan="3">가입신청 한 너나들이 팀이 없습니다.</td>
@@ -70,6 +73,9 @@
 								<c:if test="${jv.joinyn == 'Y'}">
 									<td><a href="<%=request.getContextPath()%>/team/teamTeam.do?tidx=${jv.tidx}">${jv.title}</a></td>
 								</c:if>
+								<td>
+									${jv.nickname}
+								</td>
 								<c:if test="${jv.joinyn == 'N'}">
 									<td style="color: #DE8889">${jv.joinyn}</td>
 								</c:if>
@@ -82,10 +88,18 @@
 								<c:if test="${jv.joinyn == 'Y'}">
 									<td style="color: #54ACA8">${jv.jdate}</td>
 								</c:if>
+								<td>
+									<c:if test="${login.midx == jv.midx}">
+										<button type="button" onclick="applyList('${jv.tidx}')">목록</button>
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<div id="showList">
+					
+				</div>
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -98,10 +112,75 @@
 <script>
 	$(function(){
 		$("#joinN").click(function(){
-			modalFn("가입승인되지 않은 너나들이 팀 페이지에는 참여하실 수 없습니다.", "확인");
+			modalFn("가입승인되지 않은 너나들이 팀에는 참여하실 수 없습니다.", "확인");
 			return;
 		});
 	});
+	
+	function applyList(tidx){
+		$.ajax({
+			url: "applyList.do",
+			data: "tidx="+tidx,
+			type:"post",
+			success: function(data){
+				var html = "";
+				if(data.length == 0) html = "신청한 사람이 존재하지 않습니다.";
+				else {
+					html = '<table class="table">'
+						+ '<thead>'
+						+ '<tr>'
+						+ '<th width="30%">닉네임</th><th width="40%">가입일</th><th width="30%">가입승인</th>'
+						+ '</tr>'
+						+ '<tbody>';
+					
+					for(var j=0; j<data.length; j++){
+						html = html + "<tr><td rowspan='2'>"+data[j].nickname+"</td><td rowspan='2'>"+data[j].jdate+"</td>"
+						+ "<td><button onclick='apply_Y("+data[j].jidx+")' style='width:30px;border:none;cursor:pointer;border-radius:100%'><img src='<%= request.getContextPath() %>/image/icon/verificationo.png' style='width:20px;height:20px;'></button></td></tr>"
+						+ "<tr><td><button onclick='apply_N("+data[j].jidx+")' style='width:30px;border:none;cursor:pointer;border-radius:100%'><img src='<%= request.getContextPath() %>/image/icon/verificationx.png' style='width:20px;height:20px;'></button></td>"
+						+ "</tr>";
+					}
+					
+					html = html + "</tbody></table>";
+					
+				}
+				modalFn(html, "닫기");
+				
+			}
+		});
+		
+		
+	}
+	
+	function apply_Y(jidx){
+		 $.ajax({
+			url: "apply_Y.do",
+			data: "jidx="+jidx,
+			type: "post",
+			success:function(data){
+				modalFn("가입신청을 승인하였습니다.");
+				setTimeout(function(){
+					modalClose();
+					location.reload();
+				}, 1000);
+				
+			}
+		});
+	}
+	
+	function apply_N(jidx){
+ 		$.ajax({
+			url: "apply_N.do",
+			data:"jidx="+jidx,
+			type: "post",
+			success:function(data){
+				modalFn("가입신청을 거절하였습니다.");
+				setTimeout(function(){
+					modalClose();
+					location.reload();
+				}, 1000);
+			}
+		});
+	}
 </script>
 </body>
 </html>

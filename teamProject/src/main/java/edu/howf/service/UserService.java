@@ -46,6 +46,9 @@ public interface UserService {
 	public List<CommentVO> myReview(SearchVO vo);
 	public int myReviewCount(SearchVO vo);
 	public List<JoinVO> myTeamList(SearchVO vo);
+	public List<JoinVO> myTeam_applyList(int tidx);
+	public int apply_Y(int jidx);
+	public int apply_N(int jidx);
 	
 	public List<UserVO> userList(SearchVO vo);
 	public int userListCount(SearchVO vo);

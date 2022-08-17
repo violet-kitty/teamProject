@@ -499,15 +499,43 @@
 	
 	<!-- 내 팀 목록 보기 -->
 	<select id="myTeamList" parameterType="int" resultType="joinVO">
-		SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, t.midx
 		FROM team t
 		JOIN jointable j
 		ON j.tidx = t.tidx
 		WHERE j.midx = #{midx}
-		AND t.delyn = 'N'
+		AND t.delyn = 'N') a, usertable u
+		WHERE a.midx = u.midx
 		ORDER BY t.tidx DESC
 	</select>
 	
+	<!-- 팀 가입신청 목록보기 & 승인 여부 -->
+	<select id="myTeam_applyList" parameterType="int" resultType="joinVO">
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, j.midx
+		FROM team t
+		JOIN jointable j
+		ON j.tidx = t.tidx
+		WHERE t.tidx = #{tidx}
+		AND j.joinyn = 'N'
+		AND t.delyn = 'N') a, usertable u
+		WHERE a.midx = u.midx;
+	</select>
+	
+	<!-- 가입신청 수락, 거절 -->
+	<update id="apply_Y" parameterType="int">
+		UPDATE	jointable
+		SET		joinyn = 'Y'
+		WHERE	jidx = #{jidx}
+	</update>
+	
+	<delete id="apply_N" parameterType="int">
+		DELETE FROM jointable
+		WHERE		jidx = #{jidx}
+	</delete>
 	<!-- 내 팀 개수 -->
 	
 	
