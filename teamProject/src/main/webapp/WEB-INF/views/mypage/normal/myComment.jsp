@@ -54,10 +54,10 @@
 					<!-- 게시판 별 탭 -->
 					<ul class="nav nav-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" id="reviewTab" aria-current="page" href="javascript:tabChange('review')">리뷰</a>
+							<a class="nav-link" id="reviewTab" aria-current="page" href="myComment.do?page=1&sortType=review">리뷰</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="commentTab" aria-current="page" href="javascript:tabChange('comment')">댓글</a>
+							<a class="nav-link" id="commentTab" aria-current="page" href="myComment.do?page=1&sortType=comment">댓글</a>
 						</li>
 					</ul>
 					
@@ -75,10 +75,10 @@
 									<div class="row g-0">
 										<c:choose>
 										<c:when test="${v.photo != null}">
-											<div class="col-lg-4" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+											<div class="col-lg-4" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.bidx}'" style="cursor:pointer;">
 												<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${v.photo}" style="width:100%;height:100%;">
 											</div>
-											<div class="col-lg-8" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+											<div class="col-lg-8" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.bidx}'" style="cursor:pointer;">
 												<div class="card-body">
 													<h5 class="card-title">${v.name}</h5>
 													<p class="card-text">
@@ -91,7 +91,7 @@
 											</div>
 										</c:when>
 										<c:otherwise>
-											<div class="col-lg-12" onclick="movePage('review','${v.bidx}')" style="cursor:pointer;">
+											<div class="col-lg-12" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.bidx}'" style="cursor:pointer;">
 												<div class="card-body">
 													<h5 class="card-title">${v.name}</h5>
 													<p class="card-text">
@@ -115,22 +115,22 @@
 						<!-- 리뷰 페이징 -->
 						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
 						<div class="row pagenation">
-							<div class="col d-flex justify-content-center" id="pagingArea">
-								<c:if test="${pm.prev == true}">
-									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm.startPage-1}">◀</a>
+							<div class="col d-flex justify-content-center">
+								<c:if test="${pm1.prev == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm1.startPage-1}&sortType=review">◀</a>
 								</c:if>
-								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<c:forEach var="i" begin="${pm1.startPage}" end="${pm1.endPage}" step="1">
 								<c:choose>
-								<c:when test="${search.page != null && i == search.page}">
-									<a class="hfc-white hfc-bold hbg-pink mx-1" href="myComment.do?page=${i}">${i}</a>
+								<c:when test="${search1.page != null && i == search1.page}">
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="myComment.do?page=${i}&sortType=review">${i}</a>
 								</c:when>
 								<c:otherwise>
-									<a class="hfc-gray hfc-bold mx-1" href="myComment.do?page=${i}">${i}</a>
+									<a class="hfc-gray hfc-bold mx-1" href="myComment.do?page=${i}&sortType=review">${i}</a>
 								</c:otherwise>
 								</c:choose>
 								</c:forEach>
-								<c:if test="${pm.next == true}">
-									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm.endPage+1}">▶</a>
+								<c:if test="${pm1.next == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm1.endPage+1}&sortType=review">▶</a>
 								</c:if>
 							</div>
 						</div>
@@ -148,9 +148,9 @@
 							<c:forEach var="v" items="${comment}">
 								<div class="card mb-3">
 									<div class="row g-0">
-										<div class="col" onclick="movePage('comment','${v.bidx}')" style="cursor:pointer;">
+										<div class="col" onclick="location.href='<%= request.getContextPath() %>/story/storyView.do?sbidx=${v.bidx}'" style="cursor:pointer;">
 											<div class="card-body">
-												<h5 class="card-title">글 제목</h5>
+												<h5 class="card-title">${v.title}</h5>
 												<p class="card-text">${v.content}</p>
 											</div>
 										</div>
@@ -161,7 +161,28 @@
 						</c:choose>
 						
 						<!-- 댓글 페이징 -->
-						
+						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+						<div class="row pagenation">
+							<div class="col d-flex justify-content-center">
+								<c:if test="${pm2.prev == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm2.startPage-1}&sortType=comment">◀</a>
+								</c:if>
+								<c:forEach var="i" begin="${pm2.startPage}" end="${pm2.endPage}" step="1">
+								<c:choose>
+								<c:when test="${search2.page != null && i == search2.page}">
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="myComment.do?page=${i}&sortType=comment">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a class="hfc-gray hfc-bold mx-1" href="myComment.do?page=${i}&sortType=comment">${i}</a>
+								</c:otherwise>
+								</c:choose>
+								</c:forEach>
+								<c:if test="${pm2.next == true}">
+									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm2.endPage+1}&sortType=comment">▶</a>
+								</c:if>
+							</div>
+						</div>
+						<!-- /페이징 -->
 						
 						
 					</div>
@@ -179,7 +200,9 @@
 
 <script>
 	//탭 변경
-	function tabChange(type){
+	$(function(){
+		var type = "${type}";
+		
 		if(type == 'review'){
 			$("#reviewArea").show();
 			$("#commentArea").hide();
@@ -192,42 +215,7 @@
 			$("#reviewTab").removeClass("active");
 			$("#commentTab").addClass("active");
 		}
-	}
-	
-	//click 페이지 이동
-	function movePage(type, bidx){
-		if(type == 'review'){
-			location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx='+bidx;
-		}
-		else if(type == 'comment'){
-			
-		}
-	}
-	
-	//페이지 이동
-	function reviewPaging(index){
-		$("#page").val(index);
-		reviewListAjax(index);
-	}
-	
-	//페이징
-	function paging(){
-		$.ajax({
-			url:"reviewPaging.do",
-			success:function(paging){
-				
-			}
-		});
-	}
-	
-	//리뷰 그리기
-	function reviewListAjax(page){
-		
-	}
-	
-	//댓글 그리기
-	
-	
+	});
 </script>	
 	
 	

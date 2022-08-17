@@ -59,6 +59,7 @@ import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 //마이 페이지
@@ -203,7 +204,29 @@ public class MyPageController {
 	
 	//여행이야기 관리 이동
 	@RequestMapping(value="/myStory.do")
-	public String myStory() {
+	public String myStory(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		if(vo.getSortType() == null) {
+			vo.setSortType("new");
+		}
+		
+		int page = vo.getPage();
+		int cnt = userService.myStoryCount(vo);
+		vo.setPerPageNum(9);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<StoryVO> story = userService.myStory(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("story", story);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm",pm);
 		
 		return "mypage/normal/myStory";
 	}
@@ -313,74 +336,49 @@ public class MyPageController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setMidx(login.getMidx());
 		
-		//리뷰 페이징
-		int page = vo.getPage();
-		int cnt = userService.myReviewCount(vo);
-		vo.setPerPageNum(6);
+		String type = "";
 		
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
-		
-		List<CommentVO> review = userService.myReview(vo);
-		vo.setPage(page);
-		
-		model.addAttribute("review", review);
-		model.addAttribute("search", vo);
-		model.addAttribute("pm", pm);
-		
-		//댓글 페이징
-		
-		
-		return "mypage/normal/myComment";
-	}
-	
-	//리뷰 그리기
-	@ResponseBody
-	@RequestMapping(value="/reviewSelect.do")
-	public List<CommentVO> myReview(SearchVO vo, HttpServletRequest request, HttpSession session){
-		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");
-		vo.setMidx(login.getMidx());
-		
-		//리뷰 페이징
-		int page = vo.getPage();
-		int cnt = userService.myReviewCount(vo);
-		vo.setPerPageNum(6);
-		
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
-		
-		List<CommentVO> review = userService.myReview(vo);
-		vo.setPage(page);
-		
-		return review;
-	}
-	
-	//페이징 그리기
-	@ResponseBody
-	@RequestMapping(value="/reviewPaging.do")
-	public PageMaker myReviewPaging(String type, SearchVO vo, HttpServletRequest request, HttpSession session){
-		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");
-		vo.setMidx(login.getMidx());
-		
-		int cnt = 0;
+		if(vo.getSortType() == null) type = "review";
+		else type = vo.getSortType();
 		
 		if(type.equals("review")) {
-			cnt = userService.myReviewCount(vo);
+			//리뷰 페이징
+			int page = vo.getPage();
+			int cnt = userService.myReviewCount(vo);
+			vo.setPerPageNum(6);
+			
+			PageMaker pm = new PageMaker();
+			pm.setSearch(vo);
+			pm.setTotalCount(cnt);
+			
+			List<CommentVO> review = userService.myReview(vo);
+			vo.setPage(page);
+			
+			model.addAttribute("review", review);
+			model.addAttribute("search1", vo);
+			model.addAttribute("pm1", pm);
 		}
 		else {
+			//댓글 페이징
+			int page2 = vo.getPage();
+			int cnt2 = userService.myCommentCount(vo);
+			vo.setPerPageNum(6);
 			
+			PageMaker pm2 = new PageMaker();
+			pm2.setSearch(vo);
+			pm2.setTotalCount(cnt2);
+			
+			List<CommentVO> comment = userService.myComment(vo);
+			vo.setPage(page2);
+			
+			model.addAttribute("comment", comment);
+			model.addAttribute("search2", vo);
+			model.addAttribute("pm2", pm2);
 		}
 		
-		vo.setPerPageNum(6);
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
+		model.addAttribute("type", type);
 		
-		return pm;
+		return "mypage/normal/myComment";
 	}
 	
 	//너나들이 이동

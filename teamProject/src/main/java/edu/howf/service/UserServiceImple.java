@@ -11,6 +11,7 @@ import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 @Service
@@ -184,6 +185,27 @@ public class UserServiceImple implements UserService{
 	public int myReviewCount(SearchVO vo) {
 		return userDao.myReviewCount(vo);
 	}
+	
+	@Override
+	public List<CommentVO> myComment(SearchVO vo){
+		return userDao.myComment(vo);
+	}
+	
+	@Override
+	public int myCommentCount(SearchVO vo) {
+		return userDao.myCommentCount(vo);
+	}
+	
+	@Override
+	public List<StoryVO> myStory(SearchVO vo){
+		return userDao.myStory(vo);
+	}
+	
+	@Override
+	public int myStoryCount(SearchVO vo) {
+		return userDao.myStoryCount(vo);
+	}
+	
 	//내가 가입하거나 가입신청 한 너나들이 팀 목록
 	@Override
 	public List<JoinVO> myTeamList(SearchVO vo){

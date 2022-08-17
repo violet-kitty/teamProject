@@ -11,6 +11,7 @@ import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 @Repository
@@ -192,10 +193,26 @@ public class UserDao {
 	}
 	
 	//내 댓글
-	
+	public List<CommentVO> myComment(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myComment", vo);
+	}
 	
 	//내 댓글 개수
+	public int myCommentCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myCommentCount", vo);
+	}
 	
+	//내 여행이야기
+	public List<StoryVO> myStory(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myStory", vo);
+	}
+	
+	//내 여행이야기 개수
+	public int myStoryCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myStoryCount", vo);
+	}
 	
 	//내 팀
 	public List<JoinVO> myTeamList(SearchVO vo) {
@@ -220,7 +237,6 @@ public class UserDao {
 		return sqlSession.delete(namespace + "apply_N", jidx);
 	}
 	
-	//내 팀 개수
 	
 	
 	
