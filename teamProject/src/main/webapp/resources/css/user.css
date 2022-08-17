@@ -27,7 +27,7 @@
 .feature .colresult {width:100%;}
 .feature .result {font-size:18px;}
 .feature form span {position: absolute;color: #DE8889;top: 35%;width: 25px;height: 25px;right: 20px;}
-
+.whitebox .feature a:hover {color:#2F6764;} 
 @media all and (max-width: 992px) {
 	.feature:last-child {text-align:center; padding-left:0px;}
 }
