@@ -17,7 +17,11 @@ public interface TeamService {
 	
 	public int teamWrite(TeamVO tv);
 	
+	public int team_channel_update(TeamVO tv);
+	
 	public TeamVO teamView(int tidx);
+	
+	public TeamVO team_channel_id_select(int tidx);
 	
 	public int team_cnt_update(int tidx);
 	

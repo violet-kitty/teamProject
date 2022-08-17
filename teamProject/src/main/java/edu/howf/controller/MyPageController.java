@@ -9,9 +9,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,7 +51,9 @@ import edu.howf.service.TeamService;
 import edu.howf.service.UserService;
 import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
+import edu.howf.vo.EventVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
@@ -89,6 +91,11 @@ public class MyPageController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	String iamportKey;
+	
+	@Autowired
+	String iamportSecretKey;
 	
 	
 	//공통
@@ -135,6 +142,7 @@ public class MyPageController {
 				session = request.getSession();
 				UserVO login = (UserVO)session.getAttribute("login");
 				login.setImg(fileName);
+				
 				userService.profileImgModify(login);
 				
 				return 1;
@@ -171,6 +179,32 @@ public class MyPageController {
 		int result = userService.profileModify(vo);
 		
 		return result;
+	}
+	
+	//회원 탈퇴
+	@ResponseBody
+	@RequestMapping(value="/delyn.do")
+	public int delyn(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		return userService.userDel(login.getMidx());
+	}
+	
+	
+	
+	//일반회원
+	
+	//마이페이지 이동(일반회원)
+	@RequestMapping(value="/mypage.do")
+	public String mypageN() {
+		return "mypage/normal/mypageNList";
+	}
+	
+	//여행이야기 관리 이동
+	@RequestMapping(value="/myStory.do")
+	public String myStory() {
+		
+		return "mypage/normal/myStory";
 	}
 	
 	//찜 목록 이동
@@ -238,25 +272,7 @@ public class MyPageController {
 				model.addAttribute("search", vo);
 			}
 		}
-		return "mypage/myHeart";
-	}
-	
-	
-	
-	
-	//일반회원
-	
-	//마이페이지 이동(일반회원)
-	@RequestMapping(value="/mypage.do")
-	public String mypageN() {
-		return "mypage/mypageNList";
-	}
-	
-	//여행이야기 관리 이동
-	@RequestMapping(value="/myStory.do")
-	public String myStory() {
-		
-		return "mypage/myStory";
+		return "mypage/normal/myHeart";
 	}
 	
 	//예약한 숙소리스트 이동
@@ -285,7 +301,7 @@ public class MyPageController {
 		model.addAttribute("search", search);
 		model.addAttribute("pm", pm);
 		
-		return "mypage/myReservation";
+		return "mypage/normal/myReservation";
 	}
 	
 	
@@ -315,7 +331,7 @@ public class MyPageController {
 		//댓글 페이징
 		
 		
-		return "mypage/myComment";
+		return "mypage/normal/myComment";
 	}
 	
 	//리뷰 그리기
@@ -368,11 +384,19 @@ public class MyPageController {
 	
 	//너나들이 이동
 	@RequestMapping(value="/myTeam.do")
-	public String myTeam(SearchVO vo, Model model) {
+	public String myTeam(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
 		
-		return "mypage/myTeam";
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		vo.setMidx(login.getMidx());
+		List<JoinVO> jv = userService.myTeamList(vo);
+		
+		model.addAttribute("jv", jv);
+		model.addAttribute("login", login);
+		
+		return "mypage/normal/myTeam";
 	}
-	
 	
 	
 	
@@ -381,11 +405,34 @@ public class MyPageController {
 	//마이페이지 이동(공무원)
 	@RequestMapping(value="/mypageOfficial.do")
 	public String mypageO() {
-		return "mypage/mypageOList";
+		return "mypage/official/mypageOList";
 	}
 	
 	//지역 이벤트 관리 이동
-	
+	@RequestMapping(value="/myEvent.do")
+	public String myEvent(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("new");
+		
+		//페이징
+		int page = vo.getPage();
+		int cnt = boardService.myEventCount(vo);
+		vo.setPerPageNum(9);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<EventVO> event = boardService.myEvent(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("event", event);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
+		return "mypage/official/myEvent";
+	}
 	
 	
 	
@@ -395,15 +442,35 @@ public class MyPageController {
 	//마이페이지 이동(business)
 	@RequestMapping(value="/mypageBusiness.do")
 	public String mypageB() {
-		return "mypage/mypageBList";
+		return "mypage/business/mypageBList";
 	}
 	
 	//내 숙소 관리 이동
 	@RequestMapping(value="/myStay.do")
-	public String myStay(Model model, HttpServletRequest request, HttpSession session) {
+	public String myStay(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		if(vo.getSortType() == null) vo.setSortType("name");
 		
-		return "mypage/myStay";
+		//페이징
+		int page = vo.getPage();
+		int cnt = stayService.myStayCount(vo);
+		vo.setPerPageNum(9);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<StayVO> stay = stayService.myStayAll(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("stay", stay);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
+		return "mypage/business/myStay";
 	}
+	
 	
 	//예약자 관리 이동
 	@RequestMapping(value="reservationList.do")
@@ -416,7 +483,7 @@ public class MyPageController {
 		
 		model.addAttribute("res", res);
 		
-		return "mypage/reservationList";
+		return "mypage/business/reservationList";
 	}
 	
 	//날짜에 맞는 예약 목록 가져오기
@@ -439,11 +506,14 @@ public class MyPageController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		
 		//본인 소유 숙소 목록
-		List<StayVO> stay = stayService.myStayAll(login.getMidx());
+		SearchVO vo = new SearchVO();
+		vo.setMidx(login.getMidx());
+		vo.setSortType("name");
+		List<StayVO> stay = stayService.myStayAll(vo);
 		
 		model.addAttribute("stay", stay);
 		
-		return "mypage/resInsert";
+		return "mypage/business/resInsert";
 	}
 	
 	//방 정보 가져오기
@@ -490,8 +560,8 @@ public class MyPageController {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost("https://api.iamport.kr/users/getToken");
 		Map<String, String> m = new HashMap<String, String>();
-		m.put("imp_key", "6762610013000254");
-		m.put("imp_secret", "46VnDhH7paaluPlh5mW5dPktisxPccy2omZZvJHrjsod6KhkwbOuUTOIETzPx3FA5SkWqVM1ZHme5HlX");
+		m.put("imp_key", iamportKey);
+		m.put("imp_secret", iamportSecretKey);
 		
 		try {
 			post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
@@ -549,11 +619,94 @@ public class MyPageController {
 	//마이페이지 이동(admin)
 	@RequestMapping(value="/mypageAdmin.do")
 	public String mypageA() {
-		return "mypage/mypageAList";
+		return "mypage/admin/mypageAList";
 	}
 	
 	//회원 관리 이동
+	@RequestMapping(value="/userList.do")
+	public String userList(SearchVO vo, Model model) {
+		//페이징
+		int page = vo.getPage();
+		int cnt = userService.userListCount(vo);
+		vo.setPerPageNum(10);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<UserVO> user = userService.userList(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("pm", pm);
+		model.addAttribute("search", vo);
+		
+		//지역, 나이별 차트 데이터
+		List<UserVO> addrData = userService.addrData();
+		List<UserVO> ageData = userService.ageData();
+		
+		model.addAttribute("addrData", addrData);
+		model.addAttribute("ageData", ageData);
+		
+		return "mypage/admin/userList";
+	}
 	
+	//회원 밴
+	@ResponseBody
+	@RequestMapping(value="/userBan.do")
+	public int userBan(CommentVO vo) {
+		int result = userService.userBan(vo);
+		
+		return result;
+	}
+	
+	//사업자 가입 승인 이동
+	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.GET)
+	public String joinB(Model model, SearchVO vo) {
+		//페이징
+		int page = vo.getPage();
+		int cnt = userService.joinBCount(vo);
+		vo.setPerPageNum(10);
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<UserVO> user = userService.joinBSelect(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm", pm);
+		
+		return "mypage/admin/joinBusiness";
+	}
+	
+	//사업자 가입 승인
+	@ResponseBody
+	@RequestMapping(value="/joinBusiness.do", method=RequestMethod.POST)
+	public int joinOK(int midx) {
+		return userService.joinBY(midx);
+	}
+	
+	//사업자 가입 거절
+	@ResponseBody
+	@RequestMapping(value="/denyBusiness.do")
+	public int joinDeny(int midx) {
+		return userService.joinBN(midx);
+	}
+	
+	//리뷰 관리 이동
+	@RequestMapping(value="/reviewList.do")
+	public String reviewList() {
+		return "mypage/admin/reviewList";
+	}
+	
+	
+	
+	//댓글 관리 이동
+	@RequestMapping(value="/commentList.do")
+	public String commentList() {
+		return "mypage/admin/commentList";
+	}
 	
 	
 	
@@ -581,6 +734,56 @@ public class MyPageController {
 					
 			//bean에 주입한 물리경로 uploadPath
 			in = new FileInputStream(uploadPath+fileName);
+					
+			//파일 확장자가 있다면
+			if(mType != null){
+						
+				//만약 다운로드를 하고 싶다면 매개변수 down에 1을 넘겨줘서 호출하면 됨
+				if (down==1) {
+					fileName = fileName.substring(fileName.indexOf("_")+1);
+					headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+					headers.add("Content-Disposition", "attachment; filename=\""+
+							new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");	
+							
+				}else {
+					//down에 1이 넘어오지 않았다면 사진 보여주기
+					headers.setContentType(mType);
+				}
+						
+			}else{//파일 확장자가 없다면
+				fileName = fileName.substring(fileName.indexOf("_")+1);
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-Disposition", "attachment; filename=\""+
+						new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");				
+			}
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,
+					HttpStatus.CREATED);
+					
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}finally{
+			in.close();
+		}
+		return entity;
+	}
+	
+	//사업자 등록증 보여주기 위한 코드
+	@RequestMapping(value="/displayDocument.do", method=RequestMethod.GET)
+	public ResponseEntity<byte[]> displayDocument(@RequestParam("fileName") String fileName,@RequestParam(value="down",defaultValue="0" ) int down ) throws Exception{
+		InputStream in = null;		
+		ResponseEntity<byte[]> entity = null;
+				
+		try{
+			//파일 타입 체크
+			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+			MediaType mType = MediaUtils.getMediaType(formatName);
+					
+			HttpHeaders headers = new HttpHeaders();		
+					
+			//bean에 주입한 물리경로 uploadPath
+			in = new FileInputStream(uploadPath+"document/"+fileName);
 					
 			//파일 확장자가 있다면
 			if(mType != null){

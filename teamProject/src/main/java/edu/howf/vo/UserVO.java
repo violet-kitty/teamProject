@@ -16,6 +16,8 @@ public class UserVO {
 	private String social;		//소셜 로그인 종류
 	private String joinyn;		//가입 승인 여부
 	private String delyn;		//탈퇴 여부
+	private String joindate;	//가입 날짜
+	private String deldate;		//탈퇴 날짜
 	
 	public int getMidx() {
 		return midx;
@@ -106,5 +108,17 @@ public class UserVO {
 	}
 	public void setDelyn(String delyn) {
 		this.delyn = delyn;
+	}
+	public String getJoindate() {
+		return joindate;
+	}
+	public void setJoindate(String joindate) {
+		this.joindate = joindate;
+	}
+	public String getDeldate() {
+		return deldate;
+	}
+	public void setDeldate(String deldate) {
+		this.deldate = deldate;
 	}
 }

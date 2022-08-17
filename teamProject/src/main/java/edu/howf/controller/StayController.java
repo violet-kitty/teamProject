@@ -62,6 +62,12 @@ public class StayController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	String smsKey;
+	
+	@Autowired
+	String smsSecretKey;
+	
 	@RequestMapping(value="/stayList.do")
 	public String stayList(SearchVO vo, Model model) {
 		//히어로
@@ -459,9 +465,7 @@ public class StayController {
 	@ResponseBody
 	@RequestMapping(value="/authPerson.do")
 	public int auth(String phone, HttpServletRequest request, HttpServletResponse response) {
-		String api_key = "NCST9YVUZ5B5V4JG";
-		String api_secret = "G89QGA76EDVCLYIP7XJ0TFXEBEOUWALN";
-		Message coolsms = new Message(api_key, api_secret);
+		Message coolsms = new Message(smsKey, smsSecretKey);
 		
 		int authNum = (int)(Math.floor(Math.random()*900)+100);//인증번호
 		

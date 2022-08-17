@@ -24,6 +24,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -41,13 +42,15 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-					<!--  
 					
+					<!-- 채팅창 -->
+					<div id="chatArea">
+						
+					</div>
+					<input type="text" id="textInput">
+					<button onclick="sendMsg()">보내기</button>
 					
-					여기에 html 작성하시믄 댑니다~!
-					
-					 
-					 -->					
+								
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -56,5 +59,77 @@
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
+<script>
+	//채팅 api 초기화
+	const nc = new ncloudchat.Chat();
+	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
+	
+	//채팅 이벤트 핸들러
+	// 메시지 수신
+	nc.bind('onMessageReceived',function(channel, message) {
+		if(message.sender.name == "${login.nickname}"){
+			$("#chatArea").append("<div style='text-align:right;background:aliceblue;'><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+		}
+		else {
+			$("#chatArea").append("<div style='background:white;'><p>"+message.sender.name+"</p>"+message.content+"</div><br>");
+		}
+		window.scrollTo(0,document.body.scrollHeight);
+	});
+	// 오류 메시지
+	nc.bind('onErrorReceived',function(error) {
+		console.log("에러 : "+error);
+	});
+	// 접속 성공
+	nc.bind('onConnected',function(socket) {
+		console.log("접속 성공");
+		loadMsg();
+	});
+	// 접속 종료
+	nc.bind('onDisconnected',function(reason) { 
+		console.log("접속 종료 : "+reason);
+	});
+	
+	var re = userConnect();
+	
+	async function userConnect(){
+		const user = await nc.connect({
+		    id: "howf_${login.midx}",
+		    name: "${login.nickname}"
+		});
+		return 1;
+	}
+	
+	async function loadMsg(){
+		const filter = {channel_id: "${cidx}"};
+		const sort = {created_at:-1}; 
+		const option = { offset:0, per_page:100};
+		const messages = await nc.getMessages(filter, sort, option);
+		console.log(messages);
+		
+		for(var m of messages){
+			if(m.sender.name == "${login.nickname}"){
+				$("#chatArea").prepend("<div style='text-align:right;background:aliceblue;'><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
+			}
+			else {
+				$("#chatArea").prepend("<div style='background:white;'><p>"+m.sender.name+"</p>"+m.content+"</div><br>");
+			}
+		}
+		window.scrollTo(0,document.body.scrollHeight);
+		
+		return 1;
+	}
+	
+	async function sendMsg(){
+		await nc.sendMessage("${cidx}", {
+		      type: "text", 
+		      message: $("#textInput").val()
+		});
+		$("#textInput").val("");
+		return 1;
+	}
+	
+</script>	
+	
 </body>
 </html>

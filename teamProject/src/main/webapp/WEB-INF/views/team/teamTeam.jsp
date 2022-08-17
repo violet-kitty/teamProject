@@ -27,6 +27,7 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 <script>
@@ -79,6 +80,21 @@
 		$("#selected_vote_option").show();
 	}
 </script>
+<style>
+.input{
+    width: 100%;
+    display: block;
+    border: 0;
+    outline: none;
+    padding-right: 11rem;
+    padding-left: 1rem;
+    padding-top: 0.1rem;
+    font-size: 1.4rem;
+    line-height: 4rem;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+</style>
 </head>
 <body>
 	<div id="wrap">
@@ -96,9 +112,20 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
+				<div class="row">
+					<div class="col">
+						<!-- 채팅창 -->
+						<div id="chatArea" style="height:500px;overflow-y:scroll;width:100%;padding-left:5px;padding-right:5px;background:#54ACA8">
+							
+						</div>
+						<div style="background:white; position: relative; bottom: 0; left:0; width: 100%;">
+							<input type="text" id="textInput" onkeyup="enterkey()" class="input">
+							<button class="pinkbtn" onclick="sendMsg()" style="position: absolute; right: 0.5rem; top:50%; transform: translateY(-50%);">보내기</button>
+						</div>
+					</div>
+				</div><br><br>
 					<div class="row">
 						<div class="col d-flex justify-content-center text-center">
-						<button type="button" onclick="javascript:location.href='teamChatting.do?tidx=${tidx}'">팀 채팅</button><br>
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
 							<c:if test="${rv != null && result != 0}">
@@ -168,13 +195,6 @@
 					<div class="row">
 						<div class="col d-flex justify-content-center">
 							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<div>
-<!-- 							<button onclick="clickFn()">sdfs</button> -->
-							</div>
 						</div>
 					</div>
 				</div><!-- /.container -->
@@ -280,10 +300,111 @@
 		});
 	}
 	
-
-
-		
+	//채팅 api 초기화
+	const nc = new ncloudchat.Chat();
+	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
+	var cidx = "";
 	
+	//채팅 이벤트 핸들러
+	// 메시지 수신
+	nc.bind('onMessageReceived',function(channel, message) {
+		console.log(message);
+		if(message.sender.name == "${login.nickname}"){
+			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+		}
+		else {
+			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><p>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+		}
+		var element = document.getElementById("chatArea");
+		element.scrollTop = element.scrollHeight;
+	});
+	
+	// 오류 메시지
+	nc.bind('onErrorReceived',function(error) {
+		console.log("에러 : "+error);
+	});
+	// 접속 성공
+	nc.bind('onConnected',function(socket) {
+		console.log("접속 성공");
+		cidxReturn();
+		setTimeout(function(){
+			loadMsg();
+			chatchat(cidx);
+		},250);
+	});
+	
+	// 접속 종료
+	nc.bind('onDisconnected',function(reason) { 
+		console.log("접속 종료 : "+reason);
+	});
+	
+	var re = userConnect();
+	
+	async function userConnect(){
+		const user = await nc.connect({
+		    id: "howf_${login.midx}",
+		    name: "${login.nickname}"
+		});
+		return 1;
+	}
+	
+	async function cidxReturn(){
+		const filter = {state:true};
+		const sort = {created_at:-1};
+		const option = { offset:0, per_page:100};
+		const channels = await nc.getChannels(filter,sort,option);
+		
+		//채팅 리스트 그리기
+		for(var cha of channels){
+			if(cha.name == "${cidx}"){
+				cidx = cha.id;
+			}
+		}
+		return channels;
+	}
+	
+	async function loadMsg(){
+		const filter = {channel_id: cidx};
+		const sort = {created_at:-1}; 
+		const option = { offset:0, per_page:100};
+		const messages = await nc.getMessages(filter, sort, option);
+		console.log(messages);
+		
+		for(var m of messages){
+			if(m.sender.name == "${login.nickname}"){
+				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+			}
+			else {
+				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><p>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+			}
+		}
+		var element = document.getElementById("chatArea");
+		element.scrollTop = element.scrollHeight;
+		
+		return 1;
+	}
+	
+	async function sendMsg(){
+		await nc.sendMessage(cidx, {
+		      type: "text", 
+		      message: $("#textInput").val()
+		});
+		$("#textInput").val("");
+		
+		return 1;
+	}
+	
+	async function chatchat(CHANNEL_ID){
+		await nc.subscribe(CHANNEL_ID);
+		return 1;
+	}
+	
+	function enterkey() {
+		if (window.event.keyCode == 13) {
+			sendMsg();
+	    }
+	}
+
 </script>
 </body>
 </html>

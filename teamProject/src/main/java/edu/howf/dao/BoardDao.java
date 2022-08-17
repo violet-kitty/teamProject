@@ -14,6 +14,7 @@ import edu.howf.vo.SearchVO;
 
 @Repository
 public class BoardDao {
+	
 	@Autowired
 	SqlSession sqlSession;
 	
@@ -59,6 +60,7 @@ public class BoardDao {
 	
 	
 	public List<EventVO> eventSelectAll(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"eventSelectAll", vo);
 	}
 	
@@ -102,5 +104,15 @@ public class BoardDao {
 	
 	public int heartDup(HeartVO vo) {
 		return sqlSession.selectOne(namespace+"heartDup", vo);
+	}
+	
+	
+	public List<EventVO> myEvent(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myEvent", vo);
+	}
+	
+	public int myEventCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myEventCount", vo);
 	}
 }

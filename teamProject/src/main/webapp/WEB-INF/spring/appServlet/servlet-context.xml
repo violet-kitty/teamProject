@@ -51,10 +51,30 @@
 		</interceptor>
 	</interceptors>
 	
+	<!-- 파일 업로드 경로 -->
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:/upload/" />
 	</beans:bean>
 	
+	<!-- 결제 아임포트 API KEY -->
+	<beans:bean id="iamportKey" class="java.lang.String">
+		<beans:constructor-arg value="6762610013000254" />
+	</beans:bean>
+	
+	<!-- 결제 아임포트 SECRET API KEY -->
+	<beans:bean id="iamportSecretKey" class="java.lang.String">
+		<beans:constructor-arg value="46VnDhH7paaluPlh5mW5dPktisxPccy2omZZvJHrjsod6KhkwbOuUTOIETzPx3FA5SkWqVM1ZHme5HlX" />
+	</beans:bean>
+	
+	<!-- SMS API KEY -->
+	<beans:bean id="smsKey" class="java.lang.String">
+		<beans:constructor-arg value="NCST9YVUZ5B5V4JG" />
+	</beans:bean>
+	
+	<!-- SMS SECRET API KEY -->
+	<beans:bean id="smsSecretKey" class="java.lang.String">
+		<beans:constructor-arg value="G89QGA76EDVCLYIP7XJ0TFXEBEOUWALN" />
+	</beans:bean>
 	
 	<context:component-scan base-package="edu.howf.controller" />
 	<context:component-scan base-package="edu.howf.dao"/>

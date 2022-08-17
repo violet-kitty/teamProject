@@ -1,0 +1,89 @@
+@charset "UTF-8";
+@import "reset.css";
+
+@media all and (max-width:576px) {
+	.boardlist .container { width: 100%;margin: auto;padding: 2px 5%;}
+}
+
+/* boardTabList 공용세팅 */
+.parallax-window {
+    min-height: 250px;
+    background: transparent;
+    background-repeat:no-repeat;
+}
+.parallax-window img {width:50%;background-repeat:no-repeat;}
+@media all and (max-width: 768px) {
+	.parallax-window {
+    min-height: 100px;
+    background: transparent;
+    background-repeat:no-repeat;
+}
+	
+}
+
+/* Tab */
+.boardlist .cstopNav {z-index:3;position:absolute; text-align:center;width: 100%; margin-top: -78px;}
+.boardlist .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {background-color:#FBFBFB; border: 1px solid #dee2e6;}
+.boardlist .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {background-color:#FBFBFB; border-color: #dee2e6 #dee2e6 #FBFBFB;}
+.boardlist .cstopNav .nav-tabs {margin:auto; width:fit-content; text-align:center;}
+.boardlist .cstopNav .nav-tabs a {cursor:pointer;}
+.boardlist .cstopNav .nav-tabs a img {margin-top:5px;cursor:pointer;max-width:50px;}
+.boardlist .cstopNav .nav-tabs .nav-link.active img { margin-top:0px;cursor:pointer;max-width:60px;}
+.boardlist .cstopNav .nav-tabs .nav-link img:hover {margin-top:0px;cursor:pointer;max-width:60px;}
+
+/* pagehead & search */
+.boardlist .pagehead .pageinfo {display:inline-block;width:100%; padding:0px 12px; margin-bottom:50px;}
+.boardlist .pagehead .title {margin-top:0px; float:left; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
+.boardlist .pagehead .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
+.boardlist .pagehead .rightbox {float:right;}
+.boardlist .pagehead .search {position:relative;float:right;display: inline-block;box-sizing: border-box;text-align: center;}
+.boardlist .pagehead .search input[type=text] {width:400px; height:48px; padding:10px;border:2px solid #3E3E3E;margin-left:-4px;}
+.boardlist .pagehead .search select {cursor:pointer;border: 3.2px solid #3E3E3E;background-color: #3E3E3E;padding: 10px;color: white;}
+.boardlist .pagehead .search input[type=submit] {color: white; position:relative; top: 0px; right: 0px;margin-left: -5px; height: 48.5px; background: #3E3E3E; padding: 10px;border: 2px solid #3E3E3E; margin-left: -5px;
+}
+.boardlist .pagehead .filterbtn button{color:#9B9B9B; font-size:12px;font-weight:600; padding: 8px 24px 8px 24px; margin:8px 4px; border:2px solid #9B9B9B; background-color:white;}
+@media all and (max-width: 992px){
+	.boardlist .pagehead .rightbox {margin-top:16px; width:100%;}
+	.boardlist .pagehead .rightbox .btn-group {margin-bottom:16px;}
+	.boardlist .pagehead .rightbox button {padding:16px;}
+	.boardlist .pagehead .rightbox ul {width:100%;}
+	.boardlist .pagehead .rightbox a {width: 100%;padding: 16px;text-align: center;font-size: 16px;border-bottom:1px solid #ededed;}
+    .boardlist .pagehead .rightbox a:last-child {border-bottom:none;}
+    .boardlist .pagehead .search{width:100%;}
+}
+@media all and (max-width: 768px) {
+	.boardlist .pagehead .pageinfo{padding:0px; margin-bottom:0px;}
+	.boardlist .pagehead .title{float:none; display:block; margin-top:0px;}
+	.boardlist .pagehead .search{float:none;  display:flex;}
+	.boardlist .pagehead .search select {width:auto;}
+	.boardlist .pagehead .search input[type=submit] {position:relative;}
+	.boardlist .pagehead .search input[type=text] {width:100%;margin-left:0;}
+	.boardlist .pagehead .search input[type=button] {opacity:0;}
+}
+/* 리스트 카드*/
+/* CS List */
+.boardlist .clist .listcard {margin-bottom:24px;}
+.boardlist .clist .listtitle {margin-top:0px; font-size:19px; padding: 14px 18px; line-height:29px;  background-color:#F5F5F5; width:100%;}
+.boardlist .clist .listtitle span {float:right;}
+.boardlist .clist .listcontent {font-size:16px; line-height:26px; padding: 14px 18px; background-color:#FBFBFB; width:100%;}
+.boardlist .clist .listcontent span {float:right;}
+.boardlist .clist .listcontent button {border:none; background:none;}
+.boardlist .clist .listcontent button img {max-width:30px;}
+.boardlist .clist .btnarea {margin-top:8px; text-align:right;}
+@media screen and (max-width: 50em) {
+	.boardlist .clist .grid figure {display: inline-block; float: none; margin: 10px auto; width: 100%;}
+}
+@media all and (max-width: 768px) {
+	.boardlist .clist {margin-top:24px;}
+	.boardlist .clist .grid figure{max-height:180px;}
+	.boardlist .clist figure.effect-ming .imgbox {height:30vh;}
+	.boardlist .clist .thumbnailitem {padding:5px 0px;}
+	.boardlist .clist .thumbnail .writerinfo {padding: 0px 16px 8px 16px;}
+}
+
+/* 페이지네이션 */
+.boardlist .pagenation a {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px;}
+.boardlist .pagenation a:hover {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px; color:white; background-color:#A4C266;}
+@media all and (max-width: 576px) {
+	.boardlist .pagenation {width:100%; margin:20px 0px;}
+	}

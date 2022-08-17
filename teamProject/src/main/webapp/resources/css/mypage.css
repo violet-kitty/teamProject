@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.pageinfo .title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px; width: auto;}
+.pageinfo .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline; width: auto;}
+
+.feature a{color:black;}
+.feature a:hover{color:#54ACA8;}

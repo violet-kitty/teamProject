@@ -16,6 +16,7 @@ public class TeamVO extends BoardVO{
 	private int people_cnt;
 	private String filename;
 	private String applyyn;
+	private String team_channel_ID;
 	
 	public int getTidx() {
 		return tidx;
@@ -40,6 +41,12 @@ public class TeamVO extends BoardVO{
 	}
 	public void setApplyyn(String applyyn) {
 		this.applyyn = applyyn;
+	}
+	public String getTeam_channel_ID() {
+		return team_channel_ID;
+	}
+	public void setTeam_channel_ID(String team_channel_ID) {
+		this.team_channel_ID = team_channel_ID;
 	}
 	
 	

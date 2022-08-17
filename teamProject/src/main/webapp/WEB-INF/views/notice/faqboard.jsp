@@ -1,21 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ page session="true" %>
-    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
+    
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>Insert title here</title>
+<title>HOWF고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Bootstrap5 AwsomeFont -->
 <script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
 <!-- Google Font -->
@@ -23,16 +26,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- CSS3 - 관련CSS를 여기에 연결해주세 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyList.css">
 
-	<script type="text/javascript">
-	
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
+
+<!-- FAQ 스크립트 -->
+<script type="text/javascript">
 	// faq 내용 펼치기 이벤트
 	$(function(callback) {
 	$(".faq > dd").hide();
@@ -47,7 +55,6 @@
 	    	
 	      } else {
 	      	$dl.find("span").html("▲");
-
 	      }
 	    });
 	  });
@@ -64,7 +71,6 @@
 		mdf += "제목쓰";
 		mdf += "<input type='text' id='title'>";
 		mdf += "<br>";
-
 		$("#title"+index).html(mdf);
 		
 		mdf = "";
@@ -101,7 +107,6 @@
 					location.href="faqboard.do";
 					return;
 					},1500);
-
 				}else {
 					modalFn("삭제 실패");
 					setTimeout(function(){
@@ -113,7 +118,6 @@
 			
 		});
 	}
-
 	//쓰기 후 그려주기
 	function fmodify(index){
 		modify(index);
@@ -154,7 +158,6 @@
 		    });
 		  });
 	}
-
 // faq DB
 function modify(index){
 	var title = $("#title").val();
@@ -183,133 +186,195 @@ function modify(index){
 	});
 };
 	</script>
-	
-	<!-- 모달창 -->
-<script type="text/javascript">
-
-</script>
-<!-- 페이징 꾸미기 -->
-<style type="text/css">
-#paging {
-	padding: 20px 0 5px;
-	line-height: 160%;
-	font-size: 16px;
-	font-size:1.6em;
-	text-align:center;
-	cursor: default;
-}
-#paging a {
-	display:inline-block;
-	margin: 0 1px 0;
-	padding: 0 7px;
-	vertical-align:top;
-}
-#paging .no-more-prev ,#paging .no-more-next {
-	color: #aaa;
-	cursor: default;
-}
-#paging .selected {
-	 padding: 4px 9px 4px;
-	 border-radius: 100%;
-	 background-color:#07a;
-	 cursor: default;
-	 color: #fff;
-</style>
+	<!-- / FAQ 스크립트 -->
 
 </head>
+
+
 <body>
-	<div id="wrap">
+
+	<div id="wrap" class="boardlist cs cslist">
+		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
+		<!-- Herotop -->
+		<div class="parallax-window" data-parallax="scroll" data-image-src="<%= request.getContextPath() %>/image/picture/support.jpg"></div>
+				<nav class="cstopNav">
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a  class="nav-link active" href="<%= request.getContextPath() %>/notice/faqboard.do"><img src="<%= request.getContextPath() %>/image/button/tabby1.png"></a>
+						<a  class="nav-link" href="<%= request.getContextPath() %>/CSboard/CS_list.do"><img src="<%= request.getContextPath() %>/image/button/tabby2.png"></a>
+						<a  class="nav-link" href="<%= request.getContextPath() %>/notice/notice.do"><img src="<%= request.getContextPath() %>/image/button/tabby3.png"></a>
+					</div>
+				</nav>
+		<!-- Herotop -->
+
 		<!-- Side -->
+		
 		<div class="right-container">
+			<c:if test="${login!=null && login.role=='admin'}">
+				<div class="docctrl onlypc">
+					<a href="<%=request.getContextPath()%>/notice/faqwrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+				</div>
+			</c:if>
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
-		
-		<!-- container -->
-		<div id="container" class="hbg-lightgray">
 
-			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-<!-- 본문 -->
-<!-- 검색 -->
-	<form method="get" action="faqboard.do">
-			<select name="searchType">
-				<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
-				<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
-			</select>
-		<input type="text" name="searchValue" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
-		<input type="submit" value="검색">
-	</form>
+		<!-- #container -->
+		<div id="container" class="hbg-whitegray">
+
+			<!-- Tab 내용 컨텐츠 박스 -->
+			<div class="tab-content" id="nav-tabContent">
+
+				<!-- 탭1 내용 -->
+				<div class="tab-pane fade active show" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
+					<div class="contents pagehead hbg-whitegray">
+						<div class="container" id="featured-2">
+
+							<!--  타이틀과 검색영억 -->
+							<div class="pageinfo">
+								<!-- 제목 영역 -->
+								<div class="title onlypc">
+									<a href="<%=request.getContextPath()%>/notice/faqboard.do"><h1>FAQ</h1></a>
+								</div>
+
+								<!-- 검색영역 : PC버전 -->
+								<div class="row rightbox onlypc-inline">
+									<!-- 검색창 -->
+									<form name="frm2" action="CS_list.do" method="post">
+										<div class="search">
+											<select name="searchType">
+												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
+												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+											</select> <input type="text" name="searchValue"   placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> <input type="submit" value="검색">
+										</div>
+									</form>
+								</div><!-- .rightbox onlypc-inline-->
+								<!-- / 검색영역 -->
+								
+								<!-- 타블렛사이즈만 보이는 글쓰기 버튼 -->
+								<c:if test="${login!=null && login.role=='admin'}">
+									<div class="docctrl onlytablet" style="margin-top: 16px;">
+										<a hhref="<%=request.getContextPath()%>/CSboard/faqwrite.do"><button class="w-100 bluebtn">
+												<i class="fa-solid fa-plus"></i> &nbsp;글쓰기
+											</button></a>
+									</div>
+								</c:if>
+								<!-- / 타블렛사이즈만 보이는 글쓰기 버튼 -->
+								
+								<!-- 검색영역 : tablet사이즈 이하 버전 -->
+								<div class="row rightbox onlytablet">
+									<!-- 검색창 -->
+									<form name="frm2" action="howfList.do" method="post">
+										<div class="search">
+											<select name="searchType">
+												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
+												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+											</select> 
+											<input type="text" name="searchValue"  placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> 
+											<input type="submit" value="검색">
+										</div>
+									</form>
+								</div><!-- .rightbox onlytablet-->
+								<!-- 검색영역 : tablet사이즈 이하 버전 -->
+
+							</div><!-- .pageinfo -->
+							<!-- / 타이틀과 검색영억 -->
+
+							<!-- 리스트 박스 -->   <!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
+							<div class="clist">
+							
+								<!-- 리스트영역 -->
+								<div class="row grid">
+									<!-- faq 반복영역 -->
+									<c:forEach items="${list}" var="vo">
+									<div class="listcard" id="faqboard">
+										<input type="hidden" id="fbidx" name="fbidx">
+										<dl class="faq hbshadow3">
+											
+												<!-- 타이틀 -->
+												<dt class="listtitle hfc-bold" id="title${vo.fbidx}">
+													${vo.title} <span>▼</span></dt>
+												<!-- 내용펼치기 -->
+												<dd class="listcontent hfc-medium" id="content${vo.fbidx}">
+												${fn:replace(vo.content, newLineChar, "<br/>")}
 
 
+												<c:if test="${login!=null && login.role=='admin'}">
+													<br>
+													<div class="btnarea">
+														<button onclick="cancel('${vo.fbidx}')">
+															<img src="<%=request.getContextPath()%>/image/button/delete.png">
+														</button>
+														<button id="modify" class="modify"  onclick="wmodify(${vo.fbidx})">
+															<img src="<%=request.getContextPath()%>/image/button/edit.png">
+														</button>
+													</div>
+												</c:if>
 
-<!-- faq 리스트 -->
-<!-- <form id="form" action="delfaq.do" name="delfaq" method="get" > -->
-<div class="container">
-	<div id="faqboard">
-		<input type="hidden" id="fbidx" name="fbidx">
-	<!-- faq 영역 -->
-	<dl class="faq" style="border:8px groove black; background-color:skyblue;">
- 	
-		<c:forEach items="${list}" var="vo">
-			<!-- 타이틀 -->
-			<dt style="font-size:3em" id="title${vo.fbidx}"><span>▼</span>${vo.title}</dt>
- 			<!-- 내용펼치기 -->
-			<dd style="margin-left:20px; border:8px groove black; background-color:lightpink; font-size:1.5em" id="content${vo.fbidx}">
-  			${fn:replace(vo.content, newLineChar, "<br/>")}
-  		
-  		<c:if test="${login.role == 'admin'}">
-  		<br>
-		<button type="button" id="modify" class="modify" onclick="wmodify(${vo.fbidx})" >테스트수정</button>
-		<button onclick="cancel('${vo.fbidx}')">삭제쓰</button>
-  		</c:if>
-  			</dd>
-		</c:forEach>
-	</dl>
-	</div>
-</div>
-<c:if test="${login.role == 'admin'}">
-<button class="bluebtn" type="button" onclick="location.href='faqwrite.do'">FAQ작성 </button>
-</c:if>
-<button class="pinkbtn" type="button" onclick="location.href='notice.do'">공지사항</button>
-<button class="bluebtn" type="button" onclick="location.href='../'">메인화면</button>
-<!--  검색 및 페이징 -->
-<div id="paging">
-		<c:if test="${pageMaker.prev == true}">
-			<a href="faqboard.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">◀</a>
-		</c:if>
-		
-		<c:set var="index" value="1"/>
-		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx" step="1">
-			<c:choose>
-			<c:when test="${searchVO.page == index}">
-				<a style="color:gray" href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
-			</c:when>
-			<c:otherwise>
-				<a href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
-			</c:otherwise>
-			</c:choose>
-			<c:set var="index" value="${index+1}"/>
-    	</c:forEach>
-  
-    	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-    		<a href="faqboard.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">▶</a>
-    	</c:if> 
+											</dd>
+											
+										</dl>
+									</div>
+									</c:forEach>
+									<!-- / faq 반복영역 -->
+									
+								</div><!--/.row-->
+								<!-- /리스트영역 -->
 
-</div>
+								<!-- 페이징 -->
+								<div class="row pagenation">
+									<div class="col d-flex justify-content-center">
+										<c:if test="${pageMaker.prev == true}">
+											<a class="hfc-gray hfc-bold" href="faqboard.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">◀</a>
+										</c:if>
+										<c:set var="index" value="1"/>
+										<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"  var="idx" step="1">
+											<c:choose>
+												<c:when test="${searchVO.page == index}">
+													<a class="hfc-white hfc-bold hbg-pink mx-1" href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx}</a>
+												</c:when>
+												<c:otherwise>
+													<a class="hfc-gray hfc-bold mx-1" href="faqboard.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx}</a>
+												</c:otherwise>
+											</c:choose>
+											<c:set var="index" value="${index+1}"/>
+										</c:forEach>
+										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+											<a class="hfc-gray hfc-bold" href="faqboard.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">▶</a>
+										</c:if>
+									</div>
+								</div>
+								<!-- /페이징 -->
 
-<br><br>
-		</div><!-- /.container -->
+							</div><!-- /.clist -->
+							<!-- / 리스트 박스 --> 
+
+						</div><!-- /.container -->
+					</div><!-- /.contents -->
+
+				</div>
+				<!-- / 탭1 내용 -->
+				
+
 			</div>
-			<!-- / .content01 -->
+			<!-- / Tab 내용 컨텐츠 박스 -->
 
+
+
+
+
+			<!-- banner --><%@include file="../banner.jsp"%>
 
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
+		
 	</div><!-- /#wrap -->
+
+<script>
+$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
+</script>
+
 </body>
 </html>

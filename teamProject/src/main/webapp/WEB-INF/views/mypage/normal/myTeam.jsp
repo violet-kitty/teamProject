@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,12 +25,19 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<style>
+.table a{
+	color: #54ACA8;
+}
+</style>
 </head>
 <body>
 	<div id="wrap">
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -41,54 +47,61 @@
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
 
-			<!-- contents 02 -->
-			<style>
-			.feature {text-align:center;}
-			.feature img {margin:auto; margin-bottom:40px;}
-			.feature p {margin-bottom: 56px;}
-			.feature h2 {margin-bottom:24px;}
-			.title {border-bottom:2px solid #CFCFCF; padding-bottom:16px;display: inline; margin-bottom:70px;
-    width: auto;}
-.title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline;
-    width: auto;}
-			</style>
-			
-			<div class="contents lbg-lightestgray">
-				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
-					<!-- 페이지 제목 -->
-						<div class="title">
-							<h1>마이페이지</h1>
-						</div>
-					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">회원 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="<%= request.getContextPath() %>/howf/howfList.do">HOWF 추천 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="<%= request.getContextPath() %>/notice/notice.do">HOWF 소식 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="">사업자 가입 승인</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">고객 지원</a>
-						</div>
-					</div>
-				</div>
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+				<table class="table text-center">
+					<tbody>
+						<tr>
+							<th width="60%">너나들이 팀 이름</th>
+							<th width="20%">너나들이 팀 가입신청</th>
+							<th width="20%">너나들이 팀 가입신청일</th>
+						</tr>
+						<c:if test="${jv.size() == 0}">
+							<tr>
+								<td colspan="3">가입신청 한 너나들이 팀이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:forEach var="jv" items="${jv}">
+							<tr>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td><a href="#" id="joinN" style="color: #DE8889">${jv.title}</a></td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td><a href="<%=request.getContextPath()%>/team/teamTeam.do?tidx=${jv.tidx}">${jv.title}</a></td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td style="color: #DE8889">${jv.joinyn}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td style="color: #54ACA8">${jv.joinyn}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td style="color: #DE8889">${jv.jdate}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td style="color: #54ACA8">${jv.jdate}</td>
+								</c:if>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
-			
+
 
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+<script>
+	$(function(){
+		$("#joinN").click(function(){
+			modalFn("가입승인되지 않은 너나들이 팀 페이지에는 참여하실 수 없습니다.", "확인");
+			return;
+		});
+	});
+</script>
 </body>
 </html>

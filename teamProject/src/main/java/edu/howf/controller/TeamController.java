@@ -1,15 +1,26 @@
 package edu.howf.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +28,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.howf.service.TeamService;
 import edu.howf.vo.JoinVO;
@@ -67,16 +81,21 @@ public class TeamController {
 		return "team/teamWrite";
 	}
 	
+	
+	@ResponseBody
 	@PostMapping("/teamWrite.do")
-	public String teamWrite(TeamVO tv, HttpServletRequest request, HttpSession session) {
+	public int teamWrite(TeamVO tv, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
 		UserVO login = (UserVO)session.getAttribute("login");
 		tv.setMidx(login.getMidx());
-		
+
 		int result = teamService.teamWrite(tv);
+		tv.setTeam_channel_ID("HOWF_"+tv.getTidx());
 		
-		return "redirect:/team/teamList.do";
+		teamService.team_channel_update(tv);
+		
+		return tv.getTidx();
 	}
 	
 	@GetMapping("teamView.do")
@@ -203,10 +222,12 @@ public class TeamController {
 			}
 		}
 		
+		TeamVO tv = teamService.team_channel_id_select(tidx);
+		
 		model.addAttribute("rv", rv);
 		model.addAttribute("login", login);
 		model.addAttribute("tidx", tidx);
-		
+		model.addAttribute("cidx", tv.getTeam_channel_ID());
 		
 		
 		return "team/teamTeam";
@@ -270,14 +291,7 @@ public class TeamController {
 		
 		return teamService.revote(vv);
 	}
-	
-	@GetMapping("teamChatting.do")
-	public String teamChatting(int tidx, Model model) {
-		
-		model.addAttribute("tidx", tidx);
-		
-		return "team/teamChatting";
-	}
+
 
 	
 	

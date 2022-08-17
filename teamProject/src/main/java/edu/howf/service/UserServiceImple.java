@@ -9,6 +9,7 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
@@ -67,6 +68,16 @@ public class UserServiceImple implements UserService{
 	}
 	
 	@Override
+	public String socialBan(UserVO vo) {
+		return userDao.socialBan(vo);
+	}
+	
+	@Override
+	public String banComment(UserVO vo) {
+		return userDao.banComment(vo);
+	}
+	
+	@Override
 	public String socialType(UserVO vo) {
 		return userDao.socialType(vo);
 	}
@@ -118,6 +129,11 @@ public class UserServiceImple implements UserService{
 	public int profileModify(UserVO vo) {
 		return userDao.profileModify(vo);
 	}
+	
+	@Override
+	public int userDel(int midx) {
+		return userDao.userDel(midx);
+	}
 
 	@Override
 	public List<HeartVO> heartSelectHOWF(SearchVO vo) {
@@ -167,6 +183,57 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int myReviewCount(SearchVO vo) {
 		return userDao.myReviewCount(vo);
+	}
+	
+	@Override
+	public List<JoinVO> myTeamList(SearchVO vo){
+		return userDao.myTeamList(vo);
+	}
+
+	@Override
+	public List<UserVO> userList(SearchVO vo) {
+		return userDao.userList(vo);
+	}
+
+	@Override
+	public int userListCount(SearchVO vo) {
+		return userDao.userListCount(vo);
+	}
+
+	@Override
+	public int userBan(CommentVO vo) {
+		userDao.userBan(vo.getMidx());
+		return userDao.userBanComment(vo);
+	}
+
+	@Override
+	public List<UserVO> addrData() {
+		return userDao.addrData();
+	}
+
+	@Override
+	public List<UserVO> ageData() {
+		return userDao.ageData();
+	}
+
+	@Override
+	public List<UserVO> joinBSelect(SearchVO vo) {
+		return userDao.joinBSelect(vo);
+	}
+	
+	@Override
+	public int joinBCount(SearchVO vo) {
+		return userDao.joinBCount(vo);
+	}
+
+	@Override
+	public int joinBY(int midx) {
+		return userDao.joinBY(midx);
+	}
+
+	@Override
+	public int joinBN(int midx) {
+		return userDao.joinBN(midx);
 	}
 	
 }
