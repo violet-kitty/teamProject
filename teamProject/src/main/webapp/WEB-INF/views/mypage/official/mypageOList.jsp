@@ -31,6 +31,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabList.css">
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 
@@ -49,23 +50,26 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- contents 02 -->
 			
 			<div class="contents lbg-lightestgray">
 				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
 					<!-- 페이지 제목 -->
-						<div class="title">
+					<div class="pageinfo">
+						<div class="title onlypc">
 							<h1>마이페이지</h1>
 						</div>
+					</div>
+					
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>
 							<a class="mainbtn" href="myEvent.do">지역이벤트 관리</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
+							<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>
 							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">문의 내역</a>
 						</div>
 					</div>
