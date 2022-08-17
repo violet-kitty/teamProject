@@ -113,3 +113,45 @@
 @media all and (max-width: 576px) {
 	.boardlist .pagenation {width:100%; margin:20px 0px;}
 	}
+		
+/* 숙박정보 */
+.staylist .clist .banding {padding: 16px 16px 0px 16px;}
+.staylist .clist .banding p {display:inline-block; font-size: 12px;line-height: 15px;vertical-align: middle; letter-spacing: 0.52px;}
+.staylist .clist .banding p .cate {border-radius:25px; margin-right:8px; padding:5px 10px; display:inline-block; font: normal normal 13px/19px Noto Sans; letter-spacing: 0.52px;}
+.staylist .clist .banding .small {float: right; margin-top:0px;}
+.staylist .clist .banding .small span {margin-left:8px; font-size:16px; vertical-align:middle;}
+.staylist .clist .banding .small img { display:inline-block; width:16px; margin-top: -2px; vertical-align:middle;}
+.staylist .clist .banding .caption h4 {text-overflow: ellipsis;overflow: hidden;word-break: keep-all;display: -webkit-box; -webkit-line-clamp: 2; min-height: 57px; font-size:20px; line-height:28px;-webkit-box-orient: vertical; padding:0px 16px; color:#3D3D3D; font-weight:700;}
+
+
+.staylist .clist .banding .score {font-size: 16px;vertical-align: middle;}
+.staylist .clist .banding .priceinfo {margin-top: 8px;font-size: 16px;line-height: 26px;}
+.staylist .clist .banding h4 {font-size: 24px; line-height: 34px; margin-top: 6px; text-overflow: ellipsis; overflow: hidden; word-break: keep-all;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
+
+
+.bd-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1071;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
+}
+.bd-sidebar {
+  position: sticky;
+  z-index: 1000;
+  margin-top:15px;
+  padding:32px;
+  background: white;
+}
+.staylist .bd-sidebar .priceholder {text-align:right; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 8px; font-size: 16px;font-weight: 600;}
+.staylist .bd-sidebar .sfilter h3 {font-size:26px;}
+.staylist .bd-sidebar .sfilter h4 {margin-top:38px; font-size:18px; display:inline-block;}
+.staylist .bd-sidebar .sfilter .pricet {margin-top:38px; font-size:18px; display:inline-block;}
+.staylist .bd-sidebar .sfilter .optiont {margin-top:24px; font-size:18px; display:inline-block;}
+.staylist .bd-sidebar .sfilter .people {margin-top:32px; isplay:inline; float:right;}
+.staylist .bd-sidebar .sfilter .people button {border:none; background:none; font-size:24px; vertical-align:middle;}
+.staylist .bd-sidebar .sfilter .people input {font-size:20px;margin-left:8px; border:none; vertical-align:middle;}
+.staylist .bd-sidebar .sfilter .price {margin-top:8px;}
+.staylist .bd-sidebar .sfilter .checkoption {margin-top:24px; margin-bottom:32px}
+.staylist .bd-sidebar .sfilter .checkoption table {width:100%;}
+.staylist .bd-sidebar .sfilter .checkoption table td {padding: 5px 0px;}
+.staylist .bd-sidebar .sfilter .checkoption table td:nth-child(even) {padding:5px 0px 5px 40px;}
