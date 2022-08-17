@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 @Repository
@@ -191,15 +193,50 @@ public class UserDao {
 	}
 	
 	//내 댓글
-	
+	public List<CommentVO> myComment(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myComment", vo);
+	}
 	
 	//내 댓글 개수
+	public int myCommentCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myCommentCount", vo);
+	}
 	
+	//내 여행이야기
+	public List<StoryVO> myStory(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"myStory", vo);
+	}
+	
+	//내 여행이야기 개수
+	public int myStoryCount(SearchVO vo) {
+		return sqlSession.selectOne(namespace+"myStoryCount", vo);
+	}
 	
 	//내 팀
+	public List<JoinVO> myTeamList(SearchVO vo) {
+		
+		return sqlSession.selectList(namespace + "myTeamList", vo);
+	}
 	
+	//내가 만든 팀에 들어온 가입신청 목록
+	public List<JoinVO> myTeam_applyList(int tidx){
+		
+		return sqlSession.selectList(namespace + "myTeam_applyList", tidx);
+	}
 	
-	//내 팀 개수
+	//내가 만든 팀에 들어온 가입신청 수락
+	public int apply_Y(int jidx) {
+		
+		return sqlSession.update(namespace + "apply_Y", jidx);
+	}
+	//내가 만든 팀에 들어온 가입신청 거절(테이블에서 삭제)
+	public int apply_N(int jidx) {
+		
+		return sqlSession.delete(namespace + "apply_N", jidx);
+	}
+	
 	
 	
 	

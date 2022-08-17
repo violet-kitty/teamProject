@@ -102,7 +102,7 @@ thead tr {
 
 	<!-- 본문 -->
 <div>
-<h2>공지사항</h2>
+<h2><a href="notice.do">공지사항</a></h2>
 <br><p>현재 ${login.nickname}으로 로그인 됨</p>
 </div>
 
@@ -150,13 +150,13 @@ thead tr {
 
 <!-- 페이징  -->
 <div  id="paging">
+    	
+    	<c:if test="${pageMaker.prev == true}">
 
-		<c:if test="${pageMaker.prev == true} ">
-
-			<a href="notice.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">이전</a>
+			<a href="notice.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">◀</a>
 
 		</c:if>
-		
+
 		<c:set var="index" value="1"/>
 		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx" step="1">
 			<c:choose>
@@ -167,12 +167,12 @@ thead tr {
 				<a href="notice.do?page=${idx}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue} ">${idx} </a>
 			</c:otherwise>
 			</c:choose>
-			<c:set var="index" value="${index+1}"/>
+		<c:set var="index" value="${index+1}"/>
     	</c:forEach>
     	
     	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
- 
-    		<a href="notice.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">다음</a>
+
+    		<a href="notice.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">▶</a>
  
     	</c:if> 
 

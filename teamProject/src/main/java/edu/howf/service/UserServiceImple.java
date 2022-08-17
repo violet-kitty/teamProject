@@ -9,7 +9,9 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 @Service
@@ -183,6 +185,48 @@ public class UserServiceImple implements UserService{
 	public int myReviewCount(SearchVO vo) {
 		return userDao.myReviewCount(vo);
 	}
+	
+	@Override
+	public List<CommentVO> myComment(SearchVO vo){
+		return userDao.myComment(vo);
+	}
+	
+	@Override
+	public int myCommentCount(SearchVO vo) {
+		return userDao.myCommentCount(vo);
+	}
+	
+	@Override
+	public List<StoryVO> myStory(SearchVO vo){
+		return userDao.myStory(vo);
+	}
+	
+	@Override
+	public int myStoryCount(SearchVO vo) {
+		return userDao.myStoryCount(vo);
+	}
+	
+	//내가 가입하거나 가입신청 한 너나들이 팀 목록
+	@Override
+	public List<JoinVO> myTeamList(SearchVO vo){
+		return userDao.myTeamList(vo);
+	}
+	//내가 만든 팀에 들어온 가입신청 목록불러옴(모달창)
+	@Override
+	public List<JoinVO> myTeam_applyList(int tidx){
+		return userDao.myTeam_applyList(tidx);
+	}
+	//가입신청 수락
+	@Override
+	public int apply_Y(int jidx) {
+		return userDao.apply_Y(jidx);
+	}
+	//가입신청 거절
+	@Override
+	public int apply_N(int jidx) {
+		return userDao.apply_N(jidx);
+	}
+	
 
 	@Override
 	public List<UserVO> userList(SearchVO vo) {

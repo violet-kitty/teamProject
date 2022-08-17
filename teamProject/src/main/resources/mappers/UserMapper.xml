@@ -492,24 +492,138 @@
 	</select>
 	
 	<!-- 내 댓글 가져오기 -->
-	
+	<select id="myComment" parameterType="searchVO" resultType="commentVO">
+		SELECT c.cbidx
+			, c.content
+			, c.star
+			, c.bidx
+			, c.photo
+			, DATE_FORMAT(C.wdate,'%Y-%m-%d') as wdate
+			, s.name
+		FROM comment c
+		JOIN stay s
+		ON c.bidx = s.sidx
+		WHERE c.midx = #{midx}
+		AND c.delyn = 'N'
+		AND s.delyn = 'N'
+		AND c.type = 'story'
+		LIMIT #{page}, #{perPageNum}
+	</select>
 	
 	<!-- 내 댓글 개수 -->
+	<select id="myCommentCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE midx = #{midx}
+		AND delyn = 'N'
+		AND type = 'story'
+	</select>
 	
+	<!-- 내 여행이야기 -->
+	<select id="myStory" parameterType="SearchVO" resultType="storyVO">
+		SELECT * FROM
+			(SELECT
+				s.sbidx,
+				s.midx,
+				u.nickname,
+				u.img,
+				s.title,
+				s.content,
+				DATE_FORMAT(s.wdate,'%Y-%m-%d') as wdate,
+				s.cnt,
+				s.filename,
+				s.tag,
+				s.delyn
+			 FROM story s, usertable u WHERE s.midx = u.midx) a
+		LEFT OUTER JOIN
+			(SELECT bidx, COUNT(hidx) as heart FROM heart WHERE type = 'story' GROUP BY bidx) b
+		on a.sbidx = b.bidx
+		WHERE a.delyn = 'N'
+		AND a.midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+			AND (a.title like CONCAT('%',#{searchValue},'%')
+			OR a.tag like CONCAT('%',#{searchValue},'%')
+			OR a.nickname like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+			AND a.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+			AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("nickname")'>
+			AND a.nickname like CONCAT('%',#{searchValue},'%')
+		</if>
+		<!-- sort -->
+		<if test='sortType == null or sortType == "" or sortType.equals("new")'>
+			ORDER BY a.wdate desc, a.sbidx desc
+		</if>
+		<if test='sortType != null and sortType.equals("heart")'>
+			ORDER BY b.heart desc, a.wdate desc
+		</if>
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	<!-- 내 여행이야기 개수 -->
+	<select id="myStoryCount" parameterType="SearchVO" resultType="int">
+		SELECT COUNT(s.sbidx)
+		FROM story s, usertable u
+		WHERE s.midx = u.midx
+		AND s.delyn = 'N'
+		AND s.midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (s.title like CONCAT('%',#{searchValue},'%')
+		OR s.tag like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND s.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND s.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+	</select>
 	
 	<!-- 내 팀 목록 보기 -->
 	<select id="myTeamList" parameterType="int" resultType="joinVO">
-		SELECT j.jidx, j.joinyn, t.tidx, t.title
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, t.midx
 		FROM team t
 		JOIN jointable j
 		ON j.tidx = t.tidx
 		WHERE j.midx = #{midx}
-		AND t.delyn = 'N'
+		AND t.delyn = 'N') a, usertable u
+		WHERE a.midx = u.midx
+		ORDER BY t.tidx DESC
 	</select>
 	
-	<!-- 내 팀 개수 -->
+	<!-- 팀 가입신청 목록보기 & 승인 여부 -->
+	<select id="myTeam_applyList" parameterType="int" resultType="joinVO">
+		SELECT a.*, u.nickname
+		FROM
+		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, j.midx
+		FROM team t
+		JOIN jointable j
+		ON j.tidx = t.tidx
+		WHERE t.tidx = #{tidx}
+		AND j.joinyn = 'N'
+		AND t.delyn = 'N') a, usertable u
+		WHERE a.midx = u.midx;
+	</select>
 	
+	<!-- 가입신청 수락, 거절 -->
+	<update id="apply_Y" parameterType="int">
+		UPDATE	jointable
+		SET		joinyn = 'Y'
+		WHERE	jidx = #{jidx}
+	</update>
 	
+	<delete id="apply_N" parameterType="int">
+		DELETE FROM jointable
+		WHERE		jidx = #{jidx}
+	</delete>
 	
 	
 	

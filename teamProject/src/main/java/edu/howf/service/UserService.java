@@ -5,7 +5,9 @@ import java.util.List;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 public interface UserService { 
@@ -44,6 +46,14 @@ public interface UserService {
 	public int heartCountStay(SearchVO vo);
 	public List<CommentVO> myReview(SearchVO vo);
 	public int myReviewCount(SearchVO vo);
+	public List<CommentVO> myComment(SearchVO vo);
+	public int myCommentCount(SearchVO vo);
+	public List<StoryVO> myStory(SearchVO vo);
+	public int myStoryCount(SearchVO vo);
+	public List<JoinVO> myTeamList(SearchVO vo);
+	public List<JoinVO> myTeam_applyList(int tidx);
+	public int apply_Y(int jidx);
+	public int apply_N(int jidx);
 	
 	public List<UserVO> userList(SearchVO vo);
 	public int userListCount(SearchVO vo);

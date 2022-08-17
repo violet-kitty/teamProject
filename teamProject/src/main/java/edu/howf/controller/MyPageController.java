@@ -9,9 +9,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,10 +54,12 @@ import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.EventVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
+import edu.howf.vo.StoryVO;
 import edu.howf.vo.UserVO;
 
 //마이 페이지
@@ -201,7 +204,29 @@ public class MyPageController {
 	
 	//여행이야기 관리 이동
 	@RequestMapping(value="/myStory.do")
-	public String myStory() {
+	public String myStory(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		if(vo.getSortType() == null) {
+			vo.setSortType("new");
+		}
+		
+		int page = vo.getPage();
+		int cnt = userService.myStoryCount(vo);
+		vo.setPerPageNum(9);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		
+		List<StoryVO> story = userService.myStory(vo);
+		vo.setPage(page);
+		
+		model.addAttribute("story", story);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm",pm);
 		
 		return "mypage/normal/myStory";
 	}
@@ -311,81 +336,89 @@ public class MyPageController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setMidx(login.getMidx());
 		
-		//리뷰 페이징
-		int page = vo.getPage();
-		int cnt = userService.myReviewCount(vo);
-		vo.setPerPageNum(6);
+		String type = "";
 		
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
+		if(vo.getSortType() == null) type = "review";
+		else type = vo.getSortType();
 		
-		List<CommentVO> review = userService.myReview(vo);
-		vo.setPage(page);
+		if(type.equals("review")) {
+			//리뷰 페이징
+			int page = vo.getPage();
+			int cnt = userService.myReviewCount(vo);
+			vo.setPerPageNum(6);
+			
+			PageMaker pm = new PageMaker();
+			pm.setSearch(vo);
+			pm.setTotalCount(cnt);
+			
+			List<CommentVO> review = userService.myReview(vo);
+			vo.setPage(page);
+			
+			model.addAttribute("review", review);
+			model.addAttribute("search1", vo);
+			model.addAttribute("pm1", pm);
+		}
+		else {
+			//댓글 페이징
+			int page2 = vo.getPage();
+			int cnt2 = userService.myCommentCount(vo);
+			vo.setPerPageNum(6);
+			
+			PageMaker pm2 = new PageMaker();
+			pm2.setSearch(vo);
+			pm2.setTotalCount(cnt2);
+			
+			List<CommentVO> comment = userService.myComment(vo);
+			vo.setPage(page2);
+			
+			model.addAttribute("comment", comment);
+			model.addAttribute("search2", vo);
+			model.addAttribute("pm2", pm2);
+		}
 		
-		model.addAttribute("review", review);
-		model.addAttribute("search", vo);
-		model.addAttribute("pm", pm);
-		
-		//댓글 페이징
-		
+		model.addAttribute("type", type);
 		
 		return "mypage/normal/myComment";
 	}
 	
-	//리뷰 그리기
-	@ResponseBody
-	@RequestMapping(value="/reviewSelect.do")
-	public List<CommentVO> myReview(SearchVO vo, HttpServletRequest request, HttpSession session){
-		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");
-		vo.setMidx(login.getMidx());
-		
-		//리뷰 페이징
-		int page = vo.getPage();
-		int cnt = userService.myReviewCount(vo);
-		vo.setPerPageNum(6);
-		
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
-		
-		List<CommentVO> review = userService.myReview(vo);
-		vo.setPage(page);
-		
-		return review;
-	}
-	
-	//페이징 그리기
-	@ResponseBody
-	@RequestMapping(value="/reviewPaging.do")
-	public PageMaker myReviewPaging(String type, SearchVO vo, HttpServletRequest request, HttpSession session){
-		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");
-		vo.setMidx(login.getMidx());
-		
-		int cnt = 0;
-		
-		if(type.equals("review")) {
-			cnt = userService.myReviewCount(vo);
-		}
-		else {
-			
-		}
-		
-		vo.setPerPageNum(6);
-		PageMaker pm = new PageMaker();
-		pm.setSearch(vo);
-		pm.setTotalCount(cnt);
-		
-		return pm;
-	}
-	
 	//너나들이 이동
 	@RequestMapping(value="/myTeam.do")
-	public String myTeam(SearchVO vo, Model model) {
+	public String myTeam(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		vo.setMidx(login.getMidx());
+		List<JoinVO> jv = userService.myTeamList(vo);
+		
+		model.addAttribute("jv", jv);
+		model.addAttribute("login", login);
 		
 		return "mypage/normal/myTeam";
+	}
+	
+	//내가 만든 팀에 들어온 가입신청 목록 불러옴(모달창)
+	@ResponseBody
+	@PostMapping("applyList.do")
+	public List<JoinVO> applyList(int tidx) {
+		
+		List<JoinVO> jv = userService.myTeam_applyList(tidx);
+		
+		return jv;
+	}
+	//가입신청 승인
+	@ResponseBody
+	@PostMapping("apply_Y.do")
+	public int apply_Y(int jidx) {
+		
+		return userService.apply_Y(jidx);
+	}
+	//가입신청 거절
+	@ResponseBody
+	@PostMapping("apply_N.do")
+	public int apply_N(int jidx) {
+		
+		return userService.apply_N(jidx);
 	}
 	
 	
