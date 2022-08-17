@@ -31,8 +31,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;
-		logger.info("{} 연결됨"+ session.getId());
-		System.out.println(session.getId()+"연결성공"+i);
+		logger.info("{"+ session.getId()+"} 연결됨");
 		//맵을 쓸떄 방법
 		//session.put(session.geId(),session);
 		//List쓸 떄 방법
@@ -49,7 +48,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		logger.info("#EchoHandler, handleMsesage");
 		//0번쨰에 session.getId() 1번쨰에 message.getPayload() 넣음
 		//logger.info("", new String[]{session.getId(),message.getPayload()})
-		System.out.println(("{}로 부터 {} 받음"+ session.getId()+ message.getPayload()));
+		System.out.println(("{"+ session.getId()+ "}로 부터 {"+ message.getPayload() + "} 받음"));
 		//연결된 모든 클라이언트에게 메시지전송
 		//getPrincipal()을 이용해서 세션에 몰려있는 유저의 정보를 불러온다. 세션의 정보는 User를 이용한것과 동일하다
 		// 모든 세션에 채팅 전달
@@ -74,7 +73,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		i--;
 		
 		logger.info("#EchoHandler, afterConnectionClosed");
-		logger.info(("{} 연결 끊김"+ session.getId()));
+		logger.info(("{"+ session.getId()+"} 연결 끊김"));
 		//List 삭제
 		if(sessionList.get(session) != null) {
 			List.get(sessionList.get(session)).remove(session);
