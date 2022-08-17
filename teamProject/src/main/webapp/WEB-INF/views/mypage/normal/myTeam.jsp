@@ -25,7 +25,7 @@
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <style>
 .table a{
@@ -53,9 +53,9 @@
 				<table class="table text-center">
 					<tbody>
 						<tr>
-							<th>너나들이 팀 번호</th>
-							<th>너나들이 팀 이름</th>
-							<th>너나들이 팀 가입신청</th>
+							<th width="60%">너나들이 팀 이름</th>
+							<th width="20%">너나들이 팀 가입신청</th>
+							<th width="20%">너나들이 팀 가입신청일</th>
 						</tr>
 						<c:if test="${jv.size() == 0}">
 							<tr>
@@ -64,7 +64,6 @@
 						</c:if>
 						<c:forEach var="jv" items="${jv}">
 							<tr>
-								<td>${jv.tidx}</td>
 								<c:if test="${jv.joinyn == 'N'}">
 									<td><a href="#" id="joinN" style="color: #DE8889">${jv.title}</a></td>
 								</c:if>
@@ -76,6 +75,12 @@
 								</c:if>
 								<c:if test="${jv.joinyn == 'Y'}">
 									<td style="color: #54ACA8">${jv.joinyn}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td style="color: #DE8889">${jv.jdate}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td style="color: #54ACA8">${jv.jdate}</td>
 								</c:if>
 							</tr>
 						</c:forEach>

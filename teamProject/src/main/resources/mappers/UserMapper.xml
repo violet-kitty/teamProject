@@ -499,7 +499,7 @@
 	
 	<!-- 내 팀 목록 보기 -->
 	<select id="myTeamList" parameterType="int" resultType="joinVO">
-		SELECT j.jidx, j.joinyn, t.tidx, t.title
+		SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title
 		FROM team t
 		JOIN jointable j
 		ON j.tidx = t.tidx
