@@ -44,7 +44,7 @@
 		<if test="filter != null">
 		<if  test="filter.option != null">
 		<foreach item="op" collection="filter.option" index="index">
-		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드') and !op.equals('편의점') and !op.equals('커피숍') and !op.equals('골프장') and !op.equals('족구장') and !op.equals('농구장') and !op.equals('실내낚시터') and !op.equals('산책로') and !op.equals('익스트림체험장') and !op.equals('세차장') and !op.equals('키드존')">
 		AND tags like CONCAT('%',#{op},'%')
 		</if>
 		</foreach>
@@ -108,7 +108,7 @@
 		<if test="op.equals('킹베드')">
 		AND e.kbed != 0
 		</if>
-		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		<if test="op.equals('편의점') or op.equals('커피숍') or op.equals('골프장') or op.equals('족구장') or op.equals('농구장') or op.equals('실내낚시터') or op.equals('산책로') or op.equals('익스트림체험장') or op.equals('세차장') or op.equals('키드존')">
 		AND e.services like CONCAT ('%',#{op},'%')
 		</if>
 		</foreach>
@@ -148,7 +148,7 @@
 		<if test="filter != null">
 		<if  test="filter.option != null">
 		<foreach item="op" collection="filter.option" index="index">
-		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드')">
+		<if test="!op.equals('싱글베드') and !op.equals('더블베드') and !op.equals('퀸베드') and !op.equals('킹베드') and !op.equals('편의점') and !op.equals('커피숍') and !op.equals('골프장') and !op.equals('족구장') and !op.equals('농구장') and !op.equals('실내낚시터') and !op.equals('산책로') and !op.equals('익스트림체험장') and !op.equals('세차장') and !op.equals('키드존')">
 		AND tags like CONCAT('%',#{op},'%')
 		</if>
 		</foreach>
@@ -197,7 +197,7 @@
 		<if test="op.equals('킹베드')">
 		AND b.kbed != 0
 		</if>
-		<if test="op.equals('편의점') and op.equals('커피숍') and op.equals('골프장') and op.equals('족구장') and op.equals('농구장') and op.equals('실내낚시터') and op.equals('산책로') and op.equals('익스트림체험장') and op.equals('세차장') and op.equals('키드존')">
+		<if test="op.equals('편의점') or op.equals('커피숍') or op.equals('골프장') or op.equals('족구장') or op.equals('농구장') or op.equals('실내낚시터') or op.equals('산책로') or op.equals('익스트림체험장') or op.equals('세차장') or op.equals('키드존')">
 		AND e.services like CONCAT ('%',#{op},'%')
 		</if>
 		</foreach>
