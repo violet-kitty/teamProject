@@ -85,7 +85,7 @@ var nicknameDup = false;
 						<h2 class="hfc-bold">로그인</h2>
 						<div class="row row-cols-1 row-cols-lg-2">
 							<div class="feature col">
-								<p class="subtitle">기억이 안나나요?</p><br class="onlymobile"> <a href="emailFind.do">이메일 찾기</a> & <a href="pwdFind.do">비밀번호 찾기</a>
+								<p class="subtitle">기억이 안나나요?</p><br class="onlymobile"> <a href="emailFind.do" class="hfc-semibold hfc-blue">이메일 찾기</a> & <a href="pwdFind.do" class="hfc-semibold hfc-blue">비밀번호 찾기</a>
 								<!-- form -->
 								<form id="frm">
 									<table border="1">
@@ -169,28 +169,38 @@ var nicknameDup = false;
 						setTimeout(function(){
 							modalClose();
 						},1000);
-						//alert("아직 승인이 되지 않았습니다. 승인 이후 로그인 가능합니다.");
+					}
+					else if(data == "BAN"){
+						$.ajax({
+							url:"banComment.do",
+							data:"email="+id.val(),
+							type:"post",
+							success:function(comment){
+								var str = "밴 유저입니다. 사유 : "+comment;
+								modalFn(str);
+								setTimeout(function(){
+									modalClose();
+								},1000);
+							}
+						});
 					}
 					else if(data == "FAIL"){
 						modalFn("아이디 혹은 비밀번호가 다릅니다.");
 						setTimeout(function(){
 							modalClose();
 						},1000);
-						//alert("아이디 혹은 비밀번호가 다릅니다.");
 					}
 					else if(data == "FAIL2"){
 						modalFn("존재하지 않는 회원입니다.");
 						setTimeout(function(){
 							modalClose();
 						},1000);
-						//alert("존재하지 않는 회원입니다.");
 					}
 					else if(data == "SOCIAL"){
 						modalFn("소셜 회원입니다. 소셜 로그인을 해주세요.");
 						setTimeout(function(){
 							modalClose();
 						},1000);
-						//alert("소셜 회원입니다. 소셜 로그인을 해주세요.")
 					}
 					else {
 						location.href = "<%= request.getContextPath() %>/";
@@ -222,14 +232,32 @@ var nicknameDup = false;
 							type:"post",
 							data:"email="+email+"&name="+name+"&accessToken="+accessToken+"&social=kakao",
 							success:function(data){
-								if(data == "-1"){
+								if(data == "-3"){
+									modalFn("탈퇴한 회원입니다. 다시 회원가입하려면 당사로 문의해 주세요");
+									setTimeout(function(){
+										modalClose();
+									},1000);
+								}
+								else if(data == "-1"){
 									//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
 									modalFn("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 									setTimeout(function(){
 										modalClose();
 									},1000);
-									//alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
-									return;
+								}
+								else if(data == "-2"){
+									$.ajax({
+										url:"banComment.do",
+										data:"email="+email,
+										type:"post",
+										success:function(comment){
+											var str = "밴 유저입니다. 사유 : "+comment;
+											modalFn(str);
+											setTimeout(function(){
+												modalClose();
+											},1000);
+										}
+									});
 								}
 								else if(data == "0"){
 									//닉네임 있으면 바로 이동
@@ -262,14 +290,33 @@ var nicknameDup = false;
 			type:"post",
 			data:"email="+email+"&name="+name+"&accessToken="+accessToken+"&social=google",
 			success:function(data){
-				if(data == "-1"){
+				if(data == "-3"){
+					modalFn("탈퇴한 회원입니다. 다시 회원가입하려면 당사로 문의해 주세요");
+					setTimeout(function(){
+						modalClose();
+					},1000);
+				}
+				else if(data == "-1"){
 					//해당 이메일로 가입한 유저가 이미 있으면 다른 이메일로 로그인 유도
 					modalFn("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 					setTimeout(function(){
 						modalClose();
 					},1000);
-					//alert("해당 이메일로 가입한 유저가 있습니다. 다른 이메일을 사용해주세요");
 					return;
+				}
+				else if(data == "-2"){
+					$.ajax({
+						url:"banComment.do",
+						data:"email="+email,
+						type:"post",
+						success:function(comment){
+							var str = "밴 유저입니다. 사유 : "+comment;
+							modalFn(str);
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+					});
 				}
 				else if(data == "0"){
 					//닉네임 있으면 바로 이동

@@ -20,7 +20,7 @@
 				<a href="<%= request.getContextPath() %>/team/teamList.do"><img src="<%= request.getContextPath() %>/image/button/menu5.png"></a>
 			</div>
 			<div class="feature col-2">
-				<a href="<%= request.getContextPath() %>/CSboard/CS_list.do"><img src="<%= request.getContextPath() %>/image/button/menu6.png"></a>
+				<a href="<%= request.getContextPath() %>/notice/faqboard.do"><img src="<%= request.getContextPath() %>/image/button/menu6.png"></a>
 			</div>
 		</div><!-- /.row -->
 	</div><!-- /.shadow -->
