@@ -278,8 +278,8 @@ function modify(index){
 <button class="bluebtn" type="button" onclick="location.href='../'">메인화면</button>
 <!--  검색 및 페이징 -->
 <div id="paging">
-		<c:if test="${pageMaker.prev == true} ">
-			<a href="faqboard.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">이전</a>
+		<c:if test="${pageMaker.prev == true}">
+			<a href="faqboard.do?page=${pageMaker.startPage-1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">◀</a>
 		</c:if>
 		
 		<c:set var="index" value="1"/>
@@ -296,7 +296,7 @@ function modify(index){
     	</c:forEach>
   
     	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-    		<a href="faqboard.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">다음</a>
+    		<a href="faqboard.do?page=${pageMaker.endPage+1}&searchType=${searchVO.searchType}&searchValue=${searchVO.searchValue}">▶</a>
     	</c:if> 
 
 </div>
