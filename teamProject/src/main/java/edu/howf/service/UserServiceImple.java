@@ -9,6 +9,7 @@ import edu.howf.dao.UserDao;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
@@ -182,6 +183,11 @@ public class UserServiceImple implements UserService{
 	@Override
 	public int myReviewCount(SearchVO vo) {
 		return userDao.myReviewCount(vo);
+	}
+	
+	@Override
+	public List<JoinVO> myTeamList(SearchVO vo){
+		return userDao.myTeamList(vo);
 	}
 
 	@Override

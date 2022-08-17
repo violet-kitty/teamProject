@@ -9,9 +9,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,6 +53,7 @@ import edu.howf.util.MediaUtils;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.EventVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
@@ -383,7 +384,16 @@ public class MyPageController {
 	
 	//너나들이 이동
 	@RequestMapping(value="/myTeam.do")
-	public String myTeam(SearchVO vo, Model model) {
+	public String myTeam(SearchVO vo, Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		vo.setMidx(login.getMidx());
+		List<JoinVO> jv = userService.myTeamList(vo);
+		
+		model.addAttribute("jv", jv);
+		model.addAttribute("login", login);
 		
 		return "mypage/normal/myTeam";
 	}

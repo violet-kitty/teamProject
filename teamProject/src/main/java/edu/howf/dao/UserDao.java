@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
@@ -197,7 +198,10 @@ public class UserDao {
 	
 	
 	//내 팀
-	
+	public List<JoinVO> myTeamList(SearchVO vo) {
+		
+		return sqlSession.selectList(namespace + "myTeamList", vo);
+	}
 	
 	//내 팀 개수
 	

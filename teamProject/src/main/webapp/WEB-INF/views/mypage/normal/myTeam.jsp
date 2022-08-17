@@ -27,6 +27,11 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/관련.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<style>
+.table a{
+	color: #54ACA8;
+}
+</style>
 </head>
 <body>
 	<div id="wrap">
@@ -45,13 +50,37 @@
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
-				<!--  
-				
-				
-				여기에 html 작성하시믄 댑니다~!
-				
-				 -->	
-				
+				<table class="table text-center">
+					<tbody>
+						<tr>
+							<th>너나들이 팀 번호</th>
+							<th>너나들이 팀 이름</th>
+							<th>너나들이 팀 가입신청</th>
+						</tr>
+						<c:if test="${jv.size() == 0}">
+							<tr>
+								<td colspan="3">가입신청 한 너나들이 팀이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:forEach var="jv" items="${jv}">
+							<tr>
+								<td>${jv.tidx}</td>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td><a href="#" id="joinN" style="color: #DE8889">${jv.title}</a></td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td><a href="<%=request.getContextPath()%>/team/teamTeam.do?tidx=${jv.tidx}">${jv.title}</a></td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'N'}">
+									<td style="color: #DE8889">${jv.joinyn}</td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'Y'}">
+									<td style="color: #54ACA8">${jv.joinyn}</td>
+								</c:if>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->
@@ -61,5 +90,13 @@
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+<script>
+	$(function(){
+		$("#joinN").click(function(){
+			modalFn("가입승인되지 않은 너나들이 팀 페이지에는 참여하실 수 없습니다.", "확인");
+			return;
+		});
+	});
+</script>
 </body>
 </html>

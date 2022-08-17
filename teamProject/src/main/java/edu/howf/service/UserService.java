@@ -5,6 +5,7 @@ import java.util.List;
 import edu.howf.vo.AutoVO;
 import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
+import edu.howf.vo.JoinVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.UserVO;
 
@@ -44,6 +45,7 @@ public interface UserService {
 	public int heartCountStay(SearchVO vo);
 	public List<CommentVO> myReview(SearchVO vo);
 	public int myReviewCount(SearchVO vo);
+	public List<JoinVO> myTeamList(SearchVO vo);
 	
 	public List<UserVO> userList(SearchVO vo);
 	public int userListCount(SearchVO vo);

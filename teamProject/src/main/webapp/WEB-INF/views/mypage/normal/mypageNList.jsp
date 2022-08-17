@@ -64,32 +64,39 @@
 					
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myInfo.do">내 정보</a>
+							<a class="mainbtn" href="myInfo.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>내 정보
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myStory.do">내 여행이야기 관리</a>
+							<a class="mainbtn" href="myStory.do">
+							<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>내 여행이야기 관리
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myHeart.do">내 찜 목록</a>
+							<a class="mainbtn" href="myHeart.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>내 찜 목록
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my4.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myReservation.do">예약한 숙소</a>
+							<a class="mainbtn" href="myReservation.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my4.png" style="width:56px;margin-bottom:20px;"><br>예약한 숙소
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my3.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myComment.do">내 리뷰, 댓글</a>
+							<a class="mainbtn" href="myComment.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my3.png" style="width:56px;margin-bottom:20px;"><br>내 리뷰, 댓글
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myTeam.do">너나들이</a>
+							<a href="myTeam.do" id="myTeam" class="mainbtn">
+								<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>너나들이
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">문의 내역</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>문의 내역
+							</a>
 						</div>
 					</div>
 				</div>
