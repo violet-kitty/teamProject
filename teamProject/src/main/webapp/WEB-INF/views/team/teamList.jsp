@@ -1,17 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("newLineChar", "\n"); %>
-
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>너나들이 | HOWF</title>
+<title>여행이야기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -27,187 +24,266 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav3 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav2.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
-
 </head>
+
+<script>
+	var tagArray = new Array();
+	function tagParse(json,index){
+		var jsonParse = JSON.parse(json);
+		var tags = "";
+		$.each(jsonParse,function(idx){
+			tags = tags+jsonParse[idx]["value"]+" ";
+		})
+		tagArray[index] = tags;
+	}
+</script>
+<script>
+	function tagParse(tag, sbidx){
+		//리스트 태그 값 넣기
+		var json = tag;
+		var jsonParse = JSON.parse(json);
+		var tagData = "";
+		$.each(jsonParse,function(idx){
+			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+		})
+		
+		$("#storytag"+sbidx).html(tagData);
+	}
+</script>
+
 <body>
 
-	<div id="wrap" class="boardList cs cslist">
+	<div id="wrap" class="boardlist story storylist">
+
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
-		
-		
+
 		<!-- Side -->
 		<div class="right-container">
-		
-			<div class="docctrl onlypc">
-				<a href="<%=request.getContextPath()%>/team/teamWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
-			</div>
-			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>	
+			<c:if test="${login!=null && login.role=='normal'}">
+				<div class="docctrl onlypc">
+					<a href="<%=request.getContextPath()%>/story/storyWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+				</div>
+			</c:if>
+			<a href="#"><img src="<%=request.getContextPath()%>/image/button/top.png" class="gotop"></a>
 		</div>
-		
-		<!-- #container -->
+
+		<!-- container -->
 		<div id="container" class="hbg-whitegray">
 
-				<div class="contents pagehead hbg-whitegray">
-					<!-- container -->
-					<div class="container" id="featured-2">
-					
-						<!--  타이틀과 검색영억 -->
-						<div class="pageinfo">
-							<!-- 제목 영역 -->
-							<div class="title">
-								<a href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이</h1></a>
+			<!-- 리스트 content -->
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+
+					<!-- pagehead -->
+					<div class="pageinfo">
+						<!-- 페이지 제목 -->
+						<div class="title onlypc">
+							<a href="<%=request.getContextPath()%>/story/storyList.do"><h1>여행이야기</h1></a>
+						</div>
+
+						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
+						<div class="row rightbox onlypc-inline">
+							<!-- sort 버튼 -->
+							<div class="col d-flex justify-content-end filterbtn">
+								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
+								<!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+									<li class="nav-item active"><a class="nav-link" onclick="location.href='storyList.do?sortType=food'">맛집추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='storyList.do?sortType=stay'">숙박추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='storyList.do?sortType=travel'">여행지추천</a></li>
+									<li class="nav-item"><a class="nav-link" onclick="location.href='storyList.do?sortType=heart'">좋아요순</a></li>
+									<li class="nav-item"><a class="nav-link active" onclick="location.href='storyList.do?sortType=new'">최신순</a></li>
+								</ul> -->
+								<!-- searchVO에 sortType food, stay, travel, heart, new 넘김 -->
+								<button onclick="location.href='storyList.do?sortType=heart'" id="heartBtn">좋아요순</button>
+								<button class="active" onclick="location.href='storyList.do?sortType=new'" id="newBtn">최신순</button>
 							</div>
-						
-							<!-- 검색영역 : PC버전 -->
-							<div class="row rightbox onlypc-inline">
-								<!-- 검색창 -->
-								<form id="form1" name="frm2" action="teamList.do" method="get">
-									<div class="search">
-									<select name="searchType">
-										<option value="total"<c:if test="${!empty vo.searchType and vo.searchType eq ''}">selected</c:if>>전체</option>
-										<option value="title"<c:if test="${!empty vo.searchType and vo.searchType eq 'title'}">selected</c:if>>제목</option>
-										<option value="content"<c:if test="${!empty vo.searchType and vo.searchType eq 'content'}">selected</c:if>>내용</option>
-										<option value="nickname"<c:if test="${!empty vo.searchType and vo.searchType eq 'nickname'}">selected</c:if>>작성자</option>
-									</select>
-									<input type="text" name="searchValue" <c:if test="${!empty vo.searchValue }">value="${vo.searchValue}"</c:if>>
-									<button id="btn_search">검색</button>
-									</div>
-								</form>					
-							</div><!-- .rightbox onlypc-inline-->
-							<!-- / 검색영역 -->
-							
-							
-							<div class="row">
-								<div class="col d-flex justify-content-end">
-									<button id="filter_team">팀원수</button>
-									<button id="filter_cnt">조회수</button>
+							<!-- 검색창 Search -->
+							<form name="frm2" action="storyList.do" method="post">
+							<div class="search">
+								<select name="searchType" id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
+						</div>
+						<!-- .rightbox -->
+
+						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
+
+						<c:if test="${login!=null && login.role=='normal'}">
+							<div class="docctrl onlytablet" style="margin-top: 16px;">
+								<a href="<%=request.getContextPath()%>/story/storyWrite.do">
+									<button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button>
+								</a>
+							</div>
+						</c:if>
+
+						<div class="row rightbox onlytablet">
+							<div class="btn-group">
+								<button class="w-100 dropdown-toggle pinkbtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬 &nbsp;</button>
+								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+									<li><a class="dropdown-item" href="storyList.do?sortType=new">최신순</a></li>
+									<li><a class="dropdown-item" href="storyList.do?sortType=heart">좋아요순</a></li>
+								</ul>
+							</div>
+							<!-- 검색창 -->
+							<form name="frm2" action="storyList.do" method="post">
+							<div class="search">
+								<select name="searchType"id="sfilterID">
+									<option value="total" selected>전체</option>
+									<option value="title">제목 검색</option>
+									<option value="tag">태그 검색</option>
+									<option value="writer">작성자 검색</option>
+									
+								</select> 
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="submit" value="검색">
+							</div>
+							</form>
+						</div>
+						<!-- .rightbox -->
+
+					</div>
+					<!-- .pageinfo -->
+					<!-- / pagehead -->
+
+
+					<!-- ----------------------------------------------------------------------------------------------------- -->
+
+					<!-- 리스트 -->
+					<div class="clist">
+
+						<!-- 리스트 카드 -->
+						<div class="row grid">
+							<c:forEach var="s" items="${story}"> <!-- 8. 변수명 정해주기 -->
+								<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
+									<a style="cursor: pointer" onclick="location.href='storyView.do?sbidx=${s.sbidx}'">
+										<div class="thumbnail hbshadow3">
+
+											<figure class="effect-ming">
+												<!-- 메인이미지 보여주기-->
+												<c:if test="${s.filename != null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${s.filename});"></div>
+												</c:if>
+
+												<c:if test="${s.filename == null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:if>
+
+												<!-- 이미지 규격 사이즈 355px * 240px 권장  -->
+												<figcaption>
+													<p id="storytag${s.sbidx}"></p>
+												</figcaption>
+												<!-- 태그 파싱하는 함수 호출 -->
+												<script>tagParse('${s.tag}','${s.sbidx}');</script>
+											</figure>
+											<div class="writerinfo">
+												<c:if test="${s.img != null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${s.img});"></div>
+												</c:if>
+												<c:if test="${s.img == null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:if>
+												
+												<p>
+													<span class="">${s.nickname}</span>
+													<span class="hfc-semibold hfc-blackgray"> ${s.wdate}</span>
+												</p>
+												<div class="small">
+													<img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${s.heart}</span>
+												</div>
+											</div>
+											<div class="caption">
+												<h4>${s.title}</h4>
+											</div>
+										</div>
+										<!-- /.thumbnail -->
+									</a>
 								</div>
-							</div>
-						
+								<!--/. thumbnailitem -->
+							</c:forEach>
 						</div>
-						
-						<div class="row">
-							<div class="col">
-								<table class="table">
-									<tbody>
-										<tr>
-											<td>글번호</td>
-											<td>작성자</td>
-											<td>제목</td>
-											<td>작성일</td>
-											<td>조회수</td>
-											<td>팀원</td>
-										</tr>
-										<c:forEach var="tv" items="${tv}">
-											<tr>
-												<td>${tv.tidx}</td>
-												<td>${tv.nickname}</td>
-												<td><a href="teamView.do?tidx=${tv.tidx}">${tv.title}</a></td>
-												<td>${tv.wdate}</td>
-												<td>${tv.cnt}</td>
-												<td>${tv.people_cnt}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>			
-						</div>
-						<div class="row">
+						<!-- /.row .grid -->
+						<!-- / 리스트 카드 -->
+
+						<!-- 페이징 : 페이징 paging 공간 만들기 -->
+						<div class="row pagenation">
 							<div class="col d-flex justify-content-center">
-								<table>
-									<tbody>						
-										<tr>
-											<c:if test="${pm.prev == true}">
-												<td>
-													<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">◀</a>
-												</td>
-											</c:if>
-											<td>
-												<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-													<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
-												</c:forEach>
-											</td>
-											<c:if test="${pm.next && pm.endPage > 0}">
-												<td>
-													<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">▶</a>
-												</td>
-											</c:if>
-										</tr>						
-									</tbody>
-								</table>
-							</div>	
-						</div>		
-						<div class="row">
-							<div class="col d-flex justify-content-center">
-								<button id="teamWrite">글쓰기</button>
+								<c:if test="${pm.prev == true}">
+									<a class="hfc-gray hfc-bold" href="storyList.do?page=${pm.startPage-1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">◀</a>
+								</c:if>
+								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+									<c:choose>
+										<c:when test="${search.page != null && i == search.page}">
+											<a class="hfc-white hfc-bold hbg-pink mx-1" href="storyList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+										</c:when>
+										<c:otherwise>
+											<a class="hfc-gray hfc-bold mx-1" href="storyList.do?page=${i}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">${i}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${pm.next == true}">
+									<a class="hfc-gray hfc-bold" href="storyList.do?page=${pm.endPage+1}&sortType=${search.sortType}&searchType=${search.searchType}&searchValue=${search.searchValue}">▶</a>
+								</c:if>
 							</div>
 						</div>
-				
-			
-					</div><!-- / .container -->
-				</div><!-- .contents -->
+						<!-- /페이징 -->
+
+					</div>
+					<!-- /.clist -->
+					<!-- / 리스트 -->
+
+					<!-- ----------------------------------------------------------------------------------------------------- -->
+
+
+				</div>
+				<!-- /.container -->
+			</div>
+			<!-- /.contents -->
+			<!-- / 리스트 content -->
+
 
 			<!-- banner --><%@include file="../banner.jsp"%>
-			
-		</div><!-- #container -->
-		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
-		
-	</div><!-- /#wrap -->
-<script>
-$(function(){
-	
-	$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
-	
-	$("#btn_search").click(function(){
-		$("#form1").submit();
-	});
-	
-	$("#teamWrite").click(function(){
-		if(${login == null}){
-			modalFn("로그인이 필요한 기능입니다.", "닫기")
-			return false;
-		}
-		$.ajax({
-			url: "write_check.do",
-			data: "midx=${login.midx}",
-			type: "get",
-			success:(function(data){
-				if(data != 0){
-					modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
-				}
-				else{
-					location.href = "teamWrite.do";
-				}
-				
-			})
-			
-		});
-		
-	});
-	
-	$("#filter_team").click(function(){
-		location.href = "teamList.do?sortType=team";
-	});
-	
-	$("#filter_cnt").click(function(){
-		location.href = "teamList.do?sortType=cnt";
-	});		
 
-});
-</script>	
+		</div>
+		<!-- / #container -->
+
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+	</div>
+	<!-- /#wrap -->
+
+	<script>
+		//검색시 카테고리
+		var sfilter = "${search.searchType}";
+		if (sfilter != "")
+		$("#sfilterID").val(sfilter).prop("selected", true);
+		
+		//sort 버튼
+		var sortBtn = "${search.sortType}";
+		if(sortBtn != ""){
+			$("#"+sortBtn+"Btn").css("background","none");
+			$("#"+sortBtn+"Btn").css("color","#DE8889");
+			$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+		}
+	</script>
+
 </body>
 </html>

@@ -109,14 +109,19 @@
 								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
 							</div>
 						</div>row end -->
-				
+						
+						<style>
+						.h-input h3 {line-height:36px;} 
+						.h-input p {line-height:30px;} 
+						</style>
 						
 						<!-- 에디터 -->
 						<div class="row h-input">
 							<div class="col">
-								<h3>문의 제목 : ${cv.title}</h3>
+								<h3>${cv.title}</h3>
+								<p><br>${cv.content}</p>
 								<br>
-								<p>문의 내용 : <br>${cv.content}</p>
+								<hr>
 								<br>
 								<input type="hidden" id="title" name="title" class="input_title" value="${cv.title}">
 								<textarea id="summernote" name="content"></textarea>
