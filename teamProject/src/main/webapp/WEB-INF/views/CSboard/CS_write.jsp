@@ -1,18 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->      
+<%@ page session="true" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>1:1 고객문의 글 작성</title>
+<title>HOWF고객지원</title>
+
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Bootstrap5 AwsomeFont -->
 <script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
 <!-- Google Font -->
@@ -20,116 +24,211 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - 관련CSS를 여기에 연결해주세요 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/csBoard/CS_write.css"/>
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+
 <!-- summernote -->
 <script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
 <script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
 <!-- summernote -->
-</head>
-<body>
-	<div id="wrap">
-		<!-- 모달예제 
-		<button onclick="modalex()">모달예제</button>
-		<script>
-		function modalex(){
+
+
+
+<!-- 유효성 -->
+<script type="text/javascript">
+	
+	
+ 	function check() {
 		
-			/* modalex("모달이 완료되었습니다");
-		      setTimeout(function(){
-		         modalClose();
-		      },3000); */
-		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
+		var title = $("#title");
+		var content = $("#content");
+		
+		if (title.val() == ""){
+			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>제목을 입력해 주세요','확인');
+		
+		}else if (content.val() == ""){
+			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>내용을 입력해 주세요','확인');
+			
+			//alert("내용을 입력하세요");
+		}else {
+			var formData = new FormData($("#form")[0]);
+			$.ajax({
+				url:"faqwrite.do",
+				type:"post",
+				data:formData,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(data){
+					if(data != 0){
+						modalFn('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ynaicab2.json"  background="transparent"  speed="3"  style="width: 300px; height: 300px;"  autoplay></lottie-player><br> 작성이 완료되었습니다');
+							setTimeout(function(){
+							modalClose();
+							location.href="faqboard.do";
+							return;
+						},1500);
+					}else {
+						modalFn("작성 실패");
+						setTimeout(function(){
+							modalClose();
+							return;
+						},1500);
+					}
+				}
+				
+			});
 			
 		}
-		</script>
-		-->
+	}
+ 	function cancel(){
+ 		modalFn("목록으로 가겠습니까?","가기","이동여부","안 감 바이","cancelFn");
+ 	}
+ 	function cancelFn(){
+ 		modalClose();
+ 		modalFn("리스트로 이동합니다")
+ 		setTimeout(function(){
+ 			modalClose();
+ 			location.href="faqboard.do";
+ 			return;
+ 		},1000);
+ 		
+ 	}
+</script>
+
+</head>
+
+<body>
+	<div id="wrap" class="boardWrite cs cswrite">
+	
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
-		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
-		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
+		<!-- Herotop -->
+		<div class="parallax-window" data-parallax="scroll" data-image-src="<%= request.getContextPath() %>/image/picture/support.jpg"></div>
+				<nav class="cstopNav">
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a  class="nav-link" href="<%= request.getContextPath() %>/notice/faqboard.do"><img src="<%= request.getContextPath() %>/image/button/tabby1.png"></a>
+						<a  class="nav-link active" href="<%= request.getContextPath() %>/CSboard/CS_list.do"><img src="<%= request.getContextPath() %>/image/button/tabby2.png"></a>
+						<a  class="nav-link" href="<%= request.getContextPath() %>/notice/notice.do"><img src="<%= request.getContextPath() %>/image/button/tabby3.png"></a>
+					</div>
+				</nav>
+		<!-- Herotop -->
 		
 		<!-- Side -->
+		
 		<div class="right-container">
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
-
-			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-					<div class="row">
-						<div class="col">
-							<div class="div_header">
-								<h3>1:1 고객문의 작성</h3>
-							</div>
-							<hr>	
-							<br>
-							<br>
-							<br>
-							<div class="div1">
-								<form id="form1" action="CS_write.do" method="post" enctype="multipart/form-data">
-									<table class="tb1">
-										<tbody>
-											<tr>			
-												<td class="td_category">문의유형</td>
-												<td>
-													<select id="divsn" name="divsn">
-														<option value="질문">문의유형 선택</option>
-														<option value="질문">질문</option>
-														<option value="환불">환불</option>
-														<option value="신고">신고</option>
-														<option value="계정">계정</option>
-														<option value="건의">건의</option>
-														<option value="기타">기타</option>
-													</select>
-												</td>
-											</tr>
-											<tr>				
-												<td class="td_category">제목<span class="span_must_fill">*</span></td>
-												<td><input type="text" id="title" name="title" class="input_title" placeholder="제목을 입력해주세요"></td>					
-											</tr>
-											<tr>
-												<td class="td_category">내용<span class="span_must_fill">*</span></td>
-												<td><textarea id="summernote" name="content" class="tb_textarea"></textarea></td>
-											</tr>
-											<tr>
-												<td class="td_category">이미지 첨부 파일</td>
-												<td class="tb_filename">
-													<label><input type="file" id="file" name="file"></label>
-													<div id="div_img" style="display: none;"><img id="img"></div>
-													<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<div class="div2">
-										<input type="button" onclick="CS_write()" value="등록" class="btn1">
-										<input type="button" value="취소" id="cancel" class="btn1">
-									</div>			
-								</form>		
-							</div>
+		<div id="container" class="hbg-whitegray">
+			
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+					<!-- pagehead  -->
+					<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
-					</div>
+					</a>
+					
+					<!-- 제목 영역 -->
+							<div class="pageinfo">
+								<div class="title onlypc">
+									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 고객문의 작성</h1></a>
+								</div>
+							</div>
 
+					<!-- 폼 시작 -->
+					
+					<form id="form1" action="CS_write.do" method="post" enctype="multipart/form-data">
+						
+						<!-- 카테고리 선택, 제목 입력 -->
+						<div class="row h-input ">
+							<div class="col-2">
+								<select id="divsn" class="form-select" name="divsn">
+									<option value="질문">문의유형</option>
+									<option value="질문">질문</option>
+									<option value="환불">환불</option>
+									<option value="신고">신고</option>
+									<option value="계정">계정</option>
+									<option value="건의">건의</option>
+									<option value="기타">기타</option>
+								</select>
+							</div>
+							<div class="col-10">
+								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
+							</div>
+						</div><!-- row end -->
+				
+						
+						<!-- 에디터 -->
+						<div class="row h-input">
+							<div class="col">
+								<textarea id="summernote" name="content" class="tb_textarea"></textarea>
+							</div>
+						</div><!-- row end -->
+						
+						<!-- 에디터 -->
+						<div class="row h-input">
+							<div class="col">
+								<p>이미지 첨부 파일</p>
+							</div>
+							<div class="col">
+								<label><input type="file" id="file" name="file"></label>
+								<!-- div id="div_img" style="display: none;"><img id="img"></div>
+								<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div> -->
+							</div>
+						</div><!-- row end -->
+						
+					<!-- /.clist -->
+					</form>
+					<hr class="lastline">
+				
+					
+					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
+						<div class="row buttonarea">
+							<div class="col-lg-6">
+								<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+									<div class="backto lastbackto">
+										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+									</div>
+								</a>
+							</div>
+							<div class="col-lg-6 okbutton">
+								<button type="button" class="bluebtn" onclick="CS_write()">글 작성 완료</button>
+							</div>
+						</div><!-- row end -->
+					<!-- 리스트 카드 -->
+					
+					
+		
+					
 				</div><!-- /.container -->
-			</div>
-			<!-- / .content01 -->
-
-
+			</div><!-- /.contents -->
+			<!-- /pagehead -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
 		</div><!-- / #container -->
 		
-		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
-	</div><!-- /#wrap -->
+		<!-- Footer --><%@include file="../Footer.jsp"%>
 	
+	</div><!-- /#wrap -->
+
 <script>
 	function modalOkFn(){
 		modalClose();
@@ -154,7 +253,7 @@
 	   });
 		
 		$("#summernote").summernote({
-			height:300,
+			height:600,
 			minHeight:null,
 			maxHeight:null,
 			focus: false,
@@ -248,5 +347,11 @@
 		$("#form1").submit();
 	}
 </script>
+
+<script>
+$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
+</script>
+
 </body>
+
 </html>
