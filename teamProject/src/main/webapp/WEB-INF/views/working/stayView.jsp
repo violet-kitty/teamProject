@@ -9,20 +9,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- jquery -->
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
+<title>Home</title>
+
+<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Bootstrap5 AwsomeFont -->
+<script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- 지도 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
-<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- 별점 css -->
+
 <style>
 .star-rating {
 	  display:flex;
@@ -72,7 +88,136 @@ else {
 					<a href="stayList.do">&lt;목록으로 돌아가기</a>
 				</div>
 			</div>
-		
+			<div id="page">
+				<div class="row">
+					<div class="column small-11 small-centered">
+						<h2>Slick Slider Syncing</h2>
+						<div class="slider slider-single">
+							<div><h3>1</h3></div>
+							<div><h3>2</h3></div>
+							<div><h3>3</h3></div>
+							<div><h3>4</h3></div>
+							<div><h3>5</h3></div>
+							<div><h3>6</h3></div>
+							<div><h3>7</h3></div>
+							<div><h3>8</h3></div>
+							<div><h3>9</h3></div>
+							<div><h3>10</h3></div>
+						</div>
+						<div class="slider slider-nav">
+							<div><h3><span>1</span></h3></div>
+							<div><h3><span>2</span></h3></div>
+							<div><h3><span>3</span></h3></div>
+							<div><h3><span>4</span></h3></div>
+							<div><h3><span>5</span></h3></div>
+							<div><h3><span>6</span></h3></div>
+							<div><h3><span>7</span></h3></div>
+							<div><h3><span>8</span></h3></div>
+							<div><h3><span>9</span></h3></div>
+							<div><h3><span>10</span></h3></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<style>
+
+.js .slider-single > div:nth-child(1n+2) { display: none }
+
+.js .slider-single.slick-initialized > div:nth-child(1n+2) { display: block }
+
+h3 {
+	background: #f0f0f0;
+	color: #3498db;
+	font-size: 2.25rem;
+	margin: .5rem;
+	padding: 2%;
+	position: relative;
+	text-align: center;
+}
+
+.slider-single h3 {
+	line-height: 10rem;
+}
+
+.slider-nav h3::before {
+	content: "";
+	display: block;
+	padding-top: 75%;
+}
+
+.slider-nav h3 span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slider-nav .slick-slide { cursor: pointer; }
+
+.slick-slide.is-active h3 {
+	color: #c00;
+	background-color: #fff
+}
+			</style>
+			<script>
+			 $('.slider-single').slick({
+				 	slidesToShow: 1,
+				 	slidesToScroll: 1,
+				 	arrows: true,
+				 	fade: false,
+				 	adaptiveHeight: true,
+				 	infinite: false,
+					useTransform: true,
+				 	speed: 400,
+				 	cssEase: 'cubic-bezier(0.77, 0, 0.18, 1)',
+				 });
+
+				 $('.slider-nav')
+				 	.on('init', function(event, slick) {
+				 		$('.slider-nav .slick-slide.slick-current').addClass('is-active');
+				 	})
+				 	.slick({
+				 		slidesToShow: 7,
+				 		slidesToScroll: 7,
+				 		dots: false,
+				 		focusOnSelect: false,
+				 		infinite: false,
+				 		responsive: [{
+				 			breakpoint: 1024,
+				 			settings: {
+				 				slidesToShow: 5,
+				 				slidesToScroll: 5,
+				 			}
+				 		}, {
+				 			breakpoint: 640,
+				 			settings: {
+				 				slidesToShow: 4,
+				 				slidesToScroll: 4,
+							}
+				 		}, {
+				 			breakpoint: 420,
+				 			settings: {
+				 				slidesToShow: 3,
+				 				slidesToScroll: 3,
+						}
+				 		}]
+				 	});
+
+				 $('.slider-single').on('afterChange', function(event, slick, currentSlide) {
+				 	$('.slider-nav').slick('slickGoTo', currentSlide);
+				 	var currrentNavSlideElem = '.slider-nav .slick-slide[data-slick-index="' + currentSlide + '"]';
+				 	$('.slider-nav .slick-slide.is-active').removeClass('is-active');
+				 	$(currrentNavSlideElem).addClass('is-active');
+				 });
+
+				 $('.slider-nav').on('click', '.slick-slide', function(event) {
+				 	event.preventDefault();
+				 	var goToSingleSlide = $(this).data('slick-index');
+
+				 	$('.slider-single').slick('slickGoTo', goToSingleSlide);
+				 });
+			</script>
+			
 			<div class="row">
 				<div class="col-lg-6">
 					<c:if test="${stay.photo != null}">
