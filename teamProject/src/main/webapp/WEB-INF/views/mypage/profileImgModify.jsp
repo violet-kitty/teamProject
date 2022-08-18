@@ -70,7 +70,7 @@
 					
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
-						<div class="title onlypc">
+						<div class="title">
 							<h1>프로필 이미지 수정</h1>
 						</div>
 					</div>

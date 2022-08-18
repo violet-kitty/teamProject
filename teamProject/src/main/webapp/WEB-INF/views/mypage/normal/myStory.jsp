@@ -84,7 +84,7 @@
 					<!-- pagehead -->
 					<div class="pageinfo">
 						<!-- 페이지 제목 -->
-						<div class="title onlypc">
+						<div class="title">
 							<a href="<%=request.getContextPath()%>/mypage/myStory.do"><h1>내 여행이야기</h1></a>
 						</div>
 
