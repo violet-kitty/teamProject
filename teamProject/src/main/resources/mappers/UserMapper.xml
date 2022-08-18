@@ -861,25 +861,6 @@
 		WHERE midx = #{midx}
 	</update>
 	
-	<!-- 리뷰 목록 -->
-	<select id="">
-		
-	</select>
-	
-	<!-- 리뷰 목록 개수 -->
-	<select id="">
-		
-	</select>
-	
-	<!-- 댓글 목록 -->
-	<select id="">
-		
-	</select>
-	
-	<!-- 댓글 목록 개수 -->
-	<select id="">
-		
-	</select>
 	
 	
 </mapper>
