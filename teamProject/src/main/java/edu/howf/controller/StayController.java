@@ -79,7 +79,7 @@ public class StayController {
 		//페이징
 		int page = vo.getPage();
 		int cnt = stayService.stayCountAll(vo);
-		vo.setPerPageNum(9);
+		vo.setPerPageNum(8);
 		
 		PageMaker pm = new PageMaker();
 		pm.setSearch(vo);
@@ -490,8 +490,8 @@ public class StayController {
 		}catch(CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
-		}
-		*/
+		}*/
+		
 		
 		return authNum;
 	}
