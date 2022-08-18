@@ -22,14 +22,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardlist">
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
@@ -48,7 +51,7 @@
 					<!-- pagehead -->
 					<div class="pageinfo">
 						<!-- 페이지 제목 -->
-						<div class="title onlypc">
+						<div class="title">
 							<a href="<%= request.getContextPath() %>/mypage/userList.do"><h1>회원관리</h1></a>
 						</div>
 						
@@ -112,52 +115,52 @@
 						<thead>
 							<tr>
 								<th>
-								회원번호
+								회원번호<br>
 								<button onclick="location.href='userList.do?sortType=midxA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=midxD'">▼</button>
 								</th>
 								<th>
-								이름
+								이름<br>
 								<button onclick="location.href='userList.do?sortType=nameA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=nameD'">▼</button>
 								</th>
 								<th>
-								이메일
+								이메일<br>
 								<button onclick="location.href='userList.do?sortType=emailA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=emailD'">▼</button>
 								</th>
 								<th>
-								닉네임
+								닉네임<br>
 								<button onclick="location.href='userList.do?sortType=nicknameA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=nicknameD'">▼</button>
 								</th>
 								<th>
-								생년월일
+								생년월일<br>
 								<button onclick="location.href='userList.do?sortType=juminA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=juminD'">▼</button>
 								</th>
 								<th>
-								등급
+								등급<br>
 								<button onclick="location.href='userList.do?sortType=roleA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=roleD'">▼</button>
 								</th>
 								<th>
-								소셜여부
+								소셜여부<br>
 								<button onclick="location.href='userList.do?sortType=socialA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=socialD'">▼</button>
 								</th>
 								<th>
-								승인여부
+								승인여부<br>
 								<button onclick="location.href='userList.do?sortType=joinA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=joinD'">▼</button>
 								</th>
 								<th>
-								가입일
+								가입일<br>
 								<button onclick="location.href='userList.do?sortType=jdateA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=jdateD'">▼</button>
 								</th>
 								<th>
-								탈퇴여부
+								탈퇴여부<br>
 								<button onclick="location.href='userList.do?sortType=delA'">▲</button>
 								<button onclick="location.href='userList.do?sortType=delD'">▼</button>
 								</th>
@@ -214,8 +217,10 @@
 					
 					
 					<!-- 주소, 나이 차트 -->
-					<canvas id="myChart"></canvas>
-					<canvas id="myChart2"></canvas>
+					<div style="margin-top:50px;">
+						<canvas id="myChart"></canvas><br><br><br>
+						<canvas id="myChart2"></canvas>
+					</div>
 					
 				</div><!-- /.container -->
 			</div>
@@ -244,7 +249,7 @@
 				labels:addrL,
 				datasets:[{
 					label:"지역별 유저 수",
-					backgroundColor:"#DE8889",
+					backgroundColor:"#54ACA8",
 					borderColor:"#54ACA8",
 					data:addrD,
 					options:{
@@ -272,7 +277,7 @@
 				labels:ageL,
 				datasets:[{
 					label:"나이별 유저 수",
-					backgroundColor:"#DE8889",
+					backgroundColor:"#54ACA8",
 					borderColor:"#54ACA8",
 					data:ageD,
 					options:{

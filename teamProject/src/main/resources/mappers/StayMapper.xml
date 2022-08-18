@@ -71,6 +71,7 @@
 		<!-- 검색어 처리 -->
 		<if test='searchType != null and searchType.equals("total")'>
 		AND (e.name like CONCAT('%',#{searchValue},'%')
+		OR e.tag like CONCAT('%',#{searchValue},'%')
 		OR e.addr like CONCAT('%',#{searchValue},'%')
 		OR e.detailaddr like CONCAT('%',#{searchValue},'%'))
 		</if>

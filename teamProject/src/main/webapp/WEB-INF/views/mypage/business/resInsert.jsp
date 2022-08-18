@@ -26,12 +26,13 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- 달력 css --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/calendar.css" />
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 <script>
 	//달력 그리기
@@ -192,14 +193,18 @@
 			
 				<!-- 달력 -->
 				<div class="container">
-					
-					<div class="title">
-						<h1>예약 추가하기</h1>
-					</div>
 				
-					<div class="container">
-						<div id="calendar" ></div>
+					<div class="container hbg-whitegray" style="padding-left:20px; padding-right:20px;border-radius:5px;">
 						
+						<!-- 페이지 제목 -->
+						<div class="pageinfo">
+							<div class="title onlypc">
+								<h1>예약 추가</h1>
+							</div>
+						</div>
+					
+						<div id="calendar" ></div>
+						<br><br>
 						<!-- 날짜가 출력되는 div -->
 						<div id="dateArea">
 							<span>선택된 날짜 : </span>
@@ -207,11 +212,13 @@
 							<span> ~ </span>
 							<span id="date2"></span>
 						</div>
-						
-						<div class="title">
-							<h1>내 숙소 목록</h1>
+						<br><br>
+						<div class="pageinfo">
+							<div class="title onlypc">
+								<h1>내 숙소 목록</h1>
+							</div>
 						</div>
-						
+						<br><br>
 						<!-- 숙소 목록이 출력되는 div -->
 						<div id="stayArea">
 							<!-- reidx 담는 input -->
@@ -233,11 +240,13 @@
 								</div>
 							</c:forEach>
 						</div>
-						
-						<div class="title">
-							<h1>방 목록</h1>
+						<br>
+						<div class="pageinfo">
+							<div class="title onlypc">
+								<h1>방 목록</h1>
+							</div>
 						</div>
-						
+						<br><br>
 						<!-- 방 목록이 출력되는 div -->
 						<div id="roomArea">
 							

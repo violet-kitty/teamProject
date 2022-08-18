@@ -25,11 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 </head>
 <body>
@@ -48,16 +49,19 @@
 
 			<!-- content01 -->
 			<div class="contents content01">
-				<div class="container">
+				<div class="container hbg-whitegray bgpadding">
 					
 					<!-- 페이지 제목 -->
-					<div class="title">
-						<h1>내 정보</h1>
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<h1>내정보</h1>
+						</div>
 					</div>
+					<br><br>
 					
 					<!-- 프로필 이미지 -->
-					<div class="row">
-						<div class="col">
+					<div class="row" style="text-align:center;">
+						<div class="col-lg-4">
 							
 							<!-- 프로필 이미지 -->
 							<c:choose>
@@ -68,31 +72,42 @@
 								<img src="<%=request.getContextPath()%>/mypage/displayFile.do?fileName=${login.img}" style="border-radius:50%;width:200px;height:200px;">
 							</c:otherwise>
 							</c:choose>
-							<img><br>
-							<button onclick="location.href='profileImg.do'">프로필 이미지 수정하기</button>
+							<img><br><br>
+							<button onclick="location.href='profileImg.do'" class="bluebtn">프로필 이미지 수정하기</button>
 							
+						</div>
+						
+						<div class="col-lg-8 onlypc">
+							이름 ${profile.name}<br><br>
+							닉네임 ${profile.nickname}<br><br>
+							생년월일 ${profile.jumin}<br><br>
+							이메일 ${profile.email}<br><br>
+							연락처 ${profile.phone}<br><br>
+							주소 ${profile.addr} ${profile.detailaddr}<br><br>
+							<br>
+							<button onclick="location.href='profile.do'" class="bluebtn">정보 수정</button>
 						</div>
 					</div>
 					
+					<br><hr><br>
 					
-					<!-- 회원정보 -->
-					<div class="row">
+					<div class="row onlytablet" style="text-align:center;">
 						<div class="col">
-							이름 ${profile.name}<br>
-							닉네임 ${profile.nickname}<br>
-							생년월일 ${profile.jumin}<br>
-							이메일 ${profile.email}<br>
-							연락처 ${profile.phone}<br>
-							주소 ${profile.addr} ${profile.detailaddr}<br>
-							
-							<button onclick="location.href='profile.do'">정보 수정</button>
-							
+							이름 ${profile.name}<br><br>
+							닉네임 ${profile.nickname}<br><br>
+							생년월일 ${profile.jumin}<br><br>
+							이메일 ${profile.email}<br><br>
+							연락처 ${profile.phone}<br><br>
+							주소 ${profile.addr} ${profile.detailaddr}<br><br>
+							<br>
+							<button onclick="location.href='profile.do'" class="bluebtn">정보 수정</button>
 						</div>
 					</div>
 					
 					
 					<!-- 탈퇴 버튼 -->
-					<button onclick="delyn()">회원 탈퇴</button>
+					<br><br><br><br><br><br><br><br><br>
+					<button onclick="delyn()" class="pinkbtn">회원 탈퇴</button>
 					
 				
 				</div><!-- /.container -->

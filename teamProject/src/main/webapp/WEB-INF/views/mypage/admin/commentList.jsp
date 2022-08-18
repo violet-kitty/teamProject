@@ -21,11 +21,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
+
 </head>
 <body>
 	<div id="wrap">
@@ -46,8 +48,10 @@
 				<div class="container">
 				
 					<!-- 페이지 제목 -->
-					<div class="title">
-						<h1>댓글 관리</h1>
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<h1>댓글 관리</h1>
+						</div>
 					</div>
 					
 					
@@ -70,33 +74,33 @@
 									</div>
 								</div>
 							</c:forEach>
+							
+							<!-- 댓글 페이징 -->
+							<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+							<div class="row pagenation">
+								<div class="col d-flex justify-content-center">
+									<c:if test="${pm.prev == true}">
+										<a class="hfc-gray hfc-bold" href="commentList.do?page=${pm.startPage-1}&sortType=comment">◀</a>
+									</c:if>
+									<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+									<c:choose>
+									<c:when test="${search.page != null && i == search.page}">
+										<a class="hfc-white hfc-bold hbg-pink mx-1" href="commentList.do?page=${i}&sortType=comment">${i}</a>
+									</c:when>
+									<c:otherwise>
+										<a class="hfc-gray hfc-bold mx-1" href="commentList.do?page=${i}&sortType=comment">${i}</a>
+									</c:otherwise>
+									</c:choose>
+									</c:forEach>
+									<c:if test="${pm.next == true}">
+										<a class="hfc-gray hfc-bold" href="commentList.do?page=${pm.endPage+1}&sortType=comment">▶</a>
+									</c:if>
+								</div>
+							</div>
+							<!-- /페이징 -->
+							
 						</c:otherwise>
 						</c:choose>
-						
-						<!-- 댓글 페이징 -->
-						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
-						<div class="row pagenation">
-							<div class="col d-flex justify-content-center">
-								<c:if test="${pm2.prev == true}">
-									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm2.startPage-1}&sortType=comment">◀</a>
-								</c:if>
-								<c:forEach var="i" begin="${pm2.startPage}" end="${pm2.endPage}" step="1">
-								<c:choose>
-								<c:when test="${search2.page != null && i == search2.page}">
-									<a class="hfc-white hfc-bold hbg-pink mx-1" href="myComment.do?page=${i}&sortType=comment">${i}</a>
-								</c:when>
-								<c:otherwise>
-									<a class="hfc-gray hfc-bold mx-1" href="myComment.do?page=${i}&sortType=comment">${i}</a>
-								</c:otherwise>
-								</c:choose>
-								</c:forEach>
-								<c:if test="${pm2.next == true}">
-									<a class="hfc-gray hfc-bold" href="myComment.do?page=${pm2.endPage+1}&sortType=comment">▶</a>
-								</c:if>
-							</div>
-						</div>
-						<!-- /페이징 -->
-						
 						
 					</div>
 				
