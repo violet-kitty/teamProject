@@ -45,6 +45,14 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
 <!-- summernote -->
 
+<style>
+					.replies button {border:none; background:none;}
+					.replies button img {width:30px;}
+					.btnarea {text-align:left; margin-top:20px;}
+					.replycon {margin-bottom:20px;}
+					.replies div {line-height:30px;}
+					</style>
+
 </head>
 
 <body>
@@ -160,41 +168,29 @@
 					<!-- /.clist -->
 					<hr class="lastline">
 					
+					<h3 class="replycon">답변내용</h3>
+
 					<c:if test="${cvr != null}">
-								<div class="replies">
-									<table class="tb2">
-										<tbody>
-											<tr>
-												<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
-											</tr>				
-											<tr>
-												<td class="reply_category">작성자 </td>
-												<td>${cvr.nickname}</td>
-												<td class="reply_category">제목</td>
-												<td>${cvr.title}</td>
-												<td class="reply_category">작성일</td>
-												<td>${cvr.wdate}</td>
-											</tr>
-											<tr>
-												<td class="reply_category" style="border-top: 2px solid #27c6be; border-bottom: 2px solid #27c6be;">내용</td>
-												<td class="reply_content" colspan="5">${cvr.content}</td>
-											</tr>
-											<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
-												<tr>
-													<td class="btn_td" colspan="6">
-														<div class="div_btn">					
-															<input type="button" value="삭제" class="btn3" id="reply_delete">
-															<input type="button" value="수정" class="btn3" onclick="location.href='CS_replyModify.do?csbidx=${cvr.csbidx}'">
-														</div>
-													</td>									
-												</tr>	
-											</c:if>		
-										</tbody>
-									</table>
+
+						<div class="replies">
+							<div><p>${cvr.content}</p></div>
+							<div style="text-align:right; margin-top:30px;"><span>${cvr.wdate}</span><br><p>HOWF Support</p></div>
+							<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
+								<div class="btnarea">
+									<button id="reply_delete" value="삭제">
+										<img src="<%=request.getContextPath()%>/image/button/delete.png">
+									</button>
+									<button value="수정" onclick="location.href='CS_replyModify.do?csbidx=${cvr.csbidx}'">
+										<img src="<%=request.getContextPath()%>/image/button/edit.png">
+									</button>
+
 								</div>
 							</c:if>
-							
-							<hr class="lastline">
+
+						</div>
+					</c:if>
+
+					<hr class="lastline">
 					
 					<a class=" onlypc" href="howfList.do">
 					<div class="backto">

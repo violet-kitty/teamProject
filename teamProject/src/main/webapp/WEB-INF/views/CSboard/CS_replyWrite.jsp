@@ -201,7 +201,7 @@
 		
 		$("#cancel").click(function(){
 			
-			var title = "${cv.title}";
+			var title = '${cv.title}';
 			var content = $("#summernote");
 			
 			if($("#title").val() != title){
