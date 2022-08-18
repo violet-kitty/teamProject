@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 <script>
 	function tagParse(tag, id){
@@ -42,7 +44,7 @@
 </script>
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardlist">
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
@@ -53,18 +55,22 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
 			<div class="contents content01">
 				<div class="container">
 					
 					<!-- HOWF 추천 -->
-					<div>
-						<h1>HOWF 추천</h1>
-						<div>
+					<div class="clist" style="margin-bottom:50px;">
+						<div class="pageinfo">
+							<div class="title">
+								<h1>HOWF 추천</h1>
+							</div>
+						</div>
+						<div class="row grid">
 							<c:if test="${empty howf}">
-								검색 결과가 없습니다
+								검색 결과가 없습니다<br><br><br>
 							</c:if>
 							<c:forEach var="v" items="${howf}">
 								<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -113,21 +119,34 @@
 						</div>
 						<c:choose>
 						<c:when test="${empty howf}">
-							<button onclick="location.href='<%= request.getContextPath() %>/howf/howfList.do'">'HOWF 추천' 가기</button>
+							<a href="<%= request.getContextPath() %>/howf/howfList.do">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> 'HOWF 추천' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:when>
 						<c:otherwise>
-							<button onclick="location.href='<%= request.getContextPath() %>/howf/howfList.do?searchType=total&searchValue=${searchValue}'">'HOWF 추천' 가기</button>
+							<a href="<%= request.getContextPath() %>/howf/howfList.do?searchType=total&searchValue=${searchValue}">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> 'HOWF 추천' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:otherwise>
 						</c:choose>
 					</div>
 					
+					<hr><br>
 					
 					<!-- 여행이야기 -->
-					<div>
-						<h1>여행이야기</h1>
-						<div>
+					<div class="clist" style="margin-bottom:50px;">
+						<div class="pageinfo">
+							<div class="title">
+								<h1>여행이야기</h1>
+							</div>
+						</div>
+						<div class="row grid">
 							<c:if test="${empty story}">
-								검색 결과가 없습니다
+								검색 결과가 없습니다<br><br><br>
 							</c:if>
 							<c:forEach var="s" items="${story}">
 								<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -178,21 +197,34 @@
 						</div>
 						<c:choose>
 						<c:when test="${empty story}">
-							<button onclick="location.href='<%= request.getContextPath() %>/story/storyList.do'">'여행이야기' 가기</button>
+							<a href="<%= request.getContextPath() %>/story/storyList.do">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '여행이야기' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:when>
 						<c:otherwise>
-							<button onclick="location.href='<%= request.getContextPath() %>/story/storyList.do?searchType=total&searchValue=${searchValue}'">'여행이야기' 가기</button>
+							<a href="<%= request.getContextPath() %>/story/storyList.do?searchType=total&searchValue=${searchValue}">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '여행이야기' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:otherwise>
 						</c:choose>
 					</div>
 					
+					<hr><br>
 					
 					<!-- 지역 이벤트 -->
-					<div>
-						<h1>지역 이벤트</h1>
-						<div>
+					<div class="clist" style="margin-bottom:50px;">
+						<div class="pageinfo">
+							<div class="title">
+								<h1>지역 이벤트</h1>
+							</div>
+						</div>
+						<div class="row grid">
 							<c:if test="${empty event}">
-								검색 결과가 없습니다
+								검색 결과가 없습니다<br><br><br>
 							</c:if>
 							<c:forEach var="v" items="${event}">
 								<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -243,34 +275,89 @@
 						</div>
 						<c:choose>
 						<c:when test="${empty event}">
-							<button onclick="location.href='<%= request.getContextPath() %>/event/eventList.do'">'지역 이벤트' 가기</button>
+							<a href="<%= request.getContextPath() %>/event/eventList.do">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '지역 이벤트' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:when>
 						<c:otherwise>
-							<button onclick="location.href='<%= request.getContextPath() %>/event/eventList.do?searchType=total&searchValue=${searchValue}'">'지역 이벤트' 가기</button>
+							<a href="<%= request.getContextPath() %>/event/eventList.do?searchType=total&searchValue=${searchValue}">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '지역 이벤트' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:otherwise>
 						</c:choose>
 						
 					</div>
 					
+					<hr><br>
 					
 					<!-- 숙박정보 -->
-					<div>
-						<h1>숙박 정보</h1>
-						숙박정보는 차후 디자인 입히고 수정할 예쩡임
-						<div>
+					<div class="clist" style="margin-bottom:50px;">
+						<div class="pageinfo">
+							<div class="title">
+								<h1>숙박 정보</h1>
+							</div>
+						</div>
+						<div class="row grid">
 							<c:if test="${empty stay}">
-								검색 결과가 없습니다
+								검색 결과가 없습니다<br><br><br>
 							</c:if>
-							<c:forEach var="t" items="${stay}">
-								
+							<c:forEach var="v" items="${stay}">
+								<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
+									<a style="cursor: pointer" onclick="location.href='<%= request.getContextPath() %>/stay/stayView.do?sidx=${v.sidx}'">
+										<div class="thumbnail hbshadow3">
+
+											<figure class="effect-ming">
+												<!-- 메인이미지 보여주기-->
+												<c:if test="${v.photo != null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(v.photo,',')[0]});"></div>
+												</c:if>
+
+												<c:if test="${v.photo == null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:if>
+												
+												<figcaption>
+													<p id="staytag${v.sidx}"></p>
+												</figcaption>
+												<!-- 태그 파싱하는 함수 호출 -->
+											<script>tagParse('${v.tag}','staytag${v.sidx}');</script>
+											
+											</figure>
+											<div class="banding">
+												<p class="hfc-pink hfc-bold">${fn:split(v.addr,' ')[0]} ${fn:split(v.addr,' ')[1]}</p>
+												<div class="small score">
+													<img src="<%=request.getContextPath()%>/image/icon/star.png"><span class="hfc-semibold hfc-darkgray">${v.star}</span>&nbsp;&nbsp;
+													<img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${v.heart}</span>
+												</div>
+												<h4 class="hfc-bold hfc-blackgray">${v.name}</h4>
+												<p class="priceinfo hfc-medium hfc-darkgray">${v.min}~ ${v.max}</p>
+											</div>
+												
+										</div>
+										<!-- /.thumbnail -->
+									</a>
+								</div>
+								<!--/. thumbnailitem -->
 							</c:forEach>
 						</div>
 						<c:choose>
 						<c:when test="${empty stay}">
-							<button onclick="location.href='<%= request.getContextPath() %>/stay/stayList.do'">'숙박 정보' 가기</button>
+							<a href="<%= request.getContextPath() %>/stay/stayList.do">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '숙박 정보' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:when>
 						<c:otherwise>
-							<button onclick="location.href='<%= request.getContextPath() %>/stay/stayList.do?searchType=total&searchValue=${searchValue}'">'숙박 정보' 가기</button>
+							<a href="<%= request.getContextPath() %>/stay/stayList.do?searchType=total&searchValue=${searchValue}">
+								<div class="backto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label" style="width:170px;"><span class="arrow">◀</span> '숙박 정보' 가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</c:otherwise>
 						</c:choose>
 					</div>

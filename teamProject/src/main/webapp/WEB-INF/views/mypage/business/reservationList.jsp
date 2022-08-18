@@ -25,12 +25,13 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- 달력 css --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/calendar.css" />
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 <script>
 	//달력 그리기
@@ -67,16 +68,43 @@
 		    			
 		    			for(var i=0;i<list.length;i++){
 		    				html = html
-	    					+ "숙소 이름 " + list[i].sname +"<br>"
-	    					+ "방 이름 " + list[i].rname +"<br>"
-	    					+ "체크인 " + list[i].date1 +"<br>"
-	    					+ "체크 아웃 " + list[i].date2 +"<br>"
-	    					+ "가격 " + list[i].price +"<br>"
-	    					+ "예약 날짜 " + list[i].wdate +"<br>"
-	    					+ "결제 여부 " + list[i].pay +"<br>"
-	    					+ "예약자 이름 " + list[i].name + "<br>"
-							+ "핸드폰 번호 " + list[i].phone + "<br>"
-							+ "<button onclick='resDelete("+list[i].reidx+","+list[i].pay+")'>예약 취소</button>"
+		    				+ "<div class='card mb-3'>"
+		    				+ "<div class='row g-0'>"
+		    				+ "<div class='col'>"
+		    				+ "<div class='card-body'>"
+		    				+ "<table class='table'>"
+		    				+ "<tr>"
+	    					+ "<td><h5 class='card-title'>숙소 이름 " + list[i].sname +"</h5></td>"
+	    					+ "<td><h5 class='card-title'>방 이름 " + list[i].rname +"</h5></td>"
+	    					+ "</tr>"
+	    					+ "<tr>"
+	    					+ "<td><p class='card-text'>체크인 " + list[i].date1 +"</p></td>"
+	    					+ "<td><p class='card-text'>체크 아웃 " + list[i].date2 +"</p></td>"
+	    					+ "</tr>"
+	    					+ "<tr>"
+	    					+ "<td><p class='card-text'>가격 " + list[i].price +"</p></td>"
+	    					+ "<td><p class='card-text'>결제 여부 " + list[i].pay +"</p></td>"
+	    					+ "</tr>"
+	    					+ "<tr>";
+	    					
+	    					if(list[i].name != "null")
+	    					html = html
+	    					+ "<td><p class='card-text'>예약자 이름 " + list[i].name + "</p></td>";
+	    					
+	    					if(list[i].phone != "null")
+							+ "<td><p class='card-text'>핸드폰 번호 " + list[i].phone + "</p></td>";
+							
+							html = html
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td><p class='card-text'>예약 날짜 " + list[i].wdate +"</p></td>"
+							+ "<td><button class='bluebtn' style='padding:8px 16px;' onclick='resDelete("+list[i].reidx+","+list[i].pay+")'>예약 취소</button></td>"
+							+ "</tr>"
+							+ "</table>"
+							+ "</div>"
+							+ "</div>"
+							+ "</div>"
+							+ "</div>"
 							+ "<br><br>";
 		    			}
 		    			
@@ -186,23 +214,35 @@
 		
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
-
+			
 			<!-- content01 -->
 			<div class="contents content01">
+				
 			
 				<!-- 달력 -->
 				<div class="container">
-					<div class="container">
-						<div id="calendar" ></div>
+					<div class="container hbg-whitegray" style="padding-left:20px; padding-right:20px;border-radius:5px;">
 						
+						<!-- 페이지 제목 -->
+						<div class="pageinfo">
+							<div class="title onlypc">
+								<h1>예약목록</h1>
+							</div>
+						</div>
+						
+						<div id="calendar" ></div>
+						<br><br>
+						
+						<button onclick="resInsert()" class="bluebtn">예약 추가하러 가기</button><br><br>
+					
 						<!-- 날짜가 출력되는 div -->
 						<div id="dateArea">
 							<span>선택된 날짜 : </span>
 							<span id="date1"></span>
 							<span> ~ </span>
 							<span id="date2"></span>
-							<button onclick="resInsert()">예약 추가</button>
 						</div>
+						<br><br>
 						
 						
 						<!-- 예약 목록이 출력되는 div -->
@@ -211,22 +251,48 @@
 							<input type="hidden" id="reidx">
 							<input type="hidden" id="pay">
 							<c:forEach var="i" items="${res}">
-								숙소 이름 ${i.sname}<br>
-								방 이름 ${i.rname}<br>
-								체크인 ${i.date1}<br>
-								체크 아웃 ${i.date2}<br>
-								가격 ${i.price}<br>
-								예약 날짜 ${i.wdate}<br>
-								결제 여부 ${i.pay}<br>
-								예약자 이름 ${i.name}<br>
-								핸드폰 번호 ${i.phone}<br>
-								<button onclick="resDelete('${i.reidx}')">예약 취소</button>
-								<br><br>
+							<div class="card mb-3">
+								<div class="row g-0">
+									<div class="col">
+										<div class="card-body">
+										
+											<table class="table">
+												<tr>
+													<td><h5 class="card-title">숙소 이름 ${i.sname}</h5></td>
+													<td><h5 class="card-title">방 이름 ${i.rname}</h5></td>
+												</tr>
+												<tr>
+													<td><p class="card-text">체크인 ${i.date1}</p></td>
+													<td><p class="card-text">체크 아웃 ${i.date2}</p></td>
+												</tr>
+												<tr>
+													<td><p class="card-text">가격 ${i.price}</p></td>
+													<td><p class="card-text">결제 여부 ${i.pay}</p></td>
+												</tr>
+												<tr>
+													<c:if test="${i.name != null}">
+													<td><p class="card-text">예약자 이름 ${i.name}</p></td>
+													</c:if>
+													<c:if test="${i.phone != null}">
+													<td><p class="card-text">핸드폰 번호 ${i.phone}</p></td>
+													</c:if>
+												</tr>
+												<tr>
+													<td><p class="card-text">예약 날짜 ${i.wdate}</p></td>
+													<td><button class='bluebtn' style='padding:8px 16px;' onclick="resDelete('${i.reidx}')">예약 취소</button></td>
+												</tr>
+											</table>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<br><br>
 							</c:forEach>
 						</div>
 						
-						
-					</div>
+					</div>	
+					
 				</div><!-- /.container -->
 			</div>
 			<!-- / .content01 -->

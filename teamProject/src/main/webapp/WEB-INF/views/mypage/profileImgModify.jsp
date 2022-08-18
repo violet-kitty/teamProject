@@ -25,11 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 
 <style>
 	/* 프로필 이미지 */
@@ -65,11 +66,13 @@
 
 			<!-- content01 -->
 			<div class="contents content01">
-				<div class="container">
+				<div class="container hbg-whitegray bgpadding">
 					
 					<!-- 페이지 제목 -->
-					<div class="title">
-						<h1>프로필 이미지 수정</h1>
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<h1>프로필 이미지 수정</h1>
+						</div>
 					</div>
 					
 					<!-- 정보 확인 -->
@@ -77,13 +80,12 @@
 						<div class="col">
 							
 							<!-- 프로필 이미지 -->
-							<div>
+							<div style="text-align:center;">
 								<input type="file" name="file" id="file">
 								
 								<div>
 									<!-- 프로필 사진 -->
 									<c:choose>
-									
 									<c:when test="${profile.img == null}">
 										<div id="profileAlt" style="border-radius:50%;width:200px;height:200px;">
 											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:200px;height:200px;">
@@ -92,7 +94,7 @@
 									</c:when>
 									
 									<c:otherwise>
-										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg">
+										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%;width:200px;height:200px;">
 									</c:otherwise>
 									</c:choose>
 								</div>
@@ -106,7 +108,7 @@
 					
 					
 					<!-- 수정 버튼 -->
-					<div class="row">
+					<div class="row" style="text-align:center;">
 						<div class="col">
 							<button onclick="profileModify()">이미지 수정</button>
 							<button onclick="location.href='myInfo.do'">취소</button>

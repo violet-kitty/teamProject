@@ -651,10 +651,9 @@
 		<if test='searchType != null and searchType.equals("total")'>
 		AND (name like CONCAT('%',#{searchValue},'%')
 		OR email like CONCAT('%',#{searchValue},'%')
-		OR email like CONCAT('%',#{searchValue},'%')
-		OR email like CONCAT('%',#{searchValue},'%')
-		OR email like CONCAT('%',#{searchValue},'%')
-		OR email like CONCAT('%',#{searchValue},'%'))
+		OR nickname like CONCAT('%',#{searchValue},'%')
+		OR jumin like CONCAT('%',#{searchValue},'%')
+		OR social like CONCAT('%',#{searchValue},'%'))
 		</if>
 		<!-- sort -->
 		<if test='sortType != null and sortType.equals("dely")'>
@@ -662,6 +661,9 @@
 		</if>
 		<if test='sortType != null and sortType.equals("deln")'>
 		AND delyn = 'N'
+		</if>
+		<if test='sortType != null and sortType.equals("dela")'>
+		AND delyn = 'A'
 		</if>
 		<if test='sortType != null and sortType.equals("normal")'>
 		AND role = 'normal'
@@ -743,8 +745,11 @@
 		WHERE role != 'admin'
 		<!-- 검색 -->
 		<if test='searchType != null and searchType.equals("total")'>
-		AND (a.title like CONCAT('%',#{searchValue},'%')
-		OR a.tag like CONCAT('%',#{searchValue},'%'))
+		AND (name like CONCAT('%',#{searchValue},'%')
+		OR email like CONCAT('%',#{searchValue},'%')
+		OR nickname like CONCAT('%',#{searchValue},'%')
+		OR jumin like CONCAT('%',#{searchValue},'%')
+		OR social like CONCAT('%',#{searchValue},'%'))
 		</if>
 		<!-- sort -->
 		<if test='sortType != null and sortType.equals("dely")'>
@@ -753,7 +758,7 @@
 		<if test='sortType != null and sortType.equals("deln")'>
 		AND delyn = 'N'
 		</if>
-		<if test='sortType != null and sortType.equals("delb")'>
+		<if test='sortType != null and sortType.equals("dela")'>
 		AND delyn = 'A'
 		</if>
 		<if test='sortType != null and sortType.equals("normal")'>
@@ -860,18 +865,5 @@
 		SET delyn = 'Y'
 		WHERE midx = #{midx}
 	</update>
-	
-	<!-- 리뷰 목록 -->
-	
-	
-	<!-- 리뷰 목록 개수 -->
-	
-	
-	<!-- 댓글 목록 -->
-	
-	
-	<!-- 댓글 목록 개수 -->
-	
-	
 	
 </mapper>

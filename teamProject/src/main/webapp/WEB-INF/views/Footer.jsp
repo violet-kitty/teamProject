@@ -10,9 +10,9 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-12 company">
 					<!-- 로고 -->
-					<a href="#" class="companylogo"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
-					<p class="companyinfo hfc-medium">HOWF는 여행정보, 커뮤니티, 숙박정보을 보다 효율적
-					이고 쉽고 편리하게 제공하기 위해 노력합니다.<br>
+					<a href="<%= request.getContextPath() %>/" class="companylogo"><img src="<%= request.getContextPath() %>/image/logo/logo.png"></a>
+					<p class="companyinfo hfc-medium">HOWF는 여행정보, 커뮤니티, 숙박정보를 보다 효율적이고
+					쉽고 편리하게 제공하기 위해 노력합니다.<br>
 					HOWF와 함께 더 멋진 여행계획을 만들어보세요!</p>
 				</div>
 				<div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 onlypc"></div>
@@ -37,8 +37,8 @@
 				<div class="col-lg-2 col-md-6 col-sm-6 col-xs-6 sitemap">
 					<p class="text-uppercase hfc-bold">문의</p>
 					<ul class="list-unstyled hfc-medium">
-						<li><a href="<%=request.getContextPath() %>/null.jsp">FAQ</a></li>
-						<li><a href="<%=request.getContextPath() %>/null.jsp">1:1 Q&A</a></li>
+						<li><a href="<%=request.getContextPath() %>/notice/faqboard.do">FAQ</a></li>
+						<li><a href="<%=request.getContextPath() %>/CSboard/CS_list.do">1:1 Q&A</a></li>
 					</ul>
 				</div>
 			</div>
