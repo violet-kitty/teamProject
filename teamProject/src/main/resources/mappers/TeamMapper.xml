@@ -12,7 +12,7 @@
 				 ,t.midx
 			     ,t.title
 			     ,t.content
-			     ,t.wdate
+			     ,DATE_FORMAT(t.wdate,'%Y-%m-%d') as wdate
 			     ,t.cnt
 			     ,t.delyn
 			     ,j.people_cnt

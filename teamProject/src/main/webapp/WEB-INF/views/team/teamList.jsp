@@ -36,7 +36,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
-
+<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/normaltable.css">
 </head>
 <body>
 	
@@ -133,64 +133,62 @@
 					<div class="clist">
 						
 						<!-- 리스트영역 -->
-						<div class="row">
-							<div class="col">
-								<table class="table">
-									<tbody>
-										<tr>
-											<td>글번호</td>
-											<td>작성자</td>
-											<td>제목</td>
-											<td>작성일</td>
-											<td>조회수</td>
-											<td>팀원</td>
-										</tr>
-										<c:forEach var="tv" items="${tv}">
-											<tr>
-												<td>${tv.tidx}</td>
-												<td>${tv.nickname}</td>
-												<td><a href="teamView.do?tidx=${tv.tidx}">${tv.title}</a></td>
-												<td>${tv.wdate}</td>
-												<td>${tv.cnt}</td>
-												<td>${tv.people_cnt}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>			
-						</div>
-						<div class="row">
+						<table border="1" class="table">
+							<tbody>
+								<tr>
+									<th class="hfc-bold hfc-darkgray">글번호</th>
+									<th class="hfc-bold hfc-darkgray">작성자</th>
+									<th class="hfc-bold hfc-darkgray">제목</th>
+									<th class="hfc-bold hfc-darkgray">작성일</th>
+									<th class="hfc-bold hfc-darkgray">조회수</th>
+									<th class="hfc-bold hfc-darkgray">팀원</th>
+								</tr>
+								<c:forEach var="tv" items="${tv}">
+									<tr>
+										<td class=" hfc-blackgray">${tv.tidx}</td>
+										<td class=" hfc-blackgray">${tv.nickname}</td>
+										<td><a href="teamView.do?tidx=${tv.tidx}"  class=" hfc-blackgray hfc-semibold">${tv.title}</a></td>
+										<td class=" hfc-blackgray">${tv.wdate}</td>
+										<td class=" hfc-blackgray">${tv.cnt}</td>
+										<td class=" hfc-blackgray">${tv.people_cnt}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<!-- /리스트영역 -->
+						
+						<!-- 페이징 -->
+						<div class="row pagenation">
 							<div class="col d-flex justify-content-center">
+							
 								<table>
 									<tbody>						
 										<tr>
 											<c:if test="${pm.prev == true}">
 												<td>
-													<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">◀</a>
+													<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold">◀</a>
 												</td>
 											</c:if>
 											<td>
 												<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-													<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
+													<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold  mx-1">${i}</a>
 												</c:forEach>
 											</td>
 											<c:if test="${pm.next && pm.endPage > 0}">
 												<td>
-													<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">▶</a>
+													<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold">▶</a>
 												</td>
 											</c:if>
 										</tr>						
 									</tbody>
 								</table>
 							</div>	
-						</div>		
-						<div class="row">
-							<div class="col d-flex justify-content-center">
-								<button id="teamWrite">글쓰기</button>
-							</div>
 						</div>
+						<!-- /페이징 -->
+
 					</div><!-- /.clist -->
 					<!-- / 리스트 박스 --> 
+					
 				</div><!-- / .container -->
 			</div><!-- .contents -->
 
