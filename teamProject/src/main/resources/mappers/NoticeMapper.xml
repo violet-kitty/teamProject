@@ -36,7 +36,7 @@
 			select	 n.nbidx
 					,n.title
 					,n.content
-					,n.wdate
+					,DATE_FORMAT(n.wdate,'%Y-%m-%d') as wdate
 					,n.cnt
 					,u.email
 					,u.name
