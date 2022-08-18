@@ -85,9 +85,16 @@
 	    					+ "<td><p class='card-text'>가격 " + list[i].price +"</p></td>"
 	    					+ "<td><p class='card-text'>결제 여부 " + list[i].pay +"</p></td>"
 	    					+ "</tr>"
-	    					+ "<tr>"
-	    					+ "<td><p class='card-text'>예약자 이름 " + list[i].name + "</p></td>"
-							+ "<td><p class='card-text'>핸드폰 번호 " + list[i].phone + "</p></td>"
+	    					+ "<tr>";
+	    					
+	    					if(list[i].name != "null")
+	    					html = html
+	    					+ "<td><p class='card-text'>예약자 이름 " + list[i].name + "</p></td>";
+	    					
+	    					if(list[i].phone != "null")
+							+ "<td><p class='card-text'>핸드폰 번호 " + list[i].phone + "</p></td>";
+							
+							html = html
 							+ "</tr>"
 							+ "<tr>"
 							+ "<td><p class='card-text'>예약 날짜 " + list[i].wdate +"</p></td>"
@@ -263,8 +270,12 @@
 													<td><p class="card-text">결제 여부 ${i.pay}</p></td>
 												</tr>
 												<tr>
+													<c:if test="${i.name != null}">
 													<td><p class="card-text">예약자 이름 ${i.name}</p></td>
+													</c:if>
+													<c:if test="${i.phone != null}">
 													<td><p class="card-text">핸드폰 번호 ${i.phone}</p></td>
+													</c:if>
 												</tr>
 												<tr>
 													<td><p class="card-text">예약 날짜 ${i.wdate}</p></td>

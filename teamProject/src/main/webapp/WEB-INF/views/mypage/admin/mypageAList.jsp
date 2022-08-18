@@ -77,14 +77,6 @@
 						</div>
 						<div class="feature col">
 							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="reviewList.do">리뷰 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
-							<a class="mainbtn" href="commentList.do">댓글 관리</a>
-						</div>
-						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/heart.png" style="width:56px;">
 							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">고객 지원</a>
 						</div>
 					</div>

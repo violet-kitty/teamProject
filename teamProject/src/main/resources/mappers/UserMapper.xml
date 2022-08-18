@@ -861,6 +861,4 @@
 		WHERE midx = #{midx}
 	</update>
 	
-	
-	
 </mapper>
