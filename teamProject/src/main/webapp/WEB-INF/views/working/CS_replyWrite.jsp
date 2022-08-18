@@ -28,20 +28,14 @@
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Nav3 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
-<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
-
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- /summernote -->
 
 </head>
 <body>
@@ -81,89 +75,46 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-whitegray">
-			
-			<div class="contents pagehead hbg-whitegray">
-				<div class="container" id="featured-2">
-					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
-						<div class="backto">
-							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
-						</div>
-					</a>
-					
-					<!-- 제목 영역 -->
-							<div class="pageinfo">
-								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1문의 답변작성</h1></a>
-								</div>
-							</div>
+		<div id="container" class="hbg-lightgray">
 
-					<!-- 폼 시작 -->
-					
-					<form id="form1" action="CS_replyWrite.do?origincsbidx=${cv.origincsbidx}" method="post">
-						
-<!-- 						카테고리 선택, 제목 입력
-						<div class="row h-input ">
-							<div class="col">
-								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+
+							<div class="div_header">
+								<h3>1:1 문의 게시글 답변 작성</h3>
 							</div>
-						</div>row end -->
-				
-						
-						<!-- 에디터 -->
-						<div class="row h-input">
-							<div class="col">
-								<h3>문의 제목 : ${cv.title}</h3>
-								<br>
-								<p>문의 내용 : <br>${cv.content}</p>
-								<br>
-								<input type="hidden" id="title" name="title" class="input_title" value="${cv.title}">
-								<textarea id="summernote" name="content"></textarea>
-							</div>
-						</div><!-- row end -->
-						
-						<!-- 에디터 -->
-						<div class="row h-input">
-							<div class="col">
-								<p>이미지 첨부 파일</p>
-							</div>
-							<div class="col">
-								<label><input type="file" id="file" name="file"></label>
-								<!-- div id="div_img" style="display: none;"><img id="img"></div>
-								<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div> -->
-							</div>
-						</div><!-- row end -->
-						
-					<!-- /.clist -->
-					</form>
-					<hr class="lastline">
-				
-					
-					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
-						<div class="row buttonarea">
-							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
-									<div class="backto lastbackto">
-										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
-									</div>
-								</a>
-							</div>
-							<div class="col-lg-6 okbutton">
-								<button type="button" class="bluebtn" onclick="CS_replyWriteCheck()">답변완료</button>
-							</div>
-						</div><!-- row end -->
-					<!-- 리스트 카드 -->
-					
-					
-		
-					
+							<hr>	
+							<div class="replies">
+								<form id="form1" action="CS_replyWrite.do?origincsbidx=${cv.origincsbidx}" method="post">
+									<table class="table tb1">
+										<tbody>			
+											<tr>
+												<td class="reply_category">제목<span class="span_must_input">*</span></td>
+												<td><input type="text" id="title" name="title" class="input_title" value="${cv.title}"></td>
+											</tr>
+											<tr>
+												<td class="reply_category">내용<span class="span_must_input">*</span></td>
+												<td class="reply_content" colspan="3"><textarea id="summernote" name="content"></textarea></td>
+											</tr>
+											<tr>
+												<td class="btn_td" colspan="4">
+													<input type="hidden" name="origincsbidx" value="${cv.csbidx}">
+													<input type="button" class="btn1" value="등록" onclick="CS_replyWriteCheck()">
+													<input type="button" class="btn1" value="취소" id="cancel">
+												</td>
+											</tr>			
+										</tbody>
+									</table>
+								</form>
+							</div>		
+						</div>
+					</div>
 				</div><!-- /.container -->
-			</div><!-- /.contents -->
-			<!-- /pagehead -->
-			
-			<!-- banner --><%@include file="../banner.jsp"%>
-			
+			</div>
+			<!-- / .content01 -->
 		</div><!-- / #container -->
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->

@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
-
+<%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->   
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,30 +28,35 @@
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Nav3 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
-<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyView.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyView.css">
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
-
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- summernote -->
 
 </head>
-
 <body>
 	<div id="wrap" class="boardView cs csview">
-	
-		<!-- Header --><%@include file="../Header.jsp"%>
-		<!-- Nav --><%@include file="../Nav.jsp"%>
+		<!-- 모달예제 
+		<button onclick="modalex()">모달예제</button>
+		<script>
+		function modalex(){
+		
+			/* modalex("모달이 완료되었습니다");
+		      setTimeout(function(){
+		         modalClose();
+		      },3000); */
+		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
+			
+		}
+		</script>
+		-->
+		
+		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
+		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
 		<!-- Herotop -->
 		<div class="parallax-window" data-parallax="scroll" data-image-src="<%= request.getContextPath() %>/image/picture/support.jpg"></div>
@@ -65,102 +70,65 @@
 		<!-- Herotop -->
 		
 		<!-- Side -->
-		
 		<div class="right-container">
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-whitegray">
-			
-			<div class="contents pagehead hbg-whitegray">
-				<div class="container" id="featured-2">
-				    <!-- pagehead  -->
-					<a class=" onlypc" href="<%= request.getContextPath() %>/CSboard/CS_list.do">
-						<div class="backto">
-							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
-						</div>
-					</a>
-					
-					<!-- 뷰 -->
-					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
-					<div class="clist">
-						
-							<!-- C리스트 14. 반복 -->
-							<div class="thumbnailitem">
-								
-									<div class="thumbnail">
-											
-											<div class="writerinfo">
-												<p>
-													
-														<span class="cate" style="background: #A4C266; color: white;">${cv.divsn}</span>
-													
-													<span class="hfc-semibold hfc-darkgray">${cv.nickname} | ${cv.wdate}</span>
-												</p>
-												<div class="small">
-													<div class="col-lg-6 d-flex justify-content-end">
-														
-																<img src="<%=request.getContextPath()%>/image/icon/eye.png">
-															
-														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${cv.cnt}</span>
-													</div>
-												</div>
-											</div>
-											<div class="caption">
-												<h4>${cv.title}</h4>
-											</div>
-
-											<!-- 태그 -->
-											<div class="row">
-												<div class="col hfc-darkgray" id="tagArea"></div>
-											</div>
-											<hr class="middleline">
-											<!-- 글 내용 -->
-											<div class="row contentrow">
-												<div class="col" id="howfContent">
-													${cv.content}
-												</div>
-												<p>이미지 첨부파일</p>
-												<a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a>
-											</div>
-								
-					<div class="row btnarea">
-						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login.midx == cv.midx || login.role == 'admin'}">		
-							<button onclick="delOk()" id="delete" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-							<button value="수정" onclick="location.href='CS_modify.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
-							</c:if>
-							<button onclick="location.href='CSboard/CS_write.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
-							<c:if test="${login.role == 'admin' && cvr == null}">
-							<button id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='CS_replyWrite.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/reply.png"></button>
-						</c:if>
-						</div>
-						<div class="col-6 d-flex justify-content-end">
-							<%-- <button onclick="shareSNS('facebook')">
-								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
-							</button>
-							<button onclick="shareSNS('twitter')">
-								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
-							</button> --%>
-							<button onclick="shareSNS('kakao')" id="kakaoBtn">
-								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
-							</button>
-						</div>
-					</div>
-					
-
-								
-								
-							</div><!-- /.thumbnail -->
-										
-							</div><!--/. thumbnailitem -->
-					
-					</div>
-					<!-- /.clist -->
-					<hr class="lastline">
-					
-					<c:if test="${cvr != null}">
+		<div id="container" class="hbg-lightgray">
+			<!-- content01 -->
+			<div class="contents content01">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="div_header">
+								<h3>1:1 문의 게시글</h3>
+							</div>
+							<hr>	
+							<div class="div1">	
+								<table class="tb1">
+									<tbody>
+										<tr>
+											<td class="tb_category">글번호</td>
+											<td>${cv.csbidx}</td>
+											<td class="tb_category">문의유형</td>
+											<td>${cv.divsn}</td>
+											<td class="tb_category">작성자</td>
+											<td>${cv.nickname}</td>					
+											<td class="tb_category">작성일</td>
+											<td>${cv.wdate}</td>
+											<td class="tb_category">조회수</td>
+											<td>${cv.cnt}</td>					
+										</tr>
+										<tr>
+											<td class="tb_category" style="border-top: 2px solid black;">제목</td>
+											<td class="tb_title" colspan="9">${cv.title}</td>
+										</tr>
+										<tr>
+											<td class="tb_category tb_content">내용</td>
+											<td colspan="9" class="tb_content tb_content_fill">${cv.content}</td>				
+										</tr>
+									<c:if test="${cv.filename != null}">
+										<tr>
+											<td class="tb_category td_file">이미지 첨부 파일</td>
+											<td colspan="9" class="tb_filename td_file"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a></td>
+										</tr>
+									</c:if>
+									</tbody>
+								</table>
+								<div class="div2">
+									<c:if test="${login.role == 'admin' && cvr == null}">
+										<input id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='CS_replyWrite.do?csbidx=${cv.csbidx}'">
+									</c:if>
+										<input type="button" value="목록" onclick="location.href='CS_list.do'" class="btn2">
+									<c:if test="${login.midx == cv.midx || login.role == 'admin'}">				
+										<input type="button" value="수정" onclick="location.href='CS_modify.do?csbidx=${cv.csbidx}'" class="btn2">
+										<input type="button" id="delete" value="삭제" class="btn2">
+									</c:if>
+								</div>
+							</div>
+							<br><br>
+							<c:if test="${cvr != null}">
 								<div class="replies">
 									<table class="tb2">
 										<tbody>
@@ -192,33 +160,15 @@
 										</tbody>
 									</table>
 								</div>
-							</c:if>
-							
-							<hr class="lastline">
-					
-					<a class=" onlypc" href="howfList.do">
-					<div class="backto">
-						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+							</c:if>							
+						</div>
 					</div>
-					</a>
-					<!-- 리스트 카드 -->
-					
-					
-		
-					
 				</div><!-- /.container -->
-			</div><!-- /.contents -->
-			<!-- /pagehead -->
-			
-			<!-- banner --><%@include file="../banner.jsp"%>
-			
+			</div>
+			<!-- / .content01 -->
 		</div><!-- / #container -->
-		
-		<!-- Footer --><%@include file="../Footer.jsp"%>
-	
+		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
-
-
 <script>
 	function modalOkFn(){
 		location.href = "CS_delete.do?origincsbidx=${cv.origincsbidx}";
@@ -240,11 +190,5 @@
 		
 	});
 </script>
-
-<script>
-$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
-</script>
-
 </body>
-
 </html>

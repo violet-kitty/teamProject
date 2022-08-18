@@ -193,7 +193,7 @@ function modify(index){
 
 <body>
 
-	<div id="wrap" class="boardlist cs cslist">
+	<div id="wrap" class="boardlist faq faqlist">
 		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
