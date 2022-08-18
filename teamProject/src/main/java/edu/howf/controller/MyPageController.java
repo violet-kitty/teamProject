@@ -717,9 +717,11 @@ public class MyPageController {
 		return userService.joinBN(midx);
 	}
 	
-	//리뷰 관리 이동
+	//리뷰, 댓글 관리 이동
 	@RequestMapping(value="/reviewList.do")
-	public String reviewList() {
+	public String reviewList(SearchVO vo, Model model) {
+		
+		
 		return "mypage/admin/reviewList";
 	}
 	
@@ -727,7 +729,9 @@ public class MyPageController {
 	
 	//댓글 관리 이동
 	@RequestMapping(value="/commentList.do")
-	public String commentList() {
+	public String commentList(SearchVO vo, Model model) {
+		
+		
 		return "mypage/admin/commentList";
 	}
 	
