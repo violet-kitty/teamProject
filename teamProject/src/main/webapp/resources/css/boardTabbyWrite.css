@@ -11,7 +11,7 @@
 .boardWrite .title {margin-top:0px; margin:auto;width:130px; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
 .boardWrite .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
 
-.cswrite .title {margin-top:0px; margin:auto;width:240px; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
+.cswrite .title {margin-top:0px; margin:auto;width:fit-content; border-bottom:2px solid #CFCFCF; padding-bottom:16px;}
 .cswrite .title h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
 .cswrite .col-10 {padding-left:8px;}
 .cswrite .h-input p {margin-top:0px!important;}

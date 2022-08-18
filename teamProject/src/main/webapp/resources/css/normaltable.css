@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+/* Table */
+table{border:none}
+table tr {border-bottom:2px solid #EBEBEB;}
+table th {background-color: #EBEBEB!important; text-align:center;  padding: 1.5rem 0.5rem!important;}
+table td {border:none; padding: 1.5rem 0.5rem!important;}
+/* 문의유형 */table td:nth-child(1){text-align:center; width:85px;}
+/* 작성자롤 */table td:nth-child(2){text-align:center; width:100px;}
+ /* 제목 */table td:nth-child(3) a{height:15px; text-overflow: ellipsis;overflow: hidden;word-break: keep-all;display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;}
+ /* 제목 */table td:nth-child(3) a:hover {color:#54ACA8;}
+/* 답변여부 */table td:nth-child(4){text-align:center; width:100px;}

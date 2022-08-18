@@ -2,13 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>    
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>페이지 제목</title>
+<title>HOWF 너나들이 글쓰기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -102,7 +103,6 @@ input[type=checkbox]{
 	//채팅 api 초기화
 	const nc = new ncloudchat.Chat();
 	nc.initialize("200ead48-efb1-42e9-acc8-32ab84b2039a");
-
 	var re = userConnect();
 	
 	async function userConnect(){
@@ -185,7 +185,6 @@ input[type=checkbox]{
 					title.focus();
 					return false;
 				},1000);
-
 			}
 			else if(content.val() == ""){
 				modalFn("내용을 입력해주세요");
@@ -194,7 +193,6 @@ input[type=checkbox]{
 					$("#summernote").summernote('focus');
 					return false;
 				},1000);
-
 			}
 			else{
 				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "팀 페이지 등록", "취소", "teamWriteCheck");

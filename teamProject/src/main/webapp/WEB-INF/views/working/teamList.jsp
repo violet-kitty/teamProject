@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -36,14 +37,16 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
-<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/normaltable.css">
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
+
 </head>
 <body>
-	
-	<div id="wrap" class="boardlist story storylist">
-	
+
+	<div id="wrap" class="boardList cs cslist">
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
 		
 		<!-- Side -->
 		<div class="right-container">
@@ -56,141 +59,106 @@
 		
 		<!-- #container -->
 		<div id="container" class="hbg-whitegray">
-		
-			<!-- 리스트 content -->
-			<div class="contents pagehead hbg-whitegray">
-				<div class="container" id="featured-2">
-				
-					<!-- pagehead -->
-					<div class="pageinfo">
-						<!-- 페이지 제목 -->
-						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이</h1></a>
-						</div>
+
+				<div class="contents pagehead hbg-whitegray">
+					<!-- container -->
+					<div class="container" id="featured-2">
 					
-						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
-						<div class="row rightbox onlypc-inline">
-							<!-- sort 버튼 -->
-							<div class="col d-flex justify-content-end filterbtn">
-								<button id="filter_team">팀원수</button>
-								<button id="filter_cnt">조회수</button>
-							</div>	
-							<!-- 검색창 -->
-							<form id="form1" name="frm2" action="teamList.do" method="get">
-								<div class="search">
-									<select name="searchType" id="sfilterID">
+						<!--  타이틀과 검색영억 -->
+						<div class="pageinfo">
+							<!-- 제목 영역 -->
+							<div class="title">
+								<a href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이</h1></a>
+							</div>
+						
+							<!-- 검색영역 : PC버전 -->
+							<div class="row rightbox onlypc-inline">
+								<!-- 검색창 -->
+								<form id="form1" name="frm2" action="teamList.do" method="get">
+									<div class="search">
+									<select name="searchType">
 										<option value="total"<c:if test="${!empty vo.searchType and vo.searchType eq ''}">selected</c:if>>전체</option>
 										<option value="title"<c:if test="${!empty vo.searchType and vo.searchType eq 'title'}">selected</c:if>>제목</option>
 										<option value="content"<c:if test="${!empty vo.searchType and vo.searchType eq 'content'}">selected</c:if>>내용</option>
 										<option value="nickname"<c:if test="${!empty vo.searchType and vo.searchType eq 'nickname'}">selected</c:if>>작성자</option>
 									</select>
 									<input type="text" name="searchValue" <c:if test="${!empty vo.searchValue }">value="${vo.searchValue}"</c:if>>
-									<input type="submit" id="btn_search" value="검색">
-								</div>
-							</form>
-								
-						</div><!-- .rightbox onlypc-inline-->
-						<!-- / 검색영역 -->
-						
-						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
-						
-							<div class="docctrl onlytablet" style="margin-top: 16px;">
-								<a href="<%=request.getContextPath()%>/team/teamWrite.do">
-									<button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button>
-								</a>
-							</div>
+									<button id="btn_search">검색</button>
+									</div>
+								</form>					
+							</div><!-- .rightbox onlypc-inline-->
+							<!-- / 검색영역 -->
 							
-							<div class="row rightbox onlytablet">
-								<div class="btn-group">
-									<button class="w-100 dropdown-toggle pinkbtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬 &nbsp;</button>
-									<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
-										<li><a class="dropdown-item" href="teamList.do?sortType=team">팀원수</a></li>
-										<li><a class="dropdown-item" href="teamList.do?sortType=cnt">조회수</a></li>
-									</ul>
+							
+							<div class="row">
+								<div class="col d-flex justify-content-end">
+									<button id="filter_team">팀원수</button>
+									<button id="filter_cnt">조회수</button>
 								</div>
-								
-								<!-- 검색창 -->
-								<form id="form1" name="frm2" action="teamList.do" method="get">
-								<div class="search">
-									<select name="searchType" id="sfilterID">
-										<option value="total"<c:if test="${!empty vo.searchType and vo.searchType eq ''}">selected</c:if>>전체</option>
-										<option value="title"<c:if test="${!empty vo.searchType and vo.searchType eq 'title'}">selected</c:if>>제목</option>
-										<option value="content"<c:if test="${!empty vo.searchType and vo.searchType eq 'content'}">selected</c:if>>내용</option>
-										<option value="nickname"<c:if test="${!empty vo.searchType and vo.searchType eq 'nickname'}">selected</c:if>>작성자</option>
-									</select> 
-									<input type="text" name="searchValue" <c:if test="${!empty vo.searchValue }">value="${vo.searchValue}"</c:if>>
-									<input type="submit" id="btn_search" value="검색">
-								</div>
-								</form>
 							</div>
-							<!-- .rightbox -->
-					</div>
-					<!-- .pageinfo -->
-					<!-- / pagehead -->
-					
-					
-					<!-- 리스트 박스 -->   <!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
-					<div class="clist">
 						
-						<!-- 리스트영역 -->
-						<table border="1" class="table">
-							<tbody>
-								<tr>
-									<th class="hfc-bold hfc-darkgray">글번호</th>
-									<th class="hfc-bold hfc-darkgray">작성자</th>
-									<th class="hfc-bold hfc-darkgray">제목</th>
-									<th class="hfc-bold hfc-darkgray">작성일</th>
-									<th class="hfc-bold hfc-darkgray">조회수</th>
-									<th class="hfc-bold hfc-darkgray">팀원</th>
-								</tr>
-								<c:forEach var="tv" items="${tv}">
-									<tr>
-										<td class=" hfc-blackgray">${tv.tidx}</td>
-										<td class=" hfc-blackgray">${tv.nickname}</td>
-										<td><a href="teamView.do?tidx=${tv.tidx}"  class=" hfc-blackgray hfc-semibold">${tv.title}</a></td>
-										<td class=" hfc-blackgray">${tv.wdate}</td>
-										<td class=" hfc-blackgray">${tv.cnt}</td>
-										<td class=" hfc-blackgray">${tv.people_cnt}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<!-- /리스트영역 -->
+						</div>
 						
-						<!-- 페이징 -->
-						<div class="row pagenation">
+						<div class="row">
+							<div class="col">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>글번호</td>
+											<td>작성자</td>
+											<td>제목</td>
+											<td>작성일</td>
+											<td>조회수</td>
+											<td>팀원</td>
+										</tr>
+										<c:forEach var="tv" items="${tv}">
+											<tr>
+												<td>${tv.tidx}</td>
+												<td>${tv.nickname}</td>
+												<td><a href="teamView.do?tidx=${tv.tidx}">${tv.title}</a></td>
+												<td>${tv.wdate}</td>
+												<td>${tv.cnt}</td>
+												<td>${tv.people_cnt}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>			
+						</div>
+						<div class="row">
 							<div class="col d-flex justify-content-center">
-							
 								<table>
 									<tbody>						
 										<tr>
 											<c:if test="${pm.prev == true}">
 												<td>
-													<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold">◀</a>
+													<a href="teamList.do?page=${pm.startPage-1}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">◀</a>
 												</td>
 											</c:if>
 											<td>
 												<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-													<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold  mx-1">${i}</a>
+													<a href="teamList.do?page=${i}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">${i}</a>
 												</c:forEach>
 											</td>
 											<c:if test="${pm.next && pm.endPage > 0}">
 												<td>
-													<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}" class="hfc-gray hfc-bold">▶</a>
+													<a href="teamList.do?page=${pm.endPage}&searchType=${pm.search.searchType}&searchValue=${pm.search.searchValue}">▶</a>
 												</td>
 											</c:if>
 										</tr>						
 									</tbody>
 								</table>
 							</div>	
+						</div>		
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+								<button id="teamWrite">글쓰기</button>
+							</div>
 						</div>
-						<!-- /페이징 -->
-
-					</div><!-- /.clist -->
-					<!-- / 리스트 박스 --> 
-					
-				</div><!-- / .container -->
-			</div><!-- .contents -->
+				
+			
+					</div><!-- / .container -->
+				</div><!-- .contents -->
 
 			<!-- banner --><%@include file="../banner.jsp"%>
 			
@@ -238,6 +206,7 @@ $(function(){
 	$("#filter_cnt").click(function(){
 		location.href = "teamList.do?sortType=cnt";
 	});		
+
 });
 </script>	
 </body>
