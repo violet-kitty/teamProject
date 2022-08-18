@@ -307,8 +307,8 @@
 		ON r.ridx = rr.ridx
 		WHERE rr.delyn = 'N'
 		<if test='date1 != null and date2 != null'>
-		AND rr.date1 <![CDATA[<=]]> #{date2}
-		AND rr.date2 <![CDATA[>=]]> #{date1}
+		AND rr.date1 <![CDATA[<]]> #{date2}
+		AND rr.date2 <![CDATA[>]]> #{date1}
 		</if>
 		) b
 		ON a.ridx = b.ridx
@@ -334,8 +334,8 @@
 		FROM room r
 		JOIN res rr
 		ON r.ridx = rr.ridx
-		WHERE rr.date1 <![CDATA[<=]]> #{date2}
-		AND rr.date2 <![CDATA[>=]]> #{date1}) b
+		WHERE rr.date1 <![CDATA[<]]> #{date2}
+		AND rr.date2 <![CDATA[>]]> #{date1}) b
 		ON a.ridx = b.ridx
 		WHERE b.reidx IS NULL) c
 		LEFT OUTER JOIN stay d
@@ -626,11 +626,11 @@
 			, r.date2
 			, r.merchant
 			, r.pay
+			, r.price
 			, r.wdate
 			, r.delyn
 			, a.sname
 			, a.rname
-			, a.price
 			, a.photo
 			, a.sidx
 		FROM res r
@@ -638,7 +638,6 @@
 		(SELECT ro.ridx
 			, s.name as sname
 			, ro.name as rname
-			, ro.price
 			, ro.photo
 			, s.sidx
 		FROM room ro

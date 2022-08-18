@@ -28,11 +28,11 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
-<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyList.css">
 <!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 </head>
 <body>
-	<div id="wrap" class="boardlist">
+	<div id="wrap" class="boardlist cs cslist">
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
 		
@@ -104,60 +104,61 @@
 					<!-- / pagehead -->
 					
 					<!-- 회원 목록 -->
-					<table class="table">
+					<div class="clist">
+					<table border="1" class="table" style="text-align:center;">
 						<thead>
 							<tr>
-								<th>
+								<th width="8%">
 								회원번호<br>
-								<button onclick="location.href='userList.do?sortType=midxA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=midxD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=midxA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=midxD'" class="arrowBtn">▼</button>
 								</th>
 								<th>
 								이름<br>
-								<button onclick="location.href='userList.do?sortType=nameA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=nameD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=nameA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=nameD'" class="arrowBtn">▼</button>
 								</th>
 								<th>
 								이메일<br>
-								<button onclick="location.href='userList.do?sortType=emailA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=emailD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=emailA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=emailD'" class="arrowBtn">▼</button>
 								</th>
 								<th>
 								닉네임<br>
-								<button onclick="location.href='userList.do?sortType=nicknameA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=nicknameD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=nicknameA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=nicknameD'" class="arrowBtn">▼</button>
 								</th>
 								<th>
 								생년월일<br>
-								<button onclick="location.href='userList.do?sortType=juminA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=juminD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=juminA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=juminD'" class="arrowBtn">▼</button>
 								</th>
-								<th>
+								<th width="8%">
 								등급<br>
-								<button onclick="location.href='userList.do?sortType=roleA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=roleD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=roleA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=roleD'" class="arrowBtn">▼</button>
 								</th>
-								<th>
+								<th width="8%">
 								소셜여부<br>
-								<button onclick="location.href='userList.do?sortType=socialA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=socialD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=socialA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=socialD'" class="arrowBtn">▼</button>
 								</th>
-								<th>
+								<th width="8%">
 								승인여부<br>
-								<button onclick="location.href='userList.do?sortType=joinA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=joinD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=joinA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=joinD'" class="arrowBtn">▼</button>
 								</th>
 								<th>
 								가입일<br>
-								<button onclick="location.href='userList.do?sortType=jdateA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=jdateD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=jdateA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=jdateD'" class="arrowBtn">▼</button>
 								</th>
-								<th>
+								<th width="8%">
 								탈퇴여부<br>
-								<button onclick="location.href='userList.do?sortType=delA'">▲</button>
-								<button onclick="location.href='userList.do?sortType=delD'">▼</button>
+								<button onclick="location.href='userList.do?sortType=delA'" class="arrowBtn">▲</button>
+								<button onclick="location.href='userList.do?sortType=delD'" class="arrowBtn">▼</button>
 								</th>
-								<th>회원 밴</th>
+								<th width="8%">회원 밴</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -189,6 +190,7 @@
 						</c:choose>
 						</tbody>
 					</table>
+					
 					<!-- 밴을 위한 input -->
 					<input type="hidden" id="midx">
 					
@@ -215,6 +217,7 @@
 					</div>
 					<!-- /페이징 -->
 					
+					</div><!-- /.clist -->
 					
 					<!-- 주소, 나이 차트 -->
 					<c:if test="${(search.searchValue == null || search.searchValue == '') && search.sortType != 'dely' && search.sortType != 'deln' && search.sortType != 'dela' && search.sortType != 'normal' && search.sortType != 'business' && search.sortType != 'official'}">

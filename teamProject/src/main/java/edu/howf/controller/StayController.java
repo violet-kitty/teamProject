@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -440,7 +443,18 @@ public class StayController {
 	
 	//예약하기 페이지 이동
 	@RequestMapping(value="/stayReservation.do")
-	public String stayReservation(ResVO res, Model model, HttpServletRequest request, HttpSession session) {
+	public String stayReservation(ResVO res, Model model, HttpServletRequest request, HttpSession session) throws ParseException {
+		//날짜만큼 방 가격 곱해서 넣어주기
+		String day1 = res.getDate1();
+		String day2 = res.getDate2();
+		
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date d1 = format.parse(day1);
+		Date d2 = format.parse(day2);
+		int Days = (int)((d2.getTime() - d1.getTime())/1000) / (24*60*60);
+		
+		res.setPrice(res.getPrice() * Days);
+		
 		if(res.getMerchant() == null) {
 			//상품 id(다른것과 id가 겹치면 중복된 결제건이라고 결제가 되지 않음)
 			Calendar cal = Calendar.getInstance();

@@ -65,12 +65,14 @@
 					
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="myEvent.do">지역이벤트 관리</a>
+							<a class="mainbtn" href="myEvent.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>지역이벤트 관리
+							</a>
 						</div>
 						<div class="feature col">
-							<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>
-							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">문의 내역</a>
+							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">
+								<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>문의 내역
+							</a>
 						</div>
 					</div>
 				</div>

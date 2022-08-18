@@ -100,7 +100,7 @@ else {
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 				    <!-- pagehead  -->
-					<a class=" onlypc" href="howfList.do">
+					<a class=" onlypc" href="stayList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -487,7 +487,7 @@ h3 {
 			
 					<hr class="lastline">
 					
-					<a class=" onlypc" href="howfList.do">
+					<a class=" onlypc" href="stayList.do">
 					<div class="backto">
 						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 					</div>

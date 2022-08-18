@@ -24,10 +24,12 @@
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyList.css">
 <!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardlist cs cslist">
 		
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
@@ -39,11 +41,11 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
+			<div class="contents pagehead">
+				<div class="container" id="featured-2">
 				
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
@@ -52,9 +54,10 @@
 						</div>
 					</div>
 					
-					<table class="table">
+					<div class="clist">
+					<table border="1" class="table">
 						<thead>
-							<tr><th>회원번호</th><th>이름</th><th>닉네임</th><th>사업자 등록증</th><th>승인하기</th></tr>
+							<tr><th width="10%">회원번호</th><th width="25%">이름</th><th width="25%">닉네임</th><th width="20%">사업자 등록증</th><th width="20%">승인하기</th></tr>
 						</thead>
 						<tbody>
 							<c:forEach var="i" items="${user}">
@@ -71,7 +74,7 @@
 								<td>
 								<button onclick="busView('${i.document}')">보기</button>
 								</td>
-								<td>
+								<td style="text-align:center;">
 								<button onclick="okFn('${i.midx}')">승인</button>
 								<button onclick="delFn('${i.midx}')">거절</button>
 								</td>
@@ -105,6 +108,8 @@
 						</div>
 					</div>
 					<!-- /페이징 -->
+					
+					</div><!-- /.clist -->
 					
 				</div><!-- /.container -->
 			</div>

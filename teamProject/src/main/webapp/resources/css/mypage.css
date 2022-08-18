@@ -13,3 +13,6 @@
 
 /* 이미지 크기 조절 */
 .card-img{max-height:250px;width:100%;height:100%;}
+
+/* sort 화살표 버튼 */
+.arrowBtn{width:25px;text-align:center;height:15px;font-size:0.6rem;border:none;cursor:pointer;}
