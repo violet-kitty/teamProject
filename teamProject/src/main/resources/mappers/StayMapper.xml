@@ -199,7 +199,7 @@
 		AND b.kbed != 0
 		</if>
 		<if test="op.equals('편의점') or op.equals('커피숍') or op.equals('골프장') or op.equals('족구장') or op.equals('농구장') or op.equals('실내낚시터') or op.equals('산책로') or op.equals('익스트림체험장') or op.equals('세차장') or op.equals('키드존')">
-		AND e.services like CONCAT ('%',#{op},'%')
+		AND a.services like CONCAT ('%',#{op},'%')
 		</if>
 		</foreach>
 		</if>
