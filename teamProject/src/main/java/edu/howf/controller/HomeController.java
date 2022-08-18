@@ -65,7 +65,7 @@ public class HomeController {
 		model.addAttribute("howf", howf);
 		
 		//여행 이야기
-		vo.setPerPageNum(3);
+		vo.setPerPageNum(4);
 		List<StoryVO> story = storyService.storySelectAll(vo);
 		vo.setPage(1);
 		model.addAttribute("story", story);
@@ -94,7 +94,7 @@ public class HomeController {
 		model.addAttribute("howf", howf);
 		
 		//여행 이야기
-		vo.setPerPageNum(3);
+		vo.setPerPageNum(4);
 		List<StoryVO> story = storyService.storySelectAll(vo);
 		vo.setPage(1);
 		model.addAttribute("story", story);
