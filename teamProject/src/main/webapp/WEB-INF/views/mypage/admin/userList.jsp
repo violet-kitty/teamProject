@@ -42,11 +42,11 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
+			<div class="contents pagehead">
+				<div class="container" id="featured-2">
 				
 					<!-- pagehead -->
 					<div class="pageinfo">
@@ -54,7 +54,7 @@
 						<div class="title">
 							<a href="<%= request.getContextPath() %>/mypage/userList.do"><h1>회원관리</h1></a>
 						</div>
-						
+						<br>
 						<!-- 검색 -->
 						<!-- rightbox : tablet 사이즈 이하에서 숨기기 -->
 						<div class="row rightbox onlypc-inline">
@@ -78,20 +78,13 @@
 						</div><!-- .rightbox -->
 						
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
-						
-						<c:if test="${login!=null && (login.role=='official' || login.role=='admin')}">
-							<div class="docctrl onlytablet" style="margin-top:16px;">
-								<a href="<%=request.getContextPath()%>/event/eventWrite.do"><button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button></a>
-							</div>
-						</c:if>
-						
 						<div class="row rightbox onlytablet">
 							<div class="btn-group">
 								<button class="w-100 dropdown-toggle pinkbtn" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">카테고리 정렬 &nbsp;</button>
 								<ul class="dropdown-menu" aria-labelledby="defaultDropdown">
 									<li><a class="dropdown-item" href="userList.do?sortType=dely">탈퇴o</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=deln">탈퇴x</a></li>
-									<li><a class="dropdown-item" href="userList.do?sortType=delb">밴</a></li>
+									<li><a class="dropdown-item" href="userList.do?sortType=dela">밴</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=normal">일반회원</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=business">사업자</a></li>
 									<li><a class="dropdown-item" href="userList.do?sortType=official">공무원</a></li>
@@ -168,6 +161,11 @@
 							</tr>
 						</thead>
 						<tbody>
+						<c:choose>
+						<c:when test="${empty user}">
+							<tr><td>해당하는 유저가 없습니다</td></tr>
+						</c:when>
+						<c:otherwise>
 						<c:forEach var="u" items="${user}">
 							<tr>
 								<td>${u.midx}</td>
@@ -187,6 +185,8 @@
 								</td>
 							</tr>
 						</c:forEach>
+						</c:otherwise>
+						</c:choose>
 						</tbody>
 					</table>
 					<!-- 밴을 위한 input -->
@@ -217,10 +217,12 @@
 					
 					
 					<!-- 주소, 나이 차트 -->
+					<c:if test="${(search.searchValue == null || search.searchValue == '') && search.sortType != 'dely' && search.sortType != 'deln' && search.sortType != 'dela' && search.sortType != 'normal' && search.sortType != 'business' && search.sortType != 'official'}">
 					<div style="margin-top:50px;">
 						<canvas id="myChart"></canvas><br><br><br>
 						<canvas id="myChart2"></canvas>
 					</div>
+					</c:if>
 					
 				</div><!-- /.container -->
 			</div>
@@ -233,6 +235,15 @@
 	
 <script>
 	$(function(){
+		//sort 버튼
+		var sortBtn = "${search.sortType}";
+		if(sortBtn != ""){
+			$("#"+sortBtn+"Btn").css("background","none");
+			$("#"+sortBtn+"Btn").css("color","#DE8889");
+			$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+		}
+		
+		
 		Chart.defaults.scales.linear.min = 0;
 		//지역 별 차트
 		var addrL = [];

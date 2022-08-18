@@ -48,7 +48,7 @@
 				
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
-						<div class="title onlypc">
+						<div class="title">
 							<h1>리뷰 관리</h1>
 						</div>
 					</div>

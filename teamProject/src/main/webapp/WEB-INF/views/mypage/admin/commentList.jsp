@@ -49,7 +49,7 @@
 				
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
-						<div class="title onlypc">
+						<div class="title">
 							<h1>댓글 관리</h1>
 						</div>
 					</div>
