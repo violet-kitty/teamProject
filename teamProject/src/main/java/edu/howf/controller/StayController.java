@@ -490,8 +490,8 @@ public class StayController {
 		}catch(CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
-		}
-		*/
+		}*/
+		
 		
 		return authNum;
 	}
