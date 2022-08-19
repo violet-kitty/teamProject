@@ -123,10 +123,9 @@ var nicknameDup = false;
 					modalFn("이메일을 입력해 주세요");
 					setTimeout(function(){
 						modalClose();
+						email.focus();
+						return;
 					},1000);
-					//alert("이메일을 입력해 주세요");
-					email.focus();
-					return;
 				} else {
 					$.ajax({
 						url : "emailDupPwd.do",
@@ -137,18 +136,16 @@ var nicknameDup = false;
 								modalFn("소셜 회원입니다. 소셜 로그인을 해주세요.");
 								setTimeout(function(){
 									modalClose();
+									location.href='login.do';
+									return;
 								},1000);
-								//alert("소셜 회원입니다. 소셜 로그인을 해주세요.");
-								location.href='login.do';
-								return;
 							}
 							else if (data == 0) {
 								modalFn("일치하는 회원이 없습니다.");
 								setTimeout(function(){
 									modalClose();
+									return;
 								},1000);
-								//alert("일치하는 회원이 없습니다");
-								return;
 							} else {
 								$("#frm").submit();
 							}
