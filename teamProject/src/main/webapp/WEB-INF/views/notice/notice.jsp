@@ -78,7 +78,9 @@
 		<div class="right-container">
 			
 				<div class="docctrl onlypc">
+					<c:if test="${login.role != null && login.role == 'admin'}">
 					<a href="<%=request.getContextPath()%>/notice/noticewrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+					</c:if>
 				</div>
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
