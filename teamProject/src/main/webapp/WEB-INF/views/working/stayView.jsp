@@ -1,17 +1,17 @@
 <%@page import="edu.howf.vo.UserVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="edu.howf.vo.UserVO" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>Home</title>
+<title>HOWF숙박정보</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -27,17 +27,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 카카오 지도 api -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-
-<!-- 지도 api -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardView공용세팅 --> <link href="<%=request.getContextPath()%>/css/boardView.css" rel="stylesheet">
 
 <style>
 .star-rating {
@@ -68,6 +69,7 @@
 	  color:#fc0;
 	}
 </style>
+
 <script>
 var heartDup = false;
 
@@ -78,47 +80,52 @@ else {
 	var heartDup = false;
 }
 </script>
+
 </head>
+
 <body>
-	<div class="wrap">
-		<div class="container">
+	<div id="wrap" class="boardview stay stayview">
+	
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
-			<div class="row">
-				<div class="col">
-					<a href="stayList.do">&lt;목록으로 돌아가기</a>
-				</div>
-			</div>
+		<!-- Side (top버튼)-->
+		<div class="right-container">
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-whitegray">
+			
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+				    <!-- pagehead  -->
+					<a class=" onlypc" href="stayList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
+					
+					<!-- 뷰 -->
+					<div class="row">
+				<div class="col-lg-6">
+		<c:if test="${stay.photo != null}">
 			<div id="page">
 				<div class="row">
 					<div class="column small-11 small-centered">
 						<h2>Slick Slider Syncing</h2>
 						<div class="slider slider-single">
-							<div><h3>1</h3></div>
-							<div><h3>2</h3></div>
-							<div><h3>3</h3></div>
-							<div><h3>4</h3></div>
-							<div><h3>5</h3></div>
-							<div><h3>6</h3></div>
-							<div><h3>7</h3></div>
-							<div><h3>8</h3></div>
-							<div><h3>9</h3></div>
-							<div><h3>10</h3></div>
+							<div><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}" style="max-width:200px" id="mainImage"><br></div>
 						</div>
 						<div class="slider slider-nav">
-							<div><h3><span>1</span></h3></div>
-							<div><h3><span>2</span></h3></div>
-							<div><h3><span>3</span></h3></div>
-							<div><h3><span>4</span></h3></div>
-							<div><h3><span>5</span></h3></div>
-							<div><h3><span>6</span></h3></div>
-							<div><h3><span>7</span></h3></div>
-							<div><h3><span>8</span></h3></div>
-							<div><h3><span>9</span></h3></div>
-							<div><h3><span>10</span></h3></div>
+							<c:forEach var="item" items="${fn:split(stay.photo,',')}">
+								<div><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}" style="max-width:100px;cursor:pointer;" onclick="photoChange('${item}')"></div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
 			</div>
+		</c:if>
 			<style>
 
 .js .slider-single > div:nth-child(1n+2) { display: none }
@@ -217,15 +224,7 @@ h3 {
 				 	$('.slider-single').slick('slickGoTo', goToSingleSlide);
 				 });
 			</script>
-			
-			<div class="row">
-				<div class="col-lg-6">
-					<c:if test="${stay.photo != null}">
-						<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}" style="max-width:200px" id="mainImage"><br>
-						<c:forEach var="item" items="${fn:split(stay.photo,',')}">
-							<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}" style="max-width:100px;cursor:pointer;" onclick="photoChange('${item}')">
-						</c:forEach>
-					</c:if>
+					
 				</div>
 				<div class="col-lg-6">
 					<div class="col-lg-8 d-flex justify-content-start">
@@ -486,15 +485,29 @@ h3 {
 				</div>
 			</div>
 			
+					<hr class="lastline">
+					
+					<a class=" onlypc" href="stayList.do">
+					<div class="backto">
+						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+					</div>
+					</a>
+					<!-- 리스트 카드 -->
+					
+					
+		
+					
+				</div><!-- /.container -->
+			</div><!-- /.contents -->
+			<!-- /pagehead -->
 			
-			<div class="row">
-				<div class="col">
-					<a href="stayList.do">&lt;목록으로 돌아가기</a>
-				</div>
-			</div>
+			<!-- banner --><%@include file="../banner.jsp"%>
 			
-		</div><!-- /container -->
-	</div><!-- /wrap -->
+		</div><!-- / #container -->
+		
+		<!-- Footer --><%@include file="../Footer.jsp"%>
+	
+	</div><!-- /#wrap -->
 
 
 <script>
@@ -1060,12 +1073,5 @@ h3 {
 	}
 	
 </script>
-
-
-
-<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
 </body>
 </html>
