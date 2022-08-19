@@ -24,7 +24,7 @@ public class SMTP {
 		serverInfo.put("mail.smtp.starttls.enable", "true");//로그인시 TLS 사용
 		serverInfo.put("mail.smtp.auth", "true");
 		serverInfo.put("mail.smtp.debug", "true");
-		serverInfo.put("mail.smtp.socketFactory.port", "465");//포트번호
+		serverInfo.put("mail.smtp.socketFactory.port", "587");//포트번호
 		serverInfo.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		serverInfo.put("mail.smtp.socketFactory.fallback","false");
 		serverInfo.put("mail.smtp.ssl.trust", "smtp.naver.com");
