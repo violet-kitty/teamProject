@@ -1,0 +1,275 @@
+@charset "UTF-8";
+
+
+/* view setting */
+.boardview .container {margin: auto; padding: 40px 0px; padding-bottom: 90px; position:relative;}
+
+
+@media all and (max-width: 768px) {
+	.boardview .container {padding:0px 5%; padding-bottom:32px;}
+}
+
+
+.banner-slider .slider.slider-for {
+    max-width: 100%;
+}
+.banner-slider .slider.slider-nav {
+    max-width: 100%;
+}
+.banner-slider .slider.slider-for,
+.banner-slider .slider.slider-nav {
+    width: 100%;
+}
+.banner-slider .slider.slider-for{
+    padding: 0 5px;
+}
+.banner-slider .slick-slide img {
+    width: 100%;
+}
+.banner-slider .slider-banner-image {
+    height: auto;
+    width: 100%;
+}
+.banner-slider .slider.slider-nav {
+    padding: 20px 0 0;
+}
+.banner-slider .slider-nav .slick-slide.thumbnail-image .thumbImg img {
+    height: 100%;
+    width:100%;
+    object-fit: cover;
+}
+.banner-slider .slider-banner-image img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+.banner-slider .slick-vertical .slick-slide:active,
+.banner-slider .slick-vertical .slick-slide:focus,
+.banner-slider .slick-arrow:hover,
+.banner-slider .slick-arrow:focus {
+    border: 0;
+    outline: 0;
+}
+.banner-slider .slider-nav .slick-slide.slick-current span {
+    color: #196DB6;
+}
+.banner-slider .slider-nav .slick-slide {
+    text-align: center;
+}
+.banner-slider .slider-nav .slick-slide span {
+    font-size: 14px;
+    display: block;
+    padding: 5px 0 15px;
+}
+.banner-slider .slick-arrow {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 0;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+.slick-prev {
+   top: 0;
+}
+.slick-next {
+   bottom: 0;
+   background-color: #fff;
+}
+.banner-slider .slider.slider-nav .thumbImg {
+    padding: 0 5px 15px;
+}
+.slider-nav .slick-slide.slick-current.slick-active .thumbImg img {
+    border: 1px solid #80D6CF;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.1), 0 2px 4px 0 rgba(0,0,0,0.1);
+    padding: 3px;
+}
+@media screen and (max-width : 991px) {
+	.banner-slider .slider.slider-for,
+	.banner-slider .slider.slider-nav {
+	    max-width: 100%;
+	    float: none;
+	}
+	.banner-slider .slider.slider-for {
+		padding-right: 0;
+	}
+	.banner-slider .slider.slider-nav {
+		height: auto;
+	}
+	.slider-banner-image {
+	    height: 500px;
+	}
+	.slider.slider-nav.thumb-image {
+        padding: 10px 30px 0;
+	}
+	.slider-nav .slick-slide span {
+		padding: 5px 0;
+	}
+	.slick-arrow {
+		padding: 0;
+	    width: 30px;
+	    height: 30px;
+	    top: 50%;
+	    bottom: 0;
+	    -webkit-transform: translateY(-50%) rotate(-90deg);
+	    -moz-transform: translateY(-50%) rotate(-90deg);
+	    -ms-transform: translateY(-50%) rotate(-90deg);
+	    transform: translateY(-50%) rotate(-90deg);
+	}
+	.slick-prev {
+	    left: 0;
+	    right: unset;
+	}
+	.slick-next {
+	    left: unset;
+	    right: 0;
+   		background-color: transparent;
+	}
+	.vehicle-detail-banner .car-slider-desc {
+    	max-width: 340px;
+	}
+	.bid-tag {
+    	padding: 10px 0 15px;
+	}
+	.slider.slider-nav.thumb-image {
+	   white-space: nowrap;
+	}
+	.thumbnail-image.slick-slide {
+		padding: 0px 5px;
+		min-width: 75px;
+		display: inline-block;
+		float: none;
+	}
+}
+
+@media all and (max-width: 576px) {
+	.slider-banner-image {
+	    height: 400px;
+	}
+	.slider.slider-nav.thumb-image {
+    	padding: 0px 20px 0;
+    	margin: 10px 0px 0;
+	}
+	.slider-nav .slick-slide.thumbnail-image .thumbImg {
+		max-width: 140px;
+		height: 80px;
+	}
+	.slick-prev.slick-arrow {
+    	background-position: center 10px;
+	}
+	.slick-next.slick-arrow {
+    	background-position: center 10px, center;
+	}
+	.slider-nav .slick-slide span {
+	    font-size: 12px;
+	    white-space: normal;
+	}
+}
+
+
+.slick {margin-top:19px; margin-bottom:56px;}
+.thumbbanner {padding:0px 25px 0px 0px;}
+
+/* 요약정보 */
+.infosummary {padding:0px 0px 0px 25px;}
+.infosummary h3{font-size:32px; line-height:43px; color:#212121;}
+.infosummary .pointheart {cursor:pointer; height: 27px;margin-top: 5px;margin-right: 8px;}
+.infosummary .iconarea img {height:22px;}
+.infosummary .iconarea p {margin-left:8px; font-size:19px; line-height:28px;}
+.infosummary .iconarea .reckon {margin-right:16px;}
+.addrarea {margin-top:8px; margin-bottom:16px;}
+.addrarea p {font-size:18px; line-height:28px; color:#797979;}
+.summaryarea {background-color:white; padding:32px;}
+.summaryarea p {font-size:16px; line-height:28px; color:#797979;}
+.summaryarea p:first-child {color:#212121; margin-bottom:16px;}
+.tagarea {color:#737373;padding:32px;}
+.tagarea p {font-size:16px; line-height:28px;}
+
+
+/* 탭 */
+.tabby {border-bottom:1px solid #E6E6E6; margin-bottom:48px; }
+.tabby button {font-size:21px; color:#9E9E9E; padding:12px; background:none; border:none;}
+
+/* 객실 안내 / 예약 */
+#roomTab .dating {margin-bottom:46px;}
+#roomTab .dating .col {display:inline-block;}
+#roomTab .dating input[type=date] {border-radius:10px;max-width:284px;box-shadow: inset 0px 2px 5px #00000029;background-color: white;border: none;padding: 16px;font-size: 16px;font-weight: 600;}
+#roomTab .dating span {margin:0px 20px; margin-top:20px;}
+#roomTab .dating button {margin-left:20px;}
+/*객실리스트 */
+/* 리스트 카드*/
+#roomTab .listcard .searchinfo{padding: 16px;margin: 0px 12px; text-align:center;border: 2px solid #ededed;}
+#roomTab .listcard .thumbnailitem {padding:16px; padding-bottom:32px; border:none}
+#roomTab .listcard .thumbnailimg {width:100%;}
+#roomTab .listcard .thumbnailitem a thumbnailimg:hover {overflow:hidden;}
+#roomTab .listcard .grid figure {position: relative; overflow: hidden; width: 100%; max-height: 240px;height: auto; background: #3085a3; cursor: pointer;}
+#roomTab .listcard .grid figure img {position: relative; display: block;opacity: 0.8;}
+#roomTab .listcard .grid figure figcaption {padding: 2em; color: #fff; text-transform: uppercase; font-size: 1.25em;-webkit-backface-visibility: hidden; backface-visibility: hidden;}
+#roomTab .listcard .grid figure figcaption::before, .grid figure figcaption::after {pointer-events: none;}
+#roomTab .listcard .grid figure figcaption, .grid figure figcaption>a {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+#roomTab .listcard .grid figure figcaption>a {z-index: 1000; text-indent: 200%; white-space: nowrap; font-size: 0;opacity: 0;}
+#roomTab .listcard .grid figure h2 {word-spacing: -0.15em; font-weight: 800;}
+#roomTab .listcard .grid figure h2, .grid figure p {margin: 0;}
+#roomTab .listcard .grid figure p {letter-spacing: 1px; font-size: 68.5%;}
+#roomTab .listcard .effect-ming img{height:240px;}
+#roomTab .listcard figure.effect-ming {background: #030c17;}
+#roomTab .listcard figure.effect-ming .imgbox {background-size: cover;background-position: center top; height:38vh; max-height:240px; background-repeat: no-repeat;}
+#roomTab .listcard figure.effect-ming img {opacity: 0.9; -webkit-transition: opacity 0.35s;transition: opacity 0.35s;}
+#roomTab .listcard figure.effect-ming figcaption::before {position: absolute; top: 30px; right: 30px; bottom: 30px; left: 30px;border: 2px solid #fff;box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.2); content: '';opacity: 0; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;transition: opacity 0.35s, transform 0.35s;-webkit-transform: scale3d(1.4, 1.4, 1);transform: scale3d(1.4, 1.4, 1);}
+#roomTab .listcard figure.effect-ming h2 {margin: 20% 0 10px 0; -webkit-transition: -webkit-transform 0.35s;transition: transform 0.35s;font: normal normal bold 24px/34px Noto Sans;}
+#roomTab .listcard figure.effect-ming p {word-break:keep-all;text-align: justify; padding: 1em; opacity: 0;-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;transition: opacity 0.35s, transform 0.35s;-webkit-transform: scale(1.5); transform: scale(1.5);text-overflow: ellipsis; overflow: hidden; white-space: normal;height: 92%;}
+#roomTab .listcard figure.effect-ming p span {text-align: left; font-size: 1.2em; font-weight: 700;}
+#roomTab .listcard .thumbnail {padding-bottom:16px; }
+#roomTab .listcard .thumbnail .writerinfo {padding: 16px 16px 8px 16px;}
+#roomTab .listcard .writerinfo p {display:inline-block;color:#3D3D3D; font: normal normal bold 13px/19px Noto Sans; letter-spacing: 0.52px;}
+#roomTab .listcard .writerinfo p .cate {border-radius:25px; margin-right:8px; padding:5px 10px; display:inline-block; font: normal normal 13px/19px Noto Sans; letter-spacing: 0.52px;}
+#roomTab .listcard .writerinfo .small {float: right; margin-top:6px;}
+#roomTab .listcard .writerinfo .small span {margin-left:8px; font-size:16px;}
+#roomTab .listcard .writerinfo .small img { display:inline-block; width:16px;}
+#roomTab .listcard .caption h4 {text-overflow: ellipsis;overflow: hidden;word-break: keep-all;display: -webkit-box; -webkit-line-clamp: 2; font-size:20px; line-height:28px;-webkit-box-orient: vertical; padding:0px 16px; color:#3D3D3D; font-weight:700;}
+#roomTab .listcard .caption p {margin:8px 0px;text-overflow: ellipsis;overflow: hidden;word-break: keep-all;display: -webkit-box; -webkit-line-clamp: 2; font-size:16px; line-height:26px;-webkit-box-orient: vertical; padding:0px 16px; color:#737373; font-weight:500;}
+#roomTab .listcard .caption button {display:inline-block;text-align:left;background:none; border:none;text-overflow: ellipsis;overflow: hidden;word-break: keep-all;-webkit-line-clamp: 2; font-size:19px; line-height:26px;-webkit-box-orient: vertical; padding:0px 16px; }
+#roomTab .listcard .caption span {float:right;display:inline-block;padding:0px 16px;}
+#roomTab .listcard .bookingarea {padding:0px 16px; margin-top:8px;}
+#roomTab .listcard .thumbnail:hover figure.effect-ming h2 {-webkit-transform: scale(0.9); transform: scale(0.9);}
+#roomTab .listcard .thumbnail:hover figure.effect-ming figcaption::before, .thumbnail:hover figure.effect-ming p{opacity: 1; -webkit-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1);}
+#roomTab .listcard .thumbnail:hover figure.effect-ming figcaption {background-color: rgba(58, 52, 42, 0.8);}
+
+.modalwindow {position:fixed; z-index:9999; width:100%; height:100%; top:0px; left:0px; background:rgba(128, 128, 128,0.5); }
+.modalwindow .modalsquare {background-color:white; width:699px; position:absolute; top:20%; left:30%;}
+.modalwindow .modalsquare .titlearea {padding:32px 32px 50px 32px; border-bottom: 1px solid #ededed; }
+.modalwindow .modalsquare .titlearea .title {display:inline-block; float:left;font-size:20px; font-weight:700; color:#353535;}
+.modalwindow .modalsquare .titlearea button {font-weight:700; font-size:20px;display:inline-block; float:right; background:none; border:none;}
+.modalwindow .modalsquare .titlearea button img {width:18px;}
+
+.modalwindow .modalsquare .bodyarea {padding:32px 32px 50px 32px; border-bottom: 1px solid #ededed; }
+.modalwindow .modalsquare .bodyarea p {margin:18px; font-size:18px; line-height:36px;}
+
+@media screen and (max-width: 50em) {
+	#roomTab .listcard .grid figure {display: inline-block; float: none; margin: 10px auto; width: 100%;}
+}
+@media all and (max-width: 768px) {
+	#roomTab .listcard .grid figure{max-height:180px;}
+	#roomTab .listcard figure.effect-ming .imgbox {height:30vh;}
+	#roomTab .listcard .thumbnailitem {padding:5px 0px;}
+	#roomTab .listcard .thumbnail .writerinfo {padding: 0px 16px 8px 16px;}
+}
+
+/* 숙소정보 */
+#stayTab h3 {margin-top:27px; margin-bottom:4px;font-size:24px; line-height:34px; color:#3D3D3D;}
+#stayTab .divp {margin-left:8px; font-size:20px; line-height:32px; color:#737373;}
+#stayTab #map {margin-bottom:46px;margin-top:27px;}
+/* 수정 삭제 글쓰기 버튼 */
+.btnarea {margin-top:56px;}
+.btnarea button {background:none; border:none;}
+.btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
+.btnarea img:hover {width:40px; border:none;}
+
+.lastline {margin-bottom:40px;}
