@@ -129,8 +129,9 @@
 												<div class="col" id="howfContent">
 													${cv.content}
 												</div>
-												<p>이미지 첨부파일</p>
+												<c:if test="${cv.filename != null}">
 												<a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a>
+												</c:if>
 											</div>
 								
 					<div class="row btnarea">
