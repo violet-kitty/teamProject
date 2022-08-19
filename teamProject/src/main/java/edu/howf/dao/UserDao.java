@@ -32,7 +32,7 @@ public class UserDao {
 	}
 	
 	//이메일 중복체크2
-	public String emailDupPwd(String email) {
+	public UserVO emailDupPwd(String email) {
 		return sqlSession.selectOne(namespace+"emailDupPwd", email);
 	}
 	

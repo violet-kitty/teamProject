@@ -25,7 +25,7 @@ public class UserServiceImple implements UserService{
 	}
 	
 	@Override
-	public String emailDupPwd(String email) {
+	public UserVO emailDupPwd(String email) {
 		return userDao.emailDupPwd(email);
 	}
 	

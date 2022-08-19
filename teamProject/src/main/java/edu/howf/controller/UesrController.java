@@ -228,7 +228,11 @@ public class UesrController {
 	@RequestMapping(value="/emailDupPwd.do", method=RequestMethod.POST)
 	public int emailDupPwd(String email) {
 		//만약 비밀번호가 null이면 (소셜 회원이면)
-		String pwd = userService.emailDupPwd(email);
+		UserVO vo = userService.emailDupPwd(email);
+		int is = vo.getMidx();
+		if(is == 0) return 0;
+		
+		String pwd = vo.getPassword();
 		if(pwd == null) {
 			return -1;
 		}
