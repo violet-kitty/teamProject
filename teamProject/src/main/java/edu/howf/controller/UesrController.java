@@ -337,7 +337,7 @@ public class UesrController {
 		
 		int authNum = (int)(Math.floor(Math.random()*900)+100);//인증번호
 		
-		String content = "<p>안녕하세요. 여행정보, 커뮤니티, 숙박정보를 보다 편리하게 제공해주는 <span style='color:#54ACA8;font-weight:bold;font-size:1.4em;'>HOWF</span> 입니다.</p><br><p>회원님의 인증번호는 "+authNum+"입니다.</p>";	//내용
+		String content = "<div style='height:100px;background:#54ACA8'></div><p>안녕하세요. 여행정보, 커뮤니티, 숙박정보를 보다 편리하게 제공해주는 <span style='color:#54ACA8;font-weight:bold;font-size:1.5em;'>HOWF</span> 입니다.</p><br><p>회원님의 인증번호는 "+authNum+"입니다.</p>";	//내용
 		
 		Cookie cookie = new Cookie("authNum", Integer.toString(authNum));//인증번호를 쿠키에 저장
 		cookie.setPath(request.getContextPath());
@@ -347,7 +347,7 @@ public class UesrController {
 		
 		
 		emailInfo.put("content", content);
-		emailInfo.put("format", "text/plain;charset=UTF-8");
+		emailInfo.put("format", "text/html;charset=UTF-8");
 		
 		try {
 			SMTP smtpServer = new SMTP();		//메일 전송 클래스 생성
