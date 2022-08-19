@@ -2,11 +2,11 @@ package edu.howf.service;
 
 import java.util.List;
 
+import edu.howf.vo.CSVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
-import edu.howf.vo.UserVO;
 import edu.howf.vo.VoteVO;
 
 public interface TeamService { 
@@ -51,6 +51,7 @@ public interface TeamService {
 	
 	public int revote(VoteVO vv);
 	
+	public int userReport(CSVO cv);
 	
 
 

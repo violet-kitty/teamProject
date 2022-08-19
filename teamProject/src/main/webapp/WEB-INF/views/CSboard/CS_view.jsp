@@ -193,7 +193,7 @@
 
 					<hr class="lastline">
 					
-					<a class=" onlypc" href="howfList.do">
+					<a class=" onlypc" href="CS_list.do">
 					<div class="backto">
 						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 					</div>

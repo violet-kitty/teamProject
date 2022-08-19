@@ -302,6 +302,42 @@
 		WHERE		midx = #{midx}
 		AND			ridx = #{ridx}
 	</delete>
+	
+	<insert id="userReport" parameterType="csVO">
+		<![CDATA[
+ 			INSERT INTO CStable(
+	 						origincsbidx
+	 						,midx
+	 						,title
+	 						,divsn
+	 						,content
+	 						,filename
+	 						,wdate   
+	 						,cnt
+	 						,delyn
+ 						)
+ 						VALUES(						
+	 						0
+	 						,#{midx}
+	 						,#{title}
+	 						,#{divsn}
+	 						,#{content}
+	 						,#{filename}
+	 						,now()
+	 						,0
+	 						,'N'
+ 						)
+ 		]]>
+		<selectKey resultType="int" keyProperty="csbidx" order="AFTER">
+			SELECT max(csbidx) FROM CStable
+		</selectKey>
+		</insert>
+
+		<update id="userReport_origincsbidx_update" parameterType="int">
+			UPDATE CStable
+			SET    origincsbidx = #{csbidx}
+			WHERE  csbidx = #{csbidx}
+		</update>
 
 
 
