@@ -337,7 +337,7 @@ public class UesrController {
 		
 		int authNum = (int)(Math.floor(Math.random()*900)+100);//인증번호
 		
-		String content = "<div style='height:100px;background:#54ACA8'></div><p>안녕하세요. 여행정보, 커뮤니티, 숙박정보를 보다 편리하게 제공해주는 <span style='color:#54ACA8;font-weight:bold;font-size:1.5em;'>HOWF</span> 입니다.</p><br><p>회원님의 인증번호는 "+authNum+"입니다.</p>";	//내용
+		String content = "<p style='font-size:1.5em;'>안녕하세요. 여행정보, 커뮤니티, 숙박정보를 보다 편리하게 제공해주는 <span style='color:#54ACA8;font-weight:bold;font-size:2em;'>HOWF</span> 입니다.</p><br><p style='font-size:1.5em;'>회원님의 인증번호는 <span style='font-size:3em;color:#54ACA8;'>"+authNum+"</span>입니다.</p>";	//내용
 		
 		Cookie cookie = new Cookie("authNum", Integer.toString(authNum));//인증번호를 쿠키에 저장
 		cookie.setPath(request.getContextPath());
