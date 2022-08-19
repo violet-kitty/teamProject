@@ -20,7 +20,7 @@ public class SMTP {
 		//네이버 SMTP 서버 접속 정보
 		serverInfo = new Properties();
 		serverInfo.put("mail.smtp.host", "smtp.naver.com");//이메일 발송을 처리해줄 SMTP 서버
-		serverInfo.put("mail.smtp.port", "465");//
+		serverInfo.put("mail.smtp.port", "587");//
 		serverInfo.put("mail.smtp.starttls.enable", "true");//로그인시 TLS 사용
 		serverInfo.put("mail.smtp.auth", "true");
 		serverInfo.put("mail.smtp.debug", "true");
