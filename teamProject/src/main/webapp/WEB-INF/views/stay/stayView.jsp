@@ -1,4 +1,4 @@
-<%@page import="edu.howf.vo.UserVO"%>
+<%@ page import="edu.howf.vo.UserVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
@@ -13,12 +13,13 @@
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
 <title>HOWF숙박정보</title>
 
-<!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- jQuery -->
+<script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!-- Slick Slider -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Bootstrap5 AwsomeFont -->
 <script src="https://kit.fontawesome.com/a54851838a.js" crossorigin="anonymous"></script>
@@ -28,47 +29,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- 카카오 지도 api -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
+<!-- 카카오 지도 api --><script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35c7c8bf307063859390df8e61188fbf&libraries=services"></script>
 
-<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
-<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
-<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
-<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
-<!-- CSS3 - BoardView공용세팅 --> <link href="<%=request.getContextPath()%>/css/boardView.css" rel="stylesheet">
+<!-- CSS3 - Theme --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header2 --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
+<!-- CSS3 - Nav --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
+<!-- CSS3 - Side --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --><link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --><link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - stayView --><link href="<%=request.getContextPath()%>/css/stayView.css" rel="stylesheet">
 
-<style>
-.star-rating {
-	  display:flex;
-	  flex-direction: row-reverse;
-	  font-size:1em;
-	  justify-content:space-around;
-	  padding:0 .2em;
-	  text-align:center;
-	  width:5em;
-	}
-
-	.star-rating input[type=radio] {
-	  display:none;
-	}
-
-	.star-rating label {
-	  color:#ccc;
-	  cursor:pointer;
-	}
-
-	.star-rating :checked ~ label {
-	  color:#f90;
-	}
-
-	.star-rating label:hover,
-	.star-rating label:hover ~ label {
-	  color:#fc0;
-	}
-</style>
 
 <script>
 var heartDup = false;
@@ -84,442 +55,441 @@ else {
 </head>
 
 <body>
-	<div id="wrap" class="boardview stay stayview">
-	
+	<div id="wrap" class="boardview stay stayView">
+
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
-		
+
 		<!-- Side (top버튼)-->
 		<div class="right-container">
-			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+			<a href="#"><img src="<%=request.getContextPath()%>/image/button/top.png" class="gotop"></a>
 		</div>
-		
+
 		<!-- container -->
 		<div id="container" class="hbg-whitegray">
-			
-			<div class="contents pagehead hbg-whitegray">
-				<div class="container" id="featured-2">
-				    <!-- pagehead  -->
+
+			<div class="contents hbg-whitegray">
+				<div class="container">
+				
+					<!-- 돌아가기  -->
 					<a class=" onlypc" href="stayList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
 					</a>
-					
-					<!-- 뷰 -->
-					<div class="row">
-				<div class="col-lg-6">
-		<c:if test="${stay.photo != null}">
-			<div id="page">
-				<div class="row">
-					<div class="column small-11 small-centered">
-						<h2>Slick Slider Syncing</h2>
-						<div class="slider slider-single">
-							<div><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}" style="max-width:200px" id="mainImage"><br></div>
-						</div>
-						<div class="slider slider-nav">
-							<c:forEach var="item" items="${fn:split(stay.photo,',')}">
-								<div><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}" style="max-width:100px;cursor:pointer;" onclick="photoChange('${item}')"></div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:if>
-			<style>
 
-.js .slider-single > div:nth-child(1n+2) { display: none }
-
-.js .slider-single.slick-initialized > div:nth-child(1n+2) { display: block }
-
-h3 {
-	background: #f0f0f0;
-	color: #3498db;
-	font-size: 2.25rem;
-	margin: .5rem;
-	padding: 2%;
-	position: relative;
-	text-align: center;
-}
-
-.slider-single h3 {
-	line-height: 10rem;
-}
-
-.slider-nav h3::before {
-	content: "";
-	display: block;
-	padding-top: 75%;
-}
-
-.slider-nav h3 span {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.slider-nav .slick-slide { cursor: pointer; }
-
-.slick-slide.is-active h3 {
-	color: #c00;
-	background-color: #fff
-}
-			</style>
-			<script>
-			 $('.slider-single').slick({
-				 	slidesToShow: 1,
-				 	slidesToScroll: 1,
-				 	arrows: true,
-				 	fade: false,
-				 	adaptiveHeight: true,
-				 	infinite: false,
-					useTransform: true,
-				 	speed: 400,
-				 	cssEase: 'cubic-bezier(0.77, 0, 0.18, 1)',
-				 });
-
-				 $('.slider-nav')
-				 	.on('init', function(event, slick) {
-				 		$('.slider-nav .slick-slide.slick-current').addClass('is-active');
-				 	})
-				 	.slick({
-				 		slidesToShow: 7,
-				 		slidesToScroll: 7,
-				 		dots: false,
-				 		focusOnSelect: false,
-				 		infinite: false,
-				 		responsive: [{
-				 			breakpoint: 1024,
-				 			settings: {
-				 				slidesToShow: 5,
-				 				slidesToScroll: 5,
-				 			}
-				 		}, {
-				 			breakpoint: 640,
-				 			settings: {
-				 				slidesToShow: 4,
-				 				slidesToScroll: 4,
-							}
-				 		}, {
-				 			breakpoint: 420,
-				 			settings: {
-				 				slidesToShow: 3,
-				 				slidesToScroll: 3,
-						}
-				 		}]
-				 	});
-
-				 $('.slider-single').on('afterChange', function(event, slick, currentSlide) {
-				 	$('.slider-nav').slick('slickGoTo', currentSlide);
-				 	var currrentNavSlideElem = '.slider-nav .slick-slide[data-slick-index="' + currentSlide + '"]';
-				 	$('.slider-nav .slick-slide.is-active').removeClass('is-active');
-				 	$(currrentNavSlideElem).addClass('is-active');
-				 });
-
-				 $('.slider-nav').on('click', '.slick-slide', function(event) {
-				 	event.preventDefault();
-				 	var goToSingleSlide = $(this).data('slick-index');
-
-				 	$('.slider-single').slick('slickGoTo', goToSingleSlide);
-				 });
-			</script>
-					
-				</div>
-				<div class="col-lg-6">
-					<div class="col-lg-8 d-flex justify-content-start">
-						<c:choose>
-							<c:when test="${login != null && login.role == 'normal'}">
-								<c:if test="${heart!=null && heart==1}">
-									<img src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor:pointer;" id="heartBtn">
-								</c:if>
-								<c:if test="${heart!=null && heart==0}">
-								<img src="<%=request.getContextPath()%>/image/button/lineheart.png" style="cursor:pointer;" id="heartBtn">
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<img src="<%=request.getContextPath()%>/image/button/heart.png">
-							</c:otherwise>
-						</c:choose>
-						${stay.name}
-					</div>
-					<div class="col-lg-4 d-flex justify-content-end">
-						<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
-						<span class="ms-1" id="stayStarArea">${stay.star}</span>
-						<img src="<%=request.getContextPath()%>/image/redheart.png" width="30" height="30">
-						<span class="ms-1" id="heartNum">${stay.heart}</span>
-					</div>
-					<div class="col-lg-6">
-						<div class="col-lg-12 d-flex justify-content-start">
-							${stay.addr}
-						</div>
-					</div>
-					<div class="col-lg-6" style="border:1px solid black">
-						<p>간단정보</p>
-						<p>${fn:split(stay.contents,',')[0]}</p>
-					</div>
-					<div class="col-lg-6" id="tagArea">
-					</div>
-				</div>
-				
-			</div>
-			
-			
-			<!-- 객실안내, 숙소정보, 리뷰 탭 -->
-			<div class="row">
-				<div class="col">
-					<button id="roomTabBtn" style="color:green">객실안내/예약</button>
-					<button id="stayTabBtn">숙소정보</button>
-					<button id="reviewTabBtn">리뷰</button>
-				</div>
-			</div>
-			
-			<c:set var="index" value="0" />
-			<!-- 객실 안내/예약 -->
-			<div class="row" id="roomTab">
-				<div class="col-12 d-flex justify-content-center" style="text-align:center">
-					<div class="col-4 d-flex justify-content-end">
-						<input class="form-control" type="date" id="date1" name="date1" value="${res.date1}">
-					</div>
-					<div class="col-1 d-flex justify-content-center">
-						<span> - </span>
-					</div>
-					<div class="col-4 d-flex justify-content-start">
-						<input class="form-control" type="date" id="date2" name="date2" value="${res.date2}">
-					</div>
-					<div class="col-3 d-flex justify-content-start">
-						<button class="mx-3" onclick="dateSearch()">날짜 검색</button>
-					</div>
-				</div>
-				<c:forEach var="v" items="${stay.room}">
-		    		<div class="col-sm-12 col-md-12 col-lg-4" >
-				    	<div class="card shadow-sm">
-							<c:if test="${v.photo != null}">
-								<img class="card-img-top" src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(v.photo,',')[0]}">
-							</c:if>
-							<div class="card-body">
-								<div class="d-flex justify-content-between align-items-center">
-									<div class="btn-group">
-										<span>${v.name}</span>
+					<!-- 썸네일과 요약정보 -->
+					<div class="row slick">
+						<!-- 썸네일 (Slick Slider) -->
+						<div class="col-lg-6 thumbbanner">
+							<c:if test="${stay.photo != null}">
+								<section class="banner-section">
+									<div class="vehicle-detail-banner banner-content clearfix">
+										<div class="banner-slider">
+											<div class="slider slider-for">
+												<c:forEach var="item" items="${fn:split(stay.photo,',')}">
+													<div class="slider-banner-image">
+														<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}">
+													</div>
+												</c:forEach>
+											</div>
+											<div class="slider slider-nav thumb-image">
+												<c:forEach var="item" items="${fn:split(stay.photo,',')}">
+													<div class="thumbnail-image">
+														<div class="thumbImg">
+															<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${item}">
+														</div>
+													</div>
+												</c:forEach>
+											</div>
+										</div>
 									</div>
-									<small class="text-muted">
-										<span>남은 객실 ${v.cnt}개</span>
-									</small>
+								</section>
+							</c:if>
+						</div>
+						<!-- 요약정보 -->
+						<div class="col-lg-6 infosummary">
+							<div class="row">
+								<div class="col-lg-8 d-flex">
+									<c:choose>
+										<c:when test="${login != null && login.role == 'normal'}">
+											<c:if test="${heart!=null && heart==1}">
+												<img class="pointheart" src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor: pointer;" id="heartBtn">
+											</c:if>
+											<c:if test="${heart!=null && heart==0}">
+												<img class="pointheart" src="<%=request.getContextPath()%>/image/button/lineheart.png" style="cursor: pointer;" id="heartBtn">
+											</c:if>
+										</c:when>
+										<c:otherwise>
+											<img class="pointheart" src="<%=request.getContextPath()%>/image/button/heart.png">
+										</c:otherwise>
+									</c:choose>
+									<h3>${stay.name}</h3>
 								</div>
-								<div class="d-flex justify-content-start">
-									<p>${v.price}</p>
+								<div class="col-lg-4 d-flex justify-content-end iconarea">
+									<img src="<%=request.getContextPath()%>/image/icon/star.png">
+									<p class="hfc-darkgray reckon" id="stayStarArea">${stay.star}</p>
+									<img src="<%=request.getContextPath()%>/image/icon/heart.png">
+									<p class="hfc-darkgray" id="heartNum">${stay.heart}</p>
 								</div>
-								<div class="d-flex justify-content-start">
-									<button onclick="roomInfoFn('${index}')">객실 이용 안내</button>
+							</div>
+							<div class="row addrarea">
+								<div class="col-lg-12">
+									<p>${stay.addr}</p>
 								</div>
-								<div class="d-flex justify-content-start">
-									<c:if test="${login != null && login.role == 'normal'}">
-									<c:if test="${v.cnt != 0}">
-										<button onclick="stayReservation('${stay.sidx}','${stay.name}','${v.name}','${v.price}','${v.people}','${v.square}','${v.tags}')">예약하기</button>
-									</c:if>
-									<c:if test="${v.cnt == 0}">
-										<button style="cursor:default">예약불가</button>
-									</c:if>
-									</c:if>
-									
+							</div>
+							<div class="row summaryarea">
+								<div class="col">
+									<p>간단정보</p>
+									<p>${fn:split(stay.contents,',')[0]}</p>
 								</div>
-							</div><!-- card-body end -->
+							</div>
+							<div class="row tagarea">
+								<p class="col hfc-blue" id="tagArea"></p>
+							</div>
+						</div>
+
+					</div> <!-- / 썸네일과 요약정보 -->
+
+
+					<!-- 탭 -->
+					<div class="row tabby">
+						<div class="col">
+							<button id="roomTabBtn" style="color: #D43654; border-bottom:4px solid #D43654;">객실안내/예약</button>
+							<button id="stayTabBtn">숙소정보</button>
+							<button id="reviewTabBtn">리뷰</button>
 						</div>
 					</div>
-					
-					<div class="col" style="display:none" id="roomInfoModal${index}">
-						<div><button onclick="roomInfoClose('${index}')">x</button></div>
-			    		<p>객실 이용 안내</p>
-			    		<hr>
-			    		<p>기본 정보</p>
-			    		<p>적정 인원 ${v.people}인</p>
-			    		<p>객실+욕실/${v.square}평</p>
-			    		<p>침대</p>
-			    		<p>
-			    		<c:if test="${v.sbed != 0}">
-			    		<span>싱글베드 : ${v.sbed}개 </span>
-			    		</c:if>
-			    		<c:if test="${v.dbed != 0}">
-			    		<span>더블베드 : ${v.dbed}개 </span>
-			    		</c:if>
-			    		<c:if test="${v.qbed != 0}">
-			    		<span>퀸베드 : ${v.qbed}개 </span>
-			    		</c:if>
-			    		<c:if test="${v.kbed != 0}">
-			    		<span>킹베드 : ${v.kbed}개 </span>
-			    		</c:if>
-			    		</p>
-			    		<hr>
-			    		<p>편의시설</p>
-			    		<p>${v.tags}</p>
-			    	</div>
-			    	<c:set var="index"  value="${index+1}"/>
-		    	</c:forEach>
-			</div>
-			
-			
-			<!-- 숙소정보 -->
-			<div class="row" id="stayTab" style="display:none">
-				<div class="col">
-					<div>
-						<p>주변정보</p>
-						<!-- 아래 내용 꼭 div에 넣기. 안그럼 줄바꿈 안됨 -->
-						<div>${fn:split(stay.contents,',')[1]}</div>
-					</div>
-					<div>
-						<p>공지사항</p>
-						<div>${fn:split(stay.contents,',')[2]}</div>
-					</div>
-					<div>
-						<p>기본 정보</p>
-						<div>${fn:split(stay.contents,',')[3]}</div>
-					</div>
-					<div>
-						<p>현장 결제</p>
-						<div>${fn:split(stay.contents,',')[4]}</div>
-					</div>
-					<div>
-						<p>확인사항 및 기타</p>
-						<div>${fn:split(stay.contents,',')[5]}</div>
-					</div>
-					<p>지도</p>
-					<div id="map" style="width:100%;height:350px;"></div>
-					<div>
-						<p>편의시설 및 서비스</p>
-						<c:if test="${stay.services != null}">
-						<c:forEach var="s" items="${fn:split(stay.services,',')}">
-						<span style="border:1px solid black">${s}</span> 
-						</c:forEach>
-						</c:if>
-					</div>
-				</div>
-			</div>
-			
-			<!-- 리뷰 -->
-			<div class="row" id="reviewTab" style="display:none">
-				<div class="col">
-					<p>리뷰</p>
-					<div>
-						<!-- 리뷰쓰기 창 -->
-						<div style="border:1px solid black">
-							<p>이 숙소 리뷰 ${stay.cnt}</p>
-							<form id="reviewFrm" enctype="multipart/form-data">
-								<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewContent"></textarea>
-								<div class="star-rating">
-									<input type="radio" id="5-stars" name="star" value="5" checked/>
-									<label for="5-stars" class="star">&#9733;</label>
-									<input type="radio" id="4-stars" name="star" value="4" />
-									<label for="4-stars" class="star">&#9733;</label>
-									<input type="radio" id="3-stars" name="star" value="3"/>
-									<label for="3-stars" class="star">&#9733;</label>
-									<input type="radio" id="2-stars" name="star" value="2" />
-									<label for="2-stars" class="star">&#9733;</label>
-									<input type="radio" id="1-star" name="star" value="1" />
-									<label for="1-star" class="star">&#9733;</label>
-								</div>
-								<input type="file" id="file" name="file">
-								<input type="hidden" name="bidx" value="${stay.sidx}">
-								<button type="button" id="reviewWriteBtn">리뷰 작성</button>
-							</form>
+
+
+					<c:set var="index" value="0" />
+					<!-- 객실 안내/예약 -->
+					<div class="row" id="roomTab">
+						<!-- 날짜 -->
+						<div class="col-12 dating" style="text-align:center;">
+							<div class="col">
+								<input class="form-control" type="date" id="date1" name="date1" value="${res.date1}">
+							</div>
+							<div class="col">
+								<span class="hfc-gray">~</span>
+							</div>
+							<div class="col">
+								<input class="form-control" type="date" id="date2" name="date2" value="${res.date2}">
+							</div>
+							<div class="col">
+								<button class="greenbtn" onclick="dateSearch()">날짜 검색</button>
+							</div>
 						</div>
-						
-						<br>
-						
-						
-						<!-- page 정보 -->
-						<input type="hidden" id="page" value="${vo.page}">
-						<!-- 리뷰 리스트 -->
-						<div id="reviewList">
-							<c:forEach var="i" items="${review}">
-							<div style="border:1px solid black" id="reviewL${i.cbidx}">
-								<p>${i.nickname}</p>
-								<p>
-								<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">
-								${i.star}
-								</p>
-								<c:if test="${i.photo != null}">
-								<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="max-width:100px"></p>
-								</c:if>
-								<p>${i.content}</p>
-								<c:if test="${i.midx == login.midx}">
-								<button onclick="reviewModifyFn(${i.cbidx})">수정</button>
-								<button onclick="reviewDeleteFn(${i.cbidx})">삭제</button>
+						<!-- 객실리스트 -->
+						<div class="listcard">
+
+							<div class="row grid">
+								<!-- C리스트 14. 반복 -->
+								<c:forEach var="v" items="${stay.room}">
+									<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
+										
+											<div class="thumbnail hbshadow3">
+
+												<figure class="effect-ming">
+													<!-- 메인이미지 보여주기-->
+													<c:if test="${v.photo != null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${fn:split(v.photo,',')[0]});"></div>
+													</c:if>
+
+													<c:if test="${v.photo == null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+													</c:if>
+												</figure>
+												<div class="writerinfo">
+													<p>
+													<c:if test="${v.sbed != 0}">
+														<span class="hfc-semibold hfc-pink">S침대 : ${v.sbed} </span>
+													</c:if>
+													<c:if test="${v.dbed != 0}">
+														<span class="hfc-semibold hfc-pink">| D침대 : ${v.dbed} </span>
+													</c:if>
+													<c:if test="${v.qbed != 0}">
+														<span class="hfc-semibold hfc-pink">| Q침대 : ${v.qbed} </span>
+													</c:if>
+													<c:if test="${v.kbed != 0}">
+														<span class="hfc-semibold hfc-pink">| K침대 : ${v.kbed} </span>
+													</c:if>				
+													</p>
+													<div class="small">
+														<span class="hfc-semibold hfc-darkgray">남은 객실 ${v.cnt}개</span>
+													</div>
+												</div>
+												<div class="caption">
+													<h4>${v.name}</h4>
+													<p>&#8361;${v.price}</p>
+													<button onclick="roomInfoFn('${index}')">객실 이용 안내</button>
+												</div>
+												<div class="d-flex justify-content-start bookingarea">
+													<c:if test="${login != null && login.role == 'normal'}">
+														<c:if test="${v.cnt != 0}">
+															<button class="w-100 bluebtn" onclick="stayReservation('${stay.sidx}','${stay.name}','${v.name}','${v.price}','${v.people}','${v.square}','${v.tags}')">예약하기</button>
+														</c:if>
+														<c:if test="${v.cnt == 0}">
+															<button class="w-100 graybtn"  style="cursor: default">예약불가</button>
+														</c:if>
+													</c:if>
+												</div>
+										</div><!-- /.thumbnail -->
+									</div><!--/. thumbnailitem -->
+									<div class="col modalwindow" style="display: none" id="roomInfoModal${index}">
+										<div class="modalsquare">
+											<div class="titlearea"><p class="title">객실 이용 안내</p><button onclick="roomInfoClose('${index}')"><img src="<%=request.getContextPath()%>/image/button/x.png"></button></div>
+											<div class="bodyarea">
+												<p class="hfc-blackgray">기본정보</p>
+												<p class="hfc-darkgray">&nbsp;&nbsp;* 적정 인원 ${v.people}인</p>
+												<p class="hfc-darkgray">&nbsp;&nbsp;* 객실+욕실/${v.square}평</p>
+												<p class="hfc-darkgray">&nbsp;&nbsp;* 
+													<c:if test="${v.sbed != 0}">
+														<span>싱글베드 : ${v.sbed}개 </span>
+													</c:if>
+													<c:if test="${v.dbed != 0}">
+														<span>더블베드 : ${v.dbed}개 </span>
+													</c:if>
+													<c:if test="${v.qbed != 0}">
+														<span>퀸베드 : ${v.qbed}개 </span>
+													</c:if>
+													<c:if test="${v.kbed != 0}">
+														<span>킹베드 : ${v.kbed}개 </span>
+													</c:if>
+												</p>
+												<hr>
+												<p>편의시설</p>
+												<p class="hfc-darkgray">&nbsp;&nbsp;* ${v.tags}</p>
+											</div>
+										</div>
+									</div>
+
+									<c:set var="index" value="${index+1}" />
+								</c:forEach>
+							</div>
+							<!--/row-->
+
+						</div>
+						<!-- 객실리스트 -->
+					</div>
+
+
+					<!-- 숙소정보 -->
+					<div class="row" id="stayTab" style="display: none">
+						<div class="col divp">
+							<div>
+								<h3>주변정보</h3>
+								<!-- 아래 내용 꼭 div에 넣기. 안그럼 줄바꿈 안됨 -->
+								<div class="divp">${fn:split(stay.contents,',')[1]}</div>
+							</div>
+							<div>
+								<h3>공지사항</h3>
+								<div class="divp">${fn:split(stay.contents,',')[2]}</div>
+							</div>
+							<div>
+								<h3>기본정보</h3>
+								<div class="divp">${fn:split(stay.contents,',')[3]}</div>
+							</div>
+							<div>
+								<h3>현장 결제</h3>
+								<div class="divp">${fn:split(stay.contents,',')[4]}</div>
+							</div>
+							<div>
+								<h3>확인사항 및 기타</h3>
+								<div class="divp">${fn:split(stay.contents,',')[5]}</div>
+							</div>
+							<div id="map" style="width: 100%; height: 350px;"></div>
+							<hr>
+							<div>
+								<h3 style="margin-bottom:16px;">편의시설 및 서비스</h3>
+								<c:if test="${stay.services != null}">
+									<c:forEach var="s" items="${fn:split(stay.services,',')}">
+										<span style="border:2px solid #DE8889; padding:8px 16px; color:#DE8889; border-radius:25px; margin:8px;">${s}</span>
+									</c:forEach>
 								</c:if>
 							</div>
-							</c:forEach>
 						</div>
-						
-						
-						<!-- 리뷰 페이징 -->
-						<div id="reviewPaging">
-							<c:if test="${pm.prev == true}">
-								<a href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
-							</c:if>
-							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-								<c:if test="${i==pm.startPage}">
-									<a href="javascript:reviewPaging(${i})" style="font-weight:bold;color:green;">${i}</a>
-								</c:if>
-								<c:if test="${i!=pm.startPage}">
-								<a href="javascript:reviewPaging(${i})">${i}</a>
-								</c:if>
-							</c:forEach>
-							<c:if test="${pm.next == true}">
-								<a href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
-							</c:if>
-						</div>
-						
-						
 					</div>
-				</div><!-- /리뷰 col -->
-			</div><!-- /리뷰 row -->
-			
-			
-			<!-- 삭제, 수정, 글쓰기 버튼 -->
-			<div class="row">
-				<div class="col">
-					<c:if test="${login != null && (login.midx == stay.midx || login.role == 'admin')}">
-					<button id="stayDeleteBtn">삭제</button>
-					<button onclick="location.href='stayModify.do?sidx=${stay.sidx}'">수정</button>
-					<button onclick="location.href='stayWrite.do'">글쓰기</button>
-					</c:if>
-				</div>
-			</div>
-			
-					<hr class="lastline">
+
+					<!-- 리뷰 -->
+					<div class="row" id="reviewTab" style="display: none">
+						<div class="col">
+							<p>리뷰</p>
+							<div>
+								<!-- 리뷰쓰기 창 -->
+								<div style="border: 1px solid black">
+									<p>이 숙소 리뷰 ${stay.cnt}</p>
+									<form id="reviewFrm" enctype="multipart/form-data">
+										<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewContent"></textarea>
+										<div class="star-rating">
+											<input type="radio" id="5-stars" name="star" value="5" checked /> <label for="5-stars" class="star">&#9733;</label> <input type="radio" id="4-stars" name="star" value="4" /> <label
+												for="4-stars" class="star">&#9733;</label> <input type="radio" id="3-stars" name="star" value="3" /> <label for="3-stars" class="star">&#9733;</label> <input type="radio" id="2-stars"
+												name="star" value="2" /> <label for="2-stars" class="star">&#9733;</label> <input type="radio" id="1-star" name="star" value="1" /> <label for="1-star" class="star">&#9733;</label>
+										</div>
+										<input type="file" id="file" name="file"> <input type="hidden" name="bidx" value="${stay.sidx}">
+										<button type="button" id="reviewWriteBtn">리뷰 작성</button>
+									</form>
+								</div>
+
+								<br>
+
+
+								<!-- page 정보 -->
+								<input type="hidden" id="page" value="${vo.page}">
+								<!-- 리뷰 리스트 -->
+								<div id="reviewList">
+									<c:forEach var="i" items="${review}">
+										<div style="border: 1px solid black" id="reviewL${i.cbidx}">
+											<p>${i.nickname}</p>
+											<p>
+												<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30"> ${i.star}
+											</p>
+											<c:if test="${i.photo != null}">
+												<p>
+													<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="max-width: 100px">
+												</p>
+											</c:if>
+											<p>${i.content}</p>
+											<c:if test="${i.midx == login.midx}">
+												<button onclick="reviewModifyFn(${i.cbidx})">수정</button>
+												<button onclick="reviewDeleteFn(${i.cbidx})">삭제</button>
+											</c:if>
+										</div>
+									</c:forEach>
+								</div>
+
+
+								<!-- 리뷰 페이징 -->
+								<div id="reviewPaging">
+									<c:if test="${pm.prev == true}">
+										<a href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
+									</c:if>
+									<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+										<c:if test="${i==pm.startPage}">
+											<a href="javascript:reviewPaging(${i})" style="font-weight: bold; color: green;">${i}</a>
+										</c:if>
+										<c:if test="${i!=pm.startPage}">
+											<a href="javascript:reviewPaging(${i})">${i}</a>
+										</c:if>
+									</c:forEach>
+									<c:if test="${pm.next == true}">
+										<a href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
+									</c:if>
+								</div>
+
+
+							</div>
+						</div>
+						<!-- /리뷰 col -->
+					</div>
+					<!-- /리뷰 row -->
+
 					
-					<a class=" onlypc" href="stayList.do">
-					<div class="backto">
-						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+					<div class="row btnarea">
+						<div class="col-6 d-flex justify-content-start">
+							<c:if test="${login != null && (login.midx == stay.midx || login.role == 'admin')}">
+								<button id="stayDeleteBtn"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+								<button onclick="location.href='stayModify.do?sidx=${stay.sidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+								<button onclick="location.href='stayWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+							</c:if>
+						</div>
+						<div class="col-6 d-flex justify-content-end">
+							<%-- <button onclick="shareSNS('facebook')">
+								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
+							</button>
+							<button onclick="shareSNS('twitter')">
+								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
+							</button> --%>
+							<button onclick="shareSNS('kakao')" id="kakaoBtn">
+								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+							</button>
+						</div>
 					</div>
+					
+
+					<hr class="lastline">
+
+					<a class=" onlypc" href="stayList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
 					</a>
 					<!-- 리스트 카드 -->
-					
-					
-		
-					
+
+
+
+
 				</div><!-- /.container -->
 			</div><!-- /.contents -->
-			<!-- /pagehead -->
-			
+
 			<!-- banner --><%@include file="../banner.jsp"%>
-			
+
 		</div><!-- / #container -->
-		
+
 		<!-- Footer --><%@include file="../Footer.jsp"%>
-	
-	</div><!-- /#wrap -->
+
+	</div>
+	<!-- /#wrap -->
+
+	<script>
+	jQuery(document).ready(function($) {
+	    $('.slider-for').slick({
+	        slidesToShow: 1,
+	        slidesToScroll: 1,
+	        arrows: false,
+	        fade: true,
+	        asNavFor: '.slider-nav'
+	    });
+	    $('.slider-nav').slick({
+	        slidesToShow: 6,
+	        slidesToScroll: 1,
+
+	        asNavFor: '.slider-for',
+	        dots: false,
+	        focusOnSelect: true,
+	        responsive: [{
+	                breakpoint: 992,
+	                settings: {
+	                    vertical: false,
+	                }
+	            },
+	            {
+	                breakpoint: 768,
+	                settings: {
+	                    vertical: false,
+	                }
+	            },
+	            {
+	                breakpoint: 580,
+	                settings: {
+	                    vertical: false,
+	                    slidesToShow: 3,
+	                }
+	            },
+	            {
+	                breakpoint: 380,
+	                settings: {
+	                    vertical: false,
+	                    slidesToShow: 2,
+	                }
+	            }
+	        ]
+	    });
+	});
+
+	</script>
 
 
-<script>
+	<script>
 	$(function(){
 		//태그 파싱
 		var json = '${stay.tag}';
 		var jsonParse = JSON.parse(json);
 		var tags = "";
 		$.each(jsonParse,function(idx){
-			tags = tags+jsonParse[idx]["value"]+" ";
+			tags = tags+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 		})
-		$("#tagArea").text(tags);
+		$("#tagArea").html(tags);
 		
 		
 		//tab 버튼 이벤트
@@ -528,18 +498,24 @@ h3 {
 			$("#stayTab").hide();
 			$("#reviewTab").hide();
 			
-			$("#roomTabBtn").css("color","green");
-			$("#stayTabBtn").css("color","black");
-			$("#reviewTabBtn").css("color","black");
+			$("#roomTabBtn").css("color","#D43654");
+			$("#roomTabBtn").css("border-bottom","4px solid #D43654");
+			$("#stayTabBtn").css("color","#9E9E9E");
+			$("#stayTabBtn").css("border-bottom","none");
+			$("#reviewTabBtn").css("color","#9E9E9E");
+			$("#reviewTabBtn").css("border-bottom","none");
 		});
 		$("#stayTabBtn").on("click",function(){
 			$("#roomTab").hide();
 			$("#stayTab").show();
 			$("#reviewTab").hide();
 			
-			$("#roomTabBtn").css("color","black");
-			$("#stayTabBtn").css("color","green");
-			$("#reviewTabBtn").css("color","black");
+			$("#roomTabBtn").css("color","#9E9E9E");
+			$("#roomTabBtn").css("border-bottom","none");
+			$("#stayTabBtn").css("color","#D43654");
+			$("#stayTabBtn").css("border-bottom","4px solid #D43654");
+			$("#reviewTabBtn").css("color","#9E9E9E");
+			$("#reviewTabBtn").css("border-bottom","none");
 			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {
@@ -588,9 +564,14 @@ h3 {
 			$("#stayTab").hide();
 			$("#reviewTab").show();
 			
-			$("#roomTabBtn").css("color","black");
-			$("#stayTabBtn").css("color","black");
-			$("#reviewTabBtn").css("color","green");
+			$("#roomTabBtn").css("color","#9E9E9E");
+			$("#roomTabBtn").css("border-bottom","none");
+			
+			$("#stayTabBtn").css("color","#9E9E9E");
+			$("#stayTabBtn").css("border-bottom","none");
+			
+			$("#reviewTabBtn").css("color","#D43654");
+			$("#reviewTabBtn").css("border-bottom","4px solid #D43654");
 		});
 		
 		
@@ -988,7 +969,7 @@ h3 {
 		var date1 = $("#date1").val();
 		var date2 = $("#date2").val();
 		
-		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		var login = '<%=(UserVO) session.getAttribute("login")%>';
 		if(login == "null"){
 			modalFn("로그인이 필요합니다.");
 			setTimeout(function(){

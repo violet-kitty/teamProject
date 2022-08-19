@@ -34,7 +34,7 @@ public class SMTP {
 		auth = new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("han418hi","wb0815hyj0406");
+				return new PasswordAuthentication("아이디","비밀번호");
 			}
 		};
 	}
