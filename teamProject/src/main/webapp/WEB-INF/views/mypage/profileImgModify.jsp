@@ -88,13 +88,13 @@
 									<c:choose>
 									<c:when test="${profile.img == null}">
 										<div id="profileAlt" style="border-radius:50%;width:200px;height:200px;">
-											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:200px;height:200px;">
+											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:300px;height:300px;">
 										</div>
-										<img src="" id="profileImg" style="display:none">
+										<img src="" id="profileImg" style="display:none;border-radius:50%;width:300px;height:300px;">
 									</c:when>
 									
 									<c:otherwise>
-										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%;width:200px;height:200px;">
+										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%;width:300px;height:300px;">
 									</c:otherwise>
 									</c:choose>
 								</div>

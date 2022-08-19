@@ -34,7 +34,7 @@ public class SMTP {
 		auth = new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("han418hi","h4^h4^h4^");
+				return new PasswordAuthentication("han418hi","wb0815hyj0406");
 			}
 		};
 	}
