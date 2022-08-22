@@ -48,6 +48,16 @@ public class TeamDao {
 		return sqlSession.selectOne(namespace + "teamView", tidx);
 	}
 	
+	public List<TeamVO> teamTeamMemberList(int tidx) {
+		
+		return sqlSession.selectList(namespace + "teamTeamMemberList", tidx);
+	}
+	
+	public TeamVO team_channel_id_select(int tidx) {
+		
+		return sqlSession.selectOne(namespace + "team_channel_id_select", tidx);
+	}
+	
 	public int team_cnt_update(int tidx) {
 		
 		return sqlSession.update(namespace + "team_cnt_update", tidx);
@@ -123,11 +133,6 @@ public class TeamDao {
 	public int revote(VoteVO vv) {
 		
 		return sqlSession.delete(namespace + "revote", vv);
-	}
-	
-	public TeamVO team_channel_id_select(int tidx) {
-		
-		return sqlSession.selectOne(namespace + "team_channel_id_select", tidx);
 	}
 	
 	public int userReport(CSVO cv) {

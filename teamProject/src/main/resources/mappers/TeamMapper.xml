@@ -206,6 +206,18 @@
 		AND		delyn = 'N'
 	</select>
 	
+	<select id="teamTeamMemberList" parameterType="int" resultType="joinVO">
+		SELECT		j.tidx, j.midx, j.jdate, j.joinyn, u.nickname, u.img, u.delyn 
+		FROM 		jointable j
+		LEFT JOIN	usertable u
+		ON 			j.midx = u.midx
+		LEFT JOIN	team t 
+		ON 			u.midx = t.midx
+		WHERE		j.tidx = #{tidx} 
+		GROUP BY 	j.midx 
+		ORDER BY 	j.midx DESC;
+	</select>
+	
 	<select id="team_channel_id_select" parameterType="int" resultType="teamVO">
 		SELECT	team_channel_ID
 		FROM 	team

@@ -417,7 +417,7 @@
 	function inputModal(){
 		$.ajax({
 			url: "userReport.do",
-			data: "midx=${login.midx}&title=악성 유저 신고합니다.&divsn=신고&content=<p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고사유 : </p>" + $("#textInput").val() + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>너나들이 팀 번호 : </p>" + ${tidx} + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고된 회원번호 : </p>" + "<span style='display: inline; color: #DE8889; font-weight: bold;'>" + $("#midx").val() + "</span>",
+			data: "midx=${login.midx}&title=유저 신고 시 작성되는 제목입니다.&divsn=신고&content=<p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고사유 : </p>" + $("#textInput").val() + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>너나들이 팀 번호 : </p>" + ${tidx} + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고된 회원번호 : </p>" + "<span style='display: inline; color: #DE8889; font-weight: bold;'>" + $("#midx").val() + "</span>",
 			type: "post",
 			success : function(data){
 				modalClose();

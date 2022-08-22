@@ -21,6 +21,8 @@ public interface TeamService {
 	
 	public TeamVO teamView(int tidx);
 	
+	public List<TeamVO> teamTeamMemberList(int tidx);
+	
 	public TeamVO team_channel_id_select(int tidx);
 	
 	public int team_cnt_update(int tidx);
