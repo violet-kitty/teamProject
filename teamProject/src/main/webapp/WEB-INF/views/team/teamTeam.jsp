@@ -192,6 +192,8 @@
 						</div>
 					</div>
 					<br>
+					<!-- 신고당한 사람 midx -->
+					<input type="hidden" id="midx">
 					<div class="row">
 						<div class="col d-flex justify-content-center">
 							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
@@ -310,10 +312,11 @@
 	nc.bind('onMessageReceived',function(channel, message) {
 		console.log(message);
 		if(message.sender.name == "${login.nickname}"){
-			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		else {
-			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><p>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			var id = message.sender.id.split("_");
+			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><button type='button' onclick='userOption("+id[1]+")'>신고</button><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		var element = document.getElementById("chatArea");
 		element.scrollTop = element.scrollHeight;
@@ -372,10 +375,11 @@
 		
 		for(var m of messages){
 			if(m.sender.name == "${login.nickname}"){
-				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 			else {
-				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><p>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+				var id = m.sender.id.split("_");
+				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><button type='button' onclick='userOption("+id[1]+")'>신고</button><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 		}
 		var element = document.getElementById("chatArea");
@@ -403,6 +407,27 @@
 		if (window.event.keyCode == 13) {
 			sendMsg();
 	    }
+	}
+	
+	function userOption(mm){
+		$("#midx").val(mm);
+		modalFn("신고 사유를 입력해 주세요", "확인","신고","취소","inputModal");
+	}
+	
+	function inputModal(){
+		$.ajax({
+			url: "userReport.do",
+			data: "midx=${login.midx}&title=악성 유저 신고합니다.&divsn=신고&content=<p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고사유 : </p>" + $("#textInput").val() + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>너나들이 팀 번호 : </p>" + ${tidx} + "<br><p style='display: inline; color: #3D3D3D; font-weight: bold;'>신고된 회원번호 : </p>" + "<span style='display: inline; color: #DE8889; font-weight: bold;'>" + $("#midx").val() + "</span>",
+			type: "post",
+			success : function(data){
+				modalClose();
+				modalFn("신고가 접수되었습니다");
+				setTimeout(function(){
+					modalClose();
+					
+				},1000);
+			}
+		})
 	}
 
 </script>

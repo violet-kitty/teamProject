@@ -6,11 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.howf.vo.CSVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
-import edu.howf.vo.UserVO;
 import edu.howf.vo.VoteVO;
 
 @Repository
@@ -128,6 +128,13 @@ public class TeamDao {
 	public TeamVO team_channel_id_select(int tidx) {
 		
 		return sqlSession.selectOne(namespace + "team_channel_id_select", tidx);
+	}
+	
+	public int userReport(CSVO cv) {
+		
+		sqlSession.insert(namespace + "userReport", cv);
+		
+		return sqlSession.update(namespace + "userReport_origincsbidx_update", cv.getCsbidx());
 	}
 
 

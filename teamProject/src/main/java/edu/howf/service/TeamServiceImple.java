@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.howf.dao.TeamDao;
+import edu.howf.vo.CSVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.TeamVO;
-import edu.howf.vo.UserVO;
 import edu.howf.vo.VoteVO;
 
 @Service
@@ -191,7 +191,11 @@ public class TeamServiceImple implements TeamService{
 		return teamDao.team_channel_id_select(tidx);
 	}
 
-	
+	@Override
+	public int userReport(CSVO cv) {
+		
+		return teamDao.userReport(cv);
+	}
 
 	
 	

@@ -71,7 +71,7 @@
 					<tbody>
 						<c:if test="${jv.size() == 0}">
 							<tr>
-								<td colspan="3">가입신청 한 너나들이 팀이 없습니다.</td>
+								<td colspan="5">가입신청 한 너나들이 팀이 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:forEach var="jv" items="${jv}">
@@ -166,6 +166,7 @@
 			data: "jidx="+jidx,
 			type: "post",
 			success:function(data){
+				modalClose();
 				modalFn("가입신청을 승인하였습니다.");
 				setTimeout(function(){
 					modalClose();
@@ -182,6 +183,7 @@
 			data:"jidx="+jidx,
 			type: "post",
 			success:function(data){
+				modalClose();
 				modalFn("가입신청을 거절하였습니다.");
 				setTimeout(function(){
 					modalClose();

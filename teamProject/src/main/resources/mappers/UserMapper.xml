@@ -586,9 +586,9 @@
 		</if>
 	</select>
 	
-	<!-- 내 팀 목록 보기 -->
+	<!-- 내 너나들이 팀 목록 보기 -->
 	<select id="myTeamList" parameterType="int" resultType="joinVO">
-		SELECT a.*, u.nickname
+		SELECT a.jidx, a.joinyn, DATE_FORMAT(a.jdate,'%Y-%m-%d') as jdate, a.tidx, a.title, a.midx, u.nickname
 		FROM
 		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, t.midx
 		FROM team t
@@ -602,7 +602,7 @@
 	
 	<!-- 팀 가입신청 목록보기 & 승인 여부 -->
 	<select id="myTeam_applyList" parameterType="int" resultType="joinVO">
-		SELECT a.*, u.nickname
+		SELECT a.jidx, a.joinyn, DATE_FORMAT(a.jdate,'%Y-%m-%d') as jdate, a.tidx, a.title, a.midx, u.nickname
 		FROM
 		(SELECT j.jidx, j.joinyn, j.jdate, t.tidx, t.title, j.midx
 		FROM team t
