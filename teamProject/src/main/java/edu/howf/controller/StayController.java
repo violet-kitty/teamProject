@@ -490,7 +490,7 @@ public class StayController {
 		System.out.println("인증번호 : "+authNum);
 		
 		//인증 문자 보내기
-		/*
+		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("to", phone);
 		params.put("from", "01035428975");
@@ -504,7 +504,7 @@ public class StayController {
 		}catch(CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
-		}*/
+		}
 		
 		
 		return authNum;
