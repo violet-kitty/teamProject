@@ -127,7 +127,7 @@
 								<!-- 타블렛사이즈만 보이는 글쓰기 버튼 -->
 								
 									<div class="docctrl onlytablet" style="margin-top: 16px;">
-										<a hhref="<%=request.getContextPath()%>/CSboard/CS_write.do"><button class="w-100 bluebtn">
+										<a href="<%=request.getContextPath()%>/CSboard/CS_write.do"><button class="w-100 bluebtn">
 												<i class="fa-solid fa-plus"></i> &nbsp;글쓰기
 											</button></a>
 									</div>

@@ -50,6 +50,18 @@ public class TeamServiceImple implements TeamService{
 
 		return teamDao.teamView(tidx);
 	}
+	
+	@Override
+	public List<TeamVO> teamTeamMemberList(int tidx){
+		
+		return teamDao.teamTeamMemberList(tidx);
+	}
+
+	@Override
+	public TeamVO team_channel_id_select(int tidx) {
+		
+		return teamDao.team_channel_id_select(tidx);
+	}
 
 	@Override
 	public int team_cnt_update(int tidx) {
@@ -183,12 +195,6 @@ public class TeamServiceImple implements TeamService{
 	public int revote(VoteVO vv) {
 		
 		return teamDao.revote(vv);
-	}
-
-	@Override
-	public TeamVO team_channel_id_select(int tidx) {
-		
-		return teamDao.team_channel_id_select(tidx);
 	}
 
 	@Override

@@ -90,10 +90,10 @@ var nicknameDup = false;
 								<form id="frm">
 									<table border="1">
 										<tr class="col1">
-											<td colspan="2"><input type="email" name="email" id="email" placeholder="이메일"></td>
+											<td colspan="2"><input type="email" name="email" id="email" onkeyup="enterkey()" placeholder="이메일"></td>
 										</tr>
 										<tr class="col1">
-											<td colspan="2"><input type="password" name="password" id="password" placeholder="비밀번호"></td>
+											<td colspan="2"><input type="password" name="password" id="password" onkeyup="enterkey()" placeholder="비밀번호"></td>
 										</tr>
 									</table>
 								
@@ -145,16 +145,31 @@ var nicknameDup = false;
 	</div><!-- /#wrap -->
 	
 	<script>
+	function enterkey(){
+		if(event.keyCode == 13){
+			loginFn();
+			return;
+		}
+	}
+	
 	function loginFn(){
 		var id = $("#email");
 		var password = $("#password");
 		
 		if(id.val()==""){
-			id.focus();
+			modalFn("아이디를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+				id.focus();
+			}, 1000);
 			return;
 		}
 		else if(password.val()==""){
-			password.focus();
+			modalFn("비밀번호를 입력해 주세요");
+			setTimeout(function(){
+				modalClose();
+				password.focus();
+			}, 1000);
 			return;
 		}
 		else {

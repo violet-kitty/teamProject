@@ -207,12 +207,14 @@ public class TeamController {
 			}
 		}
 		
+		List<TeamVO> ltv = teamService.teamTeamMemberList(tidx);
 		TeamVO tv = teamService.team_channel_id_select(tidx);
 		
 		model.addAttribute("rv", rv);
 		model.addAttribute("login", login);
 		model.addAttribute("tidx", tidx);
 		model.addAttribute("cidx", tv.getTeam_channel_ID());
+		model.addAttribute("ltv", ltv);
 		
 		
 		return "team/teamTeam";
