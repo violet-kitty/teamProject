@@ -321,7 +321,7 @@
 	
 	<!-- 방 ridx 가져오기 -->
 	<select id="roomRidx" parameterType="resVO" resultType="resVO">
-		SELECT c.ridx
+		SELECT ANY_VALUE(c.ridx) as ridx
 			, COUNT(c.name) as cnt
 		FROM
 		(SELECT a.ridx
