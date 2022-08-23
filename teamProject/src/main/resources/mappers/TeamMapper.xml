@@ -207,7 +207,7 @@
 	</select>
 	
 	<select id="teamTeamMemberList" parameterType="int" resultType="joinVO">
-		SELECT		j.tidx, j.midx, j.jdate, j.joinyn, u.nickname, u.img, u.delyn 
+		SELECT		ANY_VALUE(j.tidx) as tidx, j.midx, ANY_VALUE(j.jdate) as jdate, ANY_VALUE(j.joinyn) as joinyn, ANY_VALUE(u.nickname) as nickname, ANY_VALUE(u.img) as img, ANY_VALUE(u.delyn) as delyn 
 		FROM 		jointable j
 		LEFT JOIN	usertable u
 		ON 			j.midx = u.midx
