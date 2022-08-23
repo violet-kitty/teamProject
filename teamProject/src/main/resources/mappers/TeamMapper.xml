@@ -18,7 +18,7 @@
 			     ,j.people_cnt
 		FROM     team t
 		LEFT OUTER JOIN
-				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx)
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx) as midx
 				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
 		ON       t.tidx = j.tidx) a
 		join 	 (select u.midx, u.nickname from usertable u) u
@@ -117,7 +117,7 @@
 					,t.delyn
 		FROM		team t
 		LEFT OUTER JOIN
-				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx)
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx) as midx
 				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
 		ON       t.tidx = j.tidx) a
 		join 	 (select u.midx, u.nickname from usertable u) u
@@ -154,7 +154,7 @@
 	
 	<select id="join_check" parameterType="teamVO" resultType="joinVO">
 		SELECT  a.jidx, b.joinyn
-		FROM    (SELECT COUNT(jidx) as jidx, jidx as j
+		FROM    (SELECT COUNT(jidx) as jidx, ANY_VALUE(jidx) as j
 				 FROM 	jointable
 				 WHERE	tidx = #{tidx}
 				 AND	midx = #{midx}
