@@ -204,8 +204,8 @@
 												</c:if>
 												
 												<p>
-													<span class="">${s.nickname}</span>
-													<span class="hfc-semibold hfc-blackgray"> ${s.wdate}</span>
+													<span class="hfc-darkgray">${s.nickname} </span>
+													<span class="hfc-semibold hfc-gray"> | ${s.wdate}</span>
 												</p>
 												<div class="small">
 													<img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${s.heart}</span>
