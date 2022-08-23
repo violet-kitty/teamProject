@@ -117,7 +117,7 @@
 					,t.delyn
 		FROM		team t
 		LEFT OUTER JOIN
-				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, j.midx
+				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx)
 				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
 		ON       t.tidx = j.tidx) a
 		join 	 (select u.midx, u.nickname from usertable u) u
