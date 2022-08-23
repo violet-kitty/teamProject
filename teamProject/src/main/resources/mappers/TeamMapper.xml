@@ -350,6 +350,58 @@
 			SET    origincsbidx = #{csbidx}
 			WHERE  csbidx = #{csbidx}
 		</update>
+		
+		<update id="userBlock" parameterType="joinVO">
+			UPDATE	jointable
+			SET		joinyn = 'B'
+			WHERE	tidx = #{tidx}
+			AND		midx = #{midx}
+		</update>
+		
+		<!-- 팀원 밴 사유 -->
+		<insert id="teamUserBanComment" parameterType="joinVO">
+			INSERT INTO comment(
+				content
+				, type
+				, midx
+				, bidx
+				, wdate
+				, delyn
+			)
+			VALUES(
+				#{content}
+				, 'chatting'
+				, #{midx}
+				, #{tidx}
+				, now()
+				, 'N'
+			)
+		</insert>
+		
+		<!-- 팀원 차단 해제 -->
+		<update id="userUnBlock" parameterType="joinVO">
+			UPDATE	jointable
+			SET		joinyn = 'Y'
+			WHERE	midx = #{midx}
+			AND		tidx = #{tidx}			
+		</update>
+		
+		<!-- 팀원 차단 해제 후 comment 테이블의 차단사유 삭제 -->
+		<delete id="userUnBlock_commentDelete" parameterType="joinVO">
+			DELETE FROM comment
+			WHERE		midx = #{midx}
+			AND			bidx = #{tidx}
+		</delete>
+		
+		<!-- 팀원 밴 여부 체크 -->
+		<select id="teamUserBanCheck" parameterType="commentVO" resultType="commentVO">
+			SELECT COUNT(content) as content
+			FROM	comment
+			WHERE	midx = #{midx}
+			AND		bidx = #{bidx}
+			AND		type = 'chatting'
+		</select>
+
 
 
 

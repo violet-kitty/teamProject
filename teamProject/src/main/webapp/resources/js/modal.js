@@ -120,6 +120,27 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 			
 			$("#modalDiv").show();
 		}
+		else if(funcName == 'inputModal2'){
+			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+						+ '<div class="modal-dialog hbshadow" role="document">'
+						+ '<div class="modal-content">'
+						+ '<h2 class="hfc-bold">'+title+'</h2>'
+						+ '<div class="form-floating ">'
+						+ '<p class="text-muted">'+msg+'</p>'
+						+ '<input type="text" name="textInput2" id="textInput2">'
+						+ '</div>'
+						+ '<div class="btnarea">'
+						+ '<button type="button" class="graybtn w-50" onclick="modalClose()">'+btnMsg2+'</button>'
+						+ '<button type="button" class="bluebtn w-50" onclick="'+funcName+'()">'+btnMsg1+'</button>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'
+						+ '</div>'; 
+			
+			$("body").prepend(html);
+			
+			$("#modalDiv").show();
+		}
 		else {
 			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
 						+ '<div class="modal-dialog hbshadow" role="document">'

@@ -112,6 +112,7 @@
 				  ,cs.origincsbidx
 			      ,u.midx
 			      ,u.name
+			      ,u.nickname
 			      ,cs.divsn			      
 			      ,cs.title
 			      ,cs.content

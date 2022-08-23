@@ -180,7 +180,7 @@
 											<tr>
 												
 												<td class=" hfc-blackgray">${c.divsn}</td>
-												<td class=" hfc-blackgray">${c.name}</td>
+												<td class=" hfc-blackgray">${c.nickname}</td>
 												<td><a class=" hfc-blackgray hfc-semibold" href="CS_view.do?csbidx=${c.csbidx}&origincsbidx=${c.origincsbidx}">${c.title}</a></td>
 												<c:if test="${c.answer != 2}">
 												<td class=" hfc-pink">답변 대기</td>

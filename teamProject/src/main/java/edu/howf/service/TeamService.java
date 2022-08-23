@@ -3,6 +3,7 @@ package edu.howf.service;
 import java.util.List;
 
 import edu.howf.vo.CSVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
@@ -55,7 +56,11 @@ public interface TeamService {
 	
 	public int userReport(CSVO cv);
 	
-
+	public int userBlock(JoinVO jv);
+	
+	public int userUnBlock(JoinVO jv);
+	
+	public List<CommentVO> teamUserBanCheck(CommentVO cv);
 
 
 }
