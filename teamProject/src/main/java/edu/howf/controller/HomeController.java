@@ -144,4 +144,10 @@ public class HomeController {
 		return "Search";
 	}
 	
+	//팀 소개
+	@RequestMapping(value="/teamInfo.do")
+	public String teamInfo() {
+		return "teamInfo";
+	}
+	
 }

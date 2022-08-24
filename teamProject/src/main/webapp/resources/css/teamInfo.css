@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+h1 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;display: inline; width: auto;}
+h2,h3 {font: normal normal 32px/42px Noto Sans; font-weight:600; color:#3D3D3D;}
+p {font: normal normal 22px/32px Noto Sans; font-weight:600; color:#3D3D3D;}
