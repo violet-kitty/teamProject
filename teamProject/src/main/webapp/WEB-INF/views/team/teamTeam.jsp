@@ -114,6 +114,7 @@
 				<div class="container">
 				<div class="row">
 					<div class="col">
+						<button type="button" onclick="memberList()">채팅 참여자 목록</button>
 						<!-- 채팅창 -->
 						<div id="chatArea" style="height:500px;overflow-y:scroll;width:100%;padding-left:5px;padding-right:5px;background:#54ACA8">
 							
@@ -168,25 +169,27 @@
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
-							<div class="row">
-								<div class="col">
-									<div id="div_create_vote">
-										<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
-										<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
-										<div id="display" style="display:none">
-											<button onclick="add_option()" class="h-auto">선택지 추가</button>
-											<div id="voteArea">
-												<form id="vote_option">
-													<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-													<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
-													<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
-												</form>
+								<c:if test="${login.midx == rv.midx}">
+									<div class="row">
+										<div class="col">
+											<div id="div_create_vote">
+												<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
+												<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
+												<div id="display" style="display:none">
+													<button onclick="add_option()" class="h-auto">선택지 추가</button>
+													<div id="voteArea">
+														<form id="vote_option">
+															<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
+															<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
+															<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
+														</form>
+													</div>
+													<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
+												</div>
 											</div>
-											<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
 										</div>
 									</div>
-								</div>
-							</div>
+								</c:if>
 							</c:if>
 							</div>
 						</div>
@@ -207,14 +210,7 @@
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
-// 	function clickFn(){
-// 		취소 버튼 대신 설정한 시간(밀리초) 만큼만 모달을 띄워놓고 싶을 때
-// 		modalFn("sdfsdfsdf");
-// 		setTimeout(function(){
-// 			modalClose();
-// 		},1500);
-// 		modalFn("sdfsdfsdfsdf ","qweqwe");
-// 	}
+
 	function create_vote(){
 		$("#create_vote").hide();
 		$("#display").show();
@@ -333,7 +329,7 @@
 		setTimeout(function(){
 			loadMsg();
 			chatchat(cidx);
-		},250);
+		},500);
 	});
 	
 	// 접속 종료
@@ -403,6 +399,80 @@
 		return 1;
 	}
 	
+	async function memberList(){
+		const filter = {channel_id: cidx};
+		const sort = {created_at:-1};
+		const option = { offset:0, per_page:100};
+		const subscriptions = await nc.getSubscriptions(filter, sort, option);
+		const filter2 = {channel_id: cidx, online:true};
+		const subscriptions2 = await nc.getSubscriptions(filter2, sort, option);
+		
+				var html = "<table class='table'>"
+					+ "<tr>"
+					+ "<th>닉네임</th>"
+					+ "<th>접속여부</th>";
+					
+					<c:if test="${login.midx == rv.midx}">
+					html = html
+					+ "<th>차단/차단해제</th>";
+					</c:if>
+					
+					html = html
+					+ "</tr>";
+					
+				for(var i=0;i<subscriptions.length;i++){
+					html = html
+					+ "<tr>"
+					+ "<td>"
+					+ subscriptions[i].user.name
+					+ "</td>"
+					+ "<td>";
+					
+					var is = 'off';
+					for(var j of subscriptions2){
+						if(j.user.name == subscriptions[i].user.name) is = 'on';
+					}
+					
+					html = html
+					+ is
+					+ "</td>";
+					
+					<c:if test="${login.midx == rv.midx}">
+					if(subscriptions[i].user.name != '${login.nickname}'){
+						var id = subscriptions[i].user_id.split("_");
+						$("#midx").val(id[1]);
+						$.ajax({
+							url : "teamUserBanCheck.do",
+							data : "midx=" + $("#midx").val() + "&bidx=${tidx}&type=chatting",
+							type : "post",
+							success : function(data){
+								console.log("check:"+data);
+								
+								
+								
+							}
+						});
+						
+						
+						html = html
+						+ "<td>"
+						+ "<button type='button' onclick='userBlock("+id[1]+")'>차단</button>"
+						+ "</td>";
+					}
+					</c:if>
+					
+					html + html
+					+ "</tr>"
+				}
+				
+				html = html + "</table>";
+				
+				modalFn(html, "닫기");
+		
+		
+		return 1;
+	}
+	
 	function enterkey() {
 		if (window.event.keyCode == 13) {
 			sendMsg();
@@ -411,7 +481,7 @@
 	
 	function userOption(mm){
 		$("#midx").val(mm);
-		modalFn("신고 사유를 입력해 주세요", "확인","신고","취소","inputModal");
+		modalFn("신고 사유를 입력해 주세요", "확인", "신고", "취소", "inputModal");
 	}
 	
 	function inputModal(){
@@ -424,11 +494,55 @@
 				modalFn("신고가 접수되었습니다");
 				setTimeout(function(){
 					modalClose();
-					
 				},1000);
 			}
 		})
 	}
+	
+	function userBlock(mm){
+		modalClose();
+		$("#midx").val(mm);
+		modalFn("차단 사유를 입력해 주세요", "확인", "차단", "취소", "inputModal2");
+	}
+	
+	function inputModal2(){
+		$.ajax({
+			url: "userBlock.do",
+			data : "tidx=${tidx}&midx="+ $("#midx").val() + "&content=" + $("#textInput2").val(),
+			type : "post",
+			success : function(data){
+				modalClose();
+				modalFn("해당 유저가 차단되었습니다.");
+				setTimeout(function(){
+					modalClose();
+				}, 1000)
+			}
+		});
+	}
+	
+	function userUnBlockCheck(mm){
+		modalClose();
+		$("#midx").val(mm);
+		modalFn("차단해제 하시겠습니까?", "확인", "차단해제", "취소", "userUnBlock");
+	}
+	
+	function userUnBlock(){
+		$.ajax({
+			url : "userUnBlock.do",
+			data : "tidx=${tidx}&midx="+$("#midx").val(),
+			type : "post",
+			success : function(data){
+				modalClose();
+				modalFn("해당 유저가 차단 해제되었습니다.");
+				setTimeout(function(){
+					modalClose();
+				}, 1000)
+			}
+			
+		})
+	}
+
+	
 
 </script>
 </body>

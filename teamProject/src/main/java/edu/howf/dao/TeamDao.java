@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.CSVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
@@ -140,6 +141,25 @@ public class TeamDao {
 		sqlSession.insert(namespace + "userReport", cv);
 		
 		return sqlSession.update(namespace + "userReport_origincsbidx_update", cv.getCsbidx());
+	}
+	
+	public int userBlock(JoinVO jv) {
+		
+		sqlSession.insert(namespace + "teamUserBanComment", jv);
+		
+		return sqlSession.update(namespace + "userBlock", jv);
+	}
+	
+	public int userUnBlock(JoinVO jv) {
+		
+		sqlSession.delete(namespace + "userUnBlock_commentDelete", jv);
+		
+		return sqlSession.update(namespace + "userUnBlock", jv);
+	}
+	
+	public CommentVO teamUserBanCheck(CommentVO cv) {
+		
+		return sqlSession.selectOne(namespace + "teamUserBanCheck", cv);
 	}
 
 

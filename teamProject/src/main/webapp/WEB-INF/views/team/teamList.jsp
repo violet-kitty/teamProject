@@ -72,8 +72,8 @@
 						<div class="row rightbox onlypc-inline">
 							<!-- sort 버튼 -->
 							<div class="col d-flex justify-content-end filterbtn">
-								<button id="filter_team">팀원수</button>
-								<button id="filter_cnt">조회수</button>
+								<button id="teamBtn" onclick="location.href='teamList.do?sortType=team'">팀원수</button>
+								<button id="cntBtn" onclick="location.href='teamList.do?sortType=cnt'">조회수</button>
 							</div>	
 							<!-- 검색창 -->
 							<form id="form1" name="frm2" action="teamList.do" method="get">
@@ -149,8 +149,8 @@
 										<td class=" hfc-blackgray">${tv.nickname}</td>
 										<td><a href="teamView.do?tidx=${tv.tidx}"  class=" hfc-blackgray hfc-semibold">${tv.title}</a></td>
 										<td class=" hfc-blackgray">${tv.wdate}</td>
-										<td class=" hfc-blackgray">${tv.cnt}</td>
-										<td class=" hfc-blackgray">${tv.people_cnt}</td>
+										<td class=" hfc-blackgray" style="text-align: center;">${tv.cnt}</td>
+										<td class=" hfc-blackgray" style="text-align: center;">${tv.people_cnt}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -201,8 +201,13 @@
 	</div><!-- /#wrap -->
 <script>
 $(function(){
-	
-	$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
+	//sort 버튼
+	var sortBtn = "${pm.search.sortType}";
+	if(sortBtn != ""){
+		$("#"+sortBtn+"Btn").css("background","none");
+		$("#"+sortBtn+"Btn").css("color","#DE8889");
+		$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
+	}
 	
 	$("#btn_search").click(function(){
 		$("#form1").submit();
@@ -231,13 +236,6 @@ $(function(){
 		
 	});
 	
-	$("#filter_team").click(function(){
-		location.href = "teamList.do?sortType=team";
-	});
-	
-	$("#filter_cnt").click(function(){
-		location.href = "teamList.do?sortType=cnt";
-	});		
 });
 </script>	
 </body>

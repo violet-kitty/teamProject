@@ -93,7 +93,10 @@
 			<div class="row">
 				<div class="col d-flex justify-content-center">
 					<c:if test="${login != null && tv.applyyn == 'Y'}">
-						<c:if test="${check.joinyn != 'Y'}">
+						<c:if test="${check.joinyn == 'B'}">
+							해당 너나들이 팀으로부터 차단되었습니다.
+						</c:if>
+						<c:if test="${check.joinyn == 'N' || check.joinyn == null}">
 							<c:if test="${check.jidx == 0}">
 								<input type="button" id="join_btn" class="join_btn" value="가입신청">
 								<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">

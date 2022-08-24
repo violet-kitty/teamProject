@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import edu.howf.dao.TeamDao;
 import edu.howf.vo.CSVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.RecommendVO;
 import edu.howf.vo.SearchVO;
@@ -201,6 +202,24 @@ public class TeamServiceImple implements TeamService{
 	public int userReport(CSVO cv) {
 		
 		return teamDao.userReport(cv);
+	}
+
+	@Override
+	public int userBlock(JoinVO jv) {
+		
+		return teamDao.userBlock(jv);
+	}
+
+	@Override
+	public int userUnBlock(JoinVO jv) {
+		
+		return teamDao.userUnBlock(jv);
+	}
+
+	@Override
+	public CommentVO teamUserBanCheck(CommentVO cv) {
+		
+		return teamDao.teamUserBanCheck(cv);
 	}
 
 	

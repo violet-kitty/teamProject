@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.howf.service.TeamService;
 import edu.howf.vo.CSVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.JoinVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.RecommendVO;
@@ -286,6 +287,28 @@ public class TeamController {
 		
 		return teamService.userReport(cv);
 	}
+	
+	@ResponseBody
+	@PostMapping("userBlock.do")
+	public int userBlock(JoinVO jv) {
+		
+		return teamService.userBlock(jv);
+	}
+	
+	@ResponseBody
+	@PostMapping("userUnBlock.do")
+	public int userUnBlock(JoinVO jv) {
+		
+		return teamService.userUnBlock(jv);
+	}
+	
+	@ResponseBody
+	@PostMapping("teamUserBanCheck.do")
+	public CommentVO teamUserBanCheck(CommentVO cv){
+		
+		return teamService.teamUserBanCheck(cv);
+	}
+	
 
 
 	
