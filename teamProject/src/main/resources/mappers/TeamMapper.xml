@@ -215,7 +215,7 @@
 		ON 			u.midx = t.midx
 		WHERE		j.tidx = #{tidx} 
 		GROUP BY 	j.midx 
-		ORDER BY 	j.midx DESC;
+		ORDER BY 	j.midx ASC;
 	</select>
 	
 	<select id="team_channel_id_select" parameterType="int" resultType="teamVO">
