@@ -213,7 +213,9 @@
 		
 		//tagify
 		var input = document.querySelector("#tag");
-		new Tagify(input);
+		new Tagify(input, {
+			pattern: /^#/
+		})
 		
 		//파일 첨부(썸네일)
 		$("#imageAttach").click(function(){

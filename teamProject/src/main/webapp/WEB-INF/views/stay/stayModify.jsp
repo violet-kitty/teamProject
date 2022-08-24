@@ -652,7 +652,9 @@
 			
 			//tagify
 			var input = document.querySelector("#tag");
-			new Tagify(input);
+			new Tagify(input, {
+				pattern: /^#/
+			})
 			
 			//태그 값 넣기
 			var json = '${stay.tag}';

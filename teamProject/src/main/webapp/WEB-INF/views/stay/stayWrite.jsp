@@ -571,7 +571,9 @@ var tagi = 0;
 			
 			//tagify
 			var input = document.querySelector("#tag");
-			new Tagify(input);
+			new Tagify(input, {
+				pattern: /^#/
+			})
 			
 			//textarea 특수문자 제한
 			$("textarea").keyup(function(){
