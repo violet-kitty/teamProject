@@ -157,9 +157,9 @@ public class TeamDao {
 		return sqlSession.update(namespace + "userUnBlock", jv);
 	}
 	
-	public List<CommentVO> teamUserBanCheck(CommentVO cv) {
+	public CommentVO teamUserBanCheck(CommentVO cv) {
 		
-		return sqlSession.selectList(namespace + "teamUserBanCheck", cv);
+		return sqlSession.selectOne(namespace + "teamUserBanCheck", cv);
 	}
 
 

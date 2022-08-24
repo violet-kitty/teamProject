@@ -60,7 +60,7 @@ public interface TeamService {
 	
 	public int userUnBlock(JoinVO jv);
 	
-	public List<CommentVO> teamUserBanCheck(CommentVO cv);
+	public CommentVO teamUserBanCheck(CommentVO cv);
 
 
 }

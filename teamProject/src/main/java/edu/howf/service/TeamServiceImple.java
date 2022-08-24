@@ -217,7 +217,7 @@ public class TeamServiceImple implements TeamService{
 	}
 
 	@Override
-	public List<CommentVO> teamUserBanCheck(CommentVO cv) {
+	public CommentVO teamUserBanCheck(CommentVO cv) {
 		
 		return teamDao.teamUserBanCheck(cv);
 	}

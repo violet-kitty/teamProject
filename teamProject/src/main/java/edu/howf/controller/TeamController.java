@@ -304,7 +304,7 @@ public class TeamController {
 	
 	@ResponseBody
 	@PostMapping("teamUserBanCheck.do")
-	public List<CommentVO> teamUserBanCheck(CommentVO cv){
+	public CommentVO teamUserBanCheck(CommentVO cv){
 		
 		return teamService.teamUserBanCheck(cv);
 	}

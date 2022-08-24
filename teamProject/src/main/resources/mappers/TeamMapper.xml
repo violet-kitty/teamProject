@@ -395,7 +395,7 @@
 		
 		<!-- 팀원 밴 여부 체크 -->
 		<select id="teamUserBanCheck" parameterType="commentVO" resultType="commentVO">
-			SELECT COUNT(content) as content
+			SELECT COUNT(content) as cbidx
 			FROM	comment
 			WHERE	midx = #{midx}
 			AND		bidx = #{bidx}

@@ -407,12 +407,6 @@
 		const filter2 = {channel_id: cidx, online:true};
 		const subscriptions2 = await nc.getSubscriptions(filter2, sort, option);
 		
-		$.ajax({
-			url : "teamUserBanCheck.do",
-			data : "midx=" + $("#midx").val() + "&bidx=${tidx}&type=chatting",
-			type : "post",
-			success : function(data){
-				console.log("check:"+data);
 				var html = "<table class='table'>"
 					+ "<tr>"
 					+ "<th>닉네임</th>"
@@ -445,8 +439,21 @@
 					
 					<c:if test="${login.midx == rv.midx}">
 					if(subscriptions[i].user.name != '${login.nickname}'){
-						console.log(subscriptions[i]);
 						var id = subscriptions[i].user_id.split("_");
+						$("#midx").val(id[1]);
+						$.ajax({
+							url : "teamUserBanCheck.do",
+							data : "midx=" + $("#midx").val() + "&bidx=${tidx}&type=chatting",
+							type : "post",
+							success : function(data){
+								console.log("check:"+data);
+								
+								
+								
+							}
+						});
+						
+						
 						html = html
 						+ "<td>"
 						+ "<button type='button' onclick='userBlock("+id[1]+")'>차단</button>"
@@ -461,13 +468,6 @@
 				html = html + "</table>";
 				
 				modalFn(html, "닫기");
-				
-				
-				
-			}
-			
-		});
-		
 		
 		
 		return 1;
