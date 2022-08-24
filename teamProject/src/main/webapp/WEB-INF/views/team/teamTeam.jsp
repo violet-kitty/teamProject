@@ -308,11 +308,26 @@
 	nc.bind('onMessageReceived',function(channel, message) {
 		console.log(message);
 		if(message.sender.name == "${login.nickname}"){
-			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		else {
 			var id = message.sender.id.split("_");
-			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><button type='button' onclick='userOption("+id[1]+")'>신고</button><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			var img = "";
+			//프로필 이미지
+			<c:forEach var="l" items="${ltv}">
+			if(${l.midx} == id[1]){
+				<c:choose>
+				<c:when test="${l.img != null}">
+				img = '<%=request.getContextPath() %>/event/displayFile.do?fileName=${l.img}';
+				</c:when>
+				<c:otherwise>
+				img = '<%=request.getContextPath()%>/image/null/null_thumbnail.png';
+				</c:otherwise>
+				</c:choose>
+				
+			}
+			</c:forEach>
+			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+message.sender.name+"<button type='button' onclick='userOption("+id[1]+")'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		var element = document.getElementById("chatArea");
 		element.scrollTop = element.scrollHeight;
@@ -371,11 +386,26 @@
 		
 		for(var m of messages){
 			if(m.sender.name == "${login.nickname}"){
-				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 			else {
 				var id = m.sender.id.split("_");
-				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><button type='button' onclick='userOption("+id[1]+")'>신고</button><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;background:white;max-width:30%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+				var img = "";
+				//프로필 이미지
+				<c:forEach var="l" items="${ltv}">
+				if(${l.midx} == id[1]){
+					<c:choose>
+					<c:when test="${l.img != null}">
+					img = '<%=request.getContextPath() %>/event/displayFile.do?fileName=${l.img}';
+					</c:when>
+					<c:otherwise>
+					img = '<%=request.getContextPath()%>/image/null/null_thumbnail.png';
+					</c:otherwise>
+					</c:choose>
+					
+				}
+				</c:forEach>
+				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+m.sender.name+"<button type='button' onclick='userOption("+id[1]+")'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 		}
 		var element = document.getElementById("chatArea");
@@ -399,6 +429,7 @@
 		return 1;
 	}
 	
+	//채팅방 참여자 목록 불러와 그려주기
 	async function memberList(){
 		const filter = {channel_id: cidx};
 		const sort = {created_at:-1};
@@ -407,8 +438,10 @@
 		const filter2 = {channel_id: cidx, online:true};
 		const subscriptions2 = await nc.getSubscriptions(filter2, sort, option);
 		
-				var html = "<table class='table'>"
-					+ "<tr>"
+				var html = "<h4>채팅 참여자 목록</h4><br>"
+					+ "<table class='table' style='text-align:center'>";
+/* 					+ "<tr>"
+					+ "<th>프로필</th>"
 					+ "<th>닉네임</th>"
 					+ "<th>접속여부</th>";
 					
@@ -418,11 +451,33 @@
 					</c:if>
 					
 					html = html
-					+ "</tr>";
+					+ "</tr>"; */
 					
 				for(var i=0;i<subscriptions.length;i++){
+					var id = subscriptions[i].user_id.split("_");
 					html = html
 					+ "<tr>"
+					+ "<td>";
+					
+					//프로필 이미지
+					<c:forEach var="l" items="${ltv}">
+					if(${l.midx} == id[1]){
+						<c:choose>
+						<c:when test="${l.img != null}">
+						html = html
+						+ "<img src='<%=request.getContextPath() %>/event/displayFile.do?fileName=${l.img}' style='width:40px;height:40px;border-radius:50%;'>"
+						</c:when>
+						<c:otherwise>
+						html = html
+						+ "<img src='<%=request.getContextPath()%>/image/null/null_thumbnail.png' style='width:40px;height:40px;border-radius:50%;'>"
+						</c:otherwise>
+						</c:choose>
+						
+					}
+					</c:forEach>
+					
+					html = html
+					+ "</td>"
 					+ "<td>"
 					+ subscriptions[i].user.name
 					+ "</td>"
@@ -438,26 +493,30 @@
 					+ "</td>";
 					
 					<c:if test="${login.midx == rv.midx}">
-					if(subscriptions[i].user.name != '${login.nickname}'){
-						var id = subscriptions[i].user_id.split("_");
+					if(id[1] != ${login.midx}){
 						$("#midx").val(id[1]);
 						$.ajax({
 							url : "teamUserBanCheck.do",
 							data : "midx=" + $("#midx").val() + "&bidx=${tidx}&type=chatting",
 							type : "post",
+							async: false,
 							success : function(data){
-								console.log("check:"+data);
-								
-								
+								if(data.cbidx == 0){
+									html = html
+									+ "<td>"
+									+ "<button type='button' onclick='userBlock("+id[1]+")'>차단</button>"
+									+ "</td>";
+								}
+								else {
+									html = html
+									+ "<td>"
+									+ "차단됨"
+									+ "</td>";
+								}
 								
 							}
 						});
 						
-						
-						html = html
-						+ "<td>"
-						+ "<button type='button' onclick='userBlock("+id[1]+")'>차단</button>"
-						+ "</td>";
 					}
 					</c:if>
 					
