@@ -42,7 +42,7 @@
 		var jsonParse = JSON.parse(json);
 		var tagData = "";
 		$.each(jsonParse,function(idx){
-			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+			tagData = tagData+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 		})
 		
 		$("#howftag"+hbidx).html(tagData);

@@ -275,6 +275,61 @@
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
 						<div class="title">
+							<h1>사용한 기능 및 API</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:center;line-height:2;">
+						<p>1. 스프링 시큐리티 - 비밀번호 암호화</p><br>
+						<p>2. 우편 검색 API</p><br>
+						<p>3. 카카오 로그인 API</p><br>
+						<p>4. 구글 로그인 API</p><br>
+						<p>5. 지도 API</p><br>
+						<p>6. 결제 API - 아임포트</p><br>
+						<p>7. 문자 전송 API - COOLSMS</p><br>
+						<p>8. 채팅 API - NCLOUD</p><br>
+					</div>
+					
+				</div>
+				<!-- / #featured-8 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-8">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>사용자 분류</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:center;line-height:3;">
+						<h1>일반회원</h1>
+						<p></p>
+						<br>
+						<h1>사업자</h1>
+						<p></p>
+						<br>
+						<h1>공무원</h1>
+						<p></p>
+						<br>
+						<h1>관리자</h1>
+						<p></p>
+					</div>
+					
+				</div>
+				<!-- / #featured-8 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-8">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
 							<h1></h1>
 						</div>
 					</div>

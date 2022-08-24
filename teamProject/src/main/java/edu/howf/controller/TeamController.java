@@ -189,7 +189,10 @@ public class TeamController {
 	public String teamTeam(int tidx, Model model, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
-		UserVO login = (UserVO)session.getAttribute("login");	
+		UserVO login = (UserVO)session.getAttribute("login");
+		
+		TeamVO t = teamService.teamView(tidx);
+		
 		
 		RecommendVO rv = teamService.teamTeamView(tidx);	//투표 선택지들 가져옴
 		
@@ -211,6 +214,7 @@ public class TeamController {
 		List<TeamVO> ltv = teamService.teamTeamMemberList(tidx);
 		TeamVO tv = teamService.team_channel_id_select(tidx);
 		
+		model.addAttribute("tv", t);
 		model.addAttribute("rv", rv);
 		model.addAttribute("login", login);
 		model.addAttribute("tidx", tidx);

@@ -172,13 +172,13 @@
 											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
 										</div>
 									</form>
-									<c:if test="${login.midx == rv.midx}">
+									<c:if test="${login.midx == tv.midx}">
 										<br><button type="button" onclick="remove_vote()">투표  마감 / 삭제</button><br>
 									</c:if>
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
-								<c:if test="${login.midx == rv.midx}">
+								<c:if test="${login.midx == tv.midx}">
 									<div class="row">
 										<div class="col">
 											<div id="div_create_vote">
