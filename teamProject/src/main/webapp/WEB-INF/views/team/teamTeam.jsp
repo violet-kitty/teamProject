@@ -30,6 +30,14 @@
 <!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+
+<style>
+.joinedmenm td {padding:10px 0px; vertical-align:middle; text-align:left; position:relative;}
+.joinedmenm td:first-child {width:50px;}
+
+.onoff {width:16px; height: 16px; position:absolute; top:38px; left:27px; border-radius:100%; border:2px solid white;}
+</style>
+
 <script>
 	function asdasd(){
 		
@@ -94,6 +102,7 @@
     font-weight: bold;
     box-sizing: border-box;
 }
+.hbg-lightgreen {background-color:#57c702;}
 </style>
 </head>
 <body>
@@ -439,7 +448,7 @@
 		const subscriptions2 = await nc.getSubscriptions(filter2, sort, option);
 		
 				var html = "<h4>채팅 참여자 목록</h4><br>"
-					+ "<table class='table' style='text-align:center'>";
+					+ "<table class='table joinedmenm' style='text-align:center'>";
 /* 					+ "<tr>"
 					+ "<th>프로필</th>"
 					+ "<th>닉네임</th>"
@@ -476,21 +485,28 @@
 					}
 					</c:forEach>
 					
-					html = html
-					+ "</td>"
-					+ "<td>"
-					+ subscriptions[i].user.name
-					+ "</td>"
-					+ "<td>";
-					
 					var is = 'off';
 					for(var j of subscriptions2){
 						if(j.user.name == subscriptions[i].user.name) is = 'on';
 					}
 					
+					if(is == 'on'){
+						html = html
+						+ "<div class='onoff hbg-lightgreen'></div> ";
+					}
+					else {
+						html = html
+						+ "<div class='onoff hbg-gray'></div> ";
+					}
+				
+					
+					
 					html = html
-					+ is
+					+ "</td>"
+					+ "<td>"
+					+ subscriptions[i].user.name
 					+ "</td>";
+					
 					
 					<c:if test="${login.midx == rv.midx}">
 					if(id[1] != ${login.midx}){
@@ -504,13 +520,13 @@
 								if(data.cbidx == 0){
 									html = html
 									+ "<td>"
-									+ "<button type='button' onclick='userBlock("+id[1]+")'>차단</button>"
+									+ "<button type='button' style='background:none; border:none;' onclick='userBlock("+id[1]+")'><img src='<%=request.getContextPath() %>/image/button/ban.png' style='width:20px;'></button>"
 									+ "</td>";
 								}
 								else {
 									html = html
 									+ "<td>"
-									+ "차단됨"
+									+ "<img src='<%=request.getContextPath() %>/icon/banned.png' style='width:20px;'>"
 									+ "</td>";
 								}
 								

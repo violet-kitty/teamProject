@@ -304,7 +304,7 @@ else {
 								<h3 style="margin-bottom:16px;">편의시설 및 서비스</h3>
 								<c:if test="${stay.services != null}">
 									<c:forEach var="s" items="${fn:split(stay.services,',')}">
-										<span style="border:2px solid #DE8889; padding:8px 16px; color:#DE8889; border-radius:25px; margin:8px;">${s}</span>
+										<span style="border:2px solid #DE8889; padding:8px 16px; color:#DE8889; border-radius:25px; margin:8px; line-height:62px;">${s}</span>
 									</c:forEach>
 								</c:if>
 							</div>
