@@ -49,16 +49,16 @@
 		<div class="parallax-window" style="min-height:300px;" data-parallax="scroll" data-image-src="<%= request.getContextPath() %>/image/picture/diary.jpg"></div>
 		
 		<!-- Side -->
-		<div class="right-container">
+		<div class="right-container" id="topBtn" style="display:none;">
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
-			<img src="<%= request.getContextPath() %>/image/teamInfo/first.png" style="width:100%;height:1300px;">
+			<img src="<%= request.getContextPath() %>/image/teamInfo/first.png" style="width:100%;height:100vh;">
 			
 			<!-- content01 -->
-			<div class="contents content01 hbg-whitegray" style="text-align:center;">
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="500" data-aos-duration="300">
 				<div class="container" id="featured-1">
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
@@ -116,7 +116,7 @@
 			<!-- / .content01 -->
 			
 			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="500" data-aos-duration="300">
 				<div class="container" id="featured-2">
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
@@ -194,7 +194,7 @@
 			<!-- / .content01 -->
 			
 			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
 				<div class="container" id="featured-5">
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
@@ -209,63 +209,6 @@
 					
 				</div>
 				<!-- / #featured-5 -->
-			</div>
-			<!-- / .content01 -->
-			
-			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
-				<div class="container" id="featured-6">
-					<!-- 페이지 제목 -->
-					<div class="pageinfo">
-						<div class="title">
-							<h1>클래스 다이어그램</h1>
-						</div>
-					</div>
-					<br>
-					<div style="text-align:left;line-height:3;">
-						
-					</div>
-					
-				</div>
-				<!-- / #featured-6 -->
-			</div>
-			<!-- / .content01 -->
-			
-			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
-				<div class="container" id="featured-7">
-					<!-- 페이지 제목 -->
-					<div class="pageinfo">
-						<div class="title">
-							<h1>ERD</h1>
-						</div>
-					</div>
-					<br>
-					<div style="text-align:left;line-height:3;">
-						
-					</div>
-					
-				</div>
-				<!-- / #featured-7 -->
-			</div>
-			<!-- / .content01 -->
-			
-			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
-				<div class="container" id="featured-7">
-					<!-- 페이지 제목 -->
-					<div class="pageinfo">
-						<div class="title">
-							<h1>SITE MAP</h1>
-						</div>
-					</div>
-					<br>
-					<div style="text-align:center;line-height:3;">
-						<img src="<%= request.getContextPath() %>/image/teamInfo/siteMap.png" style="max-width:100%"> 
-					</div>
-					
-				</div>
-				<!-- / #featured-7 -->
 			</div>
 			<!-- / .content01 -->
 			
@@ -296,12 +239,107 @@
 			<!-- / .content01 -->
 			
 			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>SITE MAP</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:center;line-height:3;">
+						<img src="<%= request.getContextPath() %>/image/teamInfo/siteMap.png" style="max-width:100%"> 
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-6">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>요구사항 정의서</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:left;line-height:3;">
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-6 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>ERD</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:left;line-height:3;">
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>데이터베이스</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:left;line-height:3;">
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-6">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>클래스 다이어그램</h1>
+						</div>
+					</div>
+					<br>
+					<div style="text-align:left;line-height:3;">
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-6 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
 			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
 				<div class="container" id="featured-8">
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
 						<div class="title">
-							<h1>사용자 분류</h1>
+							<h1>회원 분류</h1>
 						</div>
 					</div>
 					<br>
@@ -325,8 +363,8 @@
 			<!-- / .content01 -->
 			
 			
-			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
-				<div class="container" id="featured-8">
+			<div class="contents content01 hbg-whitegray" style="text-align:center;height:100vh;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-99">
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
 						<div class="title">
@@ -335,7 +373,7 @@
 					</div>
 					<br>
 					<div style="text-align:center;line-height:3;">
-						<h1>시연</h1>
+						<h1 style="font-size:4em;">시연</h1>
 					</div>
 					
 				</div>
@@ -349,6 +387,28 @@
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
 	</div><!-- /#wrap -->
+	
+<script>
+	let isVisible = false;
+	
+	window.addEventListener('scroll', function() {
+	    if ( checkVisible($('#featured-99')) && !isVisible) {
+	    	$("#topBtn").css("display","block");
+	        isVisible=true;
+	    }
+	});
+	 
+	function checkVisible( elm, eval ) {
+	    eval = eval || "object visible";
+	    var viewportHeight = $(window).height(), // Viewport Height
+	        scrolltop = $(window).scrollTop()-300, // Scroll Top
+	        y = $(elm).offset().top,
+	        elementHeight = $(elm).height();   
+	    
+	    if (eval == "object visible") return ((y < (viewportHeight + scrolltop)) && (y > (scrolltop - elementHeight)));
+	    if (eval == "above") return ((y < (viewportHeight + scrolltop)));
+	}
+</script>	
 	
 </body>
 </html>
