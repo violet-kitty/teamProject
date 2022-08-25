@@ -161,6 +161,11 @@ public class TeamDao {
 		
 		return sqlSession.selectOne(namespace + "teamUserBanCheck", cv);
 	}
+	
+	public String teamBanReason(TeamVO tv) {
+		
+		return sqlSession.selectOne(namespace + "teamBanReason", tv);
+	}
 
 
 	

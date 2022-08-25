@@ -71,13 +71,16 @@
 					<tbody>
 						<c:if test="${jv.size() == 0}">
 							<tr>
-								<td colspan="5">가입신청 한 너나들이 팀이 없습니다.</td>
+								<td colspan="5">만든 팀 혹은 가입신청 하거나 가입된 너나들이 팀이 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:forEach var="jv" items="${jv}">
 							<tr>
 								<c:if test="${jv.joinyn == 'N'}">
 									<td><a href="#" id="joinN" style="color: #DE8889">${jv.title}</a></td>
+								</c:if>
+								<c:if test="${jv.joinyn == 'B'}">
+									<td><a href="#" id="joinB" onclick="teamBanReason(${jv.tidx})" style="color: #DE8889">${jv.title}</a></td>
 								</c:if>
 								<c:if test="${jv.joinyn == 'Y'}">
 									<td><a href="<%=request.getContextPath()%>/team/teamTeam.do?tidx=${jv.tidx}">${jv.title}</a></td>
@@ -88,10 +91,13 @@
 								<c:if test="${jv.joinyn == 'N'}">
 									<td style="color: #DE8889">${jv.joinyn}</td>
 								</c:if>
+								<c:if test="${jv.joinyn == 'B'}">
+									<td style="color: #DE8889">차단됨</td>
+								</c:if>
 								<c:if test="${jv.joinyn == 'Y'}">
 									<td style="color: #54ACA8">${jv.joinyn}</td>
 								</c:if>
-								<c:if test="${jv.joinyn == 'N'}">
+								<c:if test="${jv.joinyn == 'N' || jv.joinyn == 'B'}">
 									<td style="color: #DE8889">${jv.jdate}</td>
 								</c:if>
 								<c:if test="${jv.joinyn == 'Y'}">
@@ -125,6 +131,19 @@
 			return;
 		});
 	});
+	
+	function teamBanReason(tidx){
+		$.ajax({
+			url : "teamBanReason.do",
+			data : "midx=${login.midx}&tidx="+tidx,
+			type : "post",
+			success : function(data){
+				modalFn("밴 당한 너나들이 팀에는 참여하실 수 없습니다. 밴 사유 : "+data+"", "확인");
+			}
+		});
+		
+		return;
+	}
 	
 	function applyList(tidx){
 		$.ajax({

@@ -2,6 +2,14 @@
 
 
 function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
+		onkeydown = function(){
+		if(event.keyCode == '27' || event.which == '27'){
+			modalClose();
+		}
+	}
+	
+
+
 	var length = arguments.length;
 	//아무 버튼 없이 글만 뜨는 모달
 	if(length == 1){

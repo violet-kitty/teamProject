@@ -393,13 +393,22 @@
 			AND			bidx = #{tidx}
 		</delete>
 		
-		<!-- 팀원 밴 여부 체크 -->
+		<!-- 팀원 밴 여부 체크	 -->
 		<select id="teamUserBanCheck" parameterType="commentVO" resultType="commentVO">
 			SELECT COUNT(content) as cbidx
 			FROM	comment
 			WHERE	midx = #{midx}
 			AND		bidx = #{bidx}
 			AND		type = 'chatting'
+		</select>
+		
+		<!-- 밴 사유 가져옴 -->
+		<select id="teamBanReason" parameterType="teamVO" resultType="String">
+			SELECT	content
+			FROM	comment
+			WHERE	midx = #{midx}
+			AND		bidx = #{tidx}
+			AND		type = 'chatting';
 		</select>
 
 
