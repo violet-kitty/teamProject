@@ -52,7 +52,7 @@
 		
 		<!-- Side -->
 		<div class="right-container">
-			<a href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
