@@ -526,7 +526,7 @@
 								else {
 									html = html
 									+ "<td>"
-									+ "<img src='<%=request.getContextPath() %>/icon/banned.png' style='width:20px;'>"
+									+ "<img src='<%=request.getContextPath() %>/image/icon/banned.png' style='width:20px;'>"
 									+ "</td>";
 								}
 								
