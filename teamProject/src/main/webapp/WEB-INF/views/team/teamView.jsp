@@ -132,6 +132,10 @@
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 <script>
+	function modalOkFn(){
+		location.href = "teamDelete.do?tidx=${tv.tidx}";
+	}
+
 	$(function(){
 
 		$("#teamList").click(function(){
@@ -143,7 +147,7 @@
 		});
 		
 		$("#teamDelete").click(function(){
-			location.href = "teamDelete.do?tidx=${tv.tidx}";
+			modalFn("삭제하시면 복구할 수 없습니다. 정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");
 		});
 		
 		$("#join_btn").click(function(){
