@@ -109,7 +109,7 @@ else {
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
 														<c:choose>
-															<c:when test="${login != null}">
+															<c:when test="${login != null && story.midx != login.midx}">
 																<c:if test="${heart!=null && heart==1}">
 																	<img src="<%=request.getContextPath()%>/image/button/heart.png" style="cursor:pointer;" id="heartBtn">
 																</c:if>
