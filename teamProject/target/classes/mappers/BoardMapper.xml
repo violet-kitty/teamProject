@@ -248,6 +248,9 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		AND a.title like CONCAT('%',#{searchValue},'%')
 		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
 		<if test='searchType != null and searchType.equals("area")'>
 		AND (a.state like CONCAT('%',#{searchValue},'%')
 		OR a.city like CONCAT('%',#{searchValue},'%'))
@@ -308,7 +311,6 @@
 	
 	<!-- 지역 이벤트 히어로 용 글 가져오기(최대 3개) -->
 	<select id="eventHero" resultType="eventVO">
-	<![CDATA[
 		SELECT ebidx
 			, title
 			, DATE_FORMAT(startday, '%Y-%m-%d') as startday
@@ -317,11 +319,9 @@
 			, tag
 		FROM event
 		WHERE delyn = 'N'
-		AND startday < now()
-		AND endday > now()
+		AND endday <![CDATA[>=]]> now()
 		ORDER BY wdate desc
 		LIMIT 0,3
-	]]>
 	</select>
 	
 	<!-- 지역 이벤트 글 보기 -->
@@ -452,5 +452,106 @@
 		  AND bidx = #{bidx}
 		  AND midx = #{midx}
 	</select>
+	
+	<!-- 공무원 본인 글 목록 -->
+	<select id="myEvent" parameterType="searchVO" resultType="eventVO">
+		SELECT *
+		FROM
+		(SELECT e.ebidx
+			, e.midx
+			, u.nickname
+			, e.title
+			, e.content
+			, e.wdate
+			, e.filename
+			, e.cnt
+			, e.state
+			, e.city
+			, e.tag
+			, DATE_FORMAT(e.startday, '%Y-%m-%d') as startday
+			, DATE_FORMAT(e.endday, '%Y-%m-%d') as endday
+			, e.delyn
+		FROM event e, usertable u
+		WHERE e.midx = u.midx)a
+		LEFT OUTER JOIN
+		(SELECT bidx
+			, count(hidx) as heart
+		FROM heart
+		WHERE type = 'event'
+		GROUP BY bidx)b
+		ON a.ebidx = b.bidx
+		WHERE a.delyn = 'N'
+		AND a.midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (a.title like CONCAT('%',#{searchValue},'%')
+		OR a.state like CONCAT('%',#{searchValue},'%')
+		OR a.city like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND a.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND a.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (a.state like CONCAT('%',#{searchValue},'%')
+		OR a.city like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("new")'>
+		ORDER BY a.wdate desc
+		</if>
+		<if test='sortType.equals("heart")'>
+		ORDER BY b.heart desc, a.wdate desc
+		</if>
+		<if test='sortType.equals("ing")'>
+		<![CDATA[
+		AND a.startday < now()
+		AND a.endday > now()
+		ORDER BY a.endday asc
+		]]>
+		</if>
+		<if test='sortType.equals("will")'>
+		<![CDATA[
+		AND a.startday > now()
+		ORDER BY a.startday asc
+		]]>
+		</if>
+	</select>
+	
+	<!-- 공무원 본인 글 개수 -->
+	<select id="myEventCount" parameterType="searchVO" resultType="int">
+		SELECT COUNT(ebidx)
+		FROM event
+		WHERE delyn = 'N'
+		AND midx = #{midx}
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (title like CONCAT('%',#{searchValue},'%')
+		OR state like CONCAT('%',#{searchValue},'%')
+		OR city like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("area")'>
+		AND (state like CONCAT('%',#{searchValue},'%')
+		OR city like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<!-- sort -->
+		<if test='sortType.equals("ing")'>
+		<![CDATA[
+		AND startday < now()
+		AND endday > now()
+		]]>
+		</if>
+		<if test='sortType.equals("will")'>
+		<![CDATA[
+		AND startday > now()
+		]]>
+		</if>
+	</select>
+	
 	
 </mapper>

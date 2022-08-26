@@ -6,4 +6,182 @@
  <!-- 여행이야기 -->
 <mapper namespace="edu.howf.mapper.storyMapper">
 	
+	<!-- 여행이야기 리스트 -->
+	<select id="storySelectAll" parameterType="searchVO" resultType="storyVO">
+			SELECT * FROM
+				(SELECT
+					s.sbidx,
+					s.midx,
+					u.nickname,
+					u.img,
+					s.title,
+					s.content,
+					DATE_FORMAT(s.wdate,'%Y-%m-%d') as wdate,
+					s.cnt,
+					s.filename,
+					s.tag,
+					s.delyn
+				 FROM story s, usertable u WHERE s.midx = u.midx) a
+			LEFT OUTER JOIN
+				(SELECT bidx, COUNT(hidx) as heart FROM heart WHERE type = 'story' GROUP BY bidx) b
+			on a.sbidx = b.bidx
+			WHERE a.delyn = 'N'
+			<!-- 검색어 처리 -->
+			<if test='searchType != null and searchType.equals("total")'>
+				AND (a.title like CONCAT('%',#{searchValue},'%')
+				OR a.tag like CONCAT('%',#{searchValue},'%')
+				OR a.nickname like CONCAT('%',#{searchValue},'%'))
+			</if>
+			<if test='searchType != null and searchType.equals("title")'>
+				AND a.title like CONCAT('%',#{searchValue},'%')
+			</if>
+			<if test='searchType != null and searchType.equals("tag")'>
+				AND a.tag like CONCAT('%',#{searchValue},'%')
+			</if>
+			<if test='searchType != null and searchType.equals("nickname")'>
+				AND a.nickname like CONCAT('%',#{searchValue},'%')
+			</if>
+			<!-- sort -->
+			<if test='sortType == null or sortType == "" or sortType.equals("new")'>
+				ORDER BY a.wdate desc, a.sbidx desc
+			</if>
+			<if test='sortType != null and sortType.equals("heart")'>
+				ORDER BY b.heart desc, a.wdate desc
+			</if>
+			LIMIT #{page}, #{perPageNum}
+	</select>
+
+
+	<!-- 페이징 : 전체 글 수 세기 -->
+	<select id="storyCountAll" parameterType="searchVO" resultType="int">
+		SELECT COUNT(s.sbidx)
+		FROM story s, usertable u
+		WHERE s.midx = u.midx
+		AND s.delyn = 'N'
+		<!-- 검색어 처리 -->
+		<if test='searchType != null and searchType.equals("total")'>
+		AND (s.title like CONCAT('%',#{searchValue},'%')
+		OR s.tag like CONCAT('%',#{searchValue},'%'))
+		</if>
+		<if test='searchType != null and searchType.equals("title")'>
+		AND s.title like CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("tag")'>
+		AND s.tag like CONCAT('%',#{searchValue},'%')
+		</if>
+	</select>
+	
+	
+	<!-- Story 글 보기 (VIEW) -->
+	<select id="storyView" parameterType="int" resultType="storyVO">
+		SELECT * FROM
+			(SELECT
+				s.sbidx,
+				s.midx,
+				u.nickname,
+				s.title,
+				s.content,
+				DATE_FORMAT(s.wdate,'%Y-%m-%d') as wdate,
+				s.cnt,
+				s.filename,
+				s.tag,
+				s.delyn
+			 FROM story s, usertable u WHERE s.midx = u.midx) a
+		LEFT OUTER JOIN
+			(SELECT bidx, COUNT(hidx) as heart FROM heart WHERE type = 'story' GROUP BY bidx) b
+		on a.sbidx = b.bidx
+		WHERE a.sbidx = #{sbidx}
+	</select>
+	
+	
+	<!-- Story 글 작성 (WRITE) -->
+	<insert id="storyWrite" parameterType="storyVO">
+	<![CDATA[
+		INSERT INTO story(
+			  midx
+			, title
+			, content
+			, wdate
+			, cnt
+			, filename
+			, tag
+			, delyn
+		)
+		VALUES(
+			#{midx}
+			, #{title}
+			, #{content}
+			, now()
+			, 0
+			, #{filename}
+			, #{tag}
+			, 'N'
+		)
+	]]>
+	<!-- Story 글 작성이후 selectKey로 바로 글 보여줌 -->
+	<selectKey resultType="int" keyProperty="sbidx" order="AFTER">
+		SELECT max(sbidx) FROM story
+	</selectKey>
+	</insert>
+	
+	
+	<!-- Story 글 수정 -->
+	<update id="storyModify" parameterType="storyVO">
+		UPDATE story
+		   SET    title = #{title}
+				, content = #{content}
+				, tag = #{tag}
+				<if test="filename != null">
+				, filename = #{filename}
+				</if>
+		 WHERE sbidx = #{sbidx}
+	</update>
+	
+	
+	<!-- Story 글 삭제 -->
+	<update id="storyDelete" parameterType="int">
+		UPDATE story
+		   SET delyn = 'Y'
+		 WHERE sbidx = #{sbidx}
+	</update>
+	
+	
+	<!-- Story 글 삭제시 찜 목록에서도 삭제 -->
+	<delete id="storyHeartDelete" parameterType="heartVO">
+		DELETE FROM heart
+		 WHERE type = #{type}
+		   AND bidx = #{bidx}
+	</delete>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="heartInsert" parameterType="heartVO">
+		INSERT INTO heart(
+			  type
+			, bidx
+			, midx
+		)
+		VALUES(
+			  #{type}
+			, #{bidx}
+			, #{midx}
+		)
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="heartDelete" parameterType="heartVO">
+		DELETE FROM heart
+		WHERE type = #{type}
+		  AND bidx = #{bidx}
+		  AND midx = #{midx}
+	</delete>
+	
+	<!-- 좋아요 여부 -->
+	<select id="heartDup" parameterType="heartVO" resultType="int">
+		SELECT COUNT(hidx)
+		 FROM heart
+		WHERE type = #{type}
+		  AND bidx = #{bidx}
+		  AND midx = #{midx}
+	</select>
+	
 </mapper>
