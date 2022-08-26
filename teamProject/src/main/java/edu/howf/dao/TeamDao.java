@@ -104,6 +104,11 @@ public class TeamDao {
 		return sqlSession.insert(namespace + "upload_vote", rv);
 	}
 	
+	public int finish_vote(int ridx) {
+		
+		return sqlSession.update(namespace + "finish_vote", ridx);
+	}
+	
 	public int remove_vote(int ridx) {
 		
 		sqlSession.delete(namespace + "remove_voted", ridx);

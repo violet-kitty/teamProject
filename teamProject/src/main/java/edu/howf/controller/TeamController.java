@@ -255,6 +255,13 @@ public class TeamController {
 	}
 	
 	@ResponseBody
+	@GetMapping("finish_vote.do")
+	public int finish_vote(int ridx) {
+		
+		return teamService.finish_vote(ridx);
+	}
+	
+	@ResponseBody
 	@GetMapping("remove_vote.do")
 	public int remove_vote(int ridx) {
 		

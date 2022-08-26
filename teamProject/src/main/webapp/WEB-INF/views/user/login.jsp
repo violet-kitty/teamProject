@@ -85,7 +85,7 @@ var nicknameDup = false;
 						<h2 class="hfc-bold">로그인</h2>
 						<div class="row row-cols-1 row-cols-lg-2">
 							<div class="feature col">
-								<p class="subtitle">기억이 안나나요?</p><br class="onlymobile"> <a href="emailFind.do" class="hfc-semibold hfc-blue">이메일 찾기</a> & <a href="pwdFind.do" class="hfc-semibold hfc-blue">비밀번호 찾기</a>
+								<p class="subtitle">계정을 잊으셨나요?</p><br class="onlymobile"> <a href="emailFind.do" class="hfc-semibold hfc-blue">이메일 찾기</a> & <a href="pwdFind.do" class="hfc-semibold hfc-blue">비밀번호 찾기</a>
 								<!-- form -->
 								<form id="frm">
 									<table border="1">

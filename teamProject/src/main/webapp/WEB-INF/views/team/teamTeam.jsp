@@ -82,7 +82,14 @@
 		
 		pieChartDraw();
 		
-		var html = '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br>';
+		var Y = 'Y';
+		var N = 'N';
+		
+		var html = '<c:if test="${rv != null && rv.allow == '+Y+'}"><br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br></c:if>';
+			html += '<c:if test="${login.midx == tv.midx}">'
+				 +	'<c:if test="${rv.allow == '+Y+'}"><br><button type="button" onclick="finish_vote()">투표  마감</button><br></c:if>'
+				 +  '<br><button type="button" onclick="remove_vote()">투표  삭제</button><br>'
+				 +	'</c:if>';
 		
 		$("#selected_vote_option").append(html);
 		$("#selected_vote_option").show();
@@ -138,12 +145,13 @@
 						<div class="col d-flex justify-content-center text-center">
 							<div id="vote">
 							<div id="selected_vote_option" style="display: none">
-							<c:if test="${rv != null && result != 0}">
+							<c:if test="${(rv != null && result != 0) || (rv != null && rv.allow == 'N')}">
 								<canvas id="pieChartCanvas" style="width: 500px; height: 500px;"></canvas>
 								<script>asdasd();</script>
 							</c:if>
 							</div>
-							<c:if test="${rv != null && result == 0}">
+							
+							<c:if test="${rv != null && rv.allow == 'Y' && result == 0}">
 								<div id="show_vote_option">
 									<form id="form1">
 										<input type="hidden" name="ridx" value="${rv.ridx}">
@@ -170,9 +178,7 @@
 											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
 										</div>
 									</form>
-									<c:if test="${login.midx == tv.midx}">
-										<br><button type="button" onclick="remove_vote()">투표  마감 / 삭제</button><br>
-									</c:if>
+									
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
@@ -299,6 +305,19 @@
 			}
 		})
 		
+	}
+	
+	function finish_vote(){
+		$.ajax({
+			url : "finish_vote.do?ridx=${rv.ridx}",
+			type : "get",
+			success : function(){
+				modalFn("투표가 마감되었습니다.");
+				setTimeout(function(){
+					location.reload();
+				}, 1000);
+			}
+		});
 	}
 
 	function remove_vote(){

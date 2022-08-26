@@ -117,6 +117,12 @@ public class TeamServiceImple implements TeamService{
 		
 		return teamDao.upload_vote(rv);
 	}
+	
+	@Override
+	public int finish_vote(int ridx) {
+		
+		return teamDao.finish_vote(ridx);
+	}
 
 	@Override
 	public int remove_vote(int ridx) {

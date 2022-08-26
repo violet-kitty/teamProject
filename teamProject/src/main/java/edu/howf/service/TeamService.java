@@ -44,6 +44,8 @@ public interface TeamService {
 	
 	public int upload_vote(RecommendVO rv);
 	
+	public int finish_vote(int ridx);
+	
 	public int remove_vote(int ridx);
 	
 	public int insert_vote_option(VoteVO vv);

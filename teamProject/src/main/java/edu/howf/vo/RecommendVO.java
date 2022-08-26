@@ -35,6 +35,7 @@ public class RecommendVO extends BoardVO{
 	private String place4;
 	private String place5;
 	private String pdate;
+	private String allow;
 	private String delyn;
 	
 	public int getRidx() {
@@ -84,6 +85,12 @@ public class RecommendVO extends BoardVO{
 	}
 	public void setPdate(String pdate) {
 		this.pdate = pdate;
+	}
+	public String getAllow() {
+		return allow;
+	}
+	public void setAllow(String allow) {
+		this.allow = allow;
 	}
 	public String getDelyn() {
 		return delyn;

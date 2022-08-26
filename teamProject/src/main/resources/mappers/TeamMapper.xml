@@ -202,6 +202,7 @@
 				,place4
 				,place5
 				,wdate
+				,allow
 		FROM	recommend
 		WHERE	tidx = #{tidx}
 		AND		delyn = 'N'
@@ -237,6 +238,7 @@
 						,place4
 						,place5
 						,wdate
+						,allow
 						,delyn
 					)
 		VALUES		(
@@ -249,6 +251,7 @@
 						,#{place4}
 						,#{place5}
 						,now()
+						,'Y'
 						,'N'
 					)
 		]]>
@@ -257,12 +260,21 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 만든 투표 마감 -->
+	<update id="finish_vote" parameterType="int">
+		UPDATE	recommend
+		SET		allow = 'N'
+		WHERE	ridx = #{ridx}
+	</update>
+	
+	<!-- 만든 투표 제거 -->
 	<update id="remove_vote" parameterType="int">
 		UPDATE	recommend
 		SET		delyn = 'Y'
 		WHERE	ridx = #{ridx}
 	</update>
 	
+	<!-- 만든 투표 제거 시 투표된 목록들도 제거 -->
 	<delete id="remove_voted" parameterType="int">
 		DELETE FROM vote
 		WHERE		ridx = #{ridx}

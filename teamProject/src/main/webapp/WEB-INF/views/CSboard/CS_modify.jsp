@@ -89,22 +89,6 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-								<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-							</a>
-							<div class="div_header">
-								<h3>1:1 문의 게시글 수정</h3>
-							</div>
-							<br><br>
-							<c:if test="${login != null }">
-								<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
-								<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
-							</c:if>
-							<br>
-							<hr>	
-							<br>
-							<br>
-							<br>
 							<div class="div1">
 								<form id="form1" action="CS_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post" enctype="multipart/form-data">
 									<table class="tb1">
@@ -172,8 +156,8 @@
 		
 		$("#cancel").click(function(){
 			
-			var title = "${cv.title}";
-			var content = "${cv.content}";
+			var title = '${cv.title}';
+			var content = '${cv.content}';
 			
 			if($("#title").val() != title){
 				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
