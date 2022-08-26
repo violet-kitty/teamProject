@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page isELIgnored="false" %>
 <%@ page session="true" %>
 
 <!DOCTYPE html>
@@ -318,11 +320,11 @@ else {
 			}
 		});
 	}
-
 	
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
+		
 		var snsTitle = "${howf.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
@@ -335,14 +337,13 @@ else {
 		else if(sns=='kakao'){
 			Kakao.init('35c7c8bf307063859390df8e61188fbf');
 			//Kakao.isInitialized();
-			
 			Kakao.Link.createDefaultButton({
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
 					title:'${howf.title}',
-					description:'${howf.title}',
-					imageUrl:thisUrl,
+					description: '${howf.title}',
+					imageUrl:'http://localhost:8090/controller/howf/displayFile.do?fileName=45281473-3df1-4ac2-b2f0-39c5b4d153fb_revato-1865922-12031689-093701.jpg',
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl
