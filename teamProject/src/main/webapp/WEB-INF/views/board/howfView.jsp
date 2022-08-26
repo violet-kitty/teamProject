@@ -343,7 +343,7 @@ else {
 				content:{
 					title:'${howf.title}',
 					description: '${howf.title}',
-					imageUrl:'http://localhost:8090/controller/howf/displayFile.do?fileName=45281473-3df1-4ac2-b2f0-39c5b4d153fb_revato-1865922-12031689-093701.jpg',
+					imageUrl:'http://jjezen.cafe24.com/howf/howf/displayFile.do?fileName=${howf.filename}',
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl

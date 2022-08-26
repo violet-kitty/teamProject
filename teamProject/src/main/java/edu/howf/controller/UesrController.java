@@ -154,10 +154,10 @@ public class UesrController {
 		}
 		else {
 			String ban = userService.socialBan(vo);
-			if(ban.equals("A")) {
+			if(ban != null && ban.equals("A")) {
 				return "-2";
 			}
-			else if(ban.equals("Y")) {
+			else if(ban != null && ban.equals("Y")) {
 				return "-3";
 			}
 			else {

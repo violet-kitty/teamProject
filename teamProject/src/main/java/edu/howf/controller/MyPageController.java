@@ -519,6 +519,7 @@ public class MyPageController {
 		List<ResVO> res = stayService.resSelectAllB(vo);
 		int income = stayService.incomeSelectAllB(vo);
 		List<ResVO> incomeData = stayService.incomeData(vo);
+		stayService.incomeData(vo);
 		
 		model.addAttribute("res", res);
 		model.addAttribute("today", today);
