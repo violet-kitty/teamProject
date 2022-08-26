@@ -153,6 +153,14 @@ public class StayDao {
 		return sqlSession.selectList(namespace+"resSelectAllB", vo);
 	}
 	
+	public int incomeSelectAllB(ResVO vo) {
+		return sqlSession.selectOne(namespace+"incomeSelectAllB", vo);
+	}
+	
+	public List<ResVO> incomeData(ResVO vo){
+		return sqlSession.selectList(namespace+"incomeData", vo);
+	}
+	
 	public List<StayVO> myStayAll(SearchVO vo){
 		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
 		return sqlSession.selectList(namespace+"myStayAll", vo);
