@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -502,9 +503,19 @@ public class MyPageController {
 		UserVO login = (UserVO)session.getAttribute("login");
 		vo.setMidx(login.getMidx());
 		
+		Calendar cal = Calendar.getInstance();
+		String format = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		String today = sdf.format(cal.getTime());//오늘 날짜
+		
 		List<ResVO> res = stayService.resSelectAllB(vo);
+		int income = stayService.incomeSelectAllB(vo);
+		List<ResVO> incomeData = stayService.incomeData(vo);
 		
 		model.addAttribute("res", res);
+		model.addAttribute("today", today);
+		model.addAttribute("income", income);
+		model.addAttribute("incomeData", incomeData);
 		
 		return "mypage/business/reservationList";
 	}
@@ -520,6 +531,19 @@ public class MyPageController {
 		List<ResVO> res = stayService.resSelectAllB(vo);
 		
 		return res;
+	}
+	
+	//수입 총 합
+	@ResponseBody
+	@RequestMapping(value="/income.do")
+	public int income(ResVO vo, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		int income = stayService.incomeSelectAllB(vo);
+		
+		return income;
 	}
 	
 	//예약 추가 이동

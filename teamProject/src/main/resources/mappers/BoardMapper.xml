@@ -319,7 +319,7 @@
 			, tag
 		FROM event
 		WHERE delyn = 'N'
-		AND endday <![CDATA[>=]]> now()
+		AND DATE_FORMAT(endday, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(now(), '%Y-%m-%d')
 		ORDER BY wdate desc
 		LIMIT 0,3
 	</select>

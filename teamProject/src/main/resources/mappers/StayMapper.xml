@@ -807,6 +807,80 @@
 		ORDER BY s.name asc, re.wdate desc
 	</select>
 	
+	<!-- 해당 기간 수입 가져오기 -->
+	<select id="incomeSelectAllB" parameterType="resVO" resultType="int">
+		SELECT IFNULL(SUM(re.price),0) as price
+		FROM stay s
+		JOIN
+		(SELECT r.reidx
+			, r.ridx
+			, r.date1
+			, r.date2
+			, r.merchant
+			, r.pay
+			, r.price
+			, r.name
+			, r.phone
+			, r.wdate
+			, r.delyn
+			, ro.sidx
+			, ro.name as rname
+		FROM res r
+		JOIN room ro
+		ON r.ridx = ro.ridx
+		WHERE r.delyn = 'N'
+		AND r.pay = 'Y'
+		<!-- 기간 조건 -->
+		<if test='date2 == null'>
+		AND date2 <![CDATA[>=]]> now()
+		</if>
+		<if test='date1 != null'>
+		AND date1 <![CDATA[<=]]> #{date2}
+		</if>
+		<if test='date2 != null'>
+		AND date2 <![CDATA[>=]]> #{date1}
+		</if>
+		) re
+		ON s.sidx = re.sidx
+		WHERE s.midx = #{midx}
+		ORDER BY s.name asc, re.wdate desc
+	</select>
+	
+	<!-- 차트용 데이터 -->
+	<select id="incomeData" parameterType="resVO" resultType="resVO">
+		SELECT b.*
+		FROM
+		(SELECT SUBSTRING(a.wdate,6,2) AS wdate
+			, SUM(a.price) AS price  
+		FROM
+		(SELECT re.*
+			,s.midx
+			, s.name AS sname
+		FROM stay s JOIN
+		(SELECT r.reidx
+			,r.ridx
+			,r.date1
+			,r.date2
+			,r.merchant
+			,r.pay
+			,r.price
+			,r.wdate
+			,r.delyn
+			,ro.sidx
+			,ro.name AS rname 
+		FROM res r JOIN room ro 
+		ON r.ridx = ro.ridx
+		WHERE r.delyn = 'N'
+		AND r.pay = 'Y'
+		AND ABS(TIMESTAMPDIFF(MONTH, wdate,NOW())) <![CDATA[<]]>6)re
+		ON s.sidx = re.sidx
+		WHERE midx = #{midx}
+		ORDER BY s.name ASC, re.wdate DESC) a
+		GROUP BY SUBSTRING(a.wdate,6,2)
+		ORDER BY wdate DESC LIMIT 6) b
+		ORDER BY b.wdate ASC
+	</select>
+	
 	<!-- 본인 소유 숙소 목록 가져오기 -->
 	<select id="myStayAll" parameterType="searchVO" resultType="stayVO">
 		SELECT e.*

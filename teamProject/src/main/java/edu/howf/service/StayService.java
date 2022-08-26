@@ -36,6 +36,8 @@ public interface StayService {
 	public int resDeleteB(int reidx, CommentVO vo);
 	public String merchantSelect(int reidx);
 	public List<ResVO> resSelectAllB(ResVO vo);
+	public int incomeSelectAllB(ResVO vo);
+	public List<ResVO> incomeData(ResVO vo);
 	public List<StayVO> myStayAll(SearchVO vo);
 	public int myStayCount(SearchVO vo);
 }

@@ -265,6 +265,16 @@ public class StayServiceImple implements StayService{
 	public List<ResVO> resSelectAllB(ResVO vo) {
 		return stayDao.resSelectAllB(vo);
 	}
+	
+	@Override
+	public int incomeSelectAllB(ResVO vo) {
+		return stayDao.incomeSelectAllB(vo);
+	}
+	
+	@Override
+	public List<ResVO> incomeData(ResVO vo){
+		return stayDao.incomeData(vo);
+	}
 
 	@Override
 	public List<StayVO> myStayAll(SearchVO vo) {
