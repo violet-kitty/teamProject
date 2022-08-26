@@ -191,6 +191,7 @@
 		WHERE	tidx = #{tidx}
 	</update>
 	
+	<!-- teamTeam 페이지로 들어갈 때 투표 선택지들 불러옴 -->
 	<select id="teamTeamView" parameterType="int" resultType="recommendVO">
 		SELECT  ridx
 				,midx
@@ -301,6 +302,7 @@
 		FROM	recommend
 		WHERE	ridx = #{ridx}				
 	</select>
+	
 	
 	<select id="check_vote" parameterType="voteVO" resultType="int">
 		SELECT  COUNT(vidx) as cnt

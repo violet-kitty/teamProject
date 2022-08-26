@@ -143,17 +143,15 @@
 								<script>asdasd();</script>
 							</c:if>
 							</div>
-							<c:if test="${rv != null && result != 0}">
-
-							</c:if>
 							<c:if test="${rv != null && result == 0}">
 								<div id="show_vote_option">
 									<form id="form1">
 										<input type="hidden" name="ridx" value="${rv.ridx}">
 										<div class="text-center">
 											${rv.title}
-										</div><br>
-										<c:if test="${rv.place1 != null }">
+										</div>
+										<br>
+										<c:if test="${rv.place1 != null}">
 											<input type="radio" name="vote" value="${rv.place1}">${rv.place1}<br>
 										</c:if>
 										<c:if test="${rv.place2 != null }">
@@ -257,17 +255,24 @@
 		//recommend에 올리는  ajax
 		var frm = $("#vote_option").serialize();
 		
-		$.ajax({
-			url: "upload_vote.do",
-			data: frm+"&tidx=${tidx}",
-			type: "post",
-			success: function(ridx){
-				
-				$("#div_create_vote").hide();
-				
-				location.reload();
-			}
-		});
+		if($("#title").val() == "" || $("#p1").val() == "" || $("#p2").val() == "" || $("#p3").val() == "" || $("#p4").val() == "" || $("#p5").val() == ""){
+			modalFn("투표 주제 혹은 선택지를 입력해 주세요.", "확인");
+			return;
+		}
+		else{
+			$.ajax({
+				url: "upload_vote.do",
+				data: frm+"&tidx=${tidx}",
+				type: "post",
+				success: function(ridx){
+					
+					$("#div_create_vote").hide();
+					
+					location.reload();
+				}
+			});
+		}
+		
 	}
 	//투표한 값을 vote 테이블에 반영 후 투표결과 화면에 표시
 	function insert_vote_option(){
@@ -301,8 +306,11 @@
 			url: "remove_vote.do?ridx=${rv.ridx}",
 			type: "get",
 			success: function(){
-				modalFn("삭제되었습니다.","확인");
-				location.reload();
+				modalFn("삭제되었습니다.");
+				setTimeout(function(){
+					location.reload();
+				}, 1000)
+				
 			}
 		});
 	}
@@ -508,7 +516,7 @@
 					+ "</td>";
 					
 					
-					<c:if test="${login.midx == rv.midx}">
+					<c:if test="${login.midx == tv.midx}">
 					if(id[1] != ${login.midx}){
 						$("#midx").val(id[1]);
 						$.ajax({
