@@ -23,6 +23,12 @@
         <typeAlias type="edu.howf.vo.AutoVO" alias="autoVO"/>
         <typeAlias type="edu.howf.vo.CommentVO" alias="commentVO"/>
         <typeAlias type="edu.howf.vo.TeamVO" alias="teamVO"/>
+        <typeAlias type="edu.howf.vo.JoinVO" alias="joinVO"/>
+        <typeAlias type="edu.howf.vo.ResVO" alias="resVO"/>
+        <typeAlias type="edu.howf.vo.RecommendVO" alias="recommendVO"/>
+        <typeAlias type="edu.howf.vo.VoteVO" alias="voteVO"/>
+        <typeAlias type="edu.howf.vo.FaqVO" alias="faqVO"/>
+        
         
     </typeAliases>
 

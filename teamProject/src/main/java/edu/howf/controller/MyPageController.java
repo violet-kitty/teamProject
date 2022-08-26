@@ -61,6 +61,7 @@ import edu.howf.vo.ResVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StayVO;
 import edu.howf.vo.StoryVO;
+import edu.howf.vo.TeamVO;
 import edu.howf.vo.UserVO;
 
 //마이 페이지
@@ -396,6 +397,13 @@ public class MyPageController {
 		model.addAttribute("login", login);
 		
 		return "mypage/normal/myTeam";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="teamBanReason.do", produces = "application/text; charset=utf8")
+	public String teamBanReason(TeamVO tv) {
+		
+		return teamService.teamBanReason(tv);
 	}
 	
 	//내가 만든 팀에 들어온 가입신청 목록 불러옴(모달창)

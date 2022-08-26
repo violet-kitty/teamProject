@@ -222,6 +222,12 @@ public class TeamServiceImple implements TeamService{
 		return teamDao.teamUserBanCheck(cv);
 	}
 
+	@Override
+	public String teamBanReason(TeamVO tv) {
+		
+		return teamDao.teamBanReason(tv);
+	}
+
 	
 	
 

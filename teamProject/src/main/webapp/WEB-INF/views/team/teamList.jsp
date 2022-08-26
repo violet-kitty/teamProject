@@ -49,7 +49,7 @@
 		<div class="right-container">
 		
 			<div class="docctrl onlypc">
-				<a href="<%=request.getContextPath()%>/team/teamWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
+				<a href="javascript:void(0)" id="teamWrite"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
 			</div>
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>	
 		</div>
@@ -222,7 +222,7 @@ $(function(){
 			url: "write_check.do",
 			data: "midx=${login.midx}",
 			type: "get",
-			success:(function(data){
+			success:function(data){
 				if(data != 0){
 					modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
 				}
@@ -230,7 +230,7 @@ $(function(){
 					location.href = "teamWrite.do";
 				}
 				
-			})
+			}
 			
 		});
 		

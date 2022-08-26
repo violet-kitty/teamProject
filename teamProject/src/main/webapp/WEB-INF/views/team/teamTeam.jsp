@@ -462,7 +462,7 @@
 					html = html
 					+ "</tr>"; */
 					
-				for(var i=0;i<subscriptions.length;i++){
+				for(var i = 0; i < subscriptions.length; i++){
 					var id = subscriptions[i].user_id.split("_");
 					html = html
 					+ "<tr>"
@@ -526,7 +526,7 @@
 								else {
 									html = html
 									+ "<td>"
-									+ "<img src='<%=request.getContextPath() %>/image/icon/banned.png' style='width:20px;'>"
+									+ "<button type='button' style='background: none; border: none;' onclick='userUnBlockCheck("+id[1]+")'><img src='<%=request.getContextPath() %>/image/icon/banned.png' style='width:20px;'></button>"
 									+ "</td>";
 								}
 								

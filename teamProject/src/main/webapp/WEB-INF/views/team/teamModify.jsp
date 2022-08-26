@@ -147,8 +147,8 @@ input[type=checkbox]{
 		
 		$("#btn_cancel").click(function(){
 			
-			var title = "${tv.title}";
-			var content = "${tv.content}";
+			var title = '${tv.title}';
+			var content = '${tv.content}';
 			
 			if($("#title").val() != title){
 				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
