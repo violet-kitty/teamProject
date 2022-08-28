@@ -83,13 +83,14 @@
 		pieChartDraw();
 		
 		var Y = 'Y';
-		var N = 'N';
 		
-		var html = '<c:if test="${rv != null && rv.allow == '+Y+'}"><br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br><br></c:if>';
-			html += '<c:if test="${login.midx == tv.midx}">'
-				 +	'<c:if test="${rv.allow == '+Y+'}"><br><button type="button" onclick="finish_vote()">투표  마감</button><br></c:if>'
+		var html = '<c:if test="${rv != null && login.midx == tv.midx}">';
+			html += '<c:if test="${rv.allow == '+Y+'}">'
+				 +	'<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br>'
+				 +	'<br><button type="button" onclick="finish_vote()">투표  마감</button><br>'
+				 +	'</c:if>'
 				 +  '<br><button type="button" onclick="remove_vote()">투표  삭제</button><br>'
-				 +	'</c:if>';
+				 +  '</c:if>';
 		
 		$("#selected_vote_option").append(html);
 		$("#selected_vote_option").show();
