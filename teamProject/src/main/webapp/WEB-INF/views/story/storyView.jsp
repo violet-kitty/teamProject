@@ -312,7 +312,8 @@ else {
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
-		var snsTitle = "${story.title}";
+		
+		var snsTitle = "${howf.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -324,14 +325,13 @@ else {
 		else if(sns=='kakao'){
 			Kakao.init('35c7c8bf307063859390df8e61188fbf');
 			//Kakao.isInitialized();
-			
 			Kakao.Link.createDefaultButton({
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
-					title:'${story.title}',
-					description:'${story.title}',
-					imageUrl:thisUrl,
+					title:'${howf.title}',
+					description: '${howf.title}',
+					imageUrl:'http://jjezen.cafe24.com/howf/howf/displayFile.do?fileName=${howf.filename}',
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl

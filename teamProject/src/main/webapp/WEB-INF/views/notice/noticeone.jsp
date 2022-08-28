@@ -249,6 +249,37 @@ function test(){
 		});
 		
 	});
+	function shareSNS(sns){
+		var thisUrl = document.URL;
+		console.log(thisUrl);
+		
+		var snsTitle = "${howf.title}";
+		if(sns=='facebook'){
+			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
+	        window.open(url, "", "width=486, height=286");
+		}
+		else if(sns=='twitter'){
+			var url = "http://twitter.com/share?url="+encodeURIComponent(thisUrl)+"&text="+encodeURIComponent(snsTitle);
+	        window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+		}
+		else if(sns=='kakao'){
+			Kakao.init('35c7c8bf307063859390df8e61188fbf');
+			//Kakao.isInitialized();
+			Kakao.Link.createDefaultButton({
+				container:'#kakaoBtn',
+				objectType:'feed',
+				content:{
+					title:'${howf.title}',
+					description: '${howf.title}',
+					imageUrl:'http://jjezen.cafe24.com/howf/howf/displayFile.do?fileName=${howf.filename}',
+					link:{
+						mobileWebUrl:thisUrl,
+						webUrl:thisUrl
+					}
+				}
+			});
+		}
+	}
 </script>
 
 <script>
