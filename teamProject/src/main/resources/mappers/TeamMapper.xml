@@ -6,7 +6,7 @@
  <!-- 너나들이 -->
 <mapper namespace="edu.howf.mapper.teamMapper">
 	<select id="teamList" parameterType="searchVO" resultType="teamVO">
-		SELECT a.*, u.nickname
+		SELECT a.*, u.nickname, u.img
 		FROM
 		(SELECT   t.tidx
 				 ,t.midx
@@ -21,7 +21,7 @@
 				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx) as midx
 				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
 		ON       t.tidx = j.tidx) a
-		join 	 (select u.midx, u.nickname from usertable u) u
+		join 	 (select u.midx, u.nickname, u.img from usertable u) u
 		ON 		 a.midx = u.midx
 		WHERE    a.delyn = 'N'
 		<if test="searchType != null and searchType.equals('total')">
