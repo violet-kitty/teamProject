@@ -61,38 +61,85 @@
 	});
 	</script>
 	<script type="text/javascript">
-	
+	//이동?
+			
 	
 	//input 만들기
 	function wmodify(index){
+		var title = $("#ti"+index).text();
+		var content = $("#co"+index).text();
+		var c = "cancel("+index+",'"+title+"','"+content+"')";
 		$("dt").off('click');
 		var mdf="";
 		
 		mdf += "제목쓰";
-		mdf += "<input type='text' id='title'>";
+		mdf += "<input type='text' id='title' value='"+title+"'>";
 		mdf += "<br>";
 		$("#title"+index).html(mdf);
 		
 		mdf = "";
 		mdf += "내용쓰";
 		mdf += "<textarea id='content'>";
+		mdf += content;
 		mdf += "</textarea>";
 		mdf += "<button type='button' onclick='fmodify("+index+")'>";
 		mdf += "수정";
 		mdf += "</button>";
-		mdf += "<button type='button' onclick='cancel()'>";
+		mdf += '<button type="button" onclick="'+c+'">';
 		mdf += "취소쓰";
 		mdf += "</button>";
 		
 		$("#content"+index).html(mdf);
 		
 	}
-	//삭제
-	function cancel(fbidx){
-		$("#fbidx").val(fbidx);
-		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","cancelFn");
+	//취소
+	function cancel(index, title, content){
+		var mdf = "";
+		
+		mdf += "<label id='ti"+index+"'>"+title+"</label>";
+		mdf += "<span>▼</span>";
+		
+		$("#title"+index).html(mdf);
+		
+		mdf = "<label id='co"+index+"'>"+content+"</label>";
+		mdf += '<br>';
+		
+		<c:if test="${login!=null && login.role=='admin'}">
+		mdf += '<div class="btnarea">';
+		mdf += '<button onclick="del('+index+')">';
+		mdf += '<img src="<%=request.getContextPath()%>/image/button/delete.png">';
+		mdf += '</button>';
+		mdf += '<button id="modify" class="modify"  onclick="wmodify('+index+')">';
+		mdf += '<img src="<%=request.getContextPath()%>/image/button/edit.png">';
+		mdf += '</button>';
+		mdf += '</div>';
+		</c:if>
+		
+		$('#content'+index).html(mdf);
+		
+		//클릭 이벤트
+		$(".faq > dt").css("cursor","pointer").click(function(event) {
+			  
+		  	$(event.currentTarget).next().slideToggle(100, function() {
+		    	var $dd = $(this);
+		    	var $dl = $dd.prev();
+		    	
+		    	if ($dd.css("display") == "none") {
+		      	$dl.find("span").html("▼");
+		    	
+		      } else {
+		      	$dl.find("span").html("▲");
+		      }
+		    });
+		  });
 	}
-	function cancelFn(){
+	
+	//삭제
+	function del(fbidx){
+		$("#fbidx").val(fbidx);
+		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","delFn");
+	}
+	function delFn(){
 		modalClose();
 		var fbidx = $("#fbidx").val();
 		$.ajax({
@@ -126,20 +173,23 @@
 		var title = $("#title").val();
 		var content = $("#content").val();
 		
+		mdf += "<label id='ti"+index+"'>"+title+"</label>";
 		mdf += "<span>▼</span>";
-		mdf += title;
 		
 		$("#title"+index).html(mdf);
 		
-		mdf = "";
-		mdf += content;
+		mdf = "<label id='co"+index+"'>"+content+"</label>";
 		mdf += '<br>';
-		mdf += '<button type="button" id="modify" onclick="wmodify('+index+')">';
-		mdf += '수정';
-		mdf += '</button>'
-		mdf += '<button onclick="cancel()">';
-		mdf += '삭제';
+		<c:if test="${login!=null && login.role=='admin'}">
+		mdf += '<div class="btnarea">';
+		mdf += '<button onclick="del('+index+')">';
+		mdf += '<img src="<%=request.getContextPath()%>/image/button/delete.png">';
 		mdf += '</button>';
+		mdf += '<button id="modify" class="modify"  onclick="wmodify('+index+')">';
+		mdf += '<img src="<%=request.getContextPath()%>/image/button/edit.png">';
+		mdf += '</button>';
+		mdf += '</div>';
+		</c:if>
 		$('#content'+index).html(mdf);
 		
 		//클릭 이벤트
@@ -255,7 +305,7 @@ function modify(index){
 								<!-- 타블렛사이즈만 보이는 글쓰기 버튼 -->
 								<c:if test="${login!=null && login.role=='admin'}">
 									<div class="docctrl onlytablet" style="margin-top: 16px;">
-										<a hhref="<%=request.getContextPath()%>/CSboard/faqwrite.do"><button class="w-100 bluebtn">
+										<a href="<%=request.getContextPath()%>/CSboard/faqwrite.do"><button class="w-100 bluebtn">
 												<i class="fa-solid fa-plus"></i> &nbsp;글쓰기
 											</button></a>
 									</div>
@@ -294,16 +344,16 @@ function modify(index){
 											
 												<!-- 타이틀 -->
 												<dt class="listtitle hfc-bold" id="title${vo.fbidx}">
-													${vo.title} <span>▼</span></dt>
+													<label id="ti${vo.fbidx}">${vo.title}</label> <span>▼</span></dt>
 												<!-- 내용펼치기 -->
 												<dd class="listcontent hfc-medium" id="content${vo.fbidx}">
-												${fn:replace(vo.content, newLineChar, "<br/>")}
+												<label id="co${vo.fbidx}">${fn:replace(vo.content, newLineChar, "<br/>")}</label>
 
 
 												<c:if test="${login!=null && login.role=='admin'}">
 													<br>
 													<div class="btnarea">
-														<button onclick="cancel('${vo.fbidx}')">
+														<button onclick="del('${vo.fbidx}')">
 															<img src="<%=request.getContextPath()%>/image/button/delete.png">
 														</button>
 														<button id="modify" class="modify"  onclick="wmodify(${vo.fbidx})">
