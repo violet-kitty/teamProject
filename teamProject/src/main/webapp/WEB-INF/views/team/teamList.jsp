@@ -133,29 +133,39 @@
 					<div class="clist">
 						
 						<!-- 리스트영역 -->
-						<table border="1" class="table">
-							<tbody>
-								<tr>
-									<th class="hfc-bold hfc-darkgray">글번호</th>
-									<th class="hfc-bold hfc-darkgray">작성자</th>
-									<th class="hfc-bold hfc-darkgray">제목</th>
-									<th class="hfc-bold hfc-darkgray">작성일</th>
-									<th class="hfc-bold hfc-darkgray">조회수</th>
-									<th class="hfc-bold hfc-darkgray">팀원</th>
-								</tr>
-								<c:forEach var="tv" items="${tv}">
-									<tr>
-										<td class=" hfc-blackgray">${tv.tidx}</td>
-										<td class=" hfc-blackgray">${tv.nickname}</td>
-										<td><a href="teamView.do?tidx=${tv.tidx}"  class=" hfc-blackgray hfc-semibold">${tv.title}</a></td>
-										<td class=" hfc-blackgray">${tv.wdate}</td>
-										<td class=" hfc-blackgray" style="text-align: center;">${tv.cnt}</td>
-										<td class=" hfc-blackgray" style="text-align: center;">${tv.people_cnt}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<!-- /리스트영역 -->
+						<div class="row grid">
+							<!-- C리스트 14. 반복 -->
+							<c:forEach var="tv" items="${tv}">
+							<div class="thumbnailitem col-xs-12 col-sm-12 col-md-12 col-lg-4">
+								<a style="cursor:pointer" onclick="location.href='teamView.do?tidx=${tv.tidx}'">
+									<div class="thumbnail hbshadow3">
+										<div class="writerinfo">
+											<c:if test="${tv.img != null}">
+												<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${tv.img});"></div>
+											</c:if>
+											<c:if test="${tv.img == null}">
+												<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+											</c:if>
+											
+											<p>
+												<span class="hfc-darkgray">${tv.nickname} </span>
+												<span class="hfc-semibold hfc-gray"> | ${tv.wdate}</span>
+											</p>
+											<div class="small">
+												<!-- 조회수, 참여자 -->
+												<img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${tv.cnt}</span>
+												<img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${tv.people_cnt}</span>
+											</div>
+										</div>
+										<div class="caption">
+											<h4>${tv.title}</h4>
+										</div>
+									</div><!-- /.thumbnail -->
+								</a>
+							</div><!--/. thumbnailitem -->
+							</c:forEach>
+						</div>
+						<!--/row-->
 						
 						<!-- 페이징 -->
 						<div class="row pagenation">

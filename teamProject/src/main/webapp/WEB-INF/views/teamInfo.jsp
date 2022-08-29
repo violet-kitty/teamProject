@@ -268,7 +268,8 @@
 					</div>
 					<br>
 					<div style="text-align:left;line-height:3;">
-						
+						<img src="<%= request.getContextPath() %>/image/teamInfo/요구사항정의서1.png" style="max-width:100%">
+						<img src="<%= request.getContextPath() %>/image/teamInfo/요구사항정의서2.png" style="max-width:100%">
 					</div>
 					
 				</div>
@@ -287,7 +288,7 @@
 					</div>
 					<br>
 					<div style="text-align:left;line-height:3;">
-						
+						<img src="<%= request.getContextPath() %>/image/teamInfo/ERD.png" style="max-width:100%">
 					</div>
 					
 				</div>
@@ -306,7 +307,8 @@
 					</div>
 					<br>
 					<div style="text-align:left;line-height:3;">
-						
+						<p></p><br>
+						<img src="<%= request.getContextPath() %>/image/teamInfo/ERD.png" style="max-width:100%"><br>
 					</div>
 					
 				</div>
