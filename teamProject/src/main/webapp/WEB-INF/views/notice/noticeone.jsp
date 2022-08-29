@@ -9,9 +9,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF고객지원</title>
+<title>HOWF 고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -24,8 +26,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
@@ -47,10 +47,8 @@
 <!-- summernote -->
 
 <style>
-					
-					.btnarea {text-align:left; margin-top:20px;}
-			
-					</style>
+.btnarea {text-align:left; margin-top:20px;}
+</style>
 
 <script type="text/javascript">
 
@@ -67,11 +65,11 @@
 			success:function(data){
 				if(data != 0){
 					modalFn("삭제되었습니다");
-						timer = setTimeout(function(){
-						modalClose();
-						location.href="notice.do";
-						return;
-						},1500);
+					setTimeout(function(){
+					modalClose();
+					location.href="notice.do";
+					return;
+					},1500);
 						
 				}else {
 						modalFn("삭제 실패");
@@ -83,10 +81,6 @@
 			}
 		});
 	}
-		
-function test(){
-	location.href="notice.do";
-}
 </script>
 </head>
 
@@ -132,20 +126,16 @@ function test(){
 							<!-- C리스트 14. 반복 -->
 							<div class="thumbnailitem">
 								
-									<div class="thumbnail">
+								<div class="thumbnail">
 											
 											<div class="writerinfo">
 												<p>
-													
-														<span class="cate" style="background: #A4C266; color: white;">${vo.nbidx}</span>
-													
+													<span class="cate" style="background: #A4C266; color: white;">${vo.nbidx}</span>
 													<span class="hfc-semibold hfc-darkgray">| ${vo.wdate}</span>
 												</p>
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
-														
-																<img src="<%=request.getContextPath()%>/image/icon/eye.png">
-															
+														<img src="<%=request.getContextPath()%>/image/icon/eye.png">
 														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${vo.cnt}</span>
 													</div>
 												</div>
@@ -164,41 +154,30 @@ function test(){
 												<div class="col" id="howfContent">
 													${vo.content}
 												</div>
-												<p>이미지 첨부파일</p>
 												<c:if test="${vo.filename != null}">
-			
-				<img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}"><br>
-				<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1">${vo.filename}</a>
-				
-			</c:if>
-			
+													<p>첨부파일</p>
+													<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1"><img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}" style="max-width: 300px; max-height: 300px;"></a>
+												</c:if>
 											</div>
-								
-					<div class="row btnarea">
-						<div class="col-6 d-flex justify-content-start">
-						<c:if test="${login.midx == vo.midx }">
-							<button onclick="erase()" id="delete" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-							<button value="수정" onclick="location.href='noticemodify.do?nbidx='+${vo.nbidx }'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
-							<button onclick="location.href='<%=request.getContextPath()%>/notice/noticewrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
-							</c:if>
-						</div>
-						<div class="col-6 d-flex justify-content-end">
-							<%-- <button onclick="shareSNS('facebook')">
-								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
-							</button>
-							<button onclick="shareSNS('twitter')">
-								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
-							</button> --%>
-							<button onclick="shareSNS('kakao')" id="kakaoBtn">
-								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
-							</button>
-						</div>
-					</div>
+											<div class="row btnarea">
+												<div class="col-6 d-flex justify-content-start">
+												<c:if test="${login.midx == vo.midx }">
+													<button type="button" onclick="erase()" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+													<button type="button" onclick="location.href='noticemodify.do?nbidx=${vo.nbidx}'" value="수정"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+													<button type="button" onclick="location.href='<%=request.getContextPath()%>/notice/noticewrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+													</c:if>
+												</div>
+												<div class="col-6 d-flex justify-content-end">
+													<button onclick="shareSNS('kakao')" id="kakaoBtn">
+														<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+													</button>
+												</div>
+											</div>
 					
 
 								
 								
-							</div><!-- /.thumbnail -->
+								</div><!-- /.thumbnail -->
 										
 							</div><!--/. thumbnailitem -->
 					
@@ -230,25 +209,6 @@ function test(){
 
 
 <script>
-	function modalOkFn(){
-		location.href = "CS_delete.do?origincsbidx=${cv.origincsbidx}";
-	}
-	
-	function CS_replyDelete(){
-		location.href = "CS_replyDelete.do?csbidx=${cvr.csbidx}&origincsbidx=${cvr.origincsbidx}";
-	}
-	
-	$(function(){	
-		
-		$("#delete").click(function(){
-			modalFn("삭제하시면 복구할 수 없습니다. 정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");		
-		});
-		
-		$("#reply_delete").click(function(){
-			modalFn("정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 답변 삭제", "취소", "CS_replyDelete");		
-		});
-		
-	});
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);
@@ -281,11 +241,9 @@ function test(){
 		}
 	}
 </script>
-
 <script>
 $('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
 </script>
 
 </body>
-
 </html>

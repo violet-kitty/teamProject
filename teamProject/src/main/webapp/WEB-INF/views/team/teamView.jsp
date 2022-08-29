@@ -3,14 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>Home</title>
+<title>HOWF 너나들이</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -25,28 +27,16 @@
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<title>Insert title here</title>
-<style>
-.team_title{
-	font-size: 2.5em;
-	font-weight: bold;
-}
-.join_btn{
-	display: block;
-	width: 25%;
-	height: 100px;
-	color: white;
-	background-color: #54ACA8;
-	border: 1px solid white;
-}
-</style>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyView.css">
 </head>
 <body>
 
-	<div id="wrap">
+	<div id="wrap" class="boardView cs csview">
+	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
@@ -56,81 +46,119 @@
 		</div>
 		
 		<!-- container -->
-		<div class="container">
+		<div id="container" class="hbg-whitegray">
 		
-		
-		
-			<div class="row">
-				<div class="col">
-					<div class="thumbnail">${tv.filename}</div>
-				</div>			
-			</div>
-			
-			<div class="row">
-				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-start">
-						(프로필 사진 영역(선택))
-				</div>
-				<div class="text-center col-md-6 col-lg-3">
-						${tv.wdate}
-				</div>
-				<div class="text-center col-md-6 col-lg-3">
-						${tv.nickname}
-				</div>
-				<div class="text-center col-md-6 col-lg-3 d-flex justify-content-end">
-						팀원 ${tv.people_cnt}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col team_title">
-					${tv.title}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col" style="min-height: 500px;">
-					${tv.content}
-				</div>
-			</div>			
-			<div class="row">
-				<div class="col d-flex justify-content-center">
-					<c:if test="${login != null && tv.applyyn == 'Y'}">
-						<c:if test="${check.joinyn == 'B'}">
-							해당 너나들이 팀으로부터 차단되었습니다.
-						</c:if>
-						<c:if test="${check.joinyn == 'N' || check.joinyn == null}">
-							<c:if test="${check.jidx == 0}">
-								<input type="button" id="join_btn" class="join_btn" value="가입신청">
-								<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소" style="display: none;">
-							</c:if>
-							<c:if test="${check.jidx != 0}">
-								<input type="button" id="join_btn" class="join_btn" value="가입신청" style="display: none;">
-								<input type="button" id="join_cancel_btn" class="join_btn" value="가입신청 취소">
-							</c:if>
-						</c:if>
-					</c:if>
-				</div>
-			</div>
-			<c:if test="${check.joinyn == 'Y'}">
-				<div class="row">
-					<div class="col">
-						<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'">팀 페이지</button>
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+				    <!-- pagehead  -->
+					<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
+					
+					<!-- 뷰 -->
+					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
+					<div class="clist">
+					
+						<!-- C리스트 14. 반복 -->
+						<div class="thumbnailitem">
+							
+							<div class="thumbnail">
+								
+								<div class="writerinfo">
+									<p>
+										<span class="cate" style="background: #A4C266; color: white;">${tv.tidx}</span>
+										<span class="hfc-semibold hfc-darkgray">| ${tv.wdate}</span>
+										<span class="hfc-semibold hfc-darkgray">| ${tv.nickname}</span>
+									</p>
+									<div class="small">
+										<div class="col-lg-6 d-flex justify-content-end">
+											<img src="<%=request.getContextPath()%>/image/icon/eye.png">
+											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${tv.cnt}</span>
+											<img src="<%=request.getContextPath()%>/image/button/menu5.png">
+											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${tv.people_cnt}</span>
+										</div>
+									</div>
+								</div>
+								<div class="caption">
+									<h4>${tv.title}</h4>
+								</div>
+								<!-- 글 내용 -->
+								<div class="row contentrow">
+									<div class="col" id="howfContent">
+										${tv.content}
+									</div>
+									<c:if test="${tv.filename != null}">
+										<a href="<%=request.getContextPath() %>/team/displayFile.do?filename=${tv.filename}&down=0">
+											<img src="<%=request.getContextPath() %>/team/displayFile.do?filename=${tv.filename}" style="max-width: 300px; max-height: 300px;">
+										</a>
+									</c:if>	
+								</div>
+								<div class="row">
+									<div class="col d-flex justify-content-center">
+										<c:if test="${login != null && tv.applyyn == 'Y'}">
+											<c:if test="${check.joinyn == 'B'}">
+												해당 너나들이 팀으로부터 차단되었습니다.
+											</c:if>
+											<c:if test="${check.joinyn == 'N' || check.joinyn == null}">
+												<c:if test="${check.jidx == 0}">
+													<input type="button" id="join_btn" class="bluebtn" value="가입신청">
+													<input type="button" id="join_cancel_btn" class="graybtn" value="가입신청 취소" style="display: none;">
+												</c:if>
+												<c:if test="${check.jidx != 0}">
+													<input type="button" id="join_btn" class="bluebtn" value="가입신청" style="display: none;">
+													<input type="button" id="join_cancel_btn" class="graybtn" value="가입신청 취소">
+												</c:if>
+											</c:if>
+										</c:if>
+										<c:if test="${check.joinyn == 'Y'}">
+											<div class="row">
+												<div class="col">
+													<button onclick="javascript:location.href='teamTeam.do?tidx=${tv.tidx}'" class="bluebtn">팀 페이지</button>
+												</div>
+											</div>
+										</c:if>
+									</div>
+								</div>
+								
+								<div class="row btnarea">
+									<div class="col d-flex justify-content-start">
+										<c:if test="${login!=null && login.midx == tv.midx}">
+											<button type="button" id="teamDelete" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+											<button type="button" id="teamModify" value="수정"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+										</c:if>
+									</div>
+								</div>
+								
+							</div><!-- /.thumbnail -->
+							
+						</div><!--/. thumbnailitem -->
+						
+					</div><!-- /.clist -->
+					
+					<hr class="lastline">
+					
+					<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+					<div class="backto">
+						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 					</div>
-				</div>
-			</c:if>
-			<div class="row">
-				<div class="col d-flex justify-content-center">
-					<c:if test="${login!=null && login.midx == tv.midx}">
-						<button id="teamDelete">삭제</button>
-						<button id="teamModify">수정</button>
-					</c:if>
-					<button id="teamList">목록</button>
-				</div>
-			</div>
-	
-
+					</a>
+					<!-- 리스트 카드 -->
+					
+				</div><!-- /.container -->
+				
+			</div><!-- /.contents -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
+		
 	</div><!-- /#wrap -->
+	
+	
 <script>
 	function modalOkFn(){
 		location.href = "teamDelete.do?tidx=${tv.tidx}";

@@ -597,7 +597,7 @@
 		WHERE j.midx = #{midx}
 		AND t.delyn = 'N') a, usertable u
 		WHERE a.midx = u.midx
-		ORDER BY t.tidx DESC
+		ORDER BY a.tidx DESC
 	</select>
 	
 	<!-- 팀 가입신청 목록보기 & 승인 여부 -->
