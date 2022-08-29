@@ -224,7 +224,16 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum-1);
-							alert("찜 목록에서 제거되었습니다");
+							modalFn("찜 목록에서 제거되었습니다");
+							setTimeout(function(){
+								modalClose();
+							},1000);
+						}
+						else {
+							modalFn("찜 목록 제거 오류입니다");
+							setTimeout(function(){
+								modalClose();
+							},1000);
 						}
 					}
 				});
@@ -241,10 +250,16 @@ else {
 							var n = $("#heartNum").text();
 							var heartNum = Number(n);
 							$("#heartNum").text(heartNum+1);
-							alert("찜 목록에 추가되었습니다");
+							modalFn("찜 목록에 추가되었습니다");
+							setTimeout(function(){
+								modalClose();
+							},1000);
 						}
 						else {
-							alert("찜 목록 추가 오류입니다");
+							modalFn("찜 목록 추가 오류입니다");
+							setTimeout(function(){
+								modalClose();
+							},1000);
 						}
 					}
 				});
@@ -313,7 +328,7 @@ else {
 		var thisUrl = document.URL;
 		console.log(thisUrl);
 		
-		var snsTitle = "${howf.title}";
+		var snsTitle = "${story.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -329,9 +344,9 @@ else {
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
-					title:'${howf.title}',
-					description: '${howf.title}',
-					imageUrl:'http://jjezen.cafe24.com/howf/howf/displayFile.do?fileName=${howf.filename}',
+					title:snsTitle,
+					description: snsTitle,
+					imageUrl:'http://jjezen.cafe24.com/howf/story/displayFile.do?fileName=${story.filename}',
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl
