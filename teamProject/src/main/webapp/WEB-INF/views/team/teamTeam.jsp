@@ -81,16 +81,17 @@
 		$("#show_vote_option").hide();
 		
 		pieChartDraw();
+
+		var html = "";
 		
-		var Y = 'Y';
-		
-		var html = '<c:if test="${rv != null && login.midx == tv.midx}">';
-			html += '<c:if test="${rv.allow == '+Y+'}">'
-				 +	'<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br>'
-				 +	'<br><button type="button" onclick="finish_vote()">투표  마감</button><br>'
-				 +	'</c:if>'
-				 +  '<br><button type="button" onclick="remove_vote()">투표  삭제</button><br>'
-				 +  '</c:if>';
+		<c:if test="${rv != null && login.midx == tv.midx}">
+		<c:if test="${rv.allow == 'Y'}">
+		html += '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br>'
+			 +	'<br><button type="button" onclick="finish_vote()">투표  마감</button><br>';
+		</c:if>
+		html += '<br><button type="button" onclick="remove_vote()">투표  삭제</button><br>';
+		</c:if>
+			
 		
 		$("#selected_vote_option").append(html);
 		$("#selected_vote_option").show();
@@ -136,7 +137,7 @@
 						<div id="chatArea" style="height:500px;overflow-y:scroll;width:100%;padding-left:5px;padding-right:5px;background:#54ACA8">
 							
 						</div>
-						<div style="background:white; position: relative; bottom: 0; left:0; width: 100%;">
+						<div style="background:white; position: relative; bottom: 0; left: 0; width: 100%;">
 							<input type="text" id="textInput" onkeyup="enterkey()" class="input">
 							<button class="pinkbtn" onclick="sendMsg()" style="position: absolute; right: 0.5rem; top:50%; transform: translateY(-50%);">보내기</button>
 						</div>
@@ -145,7 +146,7 @@
 					<div class="row">
 						<div class="col d-flex justify-content-center text-center">
 							<div id="vote">
-							<div id="selected_vote_option" style="display: none">
+							<div id="selected_vote_option" style="display: none;">
 							<c:if test="${(rv != null && result != 0) || (rv != null && rv.allow == 'N')}">
 								<canvas id="pieChartCanvas" style="width: 500px; height: 500px;"></canvas>
 								<script>asdasd();</script>
@@ -179,7 +180,6 @@
 											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
 										</div>
 									</form>
-									
 								</div>
 							</c:if>
 							<c:if test="${rv == null}">
