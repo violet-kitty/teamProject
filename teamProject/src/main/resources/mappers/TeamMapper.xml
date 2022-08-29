@@ -12,13 +12,13 @@
 				 ,t.midx
 			     ,t.title
 			     ,t.content
-			     ,DATE_FORMAT(t.wdate,'%Y-%m-%d') as wdate
+			     ,DATE_FORMAT(t.wdate,'%Y-%m-%d') AS wdate
 			     ,t.cnt
 			     ,t.delyn
 			     ,j.people_cnt
 		FROM     team t
 		LEFT OUTER JOIN
-				(SELECT COUNT(j.jidx) as people_cnt, j.tidx, ANY_VALUE(j.midx) as midx
+				(SELECT COUNT(j.jidx) AS people_cnt, j.tidx, ANY_VALUE(j.midx) AS midx
 				 FROM jointable j WHERE joinyn = 'Y' GROUP BY j.tidx) j
 		ON       t.tidx = j.tidx) a
 		join 	 (select u.midx, u.nickname, u.img from usertable u) u

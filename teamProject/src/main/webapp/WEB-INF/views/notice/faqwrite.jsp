@@ -135,11 +135,11 @@
 					</a>
 					
 					<!-- 제목 영역 -->
-							<div class="pageinfo">
-								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/notice/faqboard.do"><h1>FAQ 작성</h1></a>
-								</div>
-							</div>
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<a href="<%=request.getContextPath()%>/notice/faqboard.do"><h1>FAQ 작성</h1></a>
+						</div>
+					</div>
 
 					<!-- 폼 시작 -->
 					
@@ -156,7 +156,7 @@
 						<!-- 에디터 -->
 						<div class="row h-input">
 							<div class="col">
-								<textarea name="content" id="content" cols="80" rows="20" placeholder="내용을 작성해주세요"></textarea></textarea>
+								<textarea name="content" id="content" cols="80" rows="20" placeholder="내용을 작성해주세요"></textarea>
 							</div>
 						</div><!-- row end -->
 						

@@ -28,15 +28,6 @@ public class BoardVO extends UserVO{
 		return wdate;
 	}
 	public void setWdate(String wdate) {
-		try {
-			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Date formatData = dtFormat.parse(wdate);
-			this.wdate = newDtFormat.format(formatData);
-//			System.out.println(this.wdate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		this.wdate = wdate;
 	}
 	public int getCnt() {

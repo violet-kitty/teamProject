@@ -89,11 +89,6 @@
 									<div class="col" id="howfContent">
 										${tv.content}
 									</div>
-									<c:if test="${tv.filename != null}">
-										<a href="<%=request.getContextPath() %>/team/displayFile.do?filename=${tv.filename}&down=0">
-											<img src="<%=request.getContextPath() %>/team/displayFile.do?filename=${tv.filename}" style="max-width: 300px; max-height: 300px;">
-										</a>
-									</c:if>	
 								</div>
 								<div class="row">
 									<div class="col d-flex justify-content-center">

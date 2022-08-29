@@ -11,6 +11,9 @@
 <title>페이지 제목</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -25,9 +28,11 @@
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
@@ -85,11 +90,14 @@
 		var html = "";
 		
 		<c:if test="${rv != null && login.midx == tv.midx}">
-		<c:if test="${rv.allow == 'Y'}">
-		html += '<br><div class="d-flex justify-content-center"><button type="button" onclick="revote()">투표 다시하기</button></div><br>'
-			 +	'<br><button type="button" onclick="finish_vote()">투표  마감</button><br>';
-		</c:if>
-		html += '<br><button type="button" onclick="remove_vote()">투표  삭제</button><br>';
+			html += '<hr class="lastline">';
+			<c:if test="${rv.allow == 'Y'}">
+				html += '<br><div class="d-flex justify-content-center"><button type="button" class="greenbtn" onclick="revote()">투표 다시하기</button></div><br>';
+			</c:if>
+				html += '<div class="d-flex justify-content-center"><button type="button" class="pinkbtn" onclick="remove_vote()">투표  삭제</button>';
+			<c:if test="${rv.allow == 'Y'}">
+				html += '<button type="button" class="graybtn" onclick="finish_vote()">투표  마감</button></div>';
+			</c:if>
 		</c:if>
 			
 		
@@ -132,7 +140,7 @@
 				<div class="container">
 				<div class="row">
 					<div class="col">
-						<button type="button" onclick="memberList()">채팅 참여자 목록</button>
+						<button type="button" onclick="memberList()" class="greenbtn">채팅 참여자 목록</button>
 						<!-- 채팅창 -->
 						<div id="chatArea" style="height:500px;overflow-y:scroll;width:100%;padding-left:5px;padding-right:5px;background:#54ACA8">
 							
@@ -184,23 +192,32 @@
 							</c:if>
 							<c:if test="${rv == null}">
 								<c:if test="${login.midx == tv.midx}">
-									<div class="row">
-										<div class="col">
-											<div id="div_create_vote">
-												<button onclick="cancel_vote()" id="cancel_vote" style="display: none;">투표 작성 취소</button><br>
-												<button onclick="create_vote()" id="create_vote" class="h-auto">투표 만들기</button><br>
-												<div id="display" style="display:none">
-													<button onclick="add_option()" class="h-auto">선택지 추가</button>
-													<div id="voteArea">
-														<form id="vote_option">
-															<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>
-															<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>
-															<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>
-														</form>
-													</div>
-													<button onclick="upload_vote()" class="h-auto">투표 올리기</button><br>
-												</div>
+									<div id="div_create_vote">
+										<button onclick="cancel_vote()" id="cancel_vote" class="graybtn" style="display: none;">투표 작성 취소</button><br>
+										<button onclick="create_vote()" id="create_vote" class="h-auto greenbtn">투표 만들기</button><br>
+										<div id="display" style="display:none">
+											<button onclick="add_option()" class="h-auto bluebtn">선택지 추가</button>
+											<div id="voteArea">
+												<form id="vote_option">
+													<!-- 카테고리 선택, 제목 입력 -->
+													<div class="row h-input ">
+														<div class="col">
+															<input class="form-control" type="text" name="title" id="title" placeholder="투표 주제"><br>
+														</div>
+													</div><!-- row end -->
+													<div class="row h-input ">
+														<div class="col">
+															<input type="text" id="p1" class="form-control" name="place1" placeholder="투표 선택지1">
+														</div>
+													</div><!-- row end -->
+													<div class="row h-input ">
+														<div class="col">
+															<input type="text" id="p1" class="form-control" name="place1" placeholder="투표 선택지2">
+														</div>
+													</div><!-- row end -->
+												</form>
 											</div>
+											<button onclick="upload_vote()" class="h-auto greenbtn">투표 올리기</button><br>
 										</div>
 									</div>
 								</c:if>
@@ -211,17 +228,28 @@
 					<br>
 					<!-- 신고당한 사람 midx -->
 					<input type="hidden" id="midx">
-					<div class="row">
-						<div class="col d-flex justify-content-center">
-							<button type="button" onclick="location.href='teamView.do?tidx=${tidx}'" class="h-auto">팀 글 페이지</button>
+					
+					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
+					<div class="row buttonarea">
+						<div class="col-lg-6">
+							<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tidx}">
+								<div class="backto lastbackto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
 						</div>
 					</div>
+					
 				</div><!-- /.container -->
-			</div>
-			<!-- / .content01 -->
+				
+			</div><!-- / .content01 -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
+		
 	</div><!-- /#wrap -->
 <script>
 
@@ -238,9 +266,9 @@
 		$("#create_vote").show();
 		$("#display").hide();
 		
-		var html = '<input type="text" name="title" id="title" placeholder="투표 주제 선정"><br><br>';
-			html += '<input type="text" id="p1" name="place1" placeholder="투표 선택지1"><br>';
-			html += '<input type="text" id="p2" name="place2" placeholder="투표 선택지2"><br>';
+		var html = '<input type="text" class="form-control" name="title" id="title" placeholder="투표 주제 선정"><br>';
+			html += '<input type="text" class="form-control" id="p1" name="place1" placeholder="투표 선택지1">';
+			html += '<input type="text" class="form-control" id="p2" name="place2" placeholder="투표 선택지2">';
 			
 		$("#vote_option").html(html);
 		index = 3;
@@ -252,7 +280,7 @@
 			return;
 		}
 		else{
-			$("#vote_option").append('<input type="text" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'"><br>');
+			$("#vote_option").append('<input type="text" class="form-control" id="p'+index+'" name="place'+index+'" placeholder="투표 선택지'+index+'">');
 			index++;
 		}
 		
@@ -364,7 +392,7 @@
 				
 			}
 			</c:forEach>
-			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+message.sender.name+"<button type='button' onclick='userOption("+id[1]+")'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			$("#chatArea").append("<div class='d-flex  align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+message.sender.name+"<button type='button' class='pinkbtn' onclick='userOption("+id[1]+")'style='padding:5px;'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		var element = document.getElementById("chatArea");
 		element.scrollTop = element.scrollHeight;
@@ -442,7 +470,7 @@
 					
 				}
 				</c:forEach>
-				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+m.sender.name+"<button type='button' onclick='userOption("+id[1]+")'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+				$("#chatArea").prepend("<div class='d-flex align-items-start flex-column'><span style='color: white; font-weight:bold;'><img src='"+img+"' style='width:40px;height:40px;border-radius:50%;'>"+m.sender.name+"<button type='button' class='pinkbtn' onclick='userOption("+id[1]+")' style='padding:5px;'>신고</button><br></span><div style='padding:10px;min-height:5px;background:white;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 		}
 		var element = document.getElementById("chatArea");

@@ -12,6 +12,14 @@
 <title>HOWF 너나들이 글쓰기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- /summernote -->
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -26,22 +34,20 @@
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- 채팅 --><script src="https://ncloudchat.gcdn.ntruss.com/ncloudchat-lastest.min.js"></script>
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- /summernote -->
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
+
 <style>
 input[type=checkbox]{
-	zoom: 1.5;
+	zoom: 1.1;
 }
 </style>
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardWrite cs cswrite">
+	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
@@ -51,51 +57,78 @@ input[type=checkbox]{
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-					<form id="form1" method="post">
-						<div class="row">
-							<div class="col text-center">
-								<div class="thumbnail"><input type="file" id="thumbnail" name="filename"></div>
-							</div>			
+			<div class="contents pagehead hbg-whitegray">
+			
+				<div class="container" id="featured-2">
+					<!-- pagehead  -->
+					<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
-						<div class="row">
-							<div class="col d-flex justify-content-start">
-									(프로필 사진 영역(선택))
-							</div>
+					</a>
+					<!-- 제목 영역 -->
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<a href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이 작성</h1></a>
 						</div>
-						<div class="row">
-							<div class="col bd-highlight">
-								<input type="text" id="title" class="fs-3 fw-bold" name="title" placeholder="제목">
-							</div>
-						</div>
-						<div class="row">
+					</div>
+					
+					<!-- 폼 시작 -->
+					<form id="form1" method="post" enctype="multipart/form-data">
+						
+						<!-- 카테고리 선택, 제목 입력 -->
+						<div class="row h-input ">
 							<div class="col">
-								<textarea id="summernote" name="content"></textarea>
+								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 입력해 주세요">
 							</div>
-						</div>
-						<div class="row">
+						</div><!-- row end -->
+						
+						<!-- 에디터 -->
+						<div class="row h-input">
 							<div class="col">
-								<span>가입신청 활성화/비활성화</span> <input type="checkbox" id="check" name="applyyn" value="Y" checked>
+								<textarea name="content" id="summernote" cols="80" rows="20" placeholder="내용을 작성해주세요"></textarea>
+							</div>
+						</div><!-- row end -->
+						
+						<div class="align-middle">
+							<div class="form-check-inline align-middle">
+								<label class="form-check-label" for="applyyn">가입신청 허용 / 차단</label>
+								<input class="form-check-input" type="checkbox" name="applyyn" id="applyyn" value="Y" checked style="margin: 0 0;">
 							</div>
 						</div>
-						<div class="row">
-							<div class="col d-flex justify-content-center">
-								<button type="button" id="btn_write">등록</button>
-								<button type="button" id="btn_cancel">취소</button>
-							</div>
-						</div>
+						
 					</form>
+					<hr class="lastline">
+					
+					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
+					<div class="row buttonarea">
+						<div class="col-lg-6">
+							<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+								<div class="backto lastbackto">
+									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+								</div>
+							</a>
+						</div>
+						<div class="col-lg-6 okbutton">
+							<button type="button" class="bluebtn" id="btn_write">글 작성 완료</button>
+							<button type="button" class="graybtn" id="btn_cancel">글 작성 취소</button>
+						</div>
+					</div><!-- row end -->
+					<!-- 리스트 카드 -->
+					
 				</div><!-- /.container -->
-			</div>
-			<!-- / .content01 -->
+				
+			</div><!-- / .content01 -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
 
 		</div><!-- / #container -->
 		
 		<!-- Footer --><%@include file="../Footer.jsp"%>
+		
 	</div><!-- /#wrap -->
 </body>
 <script>
@@ -201,14 +234,11 @@ input[type=checkbox]{
 	
 		$("#btn_cancel").click(function(){
 			if($("#title").val() != ""){
-				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
 			}
 			else if($("#summernote").val() != ""){
-				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
 	    	}
-			else if($("#thumbnail").val() != ""){
-				modalFn("첨부된 파일이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
-			}
 	    	else{
 				history.back();
 			}
