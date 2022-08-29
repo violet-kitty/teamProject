@@ -1076,7 +1076,7 @@ else {
 				content:{
 					title:snsTitle,
 					description: snsTitle,
-					imageUrl:'http://jjezen.cafe24.com/howf/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}',
+					imageUrl:"http://jjezen.cafe24.com/howf/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}",
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl

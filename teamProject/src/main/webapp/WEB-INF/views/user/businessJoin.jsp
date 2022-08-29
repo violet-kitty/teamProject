@@ -274,6 +274,9 @@
 			var email = $("#email");
 			var password = $("#password");
 			var passwordOk = $("#passwordOk");
+			var phone = $("#phone");
+			var addr = $("#address");
+			var daddr = $("#detailAddress");
 			
 			
 			if (name.val() == "") {
@@ -328,6 +331,13 @@
 					email.focus();
 					return;
 				},1000);
+			} else if(phone.val() == "") {
+				modalFn("연락처를 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					phone.focus();
+					return;
+				},1000);
 			} else if (password.val() == "") {
 				modalFn("비밀번호를 입력해주세요");
 				setTimeout(function(){
@@ -350,6 +360,20 @@
 					modalClose();
 					$("#pwdOkTxt").html("<img src='<%= request.getContextPath() %>/image/icon/verificationx.png'>");
 					passwordOk.focus();
+					return;
+				},1000);
+			} else if(addr.val() == "") {
+				modalFn("주소를 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					addrFn();
+					return;
+				},1000);
+			} else if(daddr.val() == "") {
+				modalFn("상세주소를 입력해주세요");
+				setTimeout(function(){
+					modalClose();
+					daddr.focus();
 					return;
 				},1000);
 			} else if($("#document").val()==""){
