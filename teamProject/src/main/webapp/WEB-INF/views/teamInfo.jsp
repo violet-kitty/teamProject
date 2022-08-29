@@ -38,6 +38,26 @@
 	padding-top:100px;
 	padding-bottom:100px;
 }
+.roleTable{
+	width:100%;
+	line-height:1.5;
+}
+table, th, td{
+	border:1px solid black;
+}
+th, td {
+	padding:10px 0px;
+	text-align : center;
+  	vertical-align : middle;
+}
+th {
+	background-color:#455f51;
+	color:white;
+	font-weight:600;
+}
+td {
+	background-color:white;
+}
 </style>
 </head>
 <body>
@@ -55,7 +75,6 @@
 		
 		<!-- container -->
 		<div id="container" class="hbg-lightgray">
-			<img src="<%= request.getContextPath() %>/image/teamInfo/first.png" style="width:100%;height:100vh;">
 			
 			<!-- content01 -->
 			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="500" data-aos-duration="300">
@@ -199,12 +218,12 @@
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
 						<div class="title">
-							<h1>개발일정</h1>
+							<h1>프로젝트 일정</h1>
 						</div>
 					</div>
 					<br>
 					<div style="text-align:left;line-height:3;">
-						
+						<img src="<%= request.getContextPath() %>/image/teamInfo/프로젝트일정표.png" style="max-width:100%">
 					</div>
 					
 				</div>
@@ -306,9 +325,188 @@
 						</div>
 					</div>
 					<br>
-					<div style="text-align:left;line-height:3;">
-						<p></p><br>
-						<img src="<%= request.getContextPath() %>/image/teamInfo/ERD.png" style="max-width:100%"><br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="margin-top: 15px;">
+						<div class="feature col">
+							<div>
+								<p>usertable</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/usertable.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>autologin</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/autologin.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>comment</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/comment.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>heart</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/heart.png" style="max-width:100%">
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>데이터베이스</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="margin-top: 15px;">
+						<div class="feature col">
+							<div>
+								<p>howf</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/howf.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>story</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/story.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>event</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/event.png" style="max-width:100%">
+							</div>
+						</div>
+
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>데이터베이스</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="margin-top: 15px;">
+						
+						<div class="feature col">
+							<div>
+								<p>stay</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/stay.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>room</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/room.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>res</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/res.png" style="max-width:100%">
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>데이터베이스</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="margin-top: 15px;">
+						
+						<div class="feature col">
+							<div>
+								<p>cstable</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/cstable.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>notice</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/notice.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>faqboard</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/faqboard.png" style="max-width:100%">
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<!-- / #featured-7 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-7">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>데이터베이스</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="margin-top: 15px;">
+						
+						<div class="feature col">
+							<div>
+								<p>team</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/team.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>jointable</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/jointable.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>recommend</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/recommend.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>vote</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/DB/vote.png" style="max-width:100%">
+							</div>
+						</div>
 					</div>
 					
 				</div>
@@ -326,8 +524,97 @@
 						</div>
 					</div>
 					<br>
-					<div style="text-align:left;line-height:3;">
-						
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
+						<div class="feature col">
+							<div>
+								<p>유저</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/user.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>vo</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/vo.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>너나들이</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/team.png" style="max-width:100%">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<!-- / #featured-6 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-left" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-6">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>클래스 다이어그램</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
+						<div class="feature col">
+							<div>
+								<p>HOWF 추천, 지역 이벤트</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/board.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>여행이야기</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/story.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>숙박정보</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/stay.png" style="max-width:100%">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<!-- / #featured-6 -->
+			</div>
+			<!-- / .content01 -->
+			
+			
+			<div class="contents content01 hbg-whitegray" style="text-align:center;" data-aos="fade-right" data-aos-offset="300" data-aos-duration="300">
+				<div class="container" id="featured-6">
+					<!-- 페이지 제목 -->
+					<div class="pageinfo">
+						<div class="title">
+							<h1>클래스 다이어그램</h1>
+						</div>
+					</div>
+					<br>
+					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
+						<div class="feature col">
+							<div>
+								<p>1:1 문의</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/cs.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>FAQ</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/faq.png" style="max-width:100%">
+							</div>
+						</div>
+						<div class="feature col">
+							<div>
+								<p>공지사항</p><br>
+								<img src="<%= request.getContextPath() %>/image/teamInfo/classDR/notice.png" style="max-width:100%">
+							</div>
+						</div>
 					</div>
 					
 				</div>
@@ -341,22 +628,82 @@
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
 						<div class="title">
-							<h1>회원 분류</h1>
+							<h1>회원 등급별 게시판 권한</h1>
 						</div>
 					</div>
 					<br>
-					<div style="text-align:center;line-height:3;">
-						<h1>일반회원</h1>
-						<p></p>
-						<br>
-						<h1>사업자</h1>
-						<p></p>
-						<br>
-						<h1>공무원</h1>
-						<p></p>
-						<br>
-						<h1>관리자</h1>
-						<p></p>
+					<div style="text-align:center;">
+						<table class="roleTable">
+							<thead>
+								<tr><th>*</th><th>비회원</th><th>일반회원</th><th>지역공무원</th><th>사업자</th><th>관리자</th></tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>HOWF 추천 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>좋아요, 공유</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+								</tr>
+								<tr>
+									<th>여행이야기 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>좋아요, 공유<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>글 삭제</td>
+								</tr>
+								<tr>
+									<th>지역이벤트 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>좋아요, 공유</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>글 삭제</td>
+								</tr>
+								<tr>
+									<th>숙박정보 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>좋아요, 공유<br>예약, 결제<br>리뷰 쓰기, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기<br>글 삭제</td>
+								</tr>
+								<tr>
+									<th>너나들이 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제<br>채팅, 투표</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>글 삭제</td>
+								</tr>
+								<tr>
+									<th>1:1문의 게시판</th>
+									<td>X</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+									<td>리스트 컨텐츠 보기<br>답글 등록, 수정, 삭제</td>
+								</tr>
+								<tr>
+									<th>FAQ 게시판</thd>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+								</tr>
+								<tr>
+									<th>공지사항 게시판</th>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기</td>
+									<td>리스트 컨텐츠 보기<br>업로드, 수정, 삭제</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					
 				</div>
