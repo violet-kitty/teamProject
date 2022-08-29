@@ -371,9 +371,8 @@
 	//채팅 이벤트 핸들러
 	// 메시지 수신
 	nc.bind('onMessageReceived',function(channel, message) {
-		console.log(message);
-		if(message.sender.name == "${login.nickname}"){
-			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+message.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+		if(message.sender.id == "howf_${login.midx}"){
+			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>${login.midx}<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		else {
 			var id = message.sender.id.split("_");
@@ -447,11 +446,10 @@
 		const sort = {created_at:-1}; 
 		const option = { offset:0, per_page:100};
 		const messages = await nc.getMessages(filter, sort, option);
-		console.log(messages);
 		
 		for(var m of messages){
-			if(m.sender.name == "${login.nickname}"){
-				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p style='color: white; font-weight:bold;'>"+m.sender.name+"<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
+			if(m.sender.id == "howf_${login.midx}"){
+				$("#chatArea").prepend("<div class='d-flex align-items-end flex-column'><p style='color: white; font-weight:bold;'>${login.nickname}<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+m.content+"</div></div><br>");
 			}
 			else {
 				var id = m.sender.id.split("_");
