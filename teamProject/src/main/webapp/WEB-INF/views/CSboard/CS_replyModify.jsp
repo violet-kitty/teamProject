@@ -8,9 +8,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF고객지원</title>
+<title>HOWF 고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- summernote -->
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -23,8 +30,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
@@ -39,21 +44,7 @@
 
 </head>
 <body>
-	<div id="wrap" class="boardwrite cs cswrite">
-		<!-- 모달예제 
-		<button onclick="modalex()">모달예제</button>
-		<script>
-		function modalex(){
-		
-			/* modalex("모달이 완료되었습니다");
-		      setTimeout(function(){
-		         modalClose();
-		      },3000); */
-		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
-			
-		}
-		</script>
-		-->
+	<div id="wrap" class="boardWrite cs cswrite">
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
@@ -75,66 +66,79 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container">
-					<div class="row">
-						<div class="col">
-							<a href="<%=request.getContextPath()%>/home.do" class="a_logo">
-								<img src="<%=request.getContextPath()%>/image/logo/logo.png">
-							</a>	
-							<div class="div_header">	
-								<h3>1:1 문의 게시글 답변 수정</h3>
-							</div>
-							<br><br>
-							<c:if test="${login != null }">
-								<div class="div_userInfo"><span class="span_userInfo">${login.nickname}</span> 로그인 중 (등급 : <span class="span_userInfo">${login.role}</span>)</div>
-								<div class="div_logout"><a href="<%=request.getContextPath()%>/user/logout.do" class="a_logout">로그아웃</a></div>
-							</c:if>
-							<br>
-							<hr>	
-							<br>
-							<br>
-							<br>
-							<div class="replies">
-								<form id="form1" action="CS_replyModify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
-									<table class="tb2">
-										<tbody>
-											<tr>
-												<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
-											</tr>				
-											<tr>
-												<td class="reply_category">작성자</td>
-												<td>${cv.nickname}</td>
-												<td class="reply_category">제목<span class="span_must_input">*</span></td>
-												<td class="td_input_title"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>
-												<td class="reply_category">작성일</td>
-												<td>${cv.wdate}</td>
-											</tr>
-											<tr>
-												<td class="reply_category" style="border-top: 2px solid #27c6be;">내용<span class="span_must_input">*</span></td>
-												<td class="reply_content" colspan="5"><textarea id="summernote" name="content">${cv.content}</textarea></td>
-											</tr>
-											<tr>
-												<td class="btn_td" colspan="6">
-													<input type="button" class="btn1" value="수정" onclick="ModifyFn()">
-													<input type="button" class="btn1" value="취소" id="cancel">
-												</td>
-											</tr>			
-										</tbody>
-									</table>
-								</form>
-							</div>
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+					
+					<!-- pagehead  -->
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
+					<!-- /pagehead -->
+					
+					<!-- 제목 영역 -->
+					<div class="pageinfo">
+						<div class="title onlypc">
+							<a href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}"><h1>1:1 문의 답변 수정</h1></a>
 						</div>
 					</div>
+					<!-- /제목 영역 -->
+					
+								<form id="form1" action="CS_replyModify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
+									
+									<!-- 카테고리 선택, 제목 입력 -->
+									<div class="row h-input">
+										<div class="col-2">
+											<input class="form-control" type="text" name="divsn" id="divsn" value="${cv.divsn}" readonly>
+										</div>
+										<div class="col-8">
+											<input class="form-control" type="text" name="title" id="title" value="${cv.title}">
+										</div>
+										<div class="col-2">
+											<input class="form-control" type="text" name="divsn" id="divsn" value="${cv.nickname}" readonly>
+										</div>
+									</div><!-- row end -->
+									
+									<!-- 에디터 -->
+									<div class="row h-input">
+										<div class="col">
+											<textarea id="summernote" name="content" class="tb_textarea">${cv.content}</textarea>
+										</div>
+									</div><!-- row end -->
+									
+								</form>
+								<hr class="lastline">
+								
+								<!-- CS_view로 돌아가기, 글 수정 버튼 -->
+								<div class="row buttonarea">
+									<div class="col-lg-6">
+										<a id="cancel2" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+											<div class="backto lastbackto">
+												<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+											</div>
+										</a>
+									</div>
+									<div class="col-lg-6 okbutton">
+										<button type="button" class="bluebtn" onclick="ModifyFn()">수정 완료</button>
+									</div>
+								</div><!-- row end -->
+								
 				</div><!-- /.container -->
-			</div>
-			<!-- / .content01 -->
+				
+			</div><!-- / .content01 -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
 		</div><!-- / #container -->
+		
 		<!-- Footer --><%@include file="/WEB-INF/views/Footer.jsp"%>
+		
 	</div><!-- /#wrap -->
+	
 <script>
 	function modalOkFn(){
 		modalClose();
@@ -150,9 +154,29 @@
 			
 			if($("#title").val() != title){
 				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 수정", "취소");
+				return false;
 	    	}
 			else if($("#summernote").val() != content){
 				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 수정", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel2").click(function(){
+			
+			var title = "${cv.title}";
+			var content = "${cv.content}";
+			
+			if($("#title").val() != title){
+				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
+				return false;
+	    	}
+			else if($("#summernote").val() != content){
+				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
+				return false;
 	    	}
 	    	else{
     			history.back();
@@ -160,7 +184,7 @@
 	    });
 		
 		$("#summernote").summernote({
-			height:300,
+			height:500,
 			minHeight: null,
 			maxHeight: null,
 			focus: false,
@@ -206,7 +230,7 @@
 			}, 1000);
 		}
 		else {
-			modalFn("정말로 수정하시겠습니까?", "확인", "1:1 고객문의 답변 수정", "취소", "CS_replyModifyCheck");
+			modalFn("정말로 수정하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소", "CS_replyModifyCheck");
 		}
 	};
 	

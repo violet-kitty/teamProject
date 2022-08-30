@@ -8,9 +8,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF고객지원</title>
+<title>HOWF 고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- summernote -->
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -23,8 +30,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
@@ -39,75 +44,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- summernote -->
 
-
-
-<!-- 유효성 -->
-<script type="text/javascript">
-	
-	
- 	function check() {
-		
-		var title = $("#title");
-		var content = $("#content");
-		
-		if (title.val() == ""){
-			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>제목을 입력해 주세요','확인');
-		
-		}else if (content.val() == ""){
-			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>내용을 입력해 주세요','확인');
-			
-			//alert("내용을 입력하세요");
-		}else {
-			var formData = new FormData($("#form")[0]);
-			$.ajax({
-				url:"faqwrite.do",
-				type:"post",
-				data:formData,
-				cache:false,
-				contentType:false,
-				processData:false,
-				success:function(data){
-					if(data != 0){
-						modalFn('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ynaicab2.json"  background="transparent"  speed="3"  style="width: 300px; height: 300px;"  autoplay></lottie-player><br> 작성이 완료되었습니다');
-							setTimeout(function(){
-							modalClose();
-							location.href="faqboard.do";
-							return;
-						},1500);
-					}else {
-						modalFn("작성 실패");
-						setTimeout(function(){
-							modalClose();
-							return;
-						},1500);
-					}
-				}
-				
-			});
-			
-		}
-	}
- 	function cancel(){
- 		modalFn("목록으로 가겠습니까?","가기","이동여부","안 감 바이","cancelFn");
- 	}
- 	function cancelFn(){
- 		modalClose();
- 		modalFn("리스트로 이동합니다")
- 		setTimeout(function(){
- 			modalClose();
- 			location.href="faqboard.do";
- 			return;
- 		},1000);
- 		
- 	}
-</script>
-
+<!-- 	modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>제목을 입력해 주세요','확인'); -->
+<!-- 	modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>내용을 입력해 주세요','확인'); -->
+<!-- 	modalFn('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ynaicab2.json"  background="transparent"  speed="3"  style="width: 300px; height: 300px;"  autoplay></lottie-player><br> 작성이 완료되었습니다'); -->
 </head>
 
 <body>
@@ -139,7 +79,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -148,7 +88,7 @@
 					<!-- 제목 영역 -->
 							<div class="pageinfo">
 								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 고객문의 작성</h1></a>
+									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 작성</h1></a>
 								</div>
 							</div>
 
@@ -160,7 +100,7 @@
 						<div class="row h-input ">
 							<div class="col-2">
 								<select id="divsn" class="form-select" name="divsn">
-									<option value="질문">문의유형</option>
+									<option value="질문" selected>문의유형</option>
 									<option value="질문">질문</option>
 									<option value="환불">환불</option>
 									<option value="신고">신고</option>
@@ -182,19 +122,6 @@
 							</div>
 						</div><!-- row end -->
 						
-						<!-- 에디터 -->
-						<div class="row h-input">
-							<div class="col">
-								<p>이미지 첨부 파일</p>
-							</div>
-							<div class="col">
-								<label><input type="file" id="file" name="file"></label>
-								<!-- div id="div_img" style="display: none;"><img id="img"></div>
-								<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div> -->
-							</div>
-						</div><!-- row end -->
-						
-					<!-- /.clist -->
 					</form>
 					<hr class="lastline">
 				
@@ -202,14 +129,14 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+								<a id="cancel2" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
 								</a>
 							</div>
 							<div class="col-lg-6 okbutton">
-								<button type="button" class="bluebtn" onclick="CS_write()">글 작성 완료</button>
+								<button type="button" class="bluebtn" onclick="CS_write()">작성 완료</button>
 							</div>
 						</div><!-- row end -->
 					<!-- 리스트 카드 -->
@@ -239,21 +166,34 @@
 		
 		$("#cancel").click(function(){
 			if($("#title").val() != ""){
-				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
 			}
 			else if($("#summernote").val() != ""){
-				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
 	    	}
-			else if($("#file").val() != ""){
-				modalFn("첨부된 파일이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 등록", "취소");
-			}
 	    	else{
     			history.back();
     		}
-	   });
+	    });
+		
+		$("#cancel2").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
 		
 		$("#summernote").summernote({
-			height:600,
+			height:500,
 			minHeight:null,
 			maxHeight:null,
 			focus: false,
@@ -339,7 +279,7 @@
 
 		}
 		else {
-			modalFn("1:1 고객문의를 등록하시겠습니까?", "확인", "1:1 고객문의 등록", "취소", "CS_writeCheck");	
+			modalFn("1:1 문의를 등록하시겠습니까?", "확인", "1:1  문의 등록", "취소", "CS_writeCheck");	
 		}
 	}
 	

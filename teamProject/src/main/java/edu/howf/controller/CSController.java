@@ -100,30 +100,12 @@ public class CSController {
 	}
 
 	@RequestMapping(value = "/CS_write.do")
-	public String cs_write(MultipartFile file, CSVO vo, HttpServletRequest request, HttpSession session)
+	public String cs_write(CSVO vo, HttpServletRequest request, HttpSession session)
 			throws IllegalStateException, IOException {
 		 
 		 session = request.getSession();
-		  
 		 UserVO uv = (UserVO) session.getAttribute("login");
-		  
 		 vo.setMidx(uv.getMidx());		 
-		 
-		 File dir = new File(uploadPath); 
-
-		 
-		 if(!dir.exists()) { 
-			 dir.mkdirs(); 
-		 }
-		 if(!file.getOriginalFilename().isEmpty()) {
-			 UUID uuid = UUID.randomUUID();
-			 String fileName = uuid.toString() + "_" + file.getOriginalFilename();
-			 file.transferTo(new File(uploadPath, fileName));
-			 vo.setFilename(fileName);
-		 }
-		 else {
-			 System.out.println("파일 없음");
-		 }
 		 
 		 int result = csService.CS_write(vo);
 		 
@@ -179,29 +161,13 @@ public class CSController {
 	}
 
 	@RequestMapping(value = "/CS_modify.do", method = RequestMethod.POST)
-	public String csListModify(MultipartFile file, CSVO vo, HttpServletRequest request, HttpSession session)
+	public String csListModify(CSVO vo, HttpServletRequest request, HttpSession session)
 			throws IllegalStateException, IOException {
 
 		session = request.getSession();
 		UserVO uv = (UserVO) session.getAttribute("login");
 		vo.setMidx(uv.getMidx());
 		
-		File dir = new File(uploadPath); 
-		 
-		 
-		 if(!dir.exists()) { 
-			 dir.mkdirs(); 
-		 }
-		 if(!file.getOriginalFilename().isEmpty()) {
-			 UUID uuid = UUID.randomUUID();
-			 String fileName = uuid.toString() + "_" + file.getOriginalFilename();
-			 file.transferTo(new File(uploadPath, fileName));
-			 vo.setFilename(fileName);
-		 }
-		 else {
-			 System.out.println("파일 없음");
-		 }
-
 		int result = csService.csList_modify(vo);
 
 		return "redirect:/CSboard/CS_view.do?csbidx=" + vo.getCsbidx() + "&origincsbidx=" + vo.getOrigincsbidx();
@@ -255,7 +221,7 @@ public class CSController {
 	}
 
 	@RequestMapping(value = "/CS_replyModify.do", method = RequestMethod.POST)
-	public String csReply_modify(CSVO vo, HttpServletRequest request, HttpSession session) {
+	public String csReply_modify(CSVO vo) {
 
 		int result = csService.csReply_modify(vo);
 
