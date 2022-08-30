@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="true" %>
+<%@ page import="edu.howf.vo.UserVO" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -396,8 +397,24 @@ else {
 
 	function commentWrite(){
 		var content = $("#content");
+		var login = '<%= (UserVO)session.getAttribute("login") %>';
+		var loginRole = '${login.role}';
 		
-		if(content.val() == ""){
+		if(login == "null"){
+			modalFn("로그인이 필요합니다.");
+			setTimeout(function(){
+				modalClose();
+				return;
+			},1000);
+		}
+		else if(loginRole != 'normal'){
+			modalFn("일반회원만 글쓰기가 가능합니다.");
+			setTimeout(function(){
+				modalClose();
+				return;
+			},1000);
+		}
+		else if(content.val() == ""){
 			modalFn("댓글 내용을 작성해주세요");
 			setTimeout(function(){
 				modalClose();
