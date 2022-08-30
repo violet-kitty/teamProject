@@ -143,11 +143,13 @@ else {
 								
 					<div class="row btnarea">
 						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login.midx == story.midx}">
+							<c:if test="${login != null && login.midx == story.midx}">
 								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
 								<button onclick="location.href='storyModify.do?sbidx=${story.sbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
 							</c:if>
-							<button onclick="location.href='storyWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+							<c:if test="${login != null && login.role == 'normal'}">
+								<button onclick="location.href='storyWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+							</c:if>
 						</div>
 						<div class="col-6 d-flex justify-content-end">
 							<%-- <button onclick="shareSNS('facebook')">

@@ -104,7 +104,7 @@ else {
 														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 													</c:if>
 													<span class="">${event.nickname}</span>
-													<span class="hfc-semibold hfc-darkgray"> ${event.wdate}</span>
+													<span class="hfc-semibold hfc-darkgray"> ${event.startday} ~ ${event.endday}</span>
 												</p>
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">

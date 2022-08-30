@@ -1058,7 +1058,7 @@ else {
 		var thisUrl = document.URL;
 		console.log(thisUrl);
 		
-		var snsTitle = "${stay.title}";
+		var snsTitle = "${stay.name}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -1068,6 +1068,8 @@ else {
 	        window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
 		}
 		else if(sns=='kakao'){
+			var photo = "${fn:split(stay.photo,',')[0]}";
+			console.log(photo);
 			Kakao.init('35c7c8bf307063859390df8e61188fbf');
 			//Kakao.isInitialized();
 			Kakao.Link.createDefaultButton({
@@ -1076,7 +1078,7 @@ else {
 				content:{
 					title:snsTitle,
 					description: snsTitle,
-					imageUrl:"http://jjezen.cafe24.com/howf/stay/displayFile.do?fileName=${fn:split(stay.photo,',')[0]}",
+					imageUrl:'http://jjezen.cafe24.com/howf/stay/displayFile.do?fileName='+photo,
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl

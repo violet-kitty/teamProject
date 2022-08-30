@@ -240,7 +240,7 @@
 		var thisUrl = document.URL;
 		console.log(thisUrl);
 		
-		var snsTitle = "${howf.title}";
+		var snsTitle = "${cv.title}";
 		if(sns=='facebook'){
 			var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
 	        window.open(url, "", "width=486, height=286");
@@ -256,9 +256,9 @@
 				container:'#kakaoBtn',
 				objectType:'feed',
 				content:{
-					title:'${howf.title}',
-					description: '${howf.title}',
-					imageUrl:'http://jjezen.cafe24.com/howf/howf/displayFile.do?fileName=${howf.filename}',
+					title:snsTitle,
+					description:snsTitle,
+					imageUrl:thisUrl,
 					link:{
 						mobileWebUrl:thisUrl,
 						webUrl:thisUrl
