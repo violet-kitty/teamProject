@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF추천</title>
+<title>HOWF마이페이지</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -29,7 +29,7 @@
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
@@ -165,10 +165,8 @@
 											<div class="writerinfo">
 												<div class="small"><img src="<%=request.getContextPath()%>/image/icon/heart.png"><span class="hfc-semibold hfc-darkgray">${v.heart}</span></div>
 												<div class="small"><img src="<%=request.getContextPath()%>/image/icon/star.png"><span class="hfc-semibold hfc-darkgray">${v.star}</span></div>
-											</div>
-											<div class="caption">
-												<h4>${v.name}</h4>
-												<p>${v.addr} ${v.detailaddr}</p>
+												<h4 class="hfc-bold hfc-blackgray">${v.name}</h4>
+												<p class="hfc-bold">${v.addr} ${v.detailaddr}</p>
 											</div>
 										</div><!-- /.thumbnail -->
 									</a>

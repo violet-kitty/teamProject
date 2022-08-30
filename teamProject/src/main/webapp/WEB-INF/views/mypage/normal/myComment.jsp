@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>페이지 제목</title>
+<title>HOWF마이페이지</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -22,13 +22,21 @@
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 <!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
+<style>
+	.tabby button{
+		border:none;
+		background:none;
+		padding:12px;
+		font-size:1.2em;
+	}
+</style>
 </head>
 <body>
 	<div id="wrap" class="boardlist">
@@ -42,7 +50,7 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
 			<div class="contents content01">
@@ -56,14 +64,12 @@
 					</div>
 					
 					<!-- 게시판 별 탭 -->
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a class="nav-link" id="reviewTab" aria-current="page" href="myComment.do?page=1&sortType=review">리뷰</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="commentTab" aria-current="page" href="myComment.do?page=1&sortType=comment">댓글</a>
-						</li>
-					</ul>
+					<div class="row tabby">
+						<div class="col">
+							<button id="reviewTab" style="color:#D43654; border-bottom:4px solid #D43654;" onclick="location.href='myComment.do?page=1&sortType=review'">리뷰</button>
+							<button id="commentTab" onclick="location.href='myComment.do?page=1&sortType=comment'">댓글</button>
+						</div>
+					</div>
 					
 					
 					<!-- 내 리뷰, 댓글 목록 보여주기 -->
@@ -210,14 +216,18 @@
 		if(type == 'review'){
 			$("#reviewArea").show();
 			$("#commentArea").hide();
-			$("#reviewTab").addClass("active");
-			$("#commentTab").removeClass("active");
+			$("#reviewTab").css("color","#D43654");
+			$("#reviewTab").css("border-bottom","4px solid #D43654");
+			$("#commentTab").css("color","black");
+			$("#commentTab").css("border","none");
 		}
 		else if(type == 'comment'){
 			$("#reviewArea").hide();
 			$("#commentArea").show();
-			$("#reviewTab").removeClass("active");
-			$("#commentTab").addClass("active");
+			$("#commentTab").css("color","#D43654");
+			$("#commentTab").css("border-bottom","4px solid #D43654");
+			$("#reviewTab").css("color","black");
+			$("#reviewTab").css("border","none");
 		}
 	});
 </script>	
