@@ -9,7 +9,6 @@
 		<![CDATA[INSERT INTO notice(
 					title
 					,content
-					,writer
 					,midx
 					,filename
 					,wdate
@@ -19,7 +18,6 @@
 		VALUES	(
 					#{title}
 					,#{content}
-					,#{writer}
 					,#{midx}
 					,#{filename}
 					,now()
@@ -64,7 +62,7 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		 	 AND n.title like concat('%',#{searchValue},'%')
 		 	</if>
-			 <if test='searchType != null and searchType.equals("contentWriter")'>
+			 <if test='searchType != null and searchType.equals("content")'>
 		  	 AND n.content like concat('%',#{searchValue},'%')
 		   	 OR u.name like concat('%',#{searchType},'%')
 			 </if>
