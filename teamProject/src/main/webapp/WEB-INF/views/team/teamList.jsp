@@ -154,7 +154,7 @@
 											<div class="small">
 												<!-- 조회수, 참여자 -->
 												<img src="<%=request.getContextPath()%>/image/icon/eye.png"><span class="hfc-semibold hfc-darkgray">${tv.cnt}</span>
-												<img src="<%=request.getContextPath()%>/image/button/menu5.png"><span class="hfc-semibold hfc-darkgray">${tv.people_cnt}</span>
+												<img src="<%=request.getContextPath()%>/image/icon/people.png" style="vertical-align:bottom"><span class="hfc-semibold hfc-darkgray">${tv.people_cnt}</span>
 											</div>
 										</div>
 										<div class="caption">
