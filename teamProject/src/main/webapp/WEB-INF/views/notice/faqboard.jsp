@@ -51,10 +51,10 @@
 	    	var $dl = $dd.prev();
 	    	
 	    	if ($dd.css("display") == "none") {
-	      	$dl.find("span").html("▼");
+	      		$dl.find("span").html("▼");
 	    	
-	      } else {
-	      	$dl.find("span").html("▲");
+	      	} else {
+	      		$dl.find("span").html("▲");
 	      }
 	    });
 	  });
@@ -72,13 +72,13 @@
 		$("dt").off('click');
 		var mdf="";
 		
-		mdf += "제목쓰";
+		mdf += "제목 : ";
 		mdf += "<input type='text' id='title' value='"+title+"'>";
 		mdf += "<br>";
 		$("#title"+index).html(mdf);
 		
 		mdf = "";
-		mdf += "내용쓰";
+		mdf += "내용 : ";
 		mdf += "<textarea id='content'>";
 		mdf += content;
 		mdf += "</textarea>";
@@ -86,7 +86,7 @@
 		mdf += "수정";
 		mdf += "</button>";
 		mdf += '<button type="button" onclick="'+c+'">';
-		mdf += "취소쓰";
+		mdf += "취소";
 		mdf += "</button>";
 		
 		$("#content"+index).html(mdf);
@@ -97,7 +97,7 @@
 		var mdf = "";
 		
 		mdf += "<label id='ti"+index+"'>"+title+"</label>";
-		mdf += "<span>▼</span>";
+		mdf += "<span style='display: block; float: none;'>▼</span>";
 		
 		$("#title"+index).html(mdf);
 		
@@ -137,7 +137,7 @@
 	//삭제
 	function del(fbidx){
 		$("#fbidx").val(fbidx);
-		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","delFn");
+		modalFn("정말 삭제하시겠습니까?","삭제","FAQ","취소","delFn");
 	}
 	function delFn(){
 		modalClose();
@@ -174,11 +174,11 @@
 		var content = $("#content").val();
 		
 		mdf += "<label id='ti"+index+"'>"+title+"</label>";
-		mdf += "<span>▼</span>";
+		mdf += "<span style='display: block; float: none;'>▼</span>";
 		
 		$("#title"+index).html(mdf);
 		
-		mdf = "<label id='co"+index+"'>"+content+"</label>";
+		mdf = "<label id='co"+index+"' style='word-break: break-all;'>"+content+"</label>";
 		mdf += '<br>';
 		<c:if test="${login!=null && login.role=='admin'}">
 		mdf += '<div class="btnarea">';
@@ -200,11 +200,11 @@
 		    	var $dl = $dd.prev();
 		    	
 		    	if ($dd.css("display") == "none") {
-		      	$dl.find("span").html("▼");
-		    	
-		      } else {
-		      	$dl.find("span").html("▲");
-		      }
+		      		$dl.find("span").html("▼");
+		    	}
+		    	else {
+		      		$dl.find("span").html("▲");
+		      	}
 		    });
 		  });
 	}
@@ -291,12 +291,14 @@ function modify(index){
 								<!-- 검색영역 : PC버전 -->
 								<div class="row rightbox onlypc-inline">
 									<!-- 검색창 -->
-									<form name="frm2" action="CS_list.do" method="post">
+									<form name="frm2" action="<%=request.getContextPath()%>/notice/faqboard.do" method="post">
 										<div class="search">
 											<select name="searchType">
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
-												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
-											</select> <input type="text" name="searchValue"   placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> <input type="submit" value="검색">
+												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
+											</select>
+											<input type="text" name="searchValue" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!"<c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
+											<input type="submit" value="검색">
 										</div>
 									</form>
 								</div><!-- .rightbox onlypc-inline-->
@@ -315,11 +317,11 @@ function modify(index){
 								<!-- 검색영역 : tablet사이즈 이하 버전 -->
 								<div class="row rightbox onlytablet">
 									<!-- 검색창 -->
-									<form name="frm2" action="howfList.do" method="post">
+									<form name="frm2" action="<%=request.getContextPath()%>/notice/faqboard.do" method="post">
 										<div class="search">
 											<select name="searchType">
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
-												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
 											</select> 
 											<input type="text" name="searchValue"  placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> 
 											<input type="submit" value="검색">
@@ -344,10 +346,11 @@ function modify(index){
 											
 												<!-- 타이틀 -->
 												<dt class="listtitle hfc-bold" id="title${vo.fbidx}">
-													<label id="ti${vo.fbidx}">${vo.title}</label> <span>▼</span></dt>
+													<label id="ti${vo.fbidx}">${vo.title}</label><span style="display: block; float: none;">▼</span>
+												</dt>
 												<!-- 내용펼치기 -->
 												<dd class="listcontent hfc-medium" id="content${vo.fbidx}">
-												<label id="co${vo.fbidx}">${fn:replace(vo.content, newLineChar, "<br/>")}</label>
+												<label id="co${vo.fbidx}" style='word-break: break-all;'>${fn:replace(vo.content, newLineChar, "<br/>")}</label>
 
 
 												<c:if test="${login!=null && login.role=='admin'}">

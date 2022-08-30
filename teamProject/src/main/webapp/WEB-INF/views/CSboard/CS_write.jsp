@@ -88,7 +88,7 @@
 					<!-- 제목 영역 -->
 							<div class="pageinfo">
 								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 작성</h1></a>
+									<a id="cancel2" href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 작성</h1></a>
 								</div>
 							</div>
 
@@ -129,7 +129,7 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a id="cancel2" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+								<a id="cancel3" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -179,6 +179,20 @@
 	    });
 		
 		$("#cancel2").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel3").click(function(){
 			if($("#title").val() != ""){
 				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "1:1 문의 등록", "취소");
 				return false;

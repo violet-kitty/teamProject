@@ -78,10 +78,6 @@ public class FaqController {
 		vo.setTitle(title);
 		vo.setContent(content);
 		
-		System.out.println("title:"+vo.getTitle());
-		System.out.println("content:"+vo.getContent());
-
-		
 		int result = faqService.faqmodify(vo);
 		
 		
@@ -93,16 +89,15 @@ public class FaqController {
 	@RequestMapping(value = "/notice/delfaq.do" , method = RequestMethod.GET)
 	public int delfaq(int fbidx){
 		
-		System.out.println("삭제전 좀가져와라 답답하다 너 진짜");
 		int result = faqService.delfaq(fbidx);
-		System.out.println("삭제후");
 		
 		return result;
 	}
 	
 	//리스트
-	@RequestMapping(value = "/notice/faqboard.do" ,method = {RequestMethod.GET ,RequestMethod.POST})
-	public String list(SearchVO searchVO , Model model, HttpServletRequest request ,HttpSession session) throws IOException {
+	@RequestMapping(value = "/notice/faqboard.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String list(SearchVO searchVO, Model model, HttpServletRequest request, HttpSession session) throws IOException {
+		
 		session = request.getSession();
 		int page = searchVO.getPage();
 		
@@ -117,9 +112,9 @@ public class FaqController {
 		List<FaqVO> list = faqService.list(searchVO);
 		searchVO.setPage(page);
 		
-		model.addAttribute("list",list);
-		model.addAttribute("searchVO",searchVO);
-		model.addAttribute("pageMaker",pageMaker);
+		model.addAttribute("list", list);
+		model.addAttribute("searchVO", searchVO);
+		model.addAttribute("pageMaker", pageMaker);
 
 
 		return "notice/faqboard";

@@ -89,81 +89,65 @@
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
 					</a>
+					<!-- /pagehead -->
 					
 					<!-- 뷰 -->
 					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
 					<div class="clist">
 						
-							<!-- C리스트 14. 반복 -->
-							<div class="thumbnailitem">
-								
-									<div class="thumbnail">
-											
-											<div class="writerinfo">
-												<p>
-													
-													<span class="cate" style="background: #A4C266; color: white;">${cv.divsn}</span>
-													
-													<span class="hfc-semibold hfc-darkgray">${cv.nickname} | ${cv.wdate}</span>
-												</p>
-												<div class="small">
-													<div class="col-lg-6 d-flex justify-content-end">
-														
-																<img src="<%=request.getContextPath()%>/image/icon/eye.png">
-															
-														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${cv.cnt}</span>
-													</div>
-												</div>
-											</div>
-											<div class="caption">
-												<h4>${cv.title}</h4>
-											</div>
+						<!-- C리스트 14. 반복 -->
+						<div class="thumbnailitem">
+							
+							<div class="thumbnail">
+									
+								<div class="writerinfo">
+									<p>
+										<span class="cate" style="background: #A4C266; color: white;">${cv.divsn}</span>
+										<span class="hfc-semibold hfc-darkgray">${cv.nickname} | ${cv.wdate}</span>
+									</p>
+									<div class="small">
+										<div class="col-lg-6 d-flex justify-content-end">
+											<img src="<%=request.getContextPath()%>/image/icon/eye.png">
+											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${cv.cnt}</span>
+										</div>
+									</div>
+								</div>
+								<div class="caption">
+									<h4>${cv.title}</h4>
+								</div>
 
-											<!-- 태그 -->
-											<div class="row">
-												<div class="col hfc-darkgray" id="tagArea"></div>
-											</div>
-											<hr class="middleline">
-											<!-- 글 내용 -->
-											<div class="row contentrow">
-												<div class="col" id="howfContent" style="word-break: break-all;">
-													${cv.content}
-												</div>
-												<c:if test="${cv.filename != null}">
-												<a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a>
-												</c:if>
-											</div>
-								
-					<div class="row btnarea">
-						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login.midx == cv.midx || login.role == 'admin'}">		
-							<button onclick="delOk()" id="delete" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-							<button value="수정" onclick="location.href='CS_modify.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
-							</c:if>
-							<button onclick="location.href='CSboard/CS_write.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
-							<c:if test="${login.role == 'admin' && cvr == null}">
-							<button id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='CS_replyWrite.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/reply.png"></button>
-						</c:if>
-						</div>
-						<div class="col-6 d-flex justify-content-end">
-							<%-- <button onclick="shareSNS('facebook')">
-								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
-							</button>
-							<button onclick="shareSNS('twitter')">
-								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
-							</button> --%>
-							<button onclick="shareSNS('kakao')" id="kakaoBtn">
-								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
-							</button>
-						</div>
-					</div>
+								<!-- 태그 -->
+								<div class="row">
+									<div class="col hfc-darkgray" id="tagArea"></div>
+								</div>
+								<hr class="middleline">
+								<!-- 글 내용 -->
+								<div class="row contentrow">
+									<div class="col" id="howfContent" style="word-break: break-all;">
+										${cv.content}
+									</div>
+								</div>
 					
-
-								
-								
+								<div class="row btnarea">
+									<div class="col-6 d-flex justify-content-start">
+										<c:if test="${login.midx == cv.midx || login.role == 'admin'}">		
+											<button onclick="delOk()" id="delete" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+											<button value="수정" onclick="location.href='CS_modify.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+										</c:if>
+										<c:if test="${login.role == 'admin' && cvr == null}">
+										<button id="reply_btn" type="button" value="답변" class="btn1" onclick="location.href='CS_replyWrite.do?csbidx=${cv.csbidx}'"><img src="<%=request.getContextPath()%>/image/button/reply.png"></button>
+									</c:if>
+									</div>
+									<div class="col-6 d-flex justify-content-end">
+										<button onclick="shareSNS('kakao')" id="kakaoBtn">
+											<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+										</button>
+									</div>
+								</div>
+							
 							</div><!-- /.thumbnail -->
-										
-							</div><!--/. thumbnailitem -->
+									
+						</div><!--/. thumbnailitem -->
 					
 					</div>
 					<!-- /.clist -->
@@ -172,7 +156,6 @@
 					<h3 class="replycon">답변내용</h3>
 
 					<c:if test="${cvr != null}">
-
 						<div class="replies">
 							<div><p>${cvr.content}</p></div>
 							<div style="text-align:right; margin-top:30px;"><span>${cvr.wdate}</span><br><p>HOWF Support</p></div>
@@ -184,13 +167,10 @@
 									<button value="수정" onclick="location.href='CS_replyModify.do?csbidx=${cvr.csbidx}'">
 										<img src="<%=request.getContextPath()%>/image/button/edit.png">
 									</button>
-
 								</div>
 							</c:if>
-
 						</div>
 					</c:if>
-
 					<hr class="lastline">
 					
 					<a class=" onlypc" href="CS_list.do">
@@ -200,12 +180,9 @@
 					</a>
 					<!-- 리스트 카드 -->
 					
-					
-		
-					
 				</div><!-- /.container -->
+				
 			</div><!-- /.contents -->
-			<!-- /pagehead -->
 			
 			<!-- banner --><%@include file="../banner.jsp"%>
 			
@@ -228,14 +205,15 @@
 	$(function(){	
 		
 		$("#delete").click(function(){
-			modalFn("삭제하시면 복구할 수 없습니다. 정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 삭제", "취소");		
+			modalFn("삭제하시면 복구할 수 없습니다. 정말로 삭제하시겠습니까?", "확인", "1:1 문의 삭제", "취소");		
 		});
 		
 		$("#reply_delete").click(function(){
-			modalFn("정말로 삭제하시겠습니까?", "확인", "1:1 고객문의 답변 삭제", "취소", "CS_replyDelete");		
+			modalFn("정말로 삭제하시겠습니까?", "확인", "1:1 문의 답변 삭제", "취소", "CS_replyDelete");		
 		});
 		
 	});
+	
 	function shareSNS(sns){
 		var thisUrl = document.URL;
 		console.log(thisUrl);

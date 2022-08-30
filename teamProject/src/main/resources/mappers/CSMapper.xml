@@ -61,6 +61,7 @@
 			<if test="searchType != null and searchType.equals('total')">
 				AND (cs.title like concat('%', #{searchValue}, '%')
 				OR   cs.content like concat('%', #{searchValue}, '%')
+				OR   cs.divsn like concat('%', #{searchValue}, '%')
 				OR   u.nickname like concat('%', #{searchValue}, '%'))
 			</if>
 			<if test="searchType != null and searchType.equals('divsn')">

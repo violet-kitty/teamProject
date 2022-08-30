@@ -110,13 +110,13 @@
 									<form name="frm2" action="CS_list.do" method="get">
 										<div class="search">
 											<select name="searchType">
-												<option value="total">전체</option>
-												<option value="divsn">문의유형</option>
-												<option value="title">제목</option>
-												<option value="content">내용</option>
-												<option value="nickname">닉네임</option>
+												<option value="total" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'total'}">selected</c:if>>전체</option>
+												<option value="divsn" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'divsn'}">selected</c:if>>문의유형</option>
+												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
+												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
+												<option value="nickname" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'nickname'}">selected</c:if>>닉네임</option>
 											</select>
-											<input type="text" name="searchValue">
+											<input type="text" name="searchValue" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
 											<input type="submit" value="검색">
 										</div>
 									</form>
