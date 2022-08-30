@@ -40,9 +40,7 @@
 <!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
 
 <style>
-input[type=checkbox]{
-	zoom: 1.1;
-}
+input[type=checkbox]{zoom: 1.1;}
 </style>
 </head>
 <body>
@@ -64,7 +62,7 @@ input[type=checkbox]{
 			
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+					<a id="cancel" class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -72,7 +70,7 @@ input[type=checkbox]{
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이 작성</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/team/teamList.do"><h1>너나들이 작성</h1></a>
 						</div>
 					</div>
 					
@@ -106,7 +104,7 @@ input[type=checkbox]{
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 					<div class="row buttonarea">
 						<div class="col-lg-6">
-							<a class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
+							<a id="cancel3" class=" onlypc" href="<%=request.getContextPath()%>/team/teamList.do">
 								<div class="backto lastbackto">
 									<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 								</div>
@@ -114,7 +112,6 @@ input[type=checkbox]{
 						</div>
 						<div class="col-lg-6 okbutton">
 							<button type="button" class="bluebtn" id="btn_write">글 작성 완료</button>
-							<button type="button" class="graybtn" id="btn_cancel">글 작성 취소</button>
 						</div>
 					</div><!-- row end -->
 					<!-- 리스트 카드 -->
@@ -149,22 +146,22 @@ input[type=checkbox]{
 		modalClose();
 		var frm = $("#form1").serialize();
 		$.ajax({
-			url:	"teamWrite.do",
-			data:frm,
-			type:"post",
-			success:	function(data){
+			url : "teamWrite.do",
+			data : frm,
+			type : "post",
+			success : function(data){
 				createChat(data);
 				setTimeout(function(){
+					modalClose();
 					modalFn("글이 등록되었습니다");
 					setTimeout(function(){
 						modalClose();
-						location.href="teamView.do?tidx="+data;
+						location.href = "teamView.do?tidx="+data;
 					},1000);
 				},1000);
 			}
 				
-		})
-		
+		});
 		
 	}
 	
@@ -232,15 +229,45 @@ input[type=checkbox]{
 			
 		});
 	
-		$("#btn_cancel").click(function(){
+		$("#cancel").click(function(){
 			if($("#title").val() != ""){
 				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
 			}
 			else if($("#summernote").val() != ""){
 				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
 	    	}
 	    	else{
-				history.back();
+				location.href = "/team/teamList.do";
+			}
+		});
+		
+		$("#cancel2").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
+	    	}
+	    	else{
+				location.href = "/team/teamList.do";
+			}
+		});
+		
+		$("#cancel3").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "너나들이 글 등록", "취소");
+				return false;
+	    	}
+	    	else{
+				location.href = "/team/teamList.do";
 			}
 		});
 		

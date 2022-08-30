@@ -73,7 +73,7 @@
 				<div class="container" id="featured-2">
 					
 					<!-- pagehead  -->
-					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.origincsbidx}&origincsbidx=${cv.origincsbidx}">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -83,29 +83,17 @@
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}"><h1>1:1 문의 답변 수정</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.origincsbidx}&origincsbidx=${cv.origincsbidx}"><h1>1:1 문의 답변 수정</h1></a>
 						</div>
 					</div>
 					<!-- /제목 영역 -->
 					
 								<form id="form1" action="CS_replyModify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post">
 									
-									<!-- 카테고리 선택, 제목 입력 -->
-									<div class="row h-input">
-										<div class="col-2">
-											<input class="form-control" type="text" name="divsn" id="divsn" value="${cv.divsn}" readonly>
-										</div>
-										<div class="col-8">
-											<input class="form-control" type="text" name="title" id="title" value="${cv.title}">
-										</div>
-										<div class="col-2">
-											<input class="form-control" type="text" name="divsn" id="divsn" value="${cv.nickname}" readonly>
-										</div>
-									</div><!-- row end -->
-									
 									<!-- 에디터 -->
 									<div class="row h-input">
 										<div class="col">
+											<input type="hidden" name="title" value="${cv.title}">
 											<textarea id="summernote" name="content" class="tb_textarea">${cv.content}</textarea>
 										</div>
 									</div><!-- row end -->
@@ -116,7 +104,7 @@
 								<!-- CS_view로 돌아가기, 글 수정 버튼 -->
 								<div class="row buttonarea">
 									<div class="col-lg-6">
-										<a id="cancel2" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+										<a id="cancel3" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.origincsbidx}&origincsbidx=${cv.origincsbidx}">
 											<div class="backto lastbackto">
 												<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 											</div>
@@ -166,6 +154,24 @@
 	    });
 		
 		$("#cancel2").click(function(){
+			
+			var title = "${cv.title}";
+			var content = "${cv.content}";
+			
+			if($("#title").val() != title){
+				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
+				return false;
+	    	}
+			else if($("#summernote").val() != content){
+				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel3").click(function(){
 			
 			var title = "${cv.title}";
 			var content = "${cv.content}";

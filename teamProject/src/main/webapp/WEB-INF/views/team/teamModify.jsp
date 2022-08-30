@@ -39,17 +39,7 @@
 <!-- CSS3 - BoardTabWrite --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
 
 <style>
-.check_apply{
-	display: block;
-	width: 10%;
-	height: 100%;
-	color: white;
-	background-color: #54ACA8;
-	border: 1px solid white;
-}
-input[type=checkbox]{
-	zoom: 1.1;
-}
+input[type=checkbox]{zoom: 1.1;}
 </style>
 </head>
 <body>
@@ -72,7 +62,7 @@ input[type=checkbox]{
 				<div class="container" id="featured-2">
 				
 					<!-- pagehead  -->
-					<a class="onlypc" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -81,7 +71,7 @@ input[type=checkbox]{
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}"><h1>너나들이 수정</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}"><h1>너나들이 수정</h1></a>
 						</div>
 					</div>
 				
@@ -117,7 +107,7 @@ input[type=checkbox]{
 						<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class="onlypc" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}">
+								<a id="cancel3" class="onlypc" href="<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -126,7 +116,6 @@ input[type=checkbox]{
 							<div class="col-lg-6 okbutton">
 								<c:if test="${login.midx == tv.midx}">
 									<button type="button" class="bluebtn" onclick="btn_modify()">수정 완료</button>
-									<button type="button" class="graybtn" id="btn_cancel">수정 취소</button>
 								</c:if>
 							</div>
 						</div><!-- row end -->
@@ -176,19 +165,57 @@ input[type=checkbox]{
 			styleTags: ['h1']
 		});
 		
-		$("#btn_cancel").click(function(){
+		$("#cancel").click(function(){
 			
 			var title = '${tv.title}';
 			var content = '${tv.content}';
 			
 			if($("#title").val() != title){
 				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
 			}
 			else if($("#summernote").val() != content){
 				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
 			}
 	    	else{
-	    		history.back();
+	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
+	    	}
+		});
+		
+		$("#cancel2").click(function(){
+			
+			var title = '${tv.title}';
+			var content = '${tv.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
+			}
+	    	else{
+	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
+	    	}
+		});
+		
+		$("#cancel3").click(function(){
+			
+			var title = '${tv.title}';
+			var content = '${tv.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				return false;
+			}
+	    	else{
+	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
 	    	}
 		});
 		
