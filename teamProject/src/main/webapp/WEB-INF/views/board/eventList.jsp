@@ -71,7 +71,7 @@
 		<!-- Side -->
 		
 		<div class="right-container">
-			<c:if test="${login!=null && login.role=='official'}">
+			<c:if test="${login!=null && (login.role=='official' || login.role == 'admin')}">
 				<div class="docctrl onlypc">
 					<a href="<%=request.getContextPath()%>/event/eventWrite.do"><img src="<%=request.getContextPath()%>/image/button/add.png"></a>
 				</div>

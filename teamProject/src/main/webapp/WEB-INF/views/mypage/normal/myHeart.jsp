@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>페이지 제목</title>
+<title>HOWF마이페이지</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -22,13 +22,21 @@
 
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav3.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 <!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
+<style>
+	.tabby button{
+		border:none;
+		background:none;
+		padding:12px;
+		font-size:1.2em;
+	}
+</style>
 </head>
 <body>
 	<div id="wrap" class="boardlist">
@@ -42,7 +50,7 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
+		<div id="container" class="hbg-whitegray">
 
 			<!-- content01 -->
 			<div class="contents content01">
@@ -56,22 +64,14 @@
 					</div>
 					
 					<!-- 게시판 별 탭 -->
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a class="nav-link" id="howfTab" aria-current="page" href="myHeart.do?type=howf">HOWF 추천</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="storyTab" aria-current="page" href="myHeart.do?type=story">여행이야기</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="eventTab" aria-current="page" href="myHeart.do?type=event">지역 이벤트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="stayTab" aria-current="page" href="myHeart.do?type=stay">숙박 정보</a>
-						</li>
-					</ul>
-					
-					<br>
+					<div class="row tabby">
+						<div class="col">
+							<button id="howfTab" onclick="location.href='myHeart.do?type=howf'">HOWF추천</button>
+							<button id="storyTab" onclick="location.href='myHeart.do?type=story'">여행이야기</button>
+							<button id="eventTab" onclick="location.href='myHeart.do?type=event'">지역이벤트</button>
+							<button id="stayTab" onclick="location.href='myHeart.do?type=stay'">숙박정보</button>
+						</div>
+					</div>
 					
 					<div class="clist">
 					
@@ -228,16 +228,20 @@
 	var tabType = "${tabType}";
 	
 	if(tabType == "howf"){
-		$("#howfTab").addClass("active");
+		$("#howfTab").css("color","#D43654");
+		$("#howfTab").css("border-bottom","4px solid #D43654");
 	}
 	else if(tabType == "event"){
-		$("#eventTab").addClass("active");
+		$("#eventTab").css("color","#D43654");
+		$("#eventTab").css("border-bottom","4px solid #D43654");
 	}
 	else if(tabType == "story"){
-		$("#storyTab").addClass("active");
+		$("#storyTab").css("color","#D43654");
+		$("#storyTab").css("border-bottom","4px solid #D43654");
 	}
 	else if(tabType == "stay"){
-		$("#stayTab").addClass("active");
+		$("#stayTab").css("color","#D43654");
+		$("#stayTab").css("border-bottom","4px solid #D43654");
 	}
 	
 	

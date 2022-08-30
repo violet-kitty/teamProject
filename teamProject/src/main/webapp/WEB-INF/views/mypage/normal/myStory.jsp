@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>여행이야기</title>
+<title>HOWF마이페이지</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->

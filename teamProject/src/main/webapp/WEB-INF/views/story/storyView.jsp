@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>여행이야기</title>
+<title>HOWF여행이야기</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -143,7 +143,7 @@ else {
 								
 					<div class="row btnarea">
 						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login != null && login.midx == story.midx}">
+							<c:if test="${login != null && (login.midx == story.midx || login.role == 'admin')}">
 								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
 								<button onclick="location.href='storyModify.do?sbidx=${story.sbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
 							</c:if>

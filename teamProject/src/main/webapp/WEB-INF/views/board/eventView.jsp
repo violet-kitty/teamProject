@@ -143,11 +143,11 @@ else {
 								
 					<div class="row btnarea">
 						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login.midx == event.midx}">
+							<c:if test="${(login.midx == event.midx) || (login.role == 'admin')}">
 								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
 								<button onclick="location.href='eventModify.do?ebidx=${event.ebidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
 							</c:if>
-							<c:if test="${login != null && login.role == 'official'}">
+							<c:if test="${login != null && (login.role == 'official' || login.role == 'admin')}">
 							<button onclick="location.href='eventWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
 							</c:if>
 						</div>
