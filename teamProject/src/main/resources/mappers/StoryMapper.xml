@@ -94,6 +94,65 @@
 	</select>
 	
 	
+	<!-- Story 댓글 작성 -->
+	<insert id="commentWrite" parameterType="commentVO">
+		INSERT INTO comment(
+			  content
+			, type
+			, midx
+			, bidx
+			, wdate
+			, delyn
+		)
+		VALUES(
+			  #{content}
+			, 'story'
+			, #{midx}
+			, #{bidx}
+			, now()
+			, 'N'
+		)
+	</insert>
+	
+	
+	<!-- Story 댓글 리스트 -->
+	<select id="commentSelect" parameterType="searchVO" resultType="commentVO">
+		SELECT a.cbidx
+			, a.content
+			, a.midx
+			, a.wdate
+			, b.nickname
+			, b.img
+		FROM comment a, usertable b
+		WHERE a.midx = b.midx
+		AND a.bidx = #{bidx}
+		AND a.type = 'story'
+		AND a.delyn = 'N'
+		ORDER BY a.wdate desc
+		LIMIT #{page}, #{perPageNum}
+	</select>
+	
+	
+	<!-- Story 댓글 페이징 -->
+	<select id="commentCount" parameterType="int" resultType="int">
+		SELECT COUNT(cbidx)
+		FROM comment
+		WHERE type = 'story'
+		AND bidx = #{bidx}
+		AND delyn = 'N'
+	</select>
+	
+	
+	<!-- 댓글 찜 갯수 가져오기 -->
+	<select id="commentHeart" parameterType="int" resultType="int">
+		SELECT COUNT(hidx)
+		FROM heart
+		WHERE type = 'story'
+		AND bidx = #{bidx}
+		AND delyn = 'N'
+	</select>
+	
+	
 	<!-- Story 글 작성 (WRITE) -->
 	<insert id="storyWrite" parameterType="storyVO">
 	<![CDATA[

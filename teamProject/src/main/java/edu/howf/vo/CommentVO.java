@@ -6,6 +6,7 @@ public class CommentVO extends SearchVO{
 	private String content;
 	private String photo;
 	private int star;
+	private int heart;
 	private String type;
 	private String wdate;
 	private String delyn;
@@ -39,6 +40,12 @@ public class CommentVO extends SearchVO{
 	}
 	public void setStar(int star) {
 		this.star = star;
+	}
+	public int getHeart() {
+		return heart;
+	}
+	public void setHeart(int heart) {
+		this.heart = heart;
 	}
 	public String getType() {
 		return type;

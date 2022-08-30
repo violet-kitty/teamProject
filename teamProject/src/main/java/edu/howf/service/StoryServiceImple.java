@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.howf.dao.StoryDao;
 import edu.howf.vo.StoryVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 
@@ -48,6 +49,26 @@ public class StoryServiceImple implements StoryService{
 	}
 	
 	@Override
+	public List<CommentVO> commentSelect(SearchVO vo) {
+		return StoryDao.commentSelect(vo);
+	}
+
+	@Override
+	public int commentCount(int bidx) {
+		return StoryDao.commentCount(bidx);
+	}
+
+	@Override
+	public int commentHeart(int bidx) {
+		return StoryDao.commentHeart(bidx);
+	}
+	
+	@Override
+	public int commentWrite(CommentVO vo) {
+		return StoryDao.commentWrite(vo);
+	}
+	
+	@Override
 	public int heartInsert(HeartVO vo) {
 		return StoryDao.heartInsert(vo);
 	}
@@ -61,4 +82,5 @@ public class StoryServiceImple implements StoryService{
 	public int heartDup(HeartVO vo) {
 		return StoryDao.heartDup(vo);
 	}
+	
 }

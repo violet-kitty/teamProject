@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.howf.vo.StoryVO;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 
@@ -47,6 +48,23 @@ public class StoryDao {
 		return sqlSession.update(namespace+"storyDelete", sbidx);
 	}
 	
+	//댓글
+	public List<CommentVO> commentSelect(SearchVO vo){
+		vo.setPage((vo.getPage()-1)*vo.getPerPageNum());
+		return sqlSession.selectList(namespace+"commentSelect", vo);
+	}
+	
+	public int commentCount(int bidx) {
+		return sqlSession.selectOne(namespace+"commentCount", bidx);
+	}
+	
+	public int commentHeart(int bidx) {
+		return sqlSession.selectOne(namespace+"commentHeart", bidx);
+	}
+	
+	public int commentWrite(CommentVO vo) {
+		return sqlSession.insert(namespace+"commentWrite", vo);
+	}
 	
 	//좋아요
 	public int heartInsert(HeartVO vo) {
