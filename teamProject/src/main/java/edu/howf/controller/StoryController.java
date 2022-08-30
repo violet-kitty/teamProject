@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.howf.service.StoryService;
 import edu.howf.util.MediaUtils;
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.PageMaker;
 import edu.howf.vo.SearchVO;
@@ -122,7 +123,7 @@ public class StoryController {
 	
 	/* 글뷰 1. 여행이야기 뷰 */
 	@RequestMapping(value="/storyView.do")
-	public String storyView(int sbidx, Model model, HttpServletRequest request, HttpSession session) {
+	public String storyView(SearchVO vo, int sbidx, Model model, HttpServletRequest request, HttpSession session) {
 		
 		// 글뷰 3.  DB 내용 불러오기
 	    StoryVO storyVar = storyService.storyView(sbidx); // Mapper- DAO - Service 를 거쳐 DB에서 내용 받아옴
@@ -133,6 +134,7 @@ public class StoryController {
 		
 		// 글뷰 5. 만약 로그인 된 상태라면 찜한 여부 가져오기
 		if(login != null) {
+			vo.setMidx(login.getMidx());
 			HeartVO heart = new HeartVO();
 			heart.setMidx(login.getMidx());
 			heart.setBidx(storyVar.getSbidx());
@@ -141,11 +143,47 @@ public class StoryController {
 			model.addAttribute("heart", result);
 		}
 		
+		
+		/* 댓글 */
+		//댓글 페이징
+		vo.setBidx(sbidx);
+		int page = vo.getPage();
+		int cnt = storyService.commentCount(sbidx);
+		vo.setPerPageNum(5);
+		
+		PageMaker pm = new PageMaker();
+		pm.setSearch(vo);
+		pm.setTotalCount(cnt);
+		storyVar.setCnt(cnt);
+		
+		//댓글 가져오기
+		List<CommentVO> comment = storyService.commentSelect(vo);
+		vo.setPage(page);
+		
+		//댓글관련 변수들 화면으로 보내기
+		model.addAttribute("comment", comment);
+		model.addAttribute("search", vo);
+		model.addAttribute("pm", pm);
+		
+		
+		
 		// 글뷰 6. 화면에서 사용할 변수명 정해주기
 		model.addAttribute("story", storyVar); // "화면에서 보여주는 이름" , 변수
 		
 		// 글뷰 2. 리턴 뷰
 		return "story/storyView";
+	}
+	
+	
+	/* 댓글 쓰기 */
+	@ResponseBody
+	@RequestMapping("/commentWrite.do")
+	public int commentWrite(CommentVO vo, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		UserVO login = (UserVO)session.getAttribute("login");
+		vo.setMidx(login.getMidx());
+		
+		return storyService.commentWrite(vo);
 	}
 	
 	

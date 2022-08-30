@@ -2,6 +2,7 @@ package edu.howf.service;
 
 import java.util.List;
 
+import edu.howf.vo.CommentVO;
 import edu.howf.vo.HeartVO;
 import edu.howf.vo.SearchVO;
 import edu.howf.vo.StoryVO;
@@ -15,6 +16,11 @@ public interface StoryService {
 	public int storyWrite(StoryVO vo);
 	public int storyModify(StoryVO vo);
 	public int storyDelete(int sbidx);
+	
+	public List<CommentVO> commentSelect(SearchVO vo);
+	public int commentCount(int bidx);
+	public int commentHeart(int bidx);
+	public int commentWrite(CommentVO vo);
 	
 	public int heartInsert(HeartVO vo);
 	public int heartDelete(HeartVO vo);

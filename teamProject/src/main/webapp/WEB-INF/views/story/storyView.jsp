@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="true" %>
 
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardView공용세팅 --> <link href="<%=request.getContextPath()%>/css/boardView.css" rel="stylesheet">
-
+<!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
 
 
 <script>
@@ -141,33 +142,31 @@ else {
 												</div>
 											</div>
 								
-					<div class="row btnarea">
-						<div class="col-6 d-flex justify-content-start">
-							<c:if test="${login != null && (login.midx == story.midx || login.role == 'admin')}">
-								<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-								<button onclick="location.href='storyModify.do?sbidx=${story.sbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
-							</c:if>
-							<c:if test="${login != null && login.role == 'normal'}">
-								<button onclick="location.href='storyWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
-							</c:if>
-						</div>
-						<div class="col-6 d-flex justify-content-end">
-							<%-- <button onclick="shareSNS('facebook')">
-								<img src="<%=request.getContextPath()%>/image/button/sns5.png">
-							</button>
-							<button onclick="shareSNS('twitter')">
-								<img src="<%=request.getContextPath()%>/image/button/sns8.png">
-							</button> --%>
-							<button onclick="shareSNS('kakao')" id="kakaoBtn">
-								<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
-							</button>
-						</div>
-					</div>
-					
-
+											<div class="row btnarea">
+												<div class="col-6 d-flex justify-content-start">
+													<c:if test="${login != null && (login.midx == story.midx || login.role == 'admin')}">
+														<button onclick="delOk()"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+														<button onclick="location.href='storyModify.do?sbidx=${story.sbidx}'"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+													</c:if>
+													<c:if test="${login != null && login.role == 'normal'}">
+														<button onclick="location.href='storyWrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+													</c:if>
+												</div>
+												<div class="col-6 d-flex justify-content-end">
+													<%-- <button onclick="shareSNS('facebook')">
+														<img src="<%=request.getContextPath()%>/image/button/sns5.png">
+													</button>
+													<button onclick="shareSNS('twitter')">
+														<img src="<%=request.getContextPath()%>/image/button/sns8.png">
+													</button> --%>
+													<button onclick="shareSNS('kakao')" id="kakaoBtn">
+														<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+													</button>
+												</div>
+											</div>
 								
 								
-							</div><!-- /.thumbnail -->
+								</div><!-- /.thumbnail -->
 										
 							</div><!--/. thumbnailitem -->
 					
@@ -181,6 +180,76 @@ else {
 					</div>
 					</a>
 					<!-- 리스트 카드 -->
+					
+					<br><br><br>
+					<!-- 댓글 -->
+					<div class="contents hbg-whitegray">
+						<div>
+							<h1>댓글 ${story.cnt}</h1>
+							<!-- 댓글 쓰는 창 -->
+							<div>
+								<form id="commentFrm" class="row g-2">
+									<div class="col-11">
+										<textarea name="content" id="content" placeholder="생각을 공유해 보세요~!" class="form-control" style="resize:none;"></textarea>
+									</div>
+									<div class="col-1">
+										<button type="button" onclick="commentWrite()" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<br><br>
+						<!-- 댓글목록 -->
+						<div>
+						<c:forEach var="co" items="${comment}">
+							<div class="thumbnail hbshadow3">
+								<div class="writerinfo">
+									<c:if test="${co.img != null}">
+										<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${co.img});"></div>
+									</c:if>
+									<c:if test="${co.img == null}">
+										<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+									</c:if>
+									
+									<p>
+										<span class="hfc-darkgray">${co.nickname} </span>
+										<span class="hfc-semibold hfc-gray"> | ${co.wdate}</span>
+									</p>
+								</div>
+								<div class="caption">
+									<h4>${co.content}</h4>
+								</div>
+							</div>
+						</c:forEach>
+						</div>
+						
+						<br><br>
+						<!-- 댓글 페이징 -->
+						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
+						<div class="row pagenation">
+							<div class="col d-flex justify-content-center">
+								<c:if test="${pm.prev == true}">
+									<a class="hfc-gray hfc-bold" href="storyView.do?page=${pm.startPage-1}">◀</a>
+								</c:if>
+								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+								<c:choose>
+								<c:when test="${search.page != null && i == search.page}">
+									<a class="hfc-white hfc-bold hbg-pink mx-1" href="storyView.do?page=${i}">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a class="hfc-gray hfc-bold mx-1" href="storyView.do?page=${i}">${i}</a>
+								</c:otherwise>
+								</c:choose>
+								</c:forEach>
+								<c:if test="${pm.next == true}">
+									<a class="hfc-gray hfc-bold" href="storyView.do?page=${pm.endPage+1}">▶</a>
+								</c:if>
+							</div>
+						</div>
+						<!-- /페이징 -->
+						
+					</div>
 					
 					
 		
@@ -318,13 +387,48 @@ else {
 					modalFn("글이 삭제되었습니다.");
 					setTimeout(function(){
 						modalClose();
+						location.href="storyList.do";
 					},1500);
-					location.href="storyList.do";
 				}
 			}
 		});
 	}
 
+	function commentWrite(){
+		var content = $("#content");
+		
+		if(content.val() == ""){
+			modalFn("댓글 내용을 작성해주세요");
+			setTimeout(function(){
+				modalClose();
+				return;
+			},1000);
+		}
+		else {
+			$.ajax({
+				url:"commentWrite.do",
+				type:"post",
+				data:"content="+content.val()+"&bidx=${story.sbidx}",
+				success:function(data){
+					if(data == 1){
+						modalFn("댓글이 작성되었습니다");
+						setTimeout(function(){
+							modalClose();
+							location.reload();
+						},1000);
+					}
+					else {
+						modalFn("댓글 작성 에러");
+						setTimeout(function(){
+							modalClose();
+							return;
+						},1000);
+					}
+				}
+			});
+		}
+	}
+	
 	
 	function shareSNS(sns){
 		var thisUrl = document.URL;
