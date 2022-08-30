@@ -136,9 +136,9 @@
 										<div class="search">
 											<select name="searchType">
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
-												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용+작성자</option>
 											</select> 
-											<input type="text" name="searchValue"> <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
+											<input type="text" name="searchValue" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
 											<input type="submit" value="검색">
 										</div>
 									</form>
