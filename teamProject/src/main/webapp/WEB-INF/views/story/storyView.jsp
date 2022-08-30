@@ -204,7 +204,7 @@ else {
 						<!-- 댓글목록 -->
 						<div>
 						<c:forEach var="co" items="${comment}">
-							<div class="thumbnail hbshadow3">
+							<div class="thumbnail hbshadow3" style="padding:15px;">
 								<div class="writerinfo">
 									<c:if test="${co.img != null}">
 										<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${co.img});"></div>
@@ -213,7 +213,7 @@ else {
 										<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 									</c:if>
 									
-									<p>
+									<p style="display:inline-block;">
 										<span class="hfc-darkgray">${co.nickname} </span>
 										<span class="hfc-semibold hfc-gray"> | ${co.wdate}</span>
 									</p>
@@ -222,10 +222,11 @@ else {
 									<h4>${co.content}</h4>
 								</div>
 							</div>
+							<br>
 						</c:forEach>
 						</div>
 						
-						<br><br>
+						<br>
 						<!-- 댓글 페이징 -->
 						<!-- C페이징 01 : 페이징 paging 공간 만들기 -->
 						<div class="row pagenation">
