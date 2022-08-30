@@ -297,7 +297,7 @@ function modify(index){
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
 												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
 											</select>
-											<input type="text" name="searchValue" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!"<c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
+											<input type="text" name="searchValue" placeholder="검색어를 입력해 주세요"<c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
 											<input type="submit" value="검색">
 										</div>
 									</form>
@@ -323,7 +323,7 @@ function modify(index){
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
 												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
 											</select> 
-											<input type="text" name="searchValue"  placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> 
+											<input type="text" name="searchValue"  placeholder="검색어를 입력해 주세요" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>> 
 											<input type="submit" value="검색">
 										</div>
 									</form>

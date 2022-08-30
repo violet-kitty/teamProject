@@ -104,21 +104,19 @@
 								</div>
 
 								<!-- 검색영역 : PC버전 -->
-								<c:if test="${login.role == 'admin'}">
 								<div class="row rightbox onlypc-inline">
 									<!-- 검색창 -->
 									<form method="get" action="notice.do">
 										<div class="search">
 											<select name="searchType">
 												<option value="title" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'title'}">selected</c:if>>제목</option>
-												<option value="contentWriter" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+												<option value="content" <c:if test="${!empty searchVO.searchType and searchVO.searchType eq 'content'}">selected</c:if>>내용</option>
 											</select>
-											<input type="text" name="searchValue"> <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>
+											<input type="text" name="searchValue" <c:if test="${!empty searchVO.searchValue}">value="${searchVO.searchValue}"</c:if>>
 											<input type="submit" value="검색">
 										</div>
 									</form>
 								</div><!-- .rightbox onlypc-inline-->
-								</c:if>
 								<!-- / 검색영역 -->
 								
 								<!-- 타블렛사이즈만 보이는 글쓰기 버튼 -->

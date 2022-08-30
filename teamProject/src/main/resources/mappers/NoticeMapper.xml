@@ -46,9 +46,8 @@
 			<if test='searchType != null and searchType.equals("title")'>
 		 	 AND n.title like concat('%',#{searchValue},'%')
 		 	</if>
-			 <if test='searchType != null and searchType.equals("contentWriter")'>
+			 <if test='searchType != null and searchType.equals("content")'>
 		  	 AND n.content like concat('%',#{searchValue},'%')
-		   	 OR u.name like concat('%',#{searchType},'%')
 			 </if>
 			 ORDER BY nbidx desc
 			 
