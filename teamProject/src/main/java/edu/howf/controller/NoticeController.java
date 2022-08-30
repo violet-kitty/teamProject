@@ -52,18 +52,17 @@ public class NoticeController {
 	@Autowired
 	String uploadPath;
 	
-	
-	
 	//경로
 	@RequestMapping(value = "noticewrite.do", method = RequestMethod.GET)
 	public String insertnotice() {
 		
 		return "notice/noticewrite";
 	}
+	
 	//공지사항 등록
 	@ResponseBody
 	@RequestMapping(value = "noticewrite.do", method = RequestMethod.POST)
-	public int insertnotice(MultipartFile fileupload,NoticeVO vo,HttpServletResponse response,HttpServletRequest request, HttpSession session) throws IOException {
+	public int insertnotice(MultipartFile fileupload, NoticeVO vo, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
 		 
 		session = request.getSession();
 		UserVO login = (UserVO) session.getAttribute("login");
@@ -92,24 +91,11 @@ public class NoticeController {
 		int result = noticeService.insertnotice(vo);
 		
 		return result;
-		 
-		/*
-		 * response.setContentType("text/html;charset=utf-8"); PrintWriter pw =
-		 * response.getWriter();
-		 * 
-		 * if(result <= 0) { //성공 실패 여부
-		 * 
-		 * pw.append("<script>alert('등록 불가');location.href='notice.do';</script>");
-		 * pw.flush(); pw.close(); }else {
-		 * 
-		 * pw.append("<script>alert('등록 완료');location.href='notice.do';</script>");
-		 * pw.flush(); pw.close(); }
-		 */
 	}
 
 	//공지사항 리스트
 	@RequestMapping(value = "notice.do")
-	public String list(Model model ,SearchVO searchVO ,  HttpServletRequest request ,HttpSession session ,HttpServletResponse response) throws IOException {
+	public String list(Model model, SearchVO searchVO, HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
 		
 		int page = searchVO.getPage();
 		
@@ -129,7 +115,7 @@ public class NoticeController {
 	
 	//공지사항 상세보기
 	@RequestMapping(value = "noticeone.do", method = RequestMethod.GET)
-	public String selectone(HttpServletRequest request ,HttpServletResponse response ,int nbidx ,Model model) {
+	public String selectone(HttpServletRequest request, HttpServletResponse response, int nbidx, Model model) {
 		//쿠키생성
 		Cookie[] cookies = request.getCookies();
 		int viewer = 0;
@@ -159,10 +145,12 @@ public class NoticeController {
 		
 		return "notice/noticeone";
 	}
+	
 	public String filedown(HttpServletResponse response)  {
 		String path = "";
 		return "notice/noticeone";
 	}
+	
 	//수정 경로
 	@RequestMapping(value = "noticemodify.do", method = RequestMethod.GET)
 	public String noticemodify(Model model,int nbidx ) {

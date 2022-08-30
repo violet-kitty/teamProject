@@ -97,7 +97,7 @@
 		var mdf = "";
 		
 		mdf += "<label id='ti"+index+"'>"+title+"</label>";
-		mdf += "<span style='display: block; float: none;'>▼</span>";
+		mdf += "<span style='display: block; float: right;'>▼</span>";
 		
 		$("#title"+index).html(mdf);
 		
@@ -174,7 +174,7 @@
 		var content = $("#content").val();
 		
 		mdf += "<label id='ti"+index+"'>"+title+"</label>";
-		mdf += "<span style='display: block; float: none;'>▼</span>";
+		mdf += "<span style='display: block; float: right;'>▼</span>";
 		
 		$("#title"+index).html(mdf);
 		
@@ -346,7 +346,7 @@ function modify(index){
 											
 												<!-- 타이틀 -->
 												<dt class="listtitle hfc-bold" id="title${vo.fbidx}">
-													<label id="ti${vo.fbidx}">${vo.title}</label><span style="display: block; float: none;">▼</span>
+													<label id="ti${vo.fbidx}">${vo.title}</label><span style="display: block; float: right;">▼</span>
 												</dt>
 												<!-- 내용펼치기 -->
 												<dd class="listcontent hfc-medium" id="content${vo.fbidx}">

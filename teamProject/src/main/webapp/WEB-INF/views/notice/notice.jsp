@@ -157,7 +157,6 @@
 								<table border="1" class="table">
 									<tbody>
 										<tr>
-			
 											<th class="hfc-bold hfc-darkgray">번호</th>
 											<th class="hfc-bold hfc-darkgray">조회수</th>
 											<th class="hfc-bold hfc-darkgray">제목</th>
@@ -172,13 +171,11 @@
 										<c:set var="i" value="1"/>
 										<c:forEach var="vo" items="${list }">
 											<tr>
-												
-												<td class=" hfc-blackgray">${i}</td>
-												<td class=" hfc-blackgray">${vo.cnt}</td>
+												<td class="hfc-blackgray">${i}</td>
+												<td class="hfc-blackgray">${vo.cnt}</td>
 												<c:set var="i" value="${i+1}"/>
-												<td><a class=" hfc-blackgray hfc-semibold" href="noticeone.do?nbidx=${vo.nbidx}">${vo.title}</a></td>
-																			
-												<td class=" hfc-blackgray">${vo.wdate}</td>
+												<td><a class="hfc-blackgray hfc-semibold" href="noticeone.do?nbidx=${vo.nbidx}">${vo.title}</a></td>
+												<td class="hfc-blackgray">${vo.wdate}</td>
 											</tr>
 											</c:forEach>
 										</c:if>
@@ -222,10 +219,6 @@
 
 			</div>
 			<!-- / Tab 내용 컨텐츠 박스 -->
-
-
-
-
 
 			<!-- banner --><%@include file="../banner.jsp"%>
 
