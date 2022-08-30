@@ -15,7 +15,6 @@
 	 						,title
 	 						,divsn
 	 						,content
-	 						,filename
 	 						,wdate
 	 						,cnt
 	 						,delyn
@@ -26,7 +25,6 @@
 	 						,#{title}
 	 						,#{divsn}
 	 						,#{content}
-	 						,#{filename}
 	 						,now()
 	 						,0
 	 						,'N'
@@ -146,7 +144,6 @@
 				   ,cs.divsn
 				   ,cs.title
 				   ,cs.content
-				   ,cs.filename
 				   ,cs.wdate
 				   ,cs.cnt
 				   ,cs.delyn				   
@@ -166,7 +163,6 @@
 			SET    divsn = #{divsn}
 				   ,title = #{title}
 				   ,content = #{content}
-				   ,filename = #{filename}
 			WHERE  csbidx = #{csbidx}
 		</update>
 		

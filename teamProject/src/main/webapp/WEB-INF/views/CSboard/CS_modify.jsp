@@ -42,8 +42,6 @@
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
-
 </head>
 <body>
 	<div id="wrap" class="boardWrite cs cswrite">
@@ -74,7 +72,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -90,52 +88,51 @@
 					<!-- /제목 영역 -->
 						
 						<!-- 본문 -->
+						<!-- 폼 시작 -->
 						<form id="form1" action="CS_modify.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}" method="post" enctype="multipart/form-data">
-							<table class="tb1">
-								<tbody>
-									<tr>			
-										<td class="tb_category">문의유형</td>
-										<td>
-											<select name="divsn">
-												<option value="질문">문의유형 선택</option>
-												<option value="질문">질문</option>
-												<option value="환불">환불</option>
-												<option value="신고">신고</option>
-												<option value="계정">계정</option>
-												<option value="건의">건의</option>
-												<option value="기타">기타</option>
-											</select>
-										</td>
-									</tr>
-									<tr>				
-										<td class="tb_category">제목<span class="span_must_input">*</span></td>
-										<td style="padding-right: 9px;"><input type="text" name="title" value="${cv.title}" id="title" class="input_title"></td>					
-									</tr>
-									<tr>
-										<td class="tb_category">내용<span class="span_must_input">*</span></td>
-										<td><textarea class="tb_textarea" rows="30" name="content" style="resize: none;" id="summernote">${cv.content}</textarea></td>
-									</tr>
-									<tr>
-										<td class="tb_category">이미지 첨부 파일</td>
-										<td class="tb_filename">
-											<div><input type="file" name="file" id="file" class="file_btn"></div>
-										<c:if test="${cv.filename == null}">
-											<div id="div_img1" style="display:none"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
-											<div id="delArea" style="display: none;"></div>
-										</c:if>
-										<c:if test="${cv.filename != null}">
-											<div id="div_img2"><a href="displayFile.do?fileName=${cv.filename}"><img src="displayFile.do?fileName=${cv.filename}" id="img"></a></div>
-											<div id="delArea"><input type="button" id="btn_file_del" value="파일 삭제"></div>
-										</c:if>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="div2">
-								<input type="button" value="수정" class="btn1" onclick="ModifyFn()">
-								<input type="button" value="취소" class="btn1" id="cancel">
-							</div>			
-						</form>		
+							
+							<!-- 카테고리 선택, 제목 입력 -->
+							<div class="row h-input">
+								<div class="col-2">
+									<select id="divsn" class="form-select" name="divsn">
+										<option value="질문">문의유형</option>
+										<option value="질문">질문</option>
+										<option value="환불">환불</option>
+										<option value="신고">신고</option>
+										<option value="계정">계정</option>
+										<option value="건의">건의</option>
+										<option value="기타">기타</option>
+									</select>
+								</div>
+								<div class="col-10">
+									<input class="form-control" type="text" name="title" id="title" value="${cv.title}">
+								</div>
+							</div><!-- row end -->
+							
+							<!-- 에디터 -->
+							<div class="row h-input">
+								<div class="col">
+									<textarea id="summernote" name="content" class="tb_textarea">${cv.content}</textarea>
+								</div>
+							</div><!-- row end -->
+							
+						</form>
+						<hr class="lastline">
+						
+						<!-- CS_view로 돌아가기, 글 수정 버튼 -->
+						<div class="row buttonarea">
+							<div class="col-lg-6">
+								<a id="cancel2" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+									<div class="backto lastbackto">
+										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+									</div>
+								</a>
+							</div>
+							<div class="col-lg-6 okbutton">
+								<button type="button" class="bluebtn" onclick="ModifyFn()">수정 완료</button>
+							</div>
+						</div><!-- row end -->
+						
 								
 				</div><!-- /.container -->
 				
@@ -163,21 +160,38 @@
 			var content = '${cv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				return false;
 	    	}
-			else if($("#file").val() != ""){				
-				modalFn("첨부된 파일이 변경되었습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 수정", "취소");
+	    	else{
+    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    	}
+	    });
+		
+		$("#cancel2").click(function(){
+			
+			var title = '${cv.title}';
+			var content = '${cv.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				return false;
 			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				return false;
+	    	}
 	    	else{
     			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
 	    	}
 	    });
 		
 		$("#summernote").summernote({
-			height:300,
+			height:500,
 			minHeight: null,
 			maxHeight: null,
 			focus: false,

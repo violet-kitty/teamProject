@@ -3,14 +3,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->     
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF고객지원</title>
+<title>HOWF 고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- /summernote -->
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -24,8 +31,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
 <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
@@ -37,29 +42,13 @@
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- /summernote -->
-
+<style>
+.h-input h3 {line-height:36px;} 
+.h-input p {line-height:30px;} 
+</style>
 </head>
 <body>
 	<div id="wrap" class="boardWrite cs cswrite">
-		<!-- 모달예제 
-		<button onclick="modalex()">모달예제</button>
-		<script>
-		function modalex(){
-		
-			/* modalex("모달이 완료되었습니다");
-		      setTimeout(function(){
-		         modalClose();
-		      },3000); */
-		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
-			
-		}
-		</script>
-		-->
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
@@ -86,7 +75,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -95,7 +84,7 @@
 					<!-- 제목 영역 -->
 							<div class="pageinfo">
 								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1문의 답변작성</h1></a>
+									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 답변 작성</h1></a>
 								</div>
 							</div>
 
@@ -103,44 +92,19 @@
 					
 					<form id="form1" action="CS_replyWrite.do?origincsbidx=${cv.origincsbidx}" method="post">
 						
-<!-- 						카테고리 선택, 제목 입력
-						<div class="row h-input ">
-							<div class="col">
-								<input class="form-control" type="text" name="title" id="title" placeholder="제목을 작성해주세요">
-							</div>
-						</div>row end -->
-						
-						<style>
-						.h-input h3 {line-height:36px;} 
-						.h-input p {line-height:30px;} 
-						</style>
-						
 						<!-- 에디터 -->
 						<div class="row h-input">
 							<div class="col">
 								<h3>${cv.title}</h3>
-								<p><br>${cv.content}</p>
+								<div style="word-break: break-all;">${cv.content}</div>
 								<br>
 								<hr>
 								<br>
-								<input type="hidden" id="title" name="title" class="input_title" value="${cv.title}">
+								<input type="hidden" name="title" id="title" class="input_title" value="${cv.title}">
 								<textarea id="summernote" name="content"></textarea>
 							</div>
 						</div><!-- row end -->
 						
-						<!-- 에디터 -->
-						<div class="row h-input">
-							<div class="col">
-								<p>이미지 첨부 파일</p>
-							</div>
-							<div class="col">
-								<label><input type="file" id="file" name="file"></label>
-								<!-- div id="div_img" style="display: none;"><img id="img"></div>
-								<div id="div_img2" style="display: none;"><input type="button" id="img_del_btn" value="파일 삭제"></div> -->
-							</div>
-						</div><!-- row end -->
-						
-					<!-- /.clist -->
 					</form>
 					<hr class="lastline">
 				
@@ -148,7 +112,7 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_list.do">
+								<a id="cancel2" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -181,7 +145,7 @@
 	$(function(){
 		
 		$("#summernote").summernote({
-			height:300,
+			height:500,
 			minHeight: null,
 			maxHeight: null,
 			focus: false,
@@ -216,7 +180,23 @@
 				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
 	    	}
 	    	else{
-    			history.back();
+	    		location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+    		}
+	    });
+		
+		$("#cancel2").click(function(){
+			
+			var title = '${cv.title}';
+			var content = $("#summernote");
+			
+			if($("#title").val() != title){
+	    		modalFn("제목이 변경 되었습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    	}
+			else if(content.val() != ""){
+				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    	}
+	    	else{
+    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
     		}
 	    });
 		

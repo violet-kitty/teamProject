@@ -46,12 +46,12 @@
 <!-- summernote -->
 
 <style>
-					.replies button {border:none; background:none;}
-					.replies button img {width:30px;}
-					.btnarea {text-align:left; margin-top:20px;}
-					.replycon {margin-bottom:20px;}
-					.replies div {line-height:30px;}
-					</style>
+.replies button {border:none; background:none;}
+.replies button img {width:30px;}
+.btnarea {text-align:left; margin-top:20px;}
+.replycon {margin-bottom:20px;}
+.replies div {line-height:30px;}
+</style>
 
 </head>
 
@@ -102,7 +102,7 @@
 											<div class="writerinfo">
 												<p>
 													
-														<span class="cate" style="background: #A4C266; color: white;">${cv.divsn}</span>
+													<span class="cate" style="background: #A4C266; color: white;">${cv.divsn}</span>
 													
 													<span class="hfc-semibold hfc-darkgray">${cv.nickname} | ${cv.wdate}</span>
 												</p>
@@ -126,7 +126,7 @@
 											<hr class="middleline">
 											<!-- 글 내용 -->
 											<div class="row contentrow">
-												<div class="col" id="howfContent">
+												<div class="col" id="howfContent" style="word-break: break-all;">
 													${cv.content}
 												</div>
 												<c:if test="${cv.filename != null}">
