@@ -988,32 +988,29 @@ else {
 	
 	//리뷰 삭제
 	function reviewDeleteFn(cbidx){
+		$("#review"+cbidx).append("<input type='hidden' id='tmpIndex' value='"+cbidx+"'>");
 		modalFn("정말로 해당 리뷰를 삭제하시겠습니까?","삭제","삭제하기","취소","reviewDeleteModalFn");
-		var check = confirm("정말로 해당 리뷰를 삭제하시겠습니까?");
-		
-		if(check == false) return;
-		else if(check == true){
-			$.ajax({
-				url:"reviewDelete.do",
-				data:"cbidx="+cbidx,
-				type:"post",
-				async:false,
-				success:function(data){
-					if(data == 1){
-						modalFn("리뷰가 삭제되었습니다.");
-						setTimeout(function(){
-							modalClose();
-							reviewListAjax(1);
-							return;
-						},1000);
-					}
-				}
-			});
-			
-		}
 	}
 	function reviewDeleteModalFn(){
-		
+		var cbidx = $("#tmpIndex").val();
+		$.ajax({
+			url:"reviewDelete.do",
+			data:"cbidx="+cbidx,
+			type:"post",
+			async:false,
+			success:function(data){
+				if(data == 1){
+					modalClose();
+					modalFn("리뷰가 삭제되었습니다.");
+					setTimeout(function(){
+						$("#tmpIndex").remove();
+						modalClose();
+						reviewListAjax(1);
+						return;
+					},1000);
+				}
+			}
+		});
 	}
 	
 	//예약하기
