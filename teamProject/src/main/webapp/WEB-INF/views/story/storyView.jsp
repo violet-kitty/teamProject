@@ -182,11 +182,11 @@ else {
 					</a>
 					<!-- 리스트 카드 -->
 					
-					<br><br><br>
 					<!-- 댓글 -->
 					<div class="contents hbg-whitegray">
 						<div>
 							<h1>댓글 ${story.cnt}</h1>
+							<br>
 							<!-- 댓글 쓰는 창 -->
 							<div>
 								<form id="commentFrm" class="row g-2">
