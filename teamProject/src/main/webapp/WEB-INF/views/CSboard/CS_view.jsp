@@ -153,12 +153,11 @@
 					<!-- /.clist -->
 					<hr class="lastline">
 					
-					<h3 class="replycon">답변내용</h3>
-
 					<c:if test="${cvr != null}">
+						<h3 class="replycon">답변내용</h3>
 						<div class="replies">
 							<div><p>${cvr.content}</p></div>
-							<div style="text-align:right; margin-top:30px;"><span>${cvr.wdate}</span><br><p>HOWF Support</p></div>
+							<div style="text-align:right; margin-top:30px;"><span class="hfc-semibold hfc-darkgray">${cvr.wdate}</span><br><p class="hfc-semibold hfc-darkgray">HOWF Support</p></div>
 							<c:if test="${login.midx == cvr.midx || login.role == 'admin'}">
 								<div class="btnarea">
 									<button id="reply_delete" value="삭제">
@@ -170,9 +169,8 @@
 								</div>
 							</c:if>
 						</div>
+						<hr class="lastline">
 					</c:if>
-					<hr class="lastline">
-					
 					<a class=" onlypc" href="CS_list.do">
 					<div class="backto">
 						<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>

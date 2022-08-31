@@ -81,7 +81,7 @@ public class NoticeController {
 				System.out.println("된다!");
 				UUID uuid = UUID.randomUUID();
 				String filename = uuid.toString()+"_"+fileupload.getOriginalFilename();
-				fileupload.transferTo(new File(uploadPath,filename));
+				fileupload.transferTo(new File(uploadPath, filename));
 				vo.setFilename(filename);
 			}else {
 				System.out.println("하하하하하하");

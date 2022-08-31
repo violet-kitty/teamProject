@@ -116,6 +116,7 @@ public class CSController {
 
 	@RequestMapping(value = "/CS_view.do", method = RequestMethod.GET)
 	public String csListView(int csbidx, int origincsbidx, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
 		Cookie[] cookies = request.getCookies();
 		int visitor = 0;
 				
