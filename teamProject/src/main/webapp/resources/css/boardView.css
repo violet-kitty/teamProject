@@ -15,7 +15,7 @@
 .boardview .clist .writerinfo .small img { display:inline-block; width:16px;}
 .boardview .clist .writerinfo p span {font-size:16px; line-height:19px;}
 .boardview .clist .caption {margin-bottom:16px;}
-.boardview .clist .caption h4 {padding:0px; color:#3D3D3D; font: normal normal bold 40px/50px Noto Sans;}
+.boardview .clist .caption h4 {padding:0px; color:#3D3D3D; font: normal normal bold 32px/50px Noto Sans;}
 .boardview .clist #tagArea {font-size:16px; line-height:26px;}
 
 .boardview .middleline {margin:24px 0px 32px 0px;}
@@ -27,6 +27,7 @@
 .boardview .clist .btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
 .boardview .clist .btnarea img:hover {width:40px; border:none;}
 
+.boardview .commentarea {padding:2.5rem;}
 #howfContent {max-width:100%;}
 #howfContent img {max-width:100%;}
 

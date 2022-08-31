@@ -183,7 +183,7 @@ else {
 					<!-- 리스트 카드 -->
 					
 					<!-- 댓글 -->
-					<div class="contents hbg-whitegray">
+					<div class="contents commentarea hbg-whitegray hbshadow3">
 						<div>
 							<h1>댓글 ${story.cnt}</h1>
 							<br>
