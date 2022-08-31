@@ -44,12 +44,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
-
 <!-- 	modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>제목을 입력해 주세요','확인'); -->
 <!-- 	modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>내용을 입력해 주세요','확인'); -->
 <!-- 	modalFn('<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ynaicab2.json"  background="transparent"  speed="3"  style="width: 300px; height: 300px;"  autoplay></lottie-player><br> 작성이 완료되었습니다'); -->
 </head>
-
 <body>
 	<div id="wrap" class="boardWrite cs cswrite">
 	
@@ -301,11 +299,8 @@
 		$("#form1").submit();
 	}
 </script>
-
 <script>
 $('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
 </script>
-
 </body>
-
 </html>

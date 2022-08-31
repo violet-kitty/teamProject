@@ -224,7 +224,7 @@ input[type=checkbox]{zoom: 1.1;}
 				},1000);
 			}
 			else{
-				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "팀 페이지 등록", "취소", "teamWriteCheck");
+				modalFn("팀 페이지를 등록하시겠습니까?", "확인", "너나들이 글 등록", "취소", "teamWriteCheck");
 			}
 			
 		});

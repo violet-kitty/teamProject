@@ -201,18 +201,9 @@
 	
 	function ModifyFn(){
 		
-		var title = $("#title");
 		var content = $("#summernote");
 		
-		if(title.val() == ""){
-			modalFn("제목을 입력해주세요");
-			setTimeout(function(){
-				modalClose();
-				title.focus();
-				return;
-			}, 1000);
-		}
-		else if(content.val() == ""){
+		if(content.val() == ""){
 			modalFn("내용을 입력해주세요");
 			setTimeout(function(){
 				modalClose();
