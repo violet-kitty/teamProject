@@ -69,7 +69,7 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 	//타이틀과 확인 취소 버튼이 있는 모달
 	else if(length == 4){
 		if(btnMsg2 == '3days'){
-			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+			var html = '<div class="modal px-3" tabindex="-1" role="dialog" id="modalDiv">'
 					+ '<div class="modal-dialog hbshadow" role="document">'
 					+ '<div class="modal-content">'
 					+ '<h2 class="hfc-bold">'+title+'</h2>'
@@ -77,7 +77,7 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 					+ '<p class="text-muted">'+msg+'</p>'
 					+ '</div>'
 					+ '<div class="btnarea">'
-					+ '<button type="button" class="graybtn w-50" onclick="timeCloseModal()">3일 동안 안보기</button>'
+					+ '<button type="button" class="graybtn w-50" onclick="timeCloseModal()">3일 안보기</button>'
 					+ '<button type="button" class="bluebtn w-50" onclick="modalClose()">'+btnMsg1+'</button>'
 					+ '</div>'
 					+ '</div>'
@@ -85,7 +85,7 @@ function modalFn(msg, btnMsg1, title, btnMsg2, funcName){
 					+ '</div>';
 		}
 		else {
-			var html = '<div class="modal py-10 px-3" tabindex="-1" role="dialog" id="modalDiv">'
+			var html = '<div class="modal px-3" tabindex="-1" role="dialog" id="modalDiv">'
 					+ '<div class="modal-dialog hbshadow" role="document">'
 					+ '<div class="modal-content">'
 					+ '<h2 class="hfc-bold">'+title+'</h2>'

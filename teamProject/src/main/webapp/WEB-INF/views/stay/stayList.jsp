@@ -44,7 +44,7 @@
 		var jsonParse = JSON.parse(json);
 		var tagData = "";
 		$.each(jsonParse,function(idx){
-			tagData = tagData+jsonParse[idx]["value"]+"<span>&nbsp;&nbsp;</span>";
+			tagData = tagData+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 		})
 		
 		$("#staytag"+sidx).html(tagData);
@@ -57,7 +57,7 @@
 		var jsonParse = JSON.parse(json);
 		var tags = "";
 		$.each(jsonParse,function(idx){
-			tags = tags+jsonParse[idx]["value"]+" ";
+			tags = tags+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 		})
 		tagArray[index] = tags;
 	}
@@ -518,7 +518,7 @@
 	$(function(){
 		$("#carousel0").addClass("active");
 		for(var i=0;i<3;i++){
-			$("#tagArea"+i).text(tagArray[i]);
+			$("#tagArea"+i).html(tagArray[i]);
 		}
 		
 		if(${search.filter.people != null}){
