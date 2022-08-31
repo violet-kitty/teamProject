@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page session="true" %>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
     
 <!DOCTYPE html>
@@ -14,6 +14,7 @@
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!-- Slick Slider -->
@@ -40,26 +41,8 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 
 </head>
-
-
 <body>
-
 	<div id="wrap" class="boardlist cs cslist">
-	
-	<!-- 모달예제 
-		<button onclick="modalex()">모달예제</button>
-		<script>
-		function modalex(){
-		
-			/* modalex("모달이 완료되었습니다");
-		      setTimeout(function(){
-		         modalClose();
-		      },3000); */
-		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
-			
-		}
-		</script>
-		-->
 		
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>

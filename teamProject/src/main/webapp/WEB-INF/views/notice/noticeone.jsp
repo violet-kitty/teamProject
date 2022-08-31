@@ -1,8 +1,8 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
-    	pageEncoding="UTF-8"%>
-    <%@ page session="true" %>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page session="true" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,6 +13,11 @@
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- summernote -->
+<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
+<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
+<!-- summernote -->
 
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -40,12 +45,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 
-<!-- summernote -->
-<script src="<%= request.getContextPath() %>/js/summernote-ko-KR.js"></script>
-<script src="<%= request.getContextPath() %>/js/summernote-lite.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/summernote-lite.css">
-<!-- summernote -->
-
 <style>
 .btnarea {text-align:left; margin-top:20px;}
 </style>
@@ -53,7 +52,7 @@
 <script type="text/javascript">
 
 	function erase() {
-		modalFn("정말 삭제하시겠습니까?","삭제하기","삭제","취소","eraseFn");
+		modalFn("정말 삭제하시겠습니까?", "삭제", "공지사항 삭제", "취소", "eraseFn");
 	}
 
 	function eraseFn(){
@@ -71,19 +70,19 @@
 					return;
 					},1500);
 						
-				}else {
-						modalFn("삭제 실패");
-						setTimeout(function(){
-						modalClose();
-						return;
-						},1500);
+				}
+				else {
+					modalFn("삭제 실패");
+					setTimeout(function(){
+					modalClose();
+					return;
+					},1500);
 				}
 			}
 		});
 	}
 </script>
 </head>
-
 <body>
 	<div id="wrap" class="boardView cs csview">
 	
@@ -123,75 +122,72 @@
 					<!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
 					<div class="clist">
 						
-							<!-- C리스트 14. 반복 -->
-							<div class="thumbnailitem">
-								
-								<div class="thumbnail">
-											
-											<div class="writerinfo">
-												<p>
-													<span class="cate" style="background: #A4C266; color: white;">${vo.nbidx}</span>
-													<span class="hfc-semibold hfc-darkgray">| ${vo.wdate}</span>
-												</p>
-												<div class="small">
-													<div class="col-lg-6 d-flex justify-content-end">
-														<img src="<%=request.getContextPath()%>/image/icon/eye.png">
-														<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${vo.cnt}</span>
-													</div>
-												</div>
-											</div>
-											<div class="caption">
-												<h4>${vo.title}</h4>
-											</div>
-
-											<!-- 태그 -->
-											<div class="row">
-												<div class="col hfc-darkgray" id="tagArea"></div>
-											</div>
-											<hr class="middleline">
-											<!-- 글 내용 -->
-											<div class="row contentrow">
-												<div class="col" id="howfContent">
-													${vo.content}
-												</div>
-												<c:if test="${vo.filename != null}">
-													<br><br>
-													<p>첨부파일</p>
-													<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1">
-													<c:choose>
-													<c:when test="${fn:split(vo.filename,'.')[1] == 'jpg' || fn:split(vo.filename,'.')[1] == 'jpeg' || fn:split(vo.filename,'.')[1] == 'png' || fn:split(vo.filename,'.')[1] == 'gif' || fn:split(vo.filename,'.')[1] == 'bmp'}">
-														<img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}" style="max-width: 300px; max-height: 300px;">
-													</c:when>
-													<c:otherwise>
-													<c:set var="fileName" value="${fn:split(vo.filename,'_')}"/>
-														${fileName[fn:length(fileName)-1]}
-													</c:otherwise>
-													</c:choose>
-													</a>
-												</c:if>
-											</div>
-											<div class="row btnarea">
-												<div class="col-6 d-flex justify-content-start">
-												<c:if test="${login.midx == vo.midx }">
-													<button type="button" onclick="erase()" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
-													<button type="button" onclick="location.href='noticemodify.do?nbidx=${vo.nbidx}'" value="수정"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
-													<button type="button" onclick="location.href='<%=request.getContextPath()%>/notice/noticewrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
-													</c:if>
-												</div>
-												<div class="col-6 d-flex justify-content-end">
-													<button onclick="shareSNS('kakao')" id="kakaoBtn">
-														<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
-													</button>
-												</div>
-											</div>
-					
-
-								
-								
-								</div><!-- /.thumbnail -->
+						<!-- C리스트 14. 반복 -->
+						<div class="thumbnailitem">
+							
+							<div class="thumbnail">
 										
-							</div><!--/. thumbnailitem -->
+								<div class="writerinfo">
+									<p>
+										<span class="cate" style="background: #A4C266; color: white;">${vo.nbidx}</span>
+										<span class="hfc-semibold hfc-darkgray">| ${vo.wdate}</span>
+									</p>
+									<div class="small">
+										<div class="col-lg-6 d-flex justify-content-end">
+											<img src="<%=request.getContextPath()%>/image/icon/eye.png">
+											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${vo.cnt}</span>
+										</div>
+									</div>
+								</div>
+								<div class="caption">
+									<h4>${vo.title}</h4>
+								</div>
+
+								<!-- 태그 -->
+								<div class="row">
+									<div class="col hfc-darkgray" id="tagArea"></div>
+								</div>
+								<hr class="middleline">
+								<!-- 글 내용 -->
+								<div class="row contentrow">
+									<div class="col" id="howfContent">
+										${vo.content}
+									</div>
+									<c:if test="${vo.filename != null}">
+										<br><br>
+										<p>첨부파일</p>
+										<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1">
+										<c:choose>
+										<c:when test="${fn:split(vo.filename,'.')[1] == 'jpg' || fn:split(vo.filename,'.')[1] == 'jpeg' || fn:split(vo.filename,'.')[1] == 'png' || fn:split(vo.filename,'.')[1] == 'gif' || fn:split(vo.filename,'.')[1] == 'bmp'}">
+											<img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}" style="max-width: 300px; max-height: 300px;">
+										</c:when>
+										<c:otherwise>
+										<c:set var="fileName" value="${fn:split(vo.filename,'_')}"/>
+											${fileName[fn:length(fileName)-1]}
+										</c:otherwise>
+										</c:choose>
+										</a>
+									</c:if>
+								</div>
+								<div class="row btnarea">
+									<div class="col-6 d-flex justify-content-start">
+									<c:if test="${login.midx == vo.midx }">
+										<button type="button" onclick="erase()" value="삭제"><img src="<%=request.getContextPath()%>/image/button/delete.png"></button>
+										<button type="button" onclick="location.href='noticemodify.do?nbidx=${vo.nbidx}'" value="수정"><img src="<%=request.getContextPath()%>/image/button/edit.png"></button>
+										<button type="button" onclick="location.href='<%=request.getContextPath()%>/notice/noticewrite.do'"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
+										</c:if>
+									</div>
+									<div class="col-6 d-flex justify-content-end">
+										<button onclick="shareSNS('kakao')" id="kakaoBtn">
+											<img src="<%=request.getContextPath()%>/image/button/share.png" style="width:25px;">
+										</button>
+									</div>
+								</div>
 					
+							</div><!-- /.thumbnail -->
+									
+						</div><!--/. thumbnailitem -->
+				
 					</div>
 					<!-- /.clist -->
 					<hr class="lastline">
@@ -203,11 +199,10 @@
 					</a>
 					<!-- 리스트 카드 -->
 					
-					
-		
-					
 				</div><!-- /.container -->
+				
 			</div><!-- /.contents -->
+			
 			<!-- /pagehead -->
 			
 			<!-- banner --><%@include file="../banner.jsp"%>
@@ -217,8 +212,6 @@
 		<!-- Footer --><%@include file="../Footer.jsp"%>
 	
 	</div><!-- /#wrap -->
-
-
 <script>
 	function shareSNS(sns){
 		var thisUrl = document.URL;
@@ -255,6 +248,5 @@
 <script>
 $('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
 </script>
-
 </body>
 </html>

@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ page session="true" %>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -60,7 +60,7 @@
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
-				content.focus();
+				$("#summernote").summernote('focus');
 				return ;
 			},1000);
 		}

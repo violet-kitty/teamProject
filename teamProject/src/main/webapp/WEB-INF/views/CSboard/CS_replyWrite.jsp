@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>	<!-- true에 되어있어야 EL을 이용해서 세션에 접근이 가능함 -->     
+<%@ page session="true" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -84,7 +85,7 @@
 					<!-- 제목 영역 -->
 							<div class="pageinfo">
 								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 답변 작성</h1></a>
+									<a id="cancel2" href="<%=request.getContextPath()%>/CSboard/CS_list.do"><h1>1:1 문의 답변 작성</h1></a>
 								</div>
 							</div>
 
@@ -112,7 +113,7 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a id="cancel2" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+								<a id="cancel3" class=" onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -175,9 +176,11 @@
 			
 			if($("#title").val() != title){
 	    		modalFn("제목이 변경 되었습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    		return false;
 	    	}
 			else if(content.val() != ""){
 				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+				return false;
 	    	}
 	    	else{
 	    		location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
@@ -191,9 +194,29 @@
 			
 			if($("#title").val() != title){
 	    		modalFn("제목이 변경 되었습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    		return false;
 	    	}
 			else if(content.val() != ""){
 				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+				return false;
+	    	}
+	    	else{
+    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+    		}
+	    });
+		
+		$("#cancel3").click(function(){
+			
+			var title = '${cv.title}';
+			var content = $("#summernote");
+			
+			if($("#title").val() != title){
+	    		modalFn("제목이 변경 되었습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+	    		return false;
+	    	}
+			else if(content.val() != ""){
+				modalFn("작성된 내용이 있습니다. 답변 작성을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 취소", "취소");
+				return false;
 	    	}
 	    	else{
     			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
@@ -214,7 +237,6 @@
 				title.focus();
 				return;
 			}, 1000);
-
 		}
 		else if(content.val() == ""){
 			modalFn("내용을 입력해주세요");
@@ -223,7 +245,6 @@
 				$("#summernote").summernote('focus');
 				return;
 			}, 1000);
-
 		}
 		else {
 			modalFn("1:1 고객문의 답변을 등록하시겠습니까?", "확인", "1:1 고객문의 답변 등록", "취소", "CS_replyWrite");
