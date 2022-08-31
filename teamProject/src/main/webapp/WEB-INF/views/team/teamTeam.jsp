@@ -94,7 +94,7 @@
 			<c:if test="${rv.allow == 'Y'}">
 				html += '<br><div class="d-flex justify-content-center"><button type="button" class="greenbtn" onclick="revote()">투표 다시하기</button></div><br>';
 			</c:if>
-				html += '<div class="d-flex justify-content-center"><button type="button" class="pinkbtn" onclick="remove_vote()">투표  삭제</button>';
+				html += '<div class="d-flex justify-content-center"><button type="button" class="pinkbtn me-3" onclick="remove_vote()">투표  삭제</button>';
 			<c:if test="${rv.allow == 'Y'}">
 				html += '<button type="button" class="graybtn" onclick="finish_vote()">투표  마감</button></div>';
 			</c:if>
@@ -165,27 +165,54 @@
 								<div id="show_vote_option">
 									<form id="form1">
 										<input type="hidden" name="ridx" value="${rv.ridx}">
-										<div class="text-center">
-											${rv.title}
-										</div>
-										<br>
-										<c:if test="${rv.place1 != null}">
-											<input type="radio" name="vote" value="${rv.place1}">${rv.place1}<br>
-										</c:if>
-										<c:if test="${rv.place2 != null }">
-											<input type="radio" name="vote" value="${rv.place2}">${rv.place2}<br>
-										</c:if>
-										<c:if test="${rv.place3 != null }">
-											<input type="radio" name="vote" value="${rv.place3}">${rv.place3}<br>
-										</c:if>
-										<c:if test="${rv.place4 != null }">
-											<input type="radio" name="vote" value="${rv.place4}">${rv.place4}<br>
-										</c:if>
-										<c:if test="${rv.place5 != null }">
-											<input type="radio" name="vote" value="${rv.place5}">${rv.place5}<br>
-										</c:if>
-										<div class="text-center">
-											<br><button type="button" onclick="insert_vote_option()">투표하기</button>
+										<div class="boardWrite">
+											<div class="row h-input">
+												<div class="col">
+													<input type="text" class="form-control text-center" value="${rv.title}" readonly>
+												</div>
+											</div>
+											<div class="row text-start" style="box-sizing: border-box; padding-left: 10%;">
+												<c:if test="${rv.place1 != null}">
+													<div class="form-check">
+														<label class="form-check-label" for="v1">
+															<input class="form-check-input" type="radio" id="v1" name="vote" value="${rv.place1}" checked>${rv.place1}
+														</label>
+													</div>
+												</c:if>
+												<c:if test="${rv.place2 != null }">
+													<div class="form-check">
+														<label class="form-check-label" for="v2">
+															<input class="form-check-input" type="radio" id="v2" name="vote" value="${rv.place2}">${rv.place2}
+														</label>
+													</div>
+												</c:if>
+												<c:if test="${rv.place3 != null }">
+													<div class="form-check">
+														<label class="form-check-label" for="v3">
+															<input class="form-check-input" type="radio" id="v3" name="vote" value="${rv.place3}">${rv.place3}
+														</label>
+													</div>
+												</c:if>
+												<c:if test="${rv.place4 != null }">
+													<div class="form-check">
+														<label class="form-check-label" for="v4">
+															<input class="form-check-input" type="radio" id="v4" name="vote" value="${rv.place4}">${rv.place4}
+														</label>
+													</div>
+												</c:if>
+												<c:if test="${rv.place5 != null }">
+													<div class="form-check">
+														<label class="form-check-label" for="v5">
+															<input class="form-check-input" type="radio" id="v5" name="vote" value="${rv.place5}">${rv.place5}
+														</label>
+													</div>
+												</c:if>
+											</div>
+											<div class="row text-center mt-4">
+												<div class="col">
+													<button type="button" class="bluebtn" onclick="insert_vote_option()">투표하기</button>
+												</div>
+											</div>
 										</div>
 									</form>
 								</div>

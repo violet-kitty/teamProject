@@ -40,7 +40,6 @@
 
 </head>
 <body>
-	
 	<div id="wrap" class="boardlist story storylist">
 	
 		<!-- Header --><%@include file="../Header.jsp"%>
@@ -96,8 +95,8 @@
 						<!-- rightbox : tablet 사이즈 이하에서만 보이기-->
 						
 							<div class="docctrl onlytablet" style="margin-top: 16px;">
-								<a href="<%=request.getContextPath()%>/team/teamWrite.do">
-									<button class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button>
+								<a id="teamWrite2"  href="javascript:void(0)">
+									<button type="button" class="w-100 bluebtn"><i class="fa-solid fa-plus"></i> &nbsp;글쓰기</button>
 								</a>
 							</div>
 							
@@ -129,8 +128,7 @@
 					<!-- .pageinfo -->
 					<!-- / pagehead -->
 					
-					
-					<!-- 리스트 박스 -->   <!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
+					<!-- 리스트 박스 -->  <!-- 리스트 카드 hover effect 종류 참고 : https://codepen.io/vavik96/pen/MYdBKz -->
 					<div class="clist">
 						
 						<!-- 리스트영역 -->
@@ -147,7 +145,6 @@
 											<c:if test="${tv.img == null}">
 												<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 											</c:if>
-											
 											<p>
 												<span class="hfc-darkgray">${tv.nickname} </span>
 												<span class="hfc-semibold hfc-gray"> | ${tv.wdate}</span>
@@ -171,7 +168,6 @@
 						<!-- 페이징 -->
 						<div class="row pagenation">
 							<div class="col d-flex justify-content-center">
-							
 								<table>
 									<tbody>						
 										<tr>
@@ -211,43 +207,70 @@
 		
 	</div><!-- /#wrap -->
 <script>
-$(function(){
-	//sort 버튼
-	var sortBtn = "${pm.search.sortType}";
-	if(sortBtn != ""){
-		$("#"+sortBtn+"Btn").css("background","none");
-		$("#"+sortBtn+"Btn").css("color","#DE8889");
-		$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
-	}
-	
-	$("#btn_search").click(function(){
-		$("#form1").submit();
-	});
-	
-	$("#teamWrite").click(function(){
-		if(${login == null}){
-			modalFn("로그인이 필요한 기능입니다.", "닫기")
-			return false;
+	$(function(){
+		//sort 버튼
+		var sortBtn = "${pm.search.sortType}";
+		if(sortBtn != ""){
+			$("#"+sortBtn+"Btn").css("background","none");
+			$("#"+sortBtn+"Btn").css("color","#DE8889");
+			$("#"+sortBtn+"Btn").css("border","2px solid #DE8889");
 		}
-		$.ajax({
-			url: "write_check.do",
-			data: "midx=${login.midx}",
-			type: "get",
-			success:function(data){
-				if(data != 0){
-					modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
-				}
-				else{
-					location.href = "teamWrite.do";
-				}
-				
+		
+		$("#btn_search").click(function(){
+			$("#form1").submit();
+		});
+		
+		$("#teamWrite").click(function(){
+			if(${login == null}){
+				modalFn("로그인이 필요한 기능입니다.", "닫기")
+				return false;
+			}
+			else{
+				$.ajax({
+					url: "write_check.do",
+					data: "midx=${login.midx}",
+					type: "get",
+					success:function(data){
+						if(data != 0){
+							modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
+							return false;
+						}
+						else{
+							location.href = "teamWrite.do";
+						}
+						
+					}
+					
+				});
 			}
 			
 		});
 		
+		
+		$("#teamWrite2").click(function(){
+			if(${login == null}){
+				modalFn("로그인이 필요한 기능입니다.", "닫기")
+				return false;
+			}
+			else{
+				$.ajax({
+					url: "write_check.do",
+					data: "midx=${login.midx}",
+					type: "get",
+					success:function(data){
+						if(data != 0){
+							modalFn("글은 최대 1개만 작성할 수 있습니다.", "닫기");
+							return false;
+						}
+						else{
+							location.href = "teamWrite.do";
+						}
+					}
+				});
+			}
+		});
+		
 	});
-	
-});
 </script>	
 </body>
 </html>

@@ -50,7 +50,7 @@ input[type=checkbox]{zoom: 1.1;}
 		
 		<!-- Side -->
 		<div class="right-container">
-			<a href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
 		
 		<!-- container -->
@@ -136,7 +136,7 @@ input[type=checkbox]{zoom: 1.1;}
 	</div><!-- /#wrap -->
 <script>
 	function modalOkFn(){
-		history.back();
+		location.href = "<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}";
 	}
 
 	$(function(){
@@ -171,15 +171,15 @@ input[type=checkbox]{zoom: 1.1;}
 			var content = '${tv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 	    	else{
-	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
+	    		location.href = "<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}";
 	    	}
 		});
 		
@@ -189,15 +189,15 @@ input[type=checkbox]{zoom: 1.1;}
 			var content = '${tv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 	    	else{
-	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
+	    		location.href = "<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}";
 	    	}
 		});
 		
@@ -207,15 +207,15 @@ input[type=checkbox]{zoom: 1.1;}
 			var content = '${tv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "팀 페이지", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소하시겠습니까?", "확인", "너나들이 글 수정", "취소");
 				return false;
 			}
 	    	else{
-	    		location.href = "/team/teamView.do?tidx=${tv.tidx}";
+	    		location.href = "<%=request.getContextPath()%>/team/teamView.do?tidx=${tv.tidx}";
 	    	}
 		});
 		
@@ -246,7 +246,7 @@ input[type=checkbox]{zoom: 1.1;}
 
 		}
 		else {
-			modalFn("수정 하시겠습니까?", "확인", "너나들이", "취소", "teamModifyCheck");
+			modalFn("수정 하시겠습니까?", "확인", "너나들이 글 수정", "취소", "teamModifyCheck");
 		}
 	}
 	

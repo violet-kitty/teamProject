@@ -73,22 +73,30 @@
 		$("dt").off('click');
 		var mdf="";
 		
-		mdf += "제목 : ";
-		mdf += "<input type='text' id='title' value='"+title+"'>";
-		mdf += "<br>";
+		mdf += "<div class='row h-input'>";
+		mdf += "<div class='col'>";
+		mdf += "<input type='text' id='title' class='form-control' value='"+title+"'>";
+		mdf += "</div>";
+		mdf += "</div>";
 		$("#title"+index).html(mdf);
 		
-		mdf = "";
-		mdf += "내용 : ";
+		mdf = "<div class='row h-input'>";
+		mdf += "<div class='col'>";
 		mdf += "<textarea id='content' style='width: 100%; height: 100px; resize: none;'>";
 		mdf += content;
 		mdf += "</textarea>";
+		mdf += "</div>";
+		mdf += "</div>";
+		mdf += "<div class='row btnarea'>";
+		mdf += "<div class='col okbutton'>";
 		mdf += "<button type='button' onclick='fmodify("+index+")'>";
 		mdf += "수정";
 		mdf += "</button>";
-		mdf += '<button type="button" onclick="'+c+'">';
+		mdf += '<button type="button" onclick='+c+'>';
 		mdf += "취소";
 		mdf += "</button>";
+		mdf += "</div>";
+		mdf += "</div>";
 		
 		$("#content"+index).html(mdf);
 	}

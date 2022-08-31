@@ -111,7 +111,7 @@ input[type=checkbox]{zoom: 1.1;}
 							</a>
 						</div>
 						<div class="col-lg-6 okbutton">
-							<button type="button" class="bluebtn" id="btn_write">글 작성 완료</button>
+							<button type="button" class="bluebtn" id="btn_write">작성 완료</button>
 						</div>
 					</div><!-- row end -->
 					<!-- 리스트 카드 -->
