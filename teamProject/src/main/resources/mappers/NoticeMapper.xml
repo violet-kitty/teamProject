@@ -5,148 +5,127 @@
 
 <!-- 공지사항 -->
 <mapper namespace="edu.howf.mapper.noticeMapper">
+
+
 	<insert id="insertnotice" parameterType="noticeVO">
-		<![CDATA[INSERT INTO notice(
-					title
-					,content
-					,midx
-					,filename
-					,wdate
-					,cnt
-					,delyn
-					)
-		VALUES	(
-					#{title}
-					,#{content}
-					,#{midx}
-					,#{filename}
-					,now()
-					,#{cnt}
-					,'N'
+		<![CDATA[
+		INSERT INTO notice(
+						title
+						,content
+						,midx
+						,filename
+						,wdate
+						,cnt
+						,delyn
+		)			VALUES(
+						#{title}
+						,#{content}
+						,#{midx}
+						,#{filename}
+						,now()
+						,#{cnt}
+						,'N'
 		)
 		]]>
 	<selectKey resultType="int" keyProperty="nbidx" order="AFTER">
-		SELECT max(nbidx) FROM notice
+		SELECT MAX(nbidx) FROM notice
 	</selectKey>						
 	</insert>
 	
 	 <select id="selectAll" resultType="noticeVO" parameterType="searchVO">
-			select	 n.nbidx
-					,n.title
-					,n.content
-					,DATE_FORMAT(n.wdate,'%Y-%m-%d') as wdate
-					,n.cnt
-					,u.email
-					,u.name
-			FROM notice n , usertable u
-			WHERE n.midx = u.midx
-			AND 	n.delyn = 'N'
-			<if test='searchType != null and searchType.equals("title")'>
-		 	 AND n.title like concat('%',#{searchValue},'%')
-		 	</if>
-			 <if test='searchType != null and searchType.equals("content")'>
-		  	 AND n.content like concat('%',#{searchValue},'%')
-			 </if>
-			 ORDER BY nbidx desc
-			 
-			LIMIT #{page}, #{perPageNum}
+		SELECT	 n.nbidx
+				,n.title
+				,n.content
+				,DATE_FORMAT(n.wdate,'%Y-%m-%d') AS wdate
+				,n.cnt
+				,u.email
+				,u.name
+		FROM 	notice n , usertable u
+		WHERE 	n.midx = u.midx
+		AND 	n.delyn = 'N'
+		<if test='searchType != null and searchType.equals("title")'>
+ 	 	AND 	n.title LIKE CONCAT('%',#{searchValue},'%')
+	 	</if>
+	 	<if test='searchType != null and searchType.equals("content")'>
+  	 	AND 	n.content LIKE CONCAT('%',#{searchValue},'%')
+	 	</if>
+	 	ORDER BY nbidx DESC
+		LIMIT #{page}, #{perPageNum}
 	</select>
 	
 	<select id="pagecount" resultType="int" parameterType="noticeVO">
-			
-			SELECT	count(n.nbidx)		
-			FROM	notice n , usertable u
-			WHERE	n.midx = u.midx
-			AND		n.delyn = 'N'
-	
+		SELECT	count(n.nbidx)		
+		FROM	notice n , usertable u
+		WHERE	n.midx = u.midx
+		AND		n.delyn = 'N'
 		<if test='searchType != null and searchType.equals("title")'>
-		 	 AND n.title like concat('%',#{searchValue},'%')
-		 	</if>
-			 <if test='searchType != null and searchType.equals("content")'>
-		  	 AND n.content like concat('%',#{searchValue},'%')
-		   	 OR u.name like concat('%',#{searchType},'%')
-			 </if>
-			
-			 
+		AND 	n.title LIKE CONCAT('%',#{searchValue},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("content")'>
+		AND 	n.content LIKE CONCAT('%',#{searchValue},'%')
+		OR 		u.name LIKE CONCAT('%',#{searchType},'%')
+		</if>
 	</select>
 
-	<!-- <select id="selectAllpage" parameterType="hashmap" resultType="noticeVO">
-			SELECT	nbidx
-			FROM	notice
-			ORDER by nbidx desc
-			LIMIT #{search},#{displayPageNum}
-	
-	</select> -->
-	
 	<select id="selectone" resultType="noticeVO" parameterType="int">
-			SELECT	n.nbidx
-					,n.title
-					,n.content
-					,n.wdate
-					,n.filename
-					,n.midx
-					,n.cnt
-					,u.email
-					,u.name
-					,u.midx
-			FROM notice n , usertable u
-			WHERE n.midx = u.midx
-			AND   n.nbidx = #{nbidx}
+		SELECT	n.nbidx
+				,n.title
+				,n.content
+				,n.wdate
+				,n.filename
+				,n.midx
+				,n.cnt
+				,u.email
+				,u.name
+				,u.midx
+		FROM 	notice n , usertable u
+		WHERE 	n.midx = u.midx
+		AND  	n.nbidx = #{nbidx}
 	</select>
 	
 	<update id="noticemodify" parameterType="noticeVO">
 		<![CDATA[
-			update notice
-			SET title = #{title}
-				,content = #{content}
-				,filename = #{filename}
-				 
-			WHERE nbidx = #{nbidx}
+			update 	notice
+			SET 	title = #{title}
+					,content = #{content}
+					,filename = #{filename}
+			WHERE 	nbidx = #{nbidx}
 		]]>
 	</update>
 	
-<!-- 	<delete id="noticedelete" parameterType="int" >
-			delete FROM
-					notice
-			WHERE nbidx = #{nbidx}
-	</delete> -->
 	<update id="noticedelete" parameterType="int">
-			update notice
-		SET delyn = 'Y'
-		WHERE nbidx = #{nbidx}
-	</update>
-	
-	<update id="fileupload">
-	
+		UPDATE 	notice
+		SET 	delyn = 'Y'
+		WHERE 	nbidx = #{nbidx}
 	</update>
 	
 	<select id="filedown" parameterType="String" resultType="noticeVO">
-		select	nbidx
+		SELECT	nbidx
 				,filename
 		FROM	notice
 		WHERE	nbidx = #{nbidx}
 		AND		filename = #{filename}
 	
 	</select>
+	
 	<update id="noticecnt" parameterType="int">
-		update notice
-		SET cnt = cnt+1
-		WHERE nbidx = #{nbidx}
-		
+		update 	notice
+		SET 	cnt = cnt+1
+		WHERE 	nbidx = #{nbidx}
 	</update>
 	
 	<select id="noticepop" resultType="noticeVO">
-			SELECT	n.nbidx
+		SELECT		n.nbidx
 					,n.title
 					,n.content
 					,n.wdate
 					,n.filename
 					,n.midx
 					,n.cnt
-			FROM notice n
-			WHERE delyn = 'N'
-			ORDER BY wdate desc
-			LIMIT 0,1
+		FROM 		notice n
+		WHERE 		delyn = 'N'
+		ORDER BY 	wdate DESC
+		LIMIT 		0,1
 	</select>
 
 

@@ -331,6 +331,7 @@
 		(SELECT e.ebidx
 			, e.midx
 			, u.nickname
+			, u.img
 			, e.title
 			, e.content
 			, DATE_FORMAT(e.wdate,'%Y-%m-%d') as wdate

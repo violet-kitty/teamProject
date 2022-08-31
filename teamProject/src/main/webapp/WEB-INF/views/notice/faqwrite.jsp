@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
-<title>HOWF고객지원</title>
+<title>HOWF 고객지원</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
@@ -39,20 +39,20 @@
 <!-- 유효성 -->
 <script type="text/javascript">
 	
-	
  	function check() {
 		
 		var title = $("#title");
 		var content = $("#content");
 		
 		if (title.val() == ""){
-			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>제목을 입력해 주세요','확인');
-		
-		}else if (content.val() == ""){
-			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player><br>내용을 입력해 주세요','확인');
-			
-			//alert("내용을 입력하세요");
-		}else {
+			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;" autoplay></lottie-player><br>제목을 입력해 주세요', '확인');
+			$("#title").focus();
+		}
+		else if (content.val() == ""){
+			modalFn('<lottie-player src="https://assets2.lottiefiles.com/packages/lf20_7i8hse0z.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;" autoplay></lottie-player><br>내용을 입력해 주세요','확인');
+			$("#content").focus();
+		}
+		else {
 			var formData = new FormData($("#form")[0]);
 			$.ajax({
 				url:"faqwrite.do",
@@ -68,37 +68,22 @@
 							modalClose();
 							location.href="faqboard.do";
 							return;
-						},1500);
-					}else {
+						},1000);
+					}
+					else {
 						modalFn("작성 실패");
 						setTimeout(function(){
 							modalClose();
 							return;
-						},1500);
+						},1000);
 					}
 				}
 				
 			});
-			
 		}
 	}
- 	function cancel(){
- 		modalFn("목록으로 가겠습니까?","가기","이동여부","안 감 바이","cancelFn");
- 	}
- 	function cancelFn(){
- 		modalClose();
- 		modalFn("리스트로 이동합니다")
- 		setTimeout(function(){
- 			modalClose();
- 			location.href="faqboard.do";
- 			return;
- 		},1000);
- 		
- 	}
 </script>
-
 </head>
-
 <body>
 	<div id="wrap" class="boardWrite cs cswrite">
 	
@@ -128,7 +113,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/notice/faqboard.do">
+					<a id="cancel" class=" onlypc" href="<%=request.getContextPath()%>/notice/faqboard.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -137,7 +122,7 @@
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/notice/faqboard.do"><h1>FAQ 작성</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/notice/faqboard.do"><h1>FAQ 작성</h1></a>
 						</div>
 					</div>
 
@@ -168,7 +153,7 @@
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/notice/faqboard.do">
+								<a id="cancel3" class=" onlypc" href="<%=request.getContextPath()%>/notice/faqboard.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -180,10 +165,8 @@
 						</div><!-- row end -->
 					<!-- 리스트 카드 -->
 					
-					
-		
-					
 				</div><!-- /.container -->
+				
 			</div><!-- /.contents -->
 			<!-- /pagehead -->
 			
@@ -198,7 +181,56 @@
 <script>
 $('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
 </script>
-
+<script>
+	function modalOkFn(){
+		history.back();
+	}
+	
+	$(function(){
+		
+		$("#cancel").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+			}
+			else if($("#content").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel2").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+			}
+			else if($("#content").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel3").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+			}
+			else if($("#content").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "FAQ 등록", "취소");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+	});
+</script>
 </body>
-
 </html>
