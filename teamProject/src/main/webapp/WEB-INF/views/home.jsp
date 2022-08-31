@@ -35,7 +35,12 @@
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
 <style>
+.modal {padding-top:5rem; padding-bottom:5rem;}
 .modal-dialog{max-width:fit-content;}
+@media (max-width: 576px){
+.modal-dialog {max-width: 100%;}
+.modal-dialog img {max-width:100%;}
+}
 </style>
 <script>
 	function tagParse(tag, id){

@@ -317,23 +317,23 @@
 			var jsonParse = JSON.parse(json0);
 			var tags = "";
 			$.each(jsonParse,function(idx){
-				tags = tags+jsonParse[idx]["value"]+" ";
+				tags = tags+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 			})
-			$("#tagArea0").text(tags);
+			$("#tagArea0").html(tags);
 			
 			var jsonParse = JSON.parse(json1);
 			var tags = "";
 			$.each(jsonParse,function(idx){
-				tags = tags+jsonParse[idx]["value"]+" ";
+				tags = tags+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 			})
-			$("#tagArea1").text(tags);
+			$("#tagArea1").html(tags);
 			
 			var jsonParse = JSON.parse(json2);
 			var tags = "";
 			$.each(jsonParse,function(idx){
-				tags = tags+jsonParse[idx]["value"]+" ";
+				tags = tags+"<span>"+jsonParse[idx]["value"]+"&nbsp;&nbsp;</span>";
 			})
-			$("#tagArea2").text(tags);
+			$("#tagArea2").html(tags);
 			
 			//검색시 카테고리
 			var sfilter = "${search.searchType}";
