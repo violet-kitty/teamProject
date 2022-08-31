@@ -82,7 +82,7 @@
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}"><h1>1:1 문의 수정</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}"><h1>1:1 문의 수정</h1></a>
 						</div>
 					</div>
 					<!-- /제목 영역 -->
@@ -122,7 +122,7 @@
 						<!-- CS_view로 돌아가기, 글 수정 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a id="cancel2" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
+								<a id="cancel3" class="onlypc" href="<%=request.getContextPath()%>/CSboard/CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -152,6 +152,10 @@
 		location.href = "CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
 	}
 	
+	function cancel(){
+		location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	}
+	
 	$(function(){
 		
 		$("#cancel").click(function(){
@@ -160,11 +164,11 @@
 			var content = '${cv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
 				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
 				return false;
 	    	}
 	    	else{
@@ -178,11 +182,29 @@
 			var content = '${cv.content}';
 			
 			if($("#title").val() != title){
-				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
 				return false;
 			}
 			else if($("#summernote").val() != content){
-				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소");
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			location.href="CS_view.do?csbidx=${cv.csbidx}&origincsbidx=${cv.origincsbidx}";
+	    	}
+	    });
+		
+		$("#cancel3").click(function(){
+			
+			var title = '${cv.title}';
+			var content = '${cv.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "1:1 문의 수정", "취소", "cancel");
 				return false;
 	    	}
 	    	else{

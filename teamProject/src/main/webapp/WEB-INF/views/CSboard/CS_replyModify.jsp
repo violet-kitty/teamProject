@@ -137,50 +137,35 @@
 		
 		$("#cancel").click(function(){
 			
-			var title = "${cv.title}";
 			var content = "${cv.content}";
 			
-			if($("#title").val() != title){
-				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 수정", "취소");
-				return false;
-	    	}
-			else if($("#summernote").val() != content){
-				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 고객문의 답변 수정", "취소");
+			if($("#summernote").val() != content){
+				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
 				return false;
 	    	}
 	    	else{
     			history.back();
     		}
 	    });
-		
+	    
 		$("#cancel2").click(function(){
 			
-			var title = "${cv.title}";
 			var content = "${cv.content}";
 			
-			if($("#title").val() != title){
+			if($("#summernote").val() != content){
 				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
 				return false;
-	    	}
-			else if($("#summernote").val() != content){
-				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
-				return false;
-	    	}
-	    	else{
-    			history.back();
-    		}
-	    });
+			}
+			else{
+				history.back();
+			}
+		});
 		
 		$("#cancel3").click(function(){
 			
-			var title = "${cv.title}";
 			var content = "${cv.content}";
 			
-			if($("#title").val() != title){
-				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
-				return false;
-	    	}
-			else if($("#summernote").val() != content){
+			if($("#summernote").val() != content){
 				modalFn("변경된 내용이 있습니다. 수정을 취소하시겠습니까?", "확인", "1:1 문의 답변 수정", "취소");
 				return false;
 	    	}
