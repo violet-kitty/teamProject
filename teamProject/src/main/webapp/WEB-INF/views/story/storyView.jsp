@@ -106,7 +106,6 @@ else {
 														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 													</c:if>
 													<span class="">${story.nickname}</span>
-													<span class="hfc-semibold hfc-darkgray"> ${story.wdate}</span>
 												</p>
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
@@ -135,6 +134,7 @@ else {
 											<div class="row">
 												<div class="col hfc-darkgray" id="tagArea"></div>
 											</div>
+											<h3 class="hfc-medium hfc-gray" style="text-align:right;font-size:12px;">&nbsp;&nbsp; ${story.wdate}</h3>
 											<hr class="middleline">
 											<!-- 글 내용 -->
 											<div class="row contentrow">
@@ -218,7 +218,7 @@ else {
 									</c:if>
 									
 									<p style="display:inline-block;">
-										<span class="hfc-darkgray hfc-semibold">${co.nickname} </span>
+										<span class="hfc-blackgray hfc-semibold">${co.nickname} </span>
 										
 									</p>
 								</div>
