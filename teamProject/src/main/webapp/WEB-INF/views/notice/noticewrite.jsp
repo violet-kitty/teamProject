@@ -52,103 +52,51 @@
 				title.focus();
 				return;
 			},1000);
-		} else if (content.val() == ""){
+		} 
+		else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
-			modalClose();
-			content.focus();
-			return ;
+				modalClose();
+				content.focus();
+				return ;
 			},1000);
-		} else {
-			var formData = new FormData($("#form")[0]);
-			$.ajax({
-				url:"noticewrite.do",
-				type:"post",
-				data:formData,
-				cache:false,
-				contentType:false,
-				processData:false,
-				success:function(data){
-					if(data == 1){
-						//modalFn("메시지","확인텍스트","타이틀","취소텍스트","test");
-						modalFn("등록되었습니다");
-						setTimeout(function(){
-							modalClose();
-							location.href="notice.do";
-							return;
-						},1500);
-					}
-					else {
-						modalFn("등록 실패");
-						setTimeout(function(){
-							modalClose();
-							return;
-						},1500);
-					}
-				}
-			});
+		} 
+		else {
+			modalFn("공지사항을 등록하시겠습니까?", "확인", "공지사항 등록", "취소", "noticeWrite");
 		}
 	}
-
- 	function test(){
- 		location.href="notice.do";
- 	}
  	
- 	function cancel(){
- 		modalFn("취소되었습니다");
- 			setTimeout(function(){
- 			modalClose();
- 			location.href="notice.do";
- 			return;
- 		},1000);
- 	}
- 	
-	function filter(options) {
-		var is = true;
-		
-		jQuery(options).each(function(){
-			var item = this;
-			
-			switch (item.filter){
-			case 'empty' :
-				var val = jQuery(item.target).val();
-				if (val == ''){
-					modalFn(item.title + "을(를) 입력하세요");
+ 	function noticeWrite(){
+ 		modalClose();
+ 		var formData = new FormData($("#form")[0]);
+		$.ajax({
+			url : "noticewrite.do",
+			type : "post",
+			data : formData,
+			cache : false,
+			contentType : false,
+			processData : false,
+			success : function(data){
+				if(data == 1){
+					modalFn("등록되었습니다");
 					setTimeout(function(){
 						modalClose();
+						location.href="notice.do";
+						return;
 					},1000);
-					//alert(item.title + '을(를) 입력하세요');
-					jQuery(item.target).focus();
-					is = false;
 				}
-				
+				else {
+					modalFn("등록 실패");
+					setTimeout(function(){
+						modalClose();
+						return;
+					},1000);
+				}
 			}
-			
 		});
-		return is;
-	}
-	// 스마트에디터 textarea 유효성검사 라는데...
- 	function submitContents() {
-        var elClickedObj = $("#form");
-        oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-        var ir1 = $("#ir1").val();
-
-        if( ir1 == ""  || ir1 == null || ir1 == '&nbsp;' || ir1 == '<p>&nbsp;</p>')  {
-             alert("내용을 입력하세요.");
-             oEditors.getById["ir1"].exec("FOCUS"); //포커싱
-             return;
-        }
-
-        try {
-            elClickedObj.submit();
-        } catch(e) {}
-    }
-	
-
+ 	}
 </script>
-
 </head>
-
 <body>
 	<div id="wrap" class="boardWrite cs cswrite">
 	
@@ -178,7 +126,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class=" onlypc" href="<%=request.getContextPath()%>/notice/notice.do">
+					<a id="cancel" class=" onlypc" href="<%=request.getContextPath()%>/notice/notice.do">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -187,7 +135,7 @@
 					<!-- 제목 영역 -->
 							<div class="pageinfo">
 								<div class="title onlypc">
-									<a href="<%=request.getContextPath()%>/notice/notice.do"><h1>공지사항 작성</h1></a>
+									<a id="cancel2" href="<%=request.getContextPath()%>/notice/notice.do"><h1>공지사항 작성</h1></a>
 								</div>
 							</div>
 
@@ -210,38 +158,27 @@
 							</div>
 						</div><!-- row end -->
 						
-						<!-- 파일첨부 -->
-						<div class="row h-input">
-							<div class="col">
-								<input type="file" name="fileupload" />
-							</div>
-						</div><!-- row end -->
-						
-					<!-- /.clist -->
 					</form>
 					<hr class="lastline">
-				
 					
 					<!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/notice/notice.do">
+								<a id="cancel3" class=" onlypc" href="<%=request.getContextPath()%>/notice/notice.do">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
 								</a>
 							</div>
 							<div class="col-lg-6 okbutton">
-								<button type="button" class="bluebtn" onclick="check()">글 작성 완료</button>
+								<button type="button" class="bluebtn" onclick="check()">작성 완료</button>
 							</div>
 						</div><!-- row end -->
 					<!-- 리스트 카드 -->
 					
-					
-		
-					
 				</div><!-- /.container -->
 			</div><!-- /.contents -->
+			
 			<!-- /pagehead -->
 			
 			<!-- banner --><%@include file="../banner.jsp"%>
@@ -253,37 +190,81 @@
 	</div><!-- /#wrap -->
 
 <script>
-$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
+	$('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
 </script>
-
 <script>
-$(function(){
-	$("#summernote").summernote({
-		height:600,
-		minHeight:null,
-		maxHeight:null,
-		focus:true,
-		lang:"ko-KR",
-		placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
-		toolbar: [
-			['style',['style']],
-		    ['fontname', ['fontname']],
-		    ['fontsize', ['fontsize']],
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    ['color', ['forecolor','color']],
-		    ['table', ['table']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']],
-		    ['insert',['picture','link','video']],
-		    ['view', ['fullscreen', 'help']]
-		],
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-		styleTags: ['h1']
+	function cancel(){
+		history.back();
+	}
+	$(function(){
+		
+		$("#summernote").summernote({
+			height:500,
+			minHeight:null,
+			maxHeight:null,
+			focus:true,
+			lang:"ko-KR",
+			placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
+			toolbar: [
+				['style',['style']],
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			styleTags: ['h1']
+		});
+		
+		$("#cancel").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel2").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
+		$("#cancel3").click(function(){
+			if($("#title").val() != ""){
+				modalFn("작성된 제목이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != ""){
+				modalFn("작성된 내용이 있습니다. 글 작성을 취소하시겠습니까?", "확인", "공지사항 등록", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			history.back();
+    		}
+	    });
+		
 	});
-});
 </script>
-
 </body>
-
 </html>

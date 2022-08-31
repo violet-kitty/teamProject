@@ -40,20 +40,6 @@
 </head>
 <body>
 	<div id="wrap" class="boardView cs csview">
-		<!-- 모달예제 
-		<button onclick="modalex()">모달예제</button>
-		<script>
-		function modalex(){
-		
-			/* modalex("모달이 완료되었습니다");
-		      setTimeout(function(){
-		         modalClose();
-		      },3000); */
-		      modalFn("모달이 완료되었습니다." ,"닫기","알림창");
-			
-		}
-		</script>
-		-->
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
@@ -108,12 +94,6 @@
 											<td class="tb_category tb_content">내용</td>
 											<td colspan="9" class="tb_content tb_content_fill">${cv.content}</td>				
 										</tr>
-									<c:if test="${cv.filename != null}">
-										<tr>
-											<td class="tb_category td_file">이미지 첨부 파일</td>
-											<td colspan="9" class="tb_filename td_file"><a href="displayFile.do?fileName=${cv.filename}&down=1"><img id="img" src="displayFile.do?fileName=${cv.filename}"></a></td>
-										</tr>
-									</c:if>
 									</tbody>
 								</table>
 								<div class="div2">
@@ -136,7 +116,7 @@
 												<td class="reply_category reply_category_title" colspan="6">답변 내용</td>
 											</tr>				
 											<tr>
-												<td class="reply_category">작성자 </td>
+												<td class="reply_category">작성자</td>
 												<td>${cvr.nickname}</td>
 												<td class="reply_category">제목</td>
 												<td>${cvr.title}</td>

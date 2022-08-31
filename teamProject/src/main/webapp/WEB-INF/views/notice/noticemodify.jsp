@@ -3,7 +3,7 @@
     <%@ page session="true" %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="<%= request.getContextPath() %>/image/logo/pin.png" type="image/x-icon">
@@ -42,10 +42,8 @@
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/parallax.js"></script>
 
-
-
 <script type="text/javascript">
-	function check() {
+	function check(){
 	
 		var title = $("#title");
 		var content = $("#summernote");
@@ -57,65 +55,49 @@
 				title.focus();
 				return;	
 			},1000);
-
-		}else if (content.val() == ""){
+		}
+		else if (content.val() == ""){
 			modalFn("내용을 입력해 주세요");
 			setTimeout(function(){
 				modalClose();
 				content.focus();
 				return ;
 			},1000);
-		}else {
-			var formData = new FormData($("#form")[0]);
-			$.ajax({
-				url:"noticemodify.do",
-				type:"post",
-				data:formData,
-				cache:false,
-				contentType:false,
-				processData:false,
-				success:function(data){
-					if(data != 0){
-						modalFn("수정되었습니다");
-							setTimeout(function(){
-							modalClose();
-							location.href="notice.do";
-							return;
-						},1500);
-					}else {
-						modalFn("수정 실패");
-						setTimeout(function(){
-							modalClose();
-							return;
-						},1500);
-					}
-				}
-				
-			});
-			
+		}
+		else {
+			modalFn("공지사항을 수정하시겠습니까?", "확인", "공지사항 수정", "취소", "noticeModify");
 		}
 	}
-	function test(){
-		location.href="notice.do";
-	}
 	
-	function cancel(){
-		modalFn("취소되었습니다")
-		setTimeout(function(){
-			modalClose();
-			location.href="noticeone.do?nbidx=${vo.nbidx}";
-			return;
-		},1000);
-		
+	function noticeModify(){
+		modalClose();
+		var formData = new FormData($("#form")[0]);
+		$.ajax({
+			url:"noticemodify.do",
+			type:"post",
+			data:formData,
+			cache:false,
+			contentType:false,
+			processData:false,
+			success:function(data){
+				if(data != 0){
+					modalFn("수정되었습니다");
+						setTimeout(function(){
+						modalClose();
+						location.href="notice.do";
+						return;
+					},1000);
+				}
+				else {
+					modalFn("수정 실패");
+					setTimeout(function(){
+						modalClose();
+						return;
+					},1000);
+				}
+			}
+		});
 	}
- 	function cancellist(){
-		modalFn("목록으로 이동됩니다");
-		setTimeout(function(){
-			modalClose();
-			location.href="notice.do";
-			return;
-		},1000);
-	}	
 </script>
 </head>
 <body>
@@ -147,7 +129,7 @@
 			<div class="contents pagehead hbg-whitegray">
 				<div class="container" id="featured-2">
 					<!-- pagehead  -->
-					<a class="onlypc" href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}">
+					<a id="cancel" class="onlypc" href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}">
 						<div class="backto">
 							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 						</div>
@@ -157,7 +139,7 @@
 					<!-- 제목 영역 -->
 					<div class="pageinfo">
 						<div class="title onlypc">
-							<a href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}"><h1>공지사항 수정</h1></a>
+							<a id="cancel2" href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}"><h1>공지사항 수정</h1></a>
 						</div>
 					</div>
 					<!-- /제목 영역 -->
@@ -179,13 +161,6 @@
 								</div>
 							</div><!-- row end -->
 							
-							<!-- 파일첨부 -->
-							<div class="row h-input">
-								<div class="col">
-									<input type="file" name="fileupload" value="${vo.filename}" />
-								</div>
-							</div><!-- row end -->
-							
 						<!-- /.clist -->
 					    </form>
 					    <hr class="lastline">
@@ -193,7 +168,7 @@
 					    <!-- 목록으로 돌아가기, 글 작성 버튼 -->
 						<div class="row buttonarea">
 							<div class="col-lg-6">
-								<a class=" onlypc" href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}">
+								<a id="cancel3"  class=" onlypc" href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}">
 									<div class="backto lastbackto">
 										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
 									</div>
@@ -201,7 +176,6 @@
 							</div>
 							<div class="col-lg-6 okbutton">
 								<button type="button" class="bluebtn" type="button" onclick="check()" style="margin-right: 1%;">수정</button>
-								<button type="button" class="pinkbtn" type="button" onclick="cancel()">취소</button>	
 							</div>
 						</div><!-- row end -->
 						<!-- 리스트 카드 -->
@@ -219,36 +193,95 @@
 		
 	</div><!-- /#wrap -->
 	
-<!-- 서머노트 -->
-<script>
-$(function(){
-	$("#summernote").summernote({
-		height:300,
-		minHeight:null,
-		maxHeight:null,
-		focus:true,
-		lang:"ko-KR",
-		placeholder:"최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
-		toolbar: [
-			['style',['style']],
-		    ['fontname', ['fontname']],
-		    ['fontsize', ['fontsize']],
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    ['color', ['forecolor','color']],
-		    ['table', ['table']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']],
-		    ['insert',['picture','link','video']],
-		    ['view', ['fullscreen', 'help']]
-		],
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-		styleTags: ['h1']
-	});
-});
-</script>
 <script>
 $('.parallax-window').parallax({imageSrc: '<%= request.getContextPath() %>/image/picture/support.jpg'});
+</script>	
+<script>
+	function cancel(){
+		location.href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}";
+	}
+
+	$(function(){
+		
+		$("#summernote").summernote({
+			height:500,
+			minHeight : null,
+			maxHeight : null,
+			focus : false,
+			lang : "ko-KR",
+			placeholder : "최대 2000자까지 쓸 수 있습니다.&#13;&#10;제목1로 지정한 텍스트는 제목 목록에 표시됩니다.",
+			toolbar : [
+				['style',['style']],
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			styleTags: ['h1']
+		});
+		
+		$("#cancel").click(function(){
+			
+			var title = '${vo.title}';
+			var content = '${vo.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			location.href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}";
+	    	}
+	    });
+		
+		$("#cancel2").click(function(){
+			
+			var title = '${vo.title}';
+			var content = '${vo.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			location.href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}";
+	    	}
+	    });
+		
+		$("#cancel3").click(function(){
+			
+			var title = '${vo.title}';
+			var content = '${vo.content}';
+			
+			if($("#title").val() != title){
+				modalFn("제목이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+			}
+			else if($("#summernote").val() != content){
+				modalFn("내용이 수정되었습니다. 수정을 취소 하시겠습니까?", "확인", "공지사항 수정", "취소", "cancel");
+				return false;
+	    	}
+	    	else{
+    			location.href="<%=request.getContextPath()%>/notice/noticeone.do?nbidx=${vo.nbidx}";
+	    	}
+	    });
+		
+	});
 </script>
 </body>
 </html>

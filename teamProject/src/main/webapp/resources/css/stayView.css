@@ -252,6 +252,8 @@
 .modalwindow .modalsquare .bodyarea {padding:32px 32px 50px 32px; border-bottom: 1px solid #ededed; }
 .modalwindow .modalsquare .bodyarea p {margin:18px; font-size:18px; line-height:36px;}
 
+.caption .imgbox {background-size: cover;background-position: center top; height:38vh; max-height:240px; background-repeat: no-repeat;}
+
 @media screen and (max-width: 50em) {
 	#roomTab .listcard .grid figure {display: inline-block; float: none; margin: 10px auto; width: 100%;}
 }
@@ -260,6 +262,7 @@
 	#roomTab .listcard figure.effect-ming .imgbox {height:30vh;}
 	#roomTab .listcard .thumbnailitem {padding:5px 0px;}
 	#roomTab .listcard .thumbnail .writerinfo {padding: 0px 16px 8px 16px;}
+	.caption .imgbox {height:30vh;}
 }
 
 /* 숙소정보 */
@@ -273,3 +276,13 @@
 .btnarea img:hover {width:40px; border:none;}
 
 .lastline {margin-bottom:40px;}
+
+/* 프로필 */
+.writerinfo .imgbox { display:inline-block; vertical-align:middle; width: 25px; height: 25px; border-radius:100%; background-size: cover;background-position: center top; background-repeat: no-repeat;}
+
+/* 별점 */
+.star-rating {display:flex;flex-direction: row-reverse;font-size:1.5em;justify-content:space-around;padding:0 .2em;text-align:center;width:10em;}
+.star-rating input[type=radio] {display:none;}
+.star-rating label {color:#ccc;cursor:pointer;}
+.star-rating :checked ~ label {color:#f90;}
+.star-rating label:hover, .star-rating label:hover ~ label {color:#fc0;}
