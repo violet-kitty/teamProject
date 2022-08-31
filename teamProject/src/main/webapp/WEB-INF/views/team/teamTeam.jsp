@@ -372,7 +372,7 @@
 	// 메시지 수신
 	nc.bind('onMessageReceived',function(channel, message) {
 		if(message.sender.id == "howf_${login.midx}"){
-			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>${login.midx}<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
+			$("#chatArea").append("<div class='d-flex  align-items-end flex-column'><p style='color: white; font-weight:bold;'>${login.nickname}<br></p><div style='padding:10px;min-height:5px;text-align:right;background:aliceblue;max-width:45%;height:auto; word-break:break-all'>"+message.content+"</div></div><br>");
 		}
 		else {
 			var id = message.sender.id.split("_");

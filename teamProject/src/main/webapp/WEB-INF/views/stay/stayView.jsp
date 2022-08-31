@@ -39,7 +39,6 @@
 <!-- CSS3 - Board공용세팅 --><link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - stayView --><link href="<%=request.getContextPath()%>/css/stayView.css" rel="stylesheet">
 
-
 <script>
 var heartDup = false;
 
@@ -313,24 +312,32 @@ else {
 					<!-- 리뷰 -->
 					<div class="row" id="reviewTab" style="display: none">
 						<div class="col">
-							<p>리뷰</p>
-							<div>
+							<div class="contents hbg-whitegray">
 								<!-- 리뷰쓰기 창 -->
-								<div style="border: 1px solid black">
-									<p>이 숙소 리뷰 ${stay.cnt}</p>
-									<form id="reviewFrm" enctype="multipart/form-data">
-										<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewContent"></textarea>
-										<div class="star-rating">
-											<input type="radio" id="5-stars" name="star" value="5" checked /> <label for="5-stars" class="star">&#9733;</label> <input type="radio" id="4-stars" name="star" value="4" /> <label
-												for="4-stars" class="star">&#9733;</label> <input type="radio" id="3-stars" name="star" value="3" /> <label for="3-stars" class="star">&#9733;</label> <input type="radio" id="2-stars"
-												name="star" value="2" /> <label for="2-stars" class="star">&#9733;</label> <input type="radio" id="1-star" name="star" value="1" /> <label for="1-star" class="star">&#9733;</label>
-										</div>
-										<input type="file" id="file" name="file"> <input type="hidden" name="bidx" value="${stay.sidx}">
-										<button type="button" id="reviewWriteBtn">리뷰 작성</button>
-									</form>
+								<div>
+									<h1>이 숙소 리뷰 ${stay.cnt}</h1>
+									<br>
+									<div>
+										<form id="reviewFrm" enctype="multipart/form-data" class="row g-2">
+											<div class="col-11">
+												<textarea placeholder="댓글" name="content" id="reviewContent" class="form-control" style="resize:none;"></textarea>
+												<div class="star-rating">
+													<input type="radio" id="5-stars" name="star" value="5" checked /> <label for="5-stars" class="star">&#9733;</label>
+													<input type="radio" id="4-stars" name="star" value="4" /> <label for="4-stars" class="star">&#9733;</label>
+													<input type="radio" id="3-stars" name="star" value="3" /> <label for="3-stars" class="star">&#9733;</label>
+													<input type="radio" id="2-stars" name="star" value="2" /> <label for="2-stars" class="star">&#9733;</label>
+													<input type="radio" id="1-star" name="star" value="1" /> <label for="1-star" class="star">&#9733;</label>
+												</div><br>
+												<input type="file" id="file" name="file"> <input type="hidden" name="bidx" value="${stay.sidx}">
+											</div>
+											<div class="col-1">
+												<button type="button" id="reviewWriteBtn" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>
+											</div>
+										</form>
+									</div>
 								</div>
 
-								<br>
+								<br><br>
 
 
 								<!-- page 정보 -->
@@ -338,42 +345,57 @@ else {
 								<!-- 리뷰 리스트 -->
 								<div id="reviewList">
 									<c:forEach var="i" items="${review}">
-										<div style="border: 1px solid black" id="reviewL${i.cbidx}">
-											<p>${i.nickname}</p>
-											<p>
-												<img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30"> ${i.star}
-											</p>
-											<c:if test="${i.photo != null}">
-												<p>
-													<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="max-width: 100px">
+										<div class="thumbnail hbshadow3" style="padding:15px;" id="review${i.cbidx}">
+											<div class="writerinfo">
+												<c:if test="${i.img != null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.img});"></div>
+												</c:if>
+												<c:if test="${i.img == null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+												</c:if>
+												
+												<p style="display:inline-block;">
+													<span class="hfc-darkgray">${i.nickname} </span>
+													<span class="hfc-semibold hfc-gray"> | ${i.wdate} </span>
+													<span style="vertical-align:text-bottom"> <img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30" style="vertical-align:text-bottom"> ${i.star} </span>
+													<c:if test="${i.midx == login.midx}">
+													<button onclick="reviewDeleteFn(${i.cbidx})" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/delete.png" style="width:25px;"></button>
+													<button onclick="reviewModifyFn(${i.cbidx})" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/edit.png" style="width:25px;"></button>
+												</c:if>
 												</p>
-											</c:if>
-											<p>${i.content}</p>
-											<c:if test="${i.midx == login.midx}">
-												<button onclick="reviewModifyFn(${i.cbidx})">수정</button>
-												<button onclick="reviewDeleteFn(${i.cbidx})">삭제</button>
-											</c:if>
+											</div>
+											<div class="caption">
+												<c:if test="${i.photo != null}">
+													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo});"></div>
+												</c:if>
+												<h4>${i.content}</h4>
+											</div>
 										</div>
+										<br>
 									</c:forEach>
 								</div>
 
 
 								<!-- 리뷰 페이징 -->
-								<div id="reviewPaging">
-									<c:if test="${pm.prev == true}">
-										<a href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
-									</c:if>
-									<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-										<c:if test="${i==pm.startPage}">
-											<a href="javascript:reviewPaging(${i})" style="font-weight: bold; color: green;">${i}</a>
+								<div class="row pagenation" id="reviewPaging">
+									<div class="col d-flex justify-content-center">
+										<c:if test="${pm.prev == true}">
+											<a class="hfc-gray hfc-bold" href="javascript:reviewPaging(${pm.startPage-1})">◀</a>
 										</c:if>
-										<c:if test="${i!=pm.startPage}">
-											<a href="javascript:reviewPaging(${i})">${i}</a>
+										<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+										<c:choose>
+										<c:when test="${search.page != null && i == search.page}">
+											<a class="hfc-white hfc-bold hbg-pink mx-1" href="javascript:reviewPaging(${i})">${i}</a>
+										</c:when>
+										<c:otherwise>
+											<a class="hfc-gray hfc-bold mx-1" href="javascript:reviewPaging(${i})">${i}</a>
+										</c:otherwise>
+										</c:choose>
+										</c:forEach>
+										<c:if test="${pm.next == true}">
+											<a class="hfc-gray hfc-bold" href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
 										</c:if>
-									</c:forEach>
-									<c:if test="${pm.next == true}">
-										<a href="javascript:reviewPaging(${pm.endPage+1})">▶</a>
-									</c:if>
+									</div>
 								</div>
 
 
@@ -783,30 +805,50 @@ else {
 			success:function(list){
 				//그려주기
 				var html = '';
-				var num = 0;
 				for(var i=0;i<list.length;i++){
-					html = html + '<div style="border:1px solid black" id="reviewL'+list[i].cbidx+'">'
-						+ '<p>'+list[i].nickname+'</p>'
-						+ '<p><img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30">'
-						+ list[i].star+'</p>';
+					html = html + '<div class="thumbnail hbshadow3" style="padding:15px;" id="review'+list[i].cbidx+'">'
+						+ '<div class="writerinfo">';
 						
-					if(list[i].photo != null){
-						html = html+'<p><img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+'" style="max-width:100px"></p>';
+					if(list[i].img != null){
+						html = html
+						+ '<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].img+');"></div>';
+						
+					}
+					else {
+						html = html
+						+ '<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>';
 					}
 						
-					html = html + '<p>'+list[i].content+'</p>';
+					html = html
+					+ '<p style="display:inline-block;">'
+					+ '<span class="hfc-darkgray">'+list[i].nickname+' </span>'
+					+ '<span class="hfc-semibold hfc-gray"> | '+list[i].wdate+' </span>'
+					+ '<span style="vertical-align:text-bottom"> <img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30" style="vertical-align:text-bottom"> '+list[i].star+' </span>';
+					
 					
 					<c:if test="${login != null}">
 					var login = "${login.midx}";
 					if(login == list[i].midx){
-						html = html + '<button onclick="reviewModifyFn('+list[i].cbidx+')">수정</button>'
-						+ '<button onclick="reviewDeleteFn('+list[i].cbidx+')">삭제</button>';
-						
-						num++;
+						html = html
+						+ '<button onclick="reviewDeleteFn('+list[i].cbidx+')" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/delete.png" style="width:25px;"></button>'
+						+ '<button onclick="reviewModifyFn('+list[i].cbidx+')" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/edit.png" style="width:25px;"></button>';
 					}
 					</c:if>
 					
-					html = html + '</div>';
+					html  = html
+					+ '</p>'
+					+ '</div>'
+					+ '<div class="caption">';
+					
+					if(list[i].photo != null){
+						html = html
+						+ '<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName='+list[i].photo+');"></div>';
+					}
+					
+					html = html
+					+ '<h4>'+list[i].content+'</h4>'
+					+ '</div>'
+					+ '</div><br>';
 				}//for
 				
 				$("#reviewList").html(html);
@@ -820,22 +862,28 @@ else {
 						//페이징 만들기
 						var p = '';
 						
+						p = p
+						+ '<div class="col d-flex justify-content-center">';
+						
 						if(paging.prev == true){
-							p = p + '<a href="javascript:reviewPaging('+(paging.startPage-1)+')">◀</a>';
+							p = p + '<a class="hfc-gray hfc-bold" href="javascript:reviewPaging('+(paging.startPage-1)+')">◀</a>';
 						}
 						
 						for(var i=paging.startPage;i<=paging.endPage;i++){
 							if(page == i){
-								p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1" style="font-weight:bold;color:green;">'+i+'</a>';
+								p = p + '<a href="javascript:reviewPaging('+i+')" class="hfc-white hfc-bold hbg-pink mx-1">'+i+'</a>';
 							}
 							else {
-								p = p + '<a href="javascript:reviewPaging('+i+')" class="mx-1">'+i+'</a>';
+								p = p + '<a href="javascript:reviewPaging('+i+')" class="hfc-gray hfc-bold mx-1">'+i+'</a>';
 							}
 						}
 						
 						if(paging.next == true){
-							p = p + '<a href="javascript:reviewPaging('+(paging.endPage+1)+')">▶</a>';
+							p = p + '<a class="hfc-gray hfc-bold" href="javascript:reviewPaging('+(paging.endPage+1)+')">▶</a>';
 						}
+						
+						p = p
+						+ '</div>';
 						
 						$("#reviewPaging").html(p);
 						
@@ -868,8 +916,10 @@ else {
 			type:"get",
 			async:false,
 			success:function(list){
-				var html = '<form id="reviewM" enctype="multipart/form-data">'
-					+ '<textarea rows="3" cols="20" placeholder="댓글" name="content" id="reviewMContent">'+list.content+'</textarea>'
+				var html = '<div>'
+					+ '<form id="reviewM" enctype="multipart/form-data" class="row g-2">'
+					+ '<div class="col-11">'
+					+ '<textarea placeholder="리뷰를 작성해주세요" name="content" id="reviewMContent" class="form-control" style="resize:none;">'+list.content+'</textarea>'
 					+ '<div class="star-rating">'
 					+ '<input type="radio" id="M5-stars" name="star" value="5"/>'
 					+ '<label for="M5-stars" class="star">&#9733;</label>'
@@ -881,13 +931,17 @@ else {
 					+ '<label for="M2-stars" class="star">&#9733;</label>'
 					+ '<input type="radio" id="M1-star" name="star" value="1" />'
 					+ '<label for="M1-star" class="star">&#9733;</label>'
-					+ '</div>'
+					+ '</div><br>'
 					+ '<input type="file" id="Mfile" name="file">'
 					+ '<input type="hidden" name="cbidx" value="'+cbidx+'">'
-					+ '<button type="button" onclick="reviewMFn('+index+')">리뷰 작성</button>'
-					+ '</form>';
+					+ '<input type="hidden" name="bidx" value="${stay.sidx}">'
+					+ '</div>'
+					+ '<div class="col-1">'
+					+ '<button type="button" onclick="reviewMFn('+index+')" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>'
+					+ '</div>'
+					+ '</form></div>';
 				
-				$("#reviewL"+cbidx).html(html);
+				$("#review"+cbidx).html(html);
 				$("input:radio[name=star]:input[value="+list.star+"]").prop("checked",true);
 				
 				
@@ -934,28 +988,29 @@ else {
 	
 	//리뷰 삭제
 	function reviewDeleteFn(cbidx){
-		var check = confirm("정말로 해당 리뷰를 삭제하시겠습니까?");
-		
-		if(check == false) return;
-		else if(check == true){
-			$.ajax({
-				url:"reviewDelete.do",
-				data:"cbidx="+cbidx,
-				type:"post",
-				async:false,
-				success:function(data){
-					if(data == 1){
-						modalFn("리뷰가 삭제되었습니다.");
-						setTimeout(function(){
-							modalClose();
-							reviewListAjax(1);
-							return;
-						},1000);
-					}
+		$("#review"+cbidx).append("<input type='hidden' id='tmpIndex' value='"+cbidx+"'>");
+		modalFn("정말로 해당 리뷰를 삭제하시겠습니까?","삭제","삭제하기","취소","reviewDeleteModalFn");
+	}
+	function reviewDeleteModalFn(){
+		var cbidx = $("#tmpIndex").val();
+		$.ajax({
+			url:"reviewDelete.do",
+			data:"cbidx="+cbidx,
+			type:"post",
+			async:false,
+			success:function(data){
+				if(data == 1){
+					modalClose();
+					modalFn("리뷰가 삭제되었습니다.");
+					setTimeout(function(){
+						$("#tmpIndex").remove();
+						modalClose();
+						reviewListAjax(1);
+						return;
+					},1000);
 				}
-			});
-			
-		}
+			}
+		});
 	}
 	
 	//예약하기

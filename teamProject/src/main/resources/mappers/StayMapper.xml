@@ -354,6 +354,7 @@
 			, a.star
 			, a.midx
 			, a.photo
+			, a.wdate
 			, b.nickname
 			, b.img
 		FROM comment a, usertable b
