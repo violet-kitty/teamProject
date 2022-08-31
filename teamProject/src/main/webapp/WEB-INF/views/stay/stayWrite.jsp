@@ -27,13 +27,19 @@
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 
+
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardWrite공용세팅 --> <link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardWrite.css">
+
+
 <style>
 	input::-webkit-inner-spin-button {
 	  appearance: none;
@@ -48,14 +54,28 @@ var tagi = 0;
 </script>
 </head>
 <body>
-	<div id="wrap">
-		<div id="container">
-			<div class="row">
-				<div class="col">
-					<a href="stayList.do">&lt;목록으로 돌아가기</a>
-				</div>
-			</div>
-			
+	<div id="wrap" class="boardWrite stay stayWrite">
+	
+		<!-- Header --><%@include file="../Header.jsp"%>
+		<!-- Nav --><%@include file="../Nav.jsp"%>
+		
+		<!-- Side -->
+		
+		<div class="right-container">
+			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
+		</div>
+		
+		<!-- container -->
+		<div id="container" class="hbg-whitegray">
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+					<!-- pagehead  -->
+					<a class=" onlypc" href="storyList.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
+					
 						
 			<form method="post"  enctype="multipart/form-data" id="stayFrm">
 				<div class="row">
@@ -218,16 +238,32 @@ var tagi = 0;
 			</form>
 			
 			
-			<hr class="my-2">
+			<hr class="lastline">
 			
 			
-			<div class="row">
-				<div class="col">
-					<a href="stayList.do">&lt;목록으로 돌아가기</a>
-				</div>
-			</div>
+			<!-- 목록으로 돌아가기, 글 작성 버튼 -->
+						<div class="row buttonarea">
+							<div class="col-lg-6">
+								<a class=" onlypc" href="storyList.do">
+									<div class="backto lastbackto">
+										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+									</div>
+								</a>
+							</div>
+							<div class="col-lg-6 okbutton">
+								<button type="button" class="bluebtn" onclick="writeFn()">글 작성 완료</button>
+							</div>
+						</div><!-- row end -->
 			
-		</div><!-- /#container -->
+			</div><!-- /.container -->
+			</div><!-- /.contents -->
+			<!-- /pagehead -->
+			
+			<!-- banner --><%@include file="../banner.jsp"%>
+			
+		</div><!-- / #container -->
+		
+		<!-- Footer --><%@include file="../Footer.jsp"%>
 	</div><!-- /#wrap -->
 	
 	<script>
