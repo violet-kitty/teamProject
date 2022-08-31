@@ -106,7 +106,6 @@ else {
 														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
 													</c:if>
 													<span class="">${story.nickname}</span>
-													<span class="hfc-semibold hfc-darkgray"> ${story.wdate}</span>
 												</p>
 												<div class="small">
 													<div class="col-lg-6 d-flex justify-content-end">
@@ -135,6 +134,7 @@ else {
 											<div class="row">
 												<div class="col hfc-darkgray" id="tagArea"></div>
 											</div>
+											<h3 class="hfc-medium hfc-gray" style="text-align:right;font-size:12px;">&nbsp;&nbsp; ${story.wdate}</h3>
 											<hr class="middleline">
 											<!-- 글 내용 -->
 											<div class="row contentrow">
@@ -183,18 +183,18 @@ else {
 					<!-- 리스트 카드 -->
 					
 					<!-- 댓글 -->
-					<div class="contents hbg-whitegray">
+					<div class="contents commentarea hbg-whitegray hbshadow3">
 						<div>
-							<h1>댓글 ${story.cnt}</h1>
+							<h1 class="hfc-bold" >댓글 ${story.cnt}</h1>
 							<br>
 							<!-- 댓글 쓰는 창 -->
 							<div>
 								<form id="commentFrm" class="row g-2">
 									<div class="col-11">
-										<textarea name="content" id="content" placeholder="생각을 공유해 보세요~!" class="form-control" style="resize:none;"></textarea>
+										<textarea name="content" id="content" placeholder="글이 마음에 들었나요? 생각을 공유해 보세요~!" class="form-control hfc-medium"></textarea>
 									</div>
 									<div class="col-1">
-										<button type="button" onclick="commentWrite()" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>
+										<button type="button" onclick="commentWrite()"><img src="<%=request.getContextPath()%>/image/button/add.png"></button>
 									</div>
 								</form>
 							</div>
@@ -203,8 +203,12 @@ else {
 						<br><br>
 						<!-- 댓글목록 -->
 						<div>
+						<c:if test="${empty comment}">
+								<p class="noitem">작성된 댓글이 없습니다. 첫번째 댓글의 주인공이 되어보세요!</p>
+					    </c:if>
+					    
 						<c:forEach var="co" items="${comment}">
-							<div class="thumbnail hbshadow3" style="padding:15px;">
+							<div class="thumbnail">
 								<div class="writerinfo">
 									<c:if test="${co.img != null}">
 										<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/story/displayFile.do?fileName=${co.img});"></div>
@@ -214,12 +218,12 @@ else {
 									</c:if>
 									
 									<p style="display:inline-block;">
-										<span class="hfc-darkgray">${co.nickname} </span>
-										<span class="hfc-semibold hfc-gray"> | ${co.wdate}</span>
+										<span class="hfc-blackgray hfc-semibold">${co.nickname} </span>
+										
 									</p>
 								</div>
 								<div class="caption">
-									<h4>${co.content}</h4>
+									<h4 class="hfc-medium">${co.content} <span class="dateinfo hfc-gray"> &nbsp;&nbsp;&nbsp;${co.wdate}</span></h4>
 								</div>
 							</div>
 							<br>

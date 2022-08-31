@@ -57,28 +57,28 @@
 			<div class="contents lbg-lightestgray">
 				<div class="container lbg-lightestgray" id="featured-3" style="text-align:center;">
 					<!-- 페이지 제목 -->
-					<div class="pageinfo">
+					<div class="pageinfo"style="margin-bottom: 60px;">
 						<div class="title">
 							<h1>마이페이지</h1>
 						</div>
 					</div>
 					<div class="row g-4 py-5 row-cols-1 row-cols-lg-3" style="margin-top: 15px;">
-						<div class="feature col">
+						<div class="feature col"style="margin-bottom: 60px;">
 							<a class="mainbtn" href="userList.do">
 								<img src="<%= request.getContextPath() %>/image/icon/my3.png" style="width:56px;margin-bottom:20px;"><br>회원 관리
 							</a>
 						</div>
-						<div class="feature col">
+						<div class="feature col"style="margin-bottom: 60px;">
 							<a class="mainbtn" href="joinBusiness.do">
 								<img src="<%= request.getContextPath() %>/image/icon/my1.png" style="width:56px;margin-bottom:20px;"><br>사업자 가입 승인
 							</a>
 						</div>
-						<div class="feature col">
+						<div class="feature col"style="margin-bottom: 60px;">
 							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do?searchType=divsn&searchValue=신고">
 								<img src="<%= request.getContextPath() %>/image/icon/my2.png" style="width:56px;margin-bottom:20px;"><br>신고 목록
 							</a>
 						</div>
-						<div class="feature col">
+						<div class="feature col"style="margin-bottom: 60px;">
 							<a class="mainbtn" href="<%= request.getContextPath() %>/CSboard/CS_list.do">
 								<img src="<%= request.getContextPath() %>/image/icon/my5.png" style="width:56px;margin-bottom:20px;"><br>고객 지원
 							</a>
