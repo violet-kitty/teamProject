@@ -75,7 +75,7 @@
 									<div class="small">
 										<div class="col-lg-6 d-flex justify-content-end">
 											<img src="<%=request.getContextPath()%>/image/icon/eye.png" style="vertical-align:middle">
-											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${tv.cnt}</span>&nbsp;
+											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum" style="margin-right:12px;">${tv.cnt}</span>&nbsp;
 											<img src="<%=request.getContextPath()%>/image/icon/people.png" style="vertical-align:bottom">
 											<span class="hfc-semibold hfc-darkgray ms-1" id="heartNum">${tv.people_cnt}</span>
 										</div>

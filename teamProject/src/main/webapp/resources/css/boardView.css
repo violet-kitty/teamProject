@@ -27,7 +27,27 @@
 .boardview .clist .btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
 .boardview .clist .btnarea img:hover {width:40px; border:none;}
 
-.boardview .commentarea {padding:2.5rem;}
+.boardview .commentarea {padding:2.5rem; margin-top:70px;}
+.boardview .commentarea h1 {font-size:24px; color:#3D3D3D;}
+.boardview .commentarea textarea {resize:none; margin-top:10px; border-radius: 10px; width: 98%; height:65px; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardview .commentarea #commentFrm .col-2 {text-align:right;}
+.boardview .commentarea #commentFrm button {border:none;background:none; margin-top:24px;}
+.boardview .commentarea #commentFrm button img {max-heigth:50px; max-width:50px;}
+
+.boardview .commentarea .thumbnail {margin-top:16px;}
+.boardview .commentarea .thumbnail .imgbox {width:32px; height:32px; margin-right:8px;}
+.boardview .commentarea .thumbnail p {font-size:16px; color:#3D3D3D;}
+.boardview .commentarea .caption h4 {margin-top:16px; color:#8B8B8B;font-size:16px; line-height:22px;}
+.boardview .commentarea .thumbnail h4 .dateinfo {margin-top:2px;float:right;font-size:12px;}
+
+
+/* 페이지네이션 */
+.boardview .pagenation a {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px;}
+.boardview .pagenation a:hover {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px; color:white; background-color:#A4C266;}
+@media all and (max-width: 576px) {
+	.boardview .pagenation {width:100%; margin:20px 0px;}
+	}
+	
 #howfContent {max-width:100%;}
 #howfContent img {max-width:100%;}
 
