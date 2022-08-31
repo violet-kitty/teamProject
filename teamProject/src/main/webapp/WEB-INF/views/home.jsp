@@ -34,6 +34,9 @@
 <!-- CSS3 - Home --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css" />
 <!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
 
+<style>
+.modal-dialog{max-width:fit-content;}
+</style>
 <script>
 	function tagParse(tag, id){
 		//리스트 태그 값 넣기
