@@ -831,16 +831,16 @@
 	
 	<!-- 사업자 등록 목록 -->
 	<select id="joinBSelect" parameterType="searchVO" resultType="userVO">
-		SELECT midx
-			, name
-			, nickname
-			, document
-		FROM usertable
-		WHERE delyn = 'N'
-		AND role = 'business'
-		AND joinyn = 'N'
-		ORDER BY joindate asc
-		LIMIT #{page}, #{perPageNum}
+		SELECT		midx
+					,name
+					,nickname
+					,document
+		FROM 		usertable
+		WHERE 		delyn = 'N'
+		AND 		role = 'business'
+		AND 		joinyn = 'N'
+		ORDER BY	joindate ASC
+		LIMIT 		#{page}, #{perPageNum}
 	</select>
 	
 	<!-- 사업자 등록 목록 개수 -->

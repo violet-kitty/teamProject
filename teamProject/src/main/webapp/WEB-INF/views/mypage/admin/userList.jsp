@@ -164,7 +164,9 @@
 						<tbody>
 						<c:choose>
 						<c:when test="${empty user}">
-							<tr><td>해당하는 유저가 없습니다</td></tr>
+							<tr>
+								<td colspan="11">해당하는 유저가 없습니다</td>
+							</tr>
 						</c:when>
 						<c:otherwise>
 						<c:forEach var="u" items="${user}">

@@ -155,7 +155,7 @@
 										</tr>
 										<c:if test="${cv.size() == 0}">
 											<tr>
-												<td colspan="6" class="td_not_found">등록된 게시글이 없습니다.</td>
+												<td colspan="6" class="hfc-blackgray">등록된 게시글이 없습니다.</td>
 											</tr>
 										</c:if>
 										<c:forEach var="c" items="${cv}">

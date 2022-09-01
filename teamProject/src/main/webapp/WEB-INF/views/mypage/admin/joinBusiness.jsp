@@ -57,26 +57,35 @@
 					<div class="clist">
 					<table border="1" class="table">
 						<thead>
-							<tr><th width="10%">회원번호</th><th width="25%">이름</th><th width="25%">닉네임</th><th width="20%">사업자 등록증</th><th width="20%">승인하기</th></tr>
+							<tr>
+								<th width="10%">회원번호</th>
+								<th width="25%">이름</th>
+								<th width="25%">닉네임</th>
+								<th width="20%">사업자 등록증</th>
+								<th width="20%">승인하기</th>
+							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${user.size() == 0}">
+								<tr>
+									<td colspan="5">해당하는 유저가 없습니다.</td>
+								</tr>
+							</c:if>
 							<c:forEach var="i" items="${user}">
 							<tr>
+								<td>${i.midx}</td>
+								<td>${i.name}</td>
+								<td>${i.nickname}</td>
 								<td>
-								${i.midx}
-								</td>
-								<td>
-								${i.name}
-								</td>
-								<td>
-								${i.nickname}
-								</td>
-								<td>
-								<button onclick="busView('${i.document}')" class="bluebtn" style="padding:5px;">보기</button>
+									<button onclick="busView('${i.document}')" class="bluebtn" style="padding:5px;">보기</button>
 								</td>
 								<td style="text-align:center;">
-								<button onclick="okFn('${i.midx}')" style='width:30px;border:none;background:none;cursor:pointer;'><img src='<%= request.getContextPath() %>/image/icon/verificationo.png' style='width:20px;height:20px;'></button>
-								<button onclick="delFn('${i.midx}')" style='width:30px;border:none;background:none;cursor:pointer;'><img src='<%= request.getContextPath() %>/image/icon/verificationx.png' style='width:20px;height:20px;'></button>
+									<button onclick="okFn('${i.midx}')" style='width:30px;border:none;background:none;cursor:pointer;'>
+										<img src='<%= request.getContextPath() %>/image/icon/verificationo.png' style='width:20px;height:20px;'>
+									</button>
+									<button onclick="delFn('${i.midx}')" style='width:30px;border:none;background:none;cursor:pointer;'>
+										<img src='<%= request.getContextPath() %>/image/icon/verificationx.png' style='width:20px;height:20px;'>
+									</button>
 								</td>
 							</tr>
 							</c:forEach>
