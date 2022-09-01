@@ -87,14 +87,14 @@
 									<!-- 프로필 사진 -->
 									<c:choose>
 									<c:when test="${profile.img == null}">
-										<div id="profileAlt" style="border-radius:50%;width:200px;height:200px;">
-											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%;width:300px;height:300px;">
+										<div id="profileAlt" style="border-radius:50%; width:200px; height:200px;">
+											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%; width:300px; height:300px;">
 										</div>
-										<img src="" id="profileImg" style="display:none;border-radius:50%;width:300px;height:300px;">
+										<img src="" id="profileImg" style="display:none; border-radius:50%; width:300px; height:300px;">
 									</c:when>
 									
 									<c:otherwise>
-										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%;width:300px;height:300px;">
+										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%; width:300px; height:300px;">
 									</c:otherwise>
 									</c:choose>
 								</div>
@@ -136,7 +136,7 @@
 		function upload(e){
 			var files = e.target.files;
 			var filesArr = Array.prototype.slice.call(files);
-			var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;//이미지 확장자만 받음
+			var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;		//이미지 확장자만 받음
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match(reg)){
@@ -144,7 +144,6 @@
 					setTimeout(function(){
 						modalClose();
 					},1000);
-					//alert("이미지 파일만 등록 가능합니다");
 					return;
 				}
 				

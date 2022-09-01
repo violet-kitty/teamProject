@@ -161,7 +161,7 @@
 									<option value="area">지역 검색</option>
 									<option value="tag">태그 검색</option>
 								</select> 
-								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="검색어를 입력해 주세요">
 								<input type="submit" value="검색">
 							</div>
 							</form>
@@ -194,7 +194,7 @@
 									<option value="area">지역 검색</option>
 									<option value="tag">태그 검색</option>
 								</select> 
-								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="방방곡곡 주최하는 이벤트에 참여하고 다양한 추억을 쌓아요!">
+								<input type="text" name="searchValue" value="${search.searchValue}" placeholder="검색어를 입력해 주세요">
 								<input type="submit" value="검색">
 							</div>
 							</form>
