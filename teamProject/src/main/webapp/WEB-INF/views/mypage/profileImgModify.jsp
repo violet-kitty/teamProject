@@ -10,6 +10,8 @@
 <title>HOWF마이페이지</title>
 
 <!-- jQuery --><script src="<%= request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- Bootstrap5 최신 CSS & JS (Popper.js 포함됨) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -24,14 +26,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js"></script>
 
-<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
-<!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
-<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
-<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
-<!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css">
+<%-- <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" /> --%>
+<%-- <!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" /> --%>
+<%-- <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" /> --%>
+<%-- <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" /> --%>
+<%-- <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" /> --%>
+<%-- <!-- CSS3 - Mypage --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mypage.css"> --%>
+<%-- <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css"> --%>
+<%-- <!-- CSS3 - BoardWrite공용세팅 --> <link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardWrite.css"> --%>
 
+<!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
+<!-- CSS3 - Nav3 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
+<!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
+<!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardTabList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardTabbyWrite.css">
 <style>
 	/* 프로필 이미지 */
 	img {
@@ -51,7 +62,7 @@
 </style>
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardWrite cs cswrite">
 		
 		<!-- Header --><%@include file="/WEB-INF/views/Header.jsp"%>
 		<!-- Nav --><%@include file="/WEB-INF/views/Nav.jsp"%>
@@ -62,11 +73,16 @@
 		</div>
 		
 		<!-- container -->
-		<div id="container" class="hbg-lightgray">
-
-			<!-- content01 -->
-			<div class="contents content01">
-				<div class="container hbg-whitegray bgpadding">
+		<div id="container" class="hbg-whitegray">
+					
+			<div class="contents pagehead hbg-whitegray">
+				<div class="container" id="featured-2">
+					<!-- pagehead  -->
+					<a class="onlypc" href="myInfo.do">
+						<div class="backto">
+							<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+						</div>
+					</a>
 					
 					<!-- 페이지 제목 -->
 					<div class="pageinfo">
@@ -81,40 +97,50 @@
 							
 							<!-- 프로필 이미지 -->
 							<div style="text-align:center;">
-								<input type="file" name="file" id="file">
-								
+								<input type="file" name="file" id="file" style="display: none;">
+								<button type="button" onclick="fileClick()" id="changeImg" class="bluebtn" style="display: none;">사진변경</button>
 								<div>
 									<!-- 프로필 사진 -->
 									<c:choose>
 									<c:when test="${profile.img == null}">
-										<div id="profileAlt" style="border-radius:50%; width:200px; height:200px;">
-											<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%; width:300px; height:300px;">
+										<div id="profileAlt" style="border-radius:50%; width:300px; height:300px; margin-left: 30%;">
+											<label for="file" style="cursor: pointer;">
+												<img src="<%=request.getContextPath()%>/image/null/null_thumbnail.png" style="border-radius:50%; width:300px; height:300px;">
+											</label>
 										</div>
-										<img src="" id="profileImg" style="display:none; border-radius:50%; width:300px; height:300px;">
+											<img src="" id="profileImg" style="display:none; border-radius:50%; width:300px; height:300px;">
 									</c:when>
-									
 									<c:otherwise>
-										<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%; width:300px; height:300px;">
+										<label for="file" style="cursor: pointer;">
+											<img src="<%= request.getContextPath() %>/mypage/displayFile.do?fileName=${profile.img}" id="profileImg" style="border-radius:50%; width:300px; height:300px;">
+										</label>
 									</c:otherwise>
 									</c:choose>
 								</div>
 								
-								<!-- 잘린 사진 미리보기 -->
-								<div id="roundImg" class="roundImg"></div>
-								
 							</div>
 						</div>
 					</div>
-					
-					
-					<!-- 수정 버튼 -->
-					<div class="row" style="text-align:center;">
+					<div class="row">
 						<div class="col">
-							<button onclick="profileModify()">이미지 수정</button>
-							<button onclick="location.href='myInfo.do'">취소</button>
+							<!-- 잘린 사진 미리보기 -->
+							<div id="roundImg" class="roundImg" style="margin-left: 30%; margin-right: 20%;"></div>
 						</div>
 					</div>
 					
+					<!-- myInfoModify로 돌아가기, 글 수정 버튼 -->
+					<div class="row buttonarea">
+							<div class="col-lg-6">
+								<a id="cancel3" class="onlypc" href="myInfo.do">
+									<div class="backto lastbackto">
+										<span class="line tLine"></span> <span class="line mLine"></span> <span class="label"><span class="arrow">◀</span> 돌아가기</span> <span class="line bLine"></span>
+									</div>
+								</a>
+							</div>
+							<div class="col-lg-6 okbutton">
+								<button onclick="profileModify()" class="bluebtn">수정 완료</button>
+							</div>
+						</div><!-- row end -->
 				
 				</div><!-- /.container -->
 			</div>
@@ -128,6 +154,10 @@
 	
 <script>
 	var cropper;
+	
+	function fileClick(){
+		$("#file").click();
+	}
 	
 	$(function(){
 		//이미지 미리보기
@@ -151,6 +181,7 @@
 				
 				var reader = new FileReader();
 				$("#profileAlt").css("display","none");
+				$("#changeImg").show();
 				$("#profileImg").css("display","block");
 				reader.onload = function(e){
 					$("#profileImg").attr("src",e.target.result);//이미지 변경
@@ -167,8 +198,8 @@
 				var imgHeight = $("#profileImg").height();
 				
 				$("#roundImg").css({
-					overflow:'hidden',
-					height:imgHeight,
+					overflow : 'hidden',
+					height : imgHeight,
 				});
 				
 				cropper = new Cropper(img, {
