@@ -153,21 +153,6 @@
 									<div class="col" id="howfContent">
 										${vo.content}
 									</div>
-									<c:if test="${vo.filename != null}">
-										<br><br>
-										<p>첨부파일</p>
-										<a href="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}&down=1">
-										<c:choose>
-										<c:when test="${fn:split(vo.filename,'.')[1] == 'jpg' || fn:split(vo.filename,'.')[1] == 'jpeg' || fn:split(vo.filename,'.')[1] == 'png' || fn:split(vo.filename,'.')[1] == 'gif' || fn:split(vo.filename,'.')[1] == 'bmp'}">
-											<img src="<%=request.getContextPath() %>/notice/displayFile.do?filename=${vo.filename}" style="max-width: 300px; max-height: 300px;">
-										</c:when>
-										<c:otherwise>
-										<c:set var="fileName" value="${fn:split(vo.filename,'_')}"/>
-											${fileName[fn:length(fileName)-1]}
-										</c:otherwise>
-										</c:choose>
-										</a>
-									</c:if>
 								</div>
 								<div class="row btnarea">
 									<div class="col-6 d-flex justify-content-start">
