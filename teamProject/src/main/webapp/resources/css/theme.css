@@ -15,6 +15,15 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
+/* checkbox */
+.form-check-input {margin-top:0px;}
+.form-check-input:checked {background-color:#54ACA8;border-color:#54ACA8}
+form input[type=file]:focus {
+    box-shadow: none!important;
+    outline: none;
+}
+
+
 /* 부트스트랩 5 resetting */
 .py-10 {padding-top: 10rem;
     padding-bottom: 10rem;}
@@ -74,6 +83,10 @@ p {line-height:22px;}
 input:focus {outline:none; border:none; box-shadow:none;}
 .form-control:focus {border-color: #ced4da; box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
 form input:focus { box-shadow: inset 0px 2px 5px #A4C266!important; outline:none;}
+form .form-check-input:focus {
+    box-shadow: none!important;
+    outline: none;
+}
 
 /* 아이디 wrap 세팅 */ /* #header, #container, #navmenu, #footer 포함됨 */
 #wrap {max-width:100%;} 

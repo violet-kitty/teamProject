@@ -153,7 +153,7 @@ else {
 					<!-- 탭 -->
 					<div class="row tabby">
 						<div class="col">
-							<button id="roomTabBtn" style="color: #D43654; border-bottom:4px solid #D43654;">객실안내/예약</button>
+							<button id="roomTabBtn" style="color: #54ACA8; border-bottom:4px solid #DE8889;">객실안내/예약</button>
 							<button id="stayTabBtn">숙소정보</button>
 							<button id="reviewTabBtn">리뷰</button>
 						</div>
@@ -275,24 +275,24 @@ else {
 					<!-- 숙소정보 -->
 					<div class="row" id="stayTab" style="display: none">
 						<div class="col divp">
-							<div>
+							<div style="margin:0px 0px 48px 0px;">
 								<h3>주변정보</h3>
 								<!-- 아래 내용 꼭 div에 넣기. 안그럼 줄바꿈 안됨 -->
 								<div class="divp">${fn:split(stay.contents,',')[1]}</div>
 							</div>
-							<div>
+							<div style="margin:48px 0px;">
 								<h3>공지사항</h3>
 								<div class="divp">${fn:split(stay.contents,',')[2]}</div>
 							</div>
-							<div>
+							<div style="margin:48px 0px;">
 								<h3>기본정보</h3>
 								<div class="divp">${fn:split(stay.contents,',')[3]}</div>
 							</div>
-							<div>
+							<div style="margin:48px 0px;">
 								<h3>현장 결제</h3>
 								<div class="divp">${fn:split(stay.contents,',')[4]}</div>
 							</div>
-							<div>
+							<div style="margin:48px 0px;">
 								<h3>확인사항 및 기타</h3>
 								<div class="divp">${fn:split(stay.contents,',')[5]}</div>
 							</div>
@@ -310,65 +310,77 @@ else {
 					</div>
 
 					<!-- 리뷰 -->
-					<div class="row" id="reviewTab" style="display: none">
+					<div class="row hbshadow2 hbg-white" id="reviewTab" style=" padding:32px;display: none">
 						<div class="col">
-							<div class="contents hbg-whitegray">
+							<div class="contents commentarea">
 								<!-- 리뷰쓰기 창 -->
 								<div>
-									<h1>이 숙소 리뷰 ${stay.cnt}</h1>
+									<h1 class="hfc-bold" >이 숙소 리뷰 ${stay.cnt}</h1>
 									<br>
 									<div>
 										<form id="reviewFrm" enctype="multipart/form-data" class="row g-2">
-											<div class="col-11">
-												<textarea placeholder="댓글" name="content" id="reviewContent" class="form-control" style="resize:none;"></textarea>
-												<div class="star-rating">
-													<input type="radio" id="5-stars" name="star" value="5" checked /> <label for="5-stars" class="star">&#9733;</label>
-													<input type="radio" id="4-stars" name="star" value="4" /> <label for="4-stars" class="star">&#9733;</label>
-													<input type="radio" id="3-stars" name="star" value="3" /> <label for="3-stars" class="star">&#9733;</label>
-													<input type="radio" id="2-stars" name="star" value="2" /> <label for="2-stars" class="star">&#9733;</label>
-													<input type="radio" id="1-star" name="star" value="1" /> <label for="1-star" class="star">&#9733;</label>
-												</div><br>
-												<input type="file" id="file" name="file"> <input type="hidden" name="bidx" value="${stay.sidx}">
-											</div>
-											<div class="col-1">
-												<button type="button" id="reviewWriteBtn" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>
-											</div>
+											
+													<textarea name="content" placeholder="숙소가 마음에 들었나요? 후기를 공유해 보세요~!" id="reviewContent" class="form-control hfc-medium" style="resize:none;"></textarea>
+													<div class="row">
+														<div class="col">
+															<input type="file" id="file" name="file" value="이미지첨부" style="margin-left:16px;margin-bottom:12px;"> <input type="hidden" name="bidx" value="${stay.sidx}"><br>
+															<div  style="display:inline-block;">
+																<div class="star-rating">
+																	<input type="radio" id="5-stars" name="star" value="5" /> <label for="5-stars" class="star hfc-bold">&#9733;</label>
+																	<input type="radio" id="4-stars" name="star" value="4" /> <label for="4-stars" class="star hfc-bold">&#9733;</label>
+																	<input type="radio" id="3-stars" name="star" value="3" /> <label for="3-stars" class="star hfc-bold">&#9733;</label>
+																	<input type="radio" id="2-stars" name="star" value="2" /> <label for="2-stars" class="star hfc-bold">&#9733;</label>
+																	<input type="radio" id="1-star" name="star" value="1" /> <label for="1-star" class="star hfc-bold">&#9733;</label>
+																</div>
+															</div>
+														</div>
+														<div class="col" style="text-align:right;">
+															<button type="button" class="bluebtn" id="reviewWriteBtn" style="max-width:160px;">리뷰작성</button>
+														</div>
+													</div>
+												
+											
 										</form>
 									</div>
 								</div>
-
-								<br><br>
+								<hr style="border:1px solid #D9D9D9; margin:24px 0px 32px 0px;">
 
 
 								<!-- page 정보 -->
 								<input type="hidden" id="page" value="${vo.page}">
 								<!-- 리뷰 리스트 -->
 								<div id="reviewList">
+									
+									<c:if test="${empty review}">
+										<p class="noitem">작성된 리뷰가 없습니다. 첫번째 리뷰의 주인공이 되어보세요!</p>
+								    </c:if>	
 									<c:forEach var="i" items="${review}">
-										<div class="thumbnail hbshadow3" style="padding:15px;" id="review${i.cbidx}">
-											<div class="writerinfo">
-												<c:if test="${i.img != null}">
-													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.img});"></div>
-												</c:if>
-												<c:if test="${i.img == null}">
-													<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
-												</c:if>
-												
-												<p style="display:inline-block;">
-													<span class="hfc-darkgray">${i.nickname} </span>
-													<span class="hfc-semibold hfc-gray"> | ${i.wdate} </span>
-													<span style="vertical-align:text-bottom"> <img src="<%=request.getContextPath()%>/image/star.png" width="30" height="30" style="vertical-align:text-bottom"> ${i.star} </span>
+										<div class="thumbnail" style="" id="review${i.cbidx}">
+											<div class="row writerinfo">
+												<div class="col" style="display:inline-block;">
+													<c:if test="${i.img != null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.img});"></div>
+													</c:if>
+													<c:if test="${i.img == null}">
+														<div class="imgbox" style="background-image: url(<%=request.getContextPath()%>/image/null/null_thumbnail.png);"></div>
+													</c:if>
+													<span class="hfc-darkgray" style="margin-right:15px;">${i.nickname} </span>
 													<c:if test="${i.midx == login.midx}">
-													<button onclick="reviewDeleteFn(${i.cbidx})" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/delete.png" style="width:25px;"></button>
-													<button onclick="reviewModifyFn(${i.cbidx})" style="background:none;border:none;"><img src="<%=request.getContextPath()%>/image/button/edit.png" style="width:25px;"></button>
-												</c:if>
-												</p>
+														<button onclick="reviewDeleteFn(${i.cbidx})" style="background:none;border:none;vertical-align:middle;"><img src="<%=request.getContextPath()%>/image/button/delete.png" style="width:25px;"></button>
+														<button onclick="reviewModifyFn(${i.cbidx})" style="background:none;border:none;vertical-align:middle;"><img src="<%=request.getContextPath()%>/image/button/edit.png" style="width:25px;"></button>
+													</c:if>
+												</div>
+												<div  class="col" style="text-align:right;vertical-align:text-bottom"> <img src="<%=request.getContextPath()%>/image/icon/star.png" width="22" height="22" style="vertical-align:text-bottom"> ${i.star} </div>
 											</div>
-											<div class="caption">
-												<c:if test="${i.photo != null}">
-													<div class="imgbox" style="background-image: url(<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo});"></div>
-												</c:if>
-												<h4>${i.content}</h4>
+											<div class="caption row">
+												<div class="col-4">
+													<c:if test="${i.photo != null}">
+														<img src="<%=request.getContextPath() %>/stay/displayFile.do?fileName=${i.photo}" style="width:100%; margin:auto; padding:16px 0px;">
+													</c:if>
+												</div>
+												<div class="col-8">
+													<article style="padding: 16px 0px 16px 24px; line-height:25px; color:#5F5F5F; font-size:16px;" class="hcf-medium">${i.content} <span class="hfc-medium hfc-gray" style="float:right;margin-top:3px;">${i.wdate} </span></article>
+												</div>
 											</div>
 										</div>
 										<br>
@@ -519,8 +531,8 @@ else {
 			$("#stayTab").hide();
 			$("#reviewTab").hide();
 			
-			$("#roomTabBtn").css("color","#D43654");
-			$("#roomTabBtn").css("border-bottom","4px solid #D43654");
+			$("#roomTabBtn").css("color","#54ACA8");
+			$("#roomTabBtn").css("border-bottom","4px solid #DE8889");
 			$("#stayTabBtn").css("color","#9E9E9E");
 			$("#stayTabBtn").css("border-bottom","none");
 			$("#reviewTabBtn").css("color","#9E9E9E");
@@ -533,8 +545,8 @@ else {
 			
 			$("#roomTabBtn").css("color","#9E9E9E");
 			$("#roomTabBtn").css("border-bottom","none");
-			$("#stayTabBtn").css("color","#D43654");
-			$("#stayTabBtn").css("border-bottom","4px solid #D43654");
+			$("#stayTabBtn").css("color","#54ACA8");
+			$("#stayTabBtn").css("border-bottom","4px solid #DE8889");
 			$("#reviewTabBtn").css("color","#9E9E9E");
 			$("#reviewTabBtn").css("border-bottom","none");
 			
@@ -591,8 +603,8 @@ else {
 			$("#stayTabBtn").css("color","#9E9E9E");
 			$("#stayTabBtn").css("border-bottom","none");
 			
-			$("#reviewTabBtn").css("color","#D43654");
-			$("#reviewTabBtn").css("border-bottom","4px solid #D43654");
+			$("#reviewTabBtn").css("color","#54ACA8");
+			$("#reviewTabBtn").css("border-bottom","4px solid #DE8889");
 		});
 		
 		
@@ -918,8 +930,16 @@ else {
 			success:function(list){
 				var html = '<div>'
 					+ '<form id="reviewM" enctype="multipart/form-data" class="row g-2">'
-					+ '<div class="col-11">'
+					
 					+ '<textarea placeholder="리뷰를 작성해주세요" name="content" id="reviewMContent" class="form-control" style="resize:none;">'+list.content+'</textarea>'
+					
+					+ '<div class="row">'
+					
+					+ '<div class="col">'
+					+ '<input type="file" id="Mfile" name="file" value="이미지첨부" style="margin-left:16px;margin-bottom:12px;">'
+					+ '<input type="hidden" name="cbidx" value="'+cbidx+'">'
+					+ '<input type="hidden" name="bidx" value="${stay.sidx}">'
+					+ '<div style="display:inline-block;">'
 					+ '<div class="star-rating">'
 					+ '<input type="radio" id="M5-stars" name="star" value="5"/>'
 					+ '<label for="M5-stars" class="star">&#9733;</label>'
@@ -931,19 +951,22 @@ else {
 					+ '<label for="M2-stars" class="star">&#9733;</label>'
 					+ '<input type="radio" id="M1-star" name="star" value="1" />'
 					+ '<label for="M1-star" class="star">&#9733;</label>'
-					+ '</div><br>'
-					+ '<input type="file" id="Mfile" name="file">'
-					+ '<input type="hidden" name="cbidx" value="'+cbidx+'">'
-					+ '<input type="hidden" name="bidx" value="${stay.sidx}">'
+					+ '</div><!--.star-rating-->'
 					+ '</div>'
-					+ '<div class="col-1">'
-					+ '<button type="button" onclick="reviewMFn('+index+')" style="border:none;background:none;"><img src="<%=request.getContextPath()%>/image/button/add.png" style="max-heigth:50px; max-width:50px;"></button>'
-					+ '</div>'
+					+ '</div><!--.col-->'
+					
+					
+					+ '<div class="col" style="text-align:right;">'
+					+ '<button type="button" class="bluebtn" style="max-width:160px" onclick="reviewMFn('+index+')">리뷰수정</button>'
+					+ '</div><!--.col-->'
+					
+					+ '</div><!--.row-->'
+					
 					+ '</form></div>';
 				
 				$("#review"+cbidx).html(html);
 				$("input:radio[name=star]:input[value="+list.star+"]").prop("checked",true);
-				
+			
 				
 			}//success
 			

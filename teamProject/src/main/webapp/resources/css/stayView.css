@@ -265,15 +265,27 @@
 	.caption .imgbox {height:30vh;}
 }
 
+/* 댓글리뷰 */
+.commentarea {}
+.commentarea h1 {font-size:24px; color:#3D3D3D;}
+.commentarea textarea {resize:none; margin:10px 0px 16px 0px; border-radius: 10px; width: 100%; height:165px; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.commentarea #reviewFrm .col-2 {text-align:right;}
+.boardview .commentarea #reviewFrm button img {max-height:50px; max-width:50px;}
+.commentarea .thumbnail .imgbox {width:32px; height:32px; margin-right:8px;}
+.commentarea .thumbnail p {font-size:16px; color:#3D3D3D;}
+.commentarea .caption h4 {margin-top:16px; color:#8B8B8B;font-size:16px; line-height:22px;}
+.commentarea .thumbnail h4 .dateinfo {margin-top:2px;float:right;font-size:12px;}
+
+
 /* 숙소정보 */
-#stayTab h3 {margin-top:27px; margin-bottom:4px;font-size:24px; line-height:34px; color:#3D3D3D;}
-#stayTab .divp {margin-left:8px; font-size:20px; line-height:32px; color:#737373;}
+#stayTab h3 { margin-bottom:8px;font-size:20px; line-height:34px; color:#3D3D3D;}
+#stayTab .divp {font-size:18px; line-height:32px; color:#737373;}
 #stayTab #map {margin-bottom:46px;margin-top:27px;}
 /* 수정 삭제 글쓰기 버튼 */
-.btnarea {margin-top:56px;}
-.btnarea button {background:none; border:none;}
-.btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
-.btnarea img:hover {width:40px; border:none;}
+.container .btnarea {margin-top:56px;}
+.container .btnarea button {background:none; border:none;}
+.container .btnarea img {width:40px; border:2px solid rgba(255,255,255,0);}
+.container .btnarea img:hover {width:40px; border:none;}
 
 .lastline {margin-bottom:40px;}
 
@@ -284,5 +296,10 @@
 .star-rating {display:flex;flex-direction: row-reverse;font-size:1.5em;justify-content:space-around;padding:0 .2em;text-align:center;width:10em;}
 .star-rating input[type=radio] {display:none;}
 .star-rating label {color:#ccc;cursor:pointer;}
-.star-rating :checked ~ label {color:#f90;}
-.star-rating label:hover, .star-rating label:hover ~ label {color:#fc0;}
+.star-rating :checked ~ label {color:#A3C165;}
+.star-rating label:hover, .star-rating label:hover ~ label {color:#A3C165;}
+
+
+/* 페이지네이션 */
+.boardview .pagenation a {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px;}
+.boardview .pagenation a:hover {border-radius: 100%;height: 25px; width: 25px; text-align: center;padding-top: 6px; color:white; background-color:#A4C266;}

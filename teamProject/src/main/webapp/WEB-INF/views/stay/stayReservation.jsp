@@ -23,23 +23,31 @@
 <!-- 결제 api -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 
+<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+
 <!-- CSS3 - Theme --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/theme.css" />
-<!-- CSS3 - Header --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header.css" />
+<!-- CSS3 - Header2 --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Header2.css" />
 <!-- CSS3 - Nav --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Nav.css" />
 <!-- CSS3 - Side --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Side.css" />
+<!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
-<!-- 모달 js --><script type="text/javascript" src="<%= request.getContextPath() %>/js/modal.js"></script>
+<!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
+<!-- CSS3 - BoardWrite공용세팅 --> <link rel="stylesheet" href="<%=request.getContextPath()%>/css/stayWrite.css">
+
+
 <script>
 	//본인인증 여부
 	var auth = false;
 </script>
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap" class="boardWrite stay stayWrite">
+	
 		<!-- Header --><%@include file="../Header.jsp"%>
 		<!-- Nav --><%@include file="../Nav.jsp"%>
 		
 		<!-- Side -->
+		
 		<div class="right-container">
 			<a href="#"><img src="<%= request.getContextPath() %>/image/button/top.png" class="gotop"></a>
 		</div>
@@ -49,39 +57,50 @@
 
 			<!-- content01 -->
 			<div class="contents content01">
-				<div class="container">
-				
+				<div class="container"  style="width:400px;">
+					
+					<style>
+					.infoinfo h3: {margin:0px 0px 24px 0px;}
+					.infoinfo p {margin:24px 0px;}
+					.infoinfo2 input {margin:8px 0px 16px 0px;}
+					</style>
 					<!-- 객실 정보 -->
-					<div class="row">
+					<div class="row infoinfo hbshadow3 hbg-white" style="padding:32px;margin-bottom:32px;">
 						<div class="col">
-							숙소이름 : ${res.sname}<br>
-							객실타입/기간<br>
-							${res.rname}<br>
-							체크인<br>
-							${res.date1}<br>
-							체크아웃<br>
-							${res.date2}<br>
+							<h3>숙소이름 : <span class="hfc-blue hfc-bold">${res.sname}</span></h3>
+							<p>객실타입/기간 : <span class="hfc-blue hfc-bold">${res.rname}</span></p>
+							<p>체크인 : <span class="hfc-blue hfc-bold">${res.date1}</span></p>
+							<p>체크아웃 : <span class="hfc-blue hfc-bold">${res.date2}</span></p>
 							<hr>
-							총 결제 금액<br>
-							${res.price} 원
+							<h3 style="margin:24px 0px 0px 0px;">총 결제 금액 : <span class="hfc-pink hfc-bold">${res.price} 원</span></h3>
 						</div>
 					</div>
-					
 					<!-- 예약 페이지 -->
-					<div class="row">
+					
+					<div class="row infoinfo2">
 						<div class="col"> 
 							<form>
 								예약자 이름<br>
 								<input type="text" name="name" id="name" placeholder="체크인시 필요한 정보입니다"><br>
 								휴대폰 번호<br>
 								<!-- 10~11개 숫자만 받기 -->
-								<input type="text" name="phone" id="phone" placeholder="숫자만 입력해 주세요" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');" size="11">
-								<button type="button" onclick="authFn()">인증번호 전송</button><br>
-								<span id="txt"></span><br>
-								<input type="text" name="auth" id="auth" placeholder="인증번호 입력">
-								<button type="button" onclick="authOkFn()">인증번호 입력</button><br>
-								<span id="txt2"></span><br>
-								<button type="button" onclick="tradeFn()">결제</button>
+								<div style="position:relative;">
+									<input type="text" name="phone" id="phone" placeholder="번호숫자만 입력해 주세요" oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');" size="11">
+									<button type="button" class="greenbtn" onclick="authFn()" style=" border-radius:10px; top:16px; right:10px; padding: 8px 16px 8px 16px; width:150px; position:absolute;">인증번호전송</button>
+									<p  style="position:block; width:100%; text-align:right;"  id="txt"></p>
+								</div>
+								
+								<div style="position:relative;">
+									<input type="text" name="auth" id="auth" placeholder="인증번호 입력">
+									<button type="button" class="pinkbtn" onclick="authOkFn()" style=" border-radius:10px; top:16px; right:10px; padding: 8px 16px 8px 16px; width:100px; position:absolute;">인증하기</button>
+									<p style="position:block; width:100%; text-align:right;" id="txt2"></p>
+								</div>
+								
+								<hr style="margin:24px 0px 32px 0px;">
+								<div style="text-align:center;">
+									<button type="button" class="bluebtn" onclick="tradeFn()">결제하기</button>
+								</div>
+								
 							</form>
 						</div>
 					</div>

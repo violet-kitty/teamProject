@@ -36,7 +36,15 @@
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
 <!-- CSS3 - BoardList --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css">
+<style>
+form .form-check-input:focus {
+    box-shadow: none!important;
+    outline: none;
+}
+.form-check-input {margin-top:0px;}
+.form-check-input:checked {background-color:#DE8889;border-color:#DE8889}
 
+</style>
 <script>
 	function tagParseto(tag, sidx){
 		//리스트 태그 값 넣기

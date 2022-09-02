@@ -31,8 +31,8 @@
 .boardview .commentarea h1 {font-size:24px; color:#3D3D3D;}
 .boardview .commentarea textarea {resize:none; margin-top:10px; border-radius: 10px; width: 98%; height:65px; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
 .boardview .commentarea #commentFrm .col-2 {text-align:right;}
-.boardview .commentarea #commentFrm button {border:none;background:none; margin-top:24px;}
-.boardview .commentarea #commentFrm button img {max-heigth:50px; max-width:50px;}
+.boardview .commentarea #commentFrm button {border:none;background:none; margin-top:17px;}
+.boardview .commentarea #commentFrm button img {max-height:50px; max-width:50px;}
 
 .boardview .commentarea .thumbnail {margin-top:16px;}
 .boardview .commentarea .thumbnail .imgbox {width:32px; height:32px; margin-right:8px;}

@@ -37,7 +37,7 @@
 <!-- CSS3 - banner --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner.css" />
 <!-- CSS3 - Footer --> <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Footer.css" />
 <!-- CSS3 - Board공용세팅 --> <link  rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css">
-<!-- CSS3 - BoardWrite공용세팅 --> <link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardWrite.css">
+<!-- CSS3 - BoardWrite공용세팅 --> <link rel="stylesheet" href="<%=request.getContextPath()%>/css/stayWrite.css">
 
 
 <style>
@@ -46,6 +46,44 @@
 	  -moz-appearance: none;
 	  -webkit-appearance: none;
 	}
+	#stayFrm .row .col {margin:16px 0px;} 
+	.form-check-input {margin-top:0px;}
+.form-check-input:checked {background-color:#DE8889;border-color:#DE8889}
+form .form-check-input:focus {
+    box-shadow: none!important;
+    outline: none;
+}
+.roomtable tr td{padding:8px 0px;}
+.roomtablefirst tr td:nth-child(2){text-align:right;}
+.roomtablethird tr td:nth-child(2){}
+
+.roomtable tr td label {margin-left:8px;}
+.roomtable tr .checkboxtd {padding:10px 0px;}
+.updownbtn {
+    border: none;
+    background: none;
+    font-size: 24px;
+    vertical-align: middle;
+    color:#757575;
+    font-weight:700;
+}
+.updownbtn:nth-child(3) {
+    border: none;
+    background: none;
+    font-size: 24px;
+    vertical-align: middle;
+    color:#757575;
+    padding-right:0px;
+    font-weight:700;
+}
+.updowninput{
+    font-size: 20px;
+    margin: 0px 8px;
+    box-shadow: inset 0px 2px 5px #00000029; color:#737373;background-color: white; border: none; padding: 8px; font-size: 16px;font-weight: 600;
+    vertical-align: middle;
+    text-align:center;
+}
+.room {margin:24px 0px;}
 </style>
 <script>
 //객실 관련 변수들
@@ -85,12 +123,12 @@ var tagi = 0;
 				</div>
 				
 				<div class="row">
-					<div class="col-lg-6">
+					<div class="col-lg-6" style="position:relative;">
 						<input class="form-control" type="text" name="addr" id="addr" placeholder="숙소 주소" readOnly>
-						<input type="button" onclick="addrFn()" value="주소 찾기">
+						<input class="addfinder graybtn" style="padding:0px 16px;" type="button" onclick="addrFn()" value="주소찾기">
 					</div>
-					<div class="col-lg-6">
-						<input class="form-control" type="text" name="detailaddr" id="detailaddr" placeholder="숙소 상세 주소">
+					<div class="col-lg-6" style="padding-left:16px;">
+						<input class="form-control" type="text" name="detailaddr" id="detailaddr" placeholder="상세 주소">
 					</div>
 				</div>
 				
@@ -102,138 +140,153 @@ var tagi = 0;
 				
 				<div class="row">
 					<div class="col">
-						<p>태그를 나열해주세요&#13;&#10;&#35;과 &#44;를 이용해 태그를 작성할 수 있습니다</p>
+						<p style="padding-bottom:8px;">태그를 나열해주세요&#13;&#10;&#35;과 &#44;를 이용해 태그를 작성할 수 있습니다</p>
 						<input class="form-control" name="tag" id="tag">
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col">
-						<input type="file" id="btnAtt" name="btnAtt" multiple="multiple">
+				<div class="row" style="margin-bottom:16px;">
+					<div class="col-2">
+					<label class="greenbtn" style="cursor:pointer;font-size: 14px; padding: 8px 16px 8px 16px;" for="btnAtt">이미지업로드</label>
+						<input type="file" id="btnAtt" class="greenbtn" style="display:none;" name="btnAtt" multiple="multiple">
 					</div>
-				</div>
-				
-				<hr class="my-1">
-				
-				<!-- 사진 미리보기 -->
-				<div class="row" style="min-height:150px;height:auto;">
-					<div class="col">
+					<div class="col" style="margin:0px;">
 						<div id="att_zone">
 							
 						</div>
 					</div>
 				</div>
 				
-				<hr class="my-1">
 				
+				
+				<!-- 탭 -->
 				<div class="row">
-					<div class="col">
-						<button  type="button" onclick="tabToggleFn('room')" id="roomTabBtn" style="color:green">객실</button>
+					<div class="col tabby">
+						<button  type="button" onclick="tabToggleFn('room')" id="roomTabBtn" style="color: #54ACA8; border-bottom:4px solid #DE8889;">객실</button>
 						<button type="button" onclick="tabToggleFn('stay')" id="stayTabBtn">숙소정보</button>
 					</div>
 				</div>
 				
+				<!-- 객실관련 탭 페이지 -->
 				<div class="row" id="roomInfoBtn">
 					<div class="col">
-						<button type="button" id="roomAdd">객실 추가</button>
-						<button type="button" id="roomRemove">객실 제거</button>
+						<button type="button" id="roomAdd" class="bluebtn w-100" style="font-size:14px; cursor:pointer;font-size: 14px; padding: 8px 16px 8px 16px; margin-bottom:0px;">객실 추가</button>
+
 					</div>
-				</div>
-				
-				<div id="roomArea">
+					<div id="roomArea">
+					
+					</div>
+					<button type="button" id="roomRemove" class="pinkbtn w-100" style="font-size:14px; cursor:pointer;font-size: 14px; padding: 8px 16px 8px 16px; margin-top:24px;">객실 제거</button>
 					
 				</div>
 				
+				
 			
 				<!-- 숙소정보 -->
+				<style>
+				#stayInfoTab .col .divdivider {margin:24px 0px;}
+				#stayInfoTab .col p {margin-bottom:8px; font-size:18px; color:#3D3D3D;}
+				.form-check-input {margin-top:0px;}
+				.checktable tr td{min-width:10px; padding:16px 16px;}
+				</style>
 				<div class="row" style="display:none" id="stayInfoTab">
 					<div class="col">
-						<div>
+						<div class="divdivider hfc-semibold">
 							<p>주변정보</p>
 							<textarea id="con1" name="content" class="form-control"></textarea>
 						</div>
-						<div>
+						<div class="divdivider hfc-semibold">
 							<p>기본정보</p>
 							<textarea id="con2" name="content" class="form-control"></textarea>
 						</div>
-						<div>
+						<div class="divdivider hfc-semibold">
 							<p>공지사항</p>
 							<textarea id="con3" name="content" class="form-control"></textarea>
 						</div>
-						<div>
+						<div class="divdivider hfc-semibold">
 							<p>취소 및 환불규정</p>
 							<textarea id="con4" name="content" class="form-control"></textarea>
 						</div>
-						<div>
+						<div class="divdivider hfc-semibold">
 							<p>확인사항 및 기타</p>
 							<textarea id="con5" name="content" class="form-control"></textarea>
 						</div>
-						<hr>
+						<hr class="lastline" style="margin:32px 0px;">
 						<div>
-							<p>편의시설 및 서비스</p>
-							<div>
-								<div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="편의점">
-						        	<label class="form-check-label" for="tag">편의점</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="커피숍">
-						        	<label class="form-check-label" for="tag">커피숍</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="주차장">
-						        	<label class="form-check-label" for="tag">주차장</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="골프장">
-						        	<label class="form-check-label" for="tag">골프장</label>
-						        </div>
-						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="수영장">
-						        	<label class="form-check-label" for="tag">수영장</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="족구장">
-						        	<label class="form-check-label" for="tag">족구장</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="농구장">
-						        	<label class="form-check-label" for="tag">농구장</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="실내낚시터">
-						        	<label class="form-check-label" for="tag">실내낚시터</label>
-						        </div>
-						        <br>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="산책로">
-						        	<label class="form-check-label" for="tag">산책로</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="익스트림체험장">
-						        	<label class="form-check-label" for="tag">익스트림체험장</label>
-						        </div>
-						         <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="세차장">
-						        	<label class="form-check-label" for="tag">세차장</label>
-						        </div>
-						        <div class="form-check form-check-inline">
-						        	<input class="form-check-input" type="checkbox" name="service" id="tag" value="키드존">
-						        	<label class="form-check-label" for="tag">키드존</label>
-						        </div>
-							</div>
+							<p class="hfc-semibold my-3">편의시설 및 서비스</p>
+							<div class="row whitebox hbshadow2" style="padding: 35px 30px;">
+							
+								<div class="col col-xs-12">
+									<table class="checktable">
+										<tr>
+											<td>
+												<input class="form-check-input" type="checkbox" name="service" id="tag" value="편의점">
+						        				<label class="form-check-label" for="tag">편의점</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="커피숍">
+						     			  	 	<label class="form-check-label" for="tag">커피숍</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="주차장">
+						     				   	<label class="form-check-label" for="tag">주차장</label>
+						        			</td>
+										</tr>
+										<tr>
+											<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="골프장">
+						      				 	<label class="form-check-label" for="tag">골프장</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="수영장">
+									        	<label class="form-check-label" for="tag">수영장</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="족구장">
+						        				<label class="form-check-label" for="tag">족구장</label>
+						        			</td>
+										</tr>
+									</table>
+								</div><!-- .col -->
+								<div class="col col-xs-12">
+									<table class="checktable">
+										<tr>
+											<td>
+							        			<input class="form-check-input" type="checkbox" name="service" id="tag" value="농구장">
+							        			<label class="form-check-label" for="tag">농구장</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="실내낚시터">
+						        				<label class="form-check-label" for="tag">실내낚시터</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="산책로">
+						        				<label class="form-check-label" for="tag">산책로</label>
+						        			</td>
+										</tr>
+										<tr>
+									   		<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="익스트림체험장">
+						        				<label class="form-check-label" for="tag">익스트림체험장</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="세차장">
+						        				<label class="form-check-label" for="tag">세차장</label>
+						        			</td>
+						        			<td>
+						        				<input class="form-check-input" type="checkbox" name="service" id="tag" value="키드존">
+						        				<label class="form-check-label" for="tag">키드존</label>
+						        			</td>
+										</tr>
+									</table>
+								</div><!-- .col -->
+							
+							</div><!-- .row .whitebox -->
 						</div>
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col">
-						<div>
-							<button type="button" onclick="stayWriteFn()">등록</button>
-						</div>
-					</div>
-				</div>
+				
 				
 			</form>
 			
@@ -250,8 +303,8 @@ var tagi = 0;
 									</div>
 								</a>
 							</div>
-							<div class="col-lg-6 okbutton">
-								<button type="button" class="bluebtn" onclick="writeFn()">글 작성 완료</button>
+							<div class="col-lg-6 okbutton" style="text-align:right;">
+								<button type="button" class="bluebtn hbshadow3" onclick="stayWriteFn()">숙박등록완료</button>
 							</div>
 						</div><!-- row end -->
 			
@@ -277,12 +330,12 @@ var tagi = 0;
 			    
 			    // 이미지와 체크 박스를 감싸고 있는 div 속성
 			    var div_style = 'display:inline-block;position:relative;'
-			                  + 'width:150px;height:120px;margin:5px;border:1px solid black;z-index:1';
+			                  + 'width:72px;height:51px;margin:0px 5px 10px 5px;z-index:1;box-shadow: 0px 3px 8px rgba(0,0,0,0.2);';
 			    // 미리보기 이미지 속성
 			    var img_style = 'width:100%;height:100%;z-index:none';
 			    // 이미지안에 표시되는 삭제 버튼의 속성
-			    var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
-			                  + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
+			    var chk_style = 'width:24px;height:24px;position:absolute;font-size:16px;'
+			                  + 'box-shadow: 0px 3px 8px rgba(0,0,0,0.5); right:5px;border:none; bottom:5px;z-index:999;background-color:#DE8889;color:white; border-radius:100px;';
 			  
 			    btnAtt.onchange = function(e){
 			    $("#att_zone").empty();
@@ -346,154 +399,97 @@ var tagi = 0;
 			//객실 추가
 			$("#roomAdd").click(function(){
 				var html = '<div class="room" id="room'+index+'">'
-				+ '<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">'
-				+ '<div class="feature col">'
-				+ '<input type="text" id="name'+index+'" name="room['+index+'].name" placeholder="객실명"><br>'
-				+ '<span>총 객실 평수</span>'
-				+ '<button type="button" id="squareMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].square" id="square'+index+'" min="1" max="99" value="1">'
-				+ '<button type="button" id="squarePlus'+index+'">+</button><br>'
-				+ '<span>싱글베드</span>'
-				+ '<button type="button" id="sbedMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].sbed" id="sbed'+index+'" min="0" max="99" value="0">'
-				+ '<button type="button" id="sbedPlus'+index+'">+</button><br>'
-				+ '<span>더블베드</span>'
-				+ '<button type="button" id="dbedMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].dbed" id="dbed'+index+'" min="0" max="99" value="0">'
-				+ '<button type="button" id="dbedPlus'+index+'">+</button><br>'
-				+ '<span>퀸베드</span>'
-				+ '<button type="button" id="qbedMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].qbed" id="qbed'+index+'" min="0" max="99" value="0">'
-				+ '<button type="button" id="qbedPlus'+index+'">+</button><br>'
-				+ '<span>킹베드</span>'
-				+ '<button type="button" id="kbedMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].kbed" id="kbed'+index+'" min="0" max="99" value="0">'
-				+ '<button type="button" id="kbedPlus'+index+'">+</button><br>'
+				+ '<div class="row whitebox hbshadow3" style="padding:35px 30px;">'
+				
+				+ '<div class="feature col-4">'
+				+ '<table class="roomtable roomtablefirst">'
+				+ '<tr><td colspan="2"><input type="text" id="name'+index+'" name="room['+index+'].name" placeholder="객실명"></td></tr>'
+				+ '<tr>'
+				+ '<td><p>총 객실 평수</p></td> <td><button class="updownbtn" type="button" id="squareMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].square" id="square'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="squarePlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td><p>싱글베드</p></td> <td><button class="updownbtn" type="button" id="sbedMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].square" id="sbed'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="sbedPlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td><p>더블베드</p></td> <td><button class="updownbtn" type="button" id="dbedMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].square" id="dbed'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="dbedPlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td><p>퀸베드</p></td> <td><button class="updownbtn" type="button" id="qbedMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].square" id="qbed'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="qbedPlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td><p>킹베드</p></td> <td><button class="updownbtn" type="button" id="kbedMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].square" id="kbed'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="kbedPlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '</table>'
+				+ '</div>'
+				
+				+ '<div class="feature col-4">'
+				+ '<table class="roomtable">'
+				+ '<tr>'
+				+ '<td><p>같은 형식 객실 수</p></td> <td><button class="updownbtn" type="button" id="cntMinus'+index+'">-</button><input type="number" class="updowninput" name="room['+index+'].cnt" id="cnt'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="cntPlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td><p>적정 인원 수</p></td> <td><button class="updownbtn" type="button" id="peopleMinus'+index+'">-</button><input type="number" class="updowninput"name="room['+index+'].people" id="people'+index+'" min="1" max="99" value="1"><button type="button" class="updownbtn" id="peoplePlus'+index+'">+</button></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+tagi+'" value="원룸"><label class="form-check-label" for="tag'+tagi+'">원룸</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+1)+'" value="분리형원룸"><label class="form-check-label" for="tag'+(tagi+1)+'">분리형원룸</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+2)+'" value="투룸"><label class="form-check-label" for="tag'+(tagi+2)+'">투룸</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+3)+'" value="쓰리룸"><label class="form-check-label" for="tag'+(tagi+3)+'">쓰리룸</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+4)+'" value="포룸"><label class="form-check-label" for="tag'+(tagi+4)+'">포룸</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+5)+'" value="방5개이상"><label class="form-check-label" for="tag'+(tagi+5)+'">방5개이상</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+6)+'" value="주방/식당"><label class="form-check-label" for="tag'+(tagi+6)+'">주방/식당</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+7)+'" value="욕실"><label class="form-check-label" for="tag'+(tagi+7)+'">욕실</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+8)+'" value="욕조"><label class="form-check-label" for="tag'+(tagi+8)+'">욕조</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+9)+'" value="욕실용품"><label class="form-check-label" for="tag'+(tagi+9)+'">욕실용품</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+10)+'" value="드라이기"><label class="form-check-label" for="tag'+(tagi+10)+'">드라이기</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+11)+'" value="에어컨"><label class="form-check-label" for="tag'+(tagi+11)+'">에어컨</label></td>'
+				+ '</tr>'
+				+ '</table>'
+				+ '</div>'
+				
+				+ '<div class="feature col-4">'
+				+ '<table class="roomtable roomtablethird">'
+				+ '<tr><td colspan="2"><input type="number" class="numberinput" placeholder="가격" name="room['+index+'].price" id="price'+index+'"></td></tr>'
+				+ '<tr><td colspan="2"><input type="file" id="roomFile'+index+'" name="roomFile" style="width:100%;"></td></tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+12)+'" value="전자렌지"><label class="form-check-label" for="tag'+(tagi+12)+'">전자렌지</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+13)+'" value="밥솥"><label class="form-check-label" for="tag'+(tagi+13)+'">밥솥</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+14)+'" value="세탁기"><label class="form-check-label" for="tag'+(tagi+14)+'">세탁기</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+15)+'" value="건조기"><label class="form-check-label" for="tag'+(tagi+15)+'">건조기</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+16)+'" value="반려동물가능"><label class="form-check-label" for="tag'+(tagi+16)+'">반려동물가능</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+17)+'" value="주차장"><label class="form-check-label" for="tag'+(tagi+17)+'">주차장</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+18)+'" value="와이파이"><label class="form-check-label" for="tag'+(tagi+18)+'">와이파이</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+19)+'" value="무료주차장"><label class="form-check-label" for="tag'+(tagi+19)+'">무료주차장</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+20)+'" value="BBQ"><label class="form-check-label" for="tag'+(tagi+20)+'">BBQ</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+21)+'" value="라운지"><label class="form-check-label" for="tag'+(tagi+21)+'">라운지</label></td>'
+				+ '</tr>'
+				+ '<tr>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+22)+'" value="엘레베이터"><label class="form-check-label" for="tag'+(tagi+22)+'">엘레베이터</label></td>'
+				+ '<td class="checkboxtd"><input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+23)+'" value="수영장"><label class="form-check-label" for="tag'+(tagi+23)+'">수영장</label></td>'
+				+ '</tr>'
+				+ '</table>'
 				+ '</div>'
 				
 				
-				+ '<div class="feature col">'
-				+ '<span>같은 형식 객실 수</span>'
-				+ '<button type="button" id="cntMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].cnt" id="cnt'+index+'" min="1" max="99" value="1">'
-				+ '<button type="button" id="cntPlus'+index+'">+</button><br>'
-				+ '<span>적정 인원 수</span>'
-				+ '<button type="button" id="peopleMinus'+index+'">-</button>'
-				+ '<input type="number" name="room['+index+'].people" id="people'+index+'" min="1" max="99" value="1">'
-				+ '<button type="button" id="peoplePlus'+index+'">+</button><br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+tagi+'" value="원룸">'
-				+ '<label class="form-check-label" for="tag'+tagi+'">원룸</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+1)+'" value="분리형원룸">'
-				+ '<label class="form-check-label" for="tag'+(tagi+1)+'">분리형원룸</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+2)+'" value="투룸">'
-				+ '<label class="form-check-label" for="tag'+(tagi+2)+'">투룸</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+3)+'" value="쓰리룸">'
-				+ '<label class="form-check-label" for="tag'+(tagi+3)+'">쓰리룸</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+4)+'" value="포룸">'
-				+ '<label class="form-check-label" for="tag'+(tagi+4)+'">포룸</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+5)+'" value="방5개이상">'
-				+ '<label class="form-check-label" for="tag'+(tagi+5)+'">방5개이상</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+6)+'" value="주방/식당">'
-				+ '<label class="form-check-label" for="tag'+(tagi+6)+'">주방/식당</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+7)+'" value="욕실">'
-				+ '<label class="form-check-label" for="tag'+(tagi+7)+'">욕실</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+8)+'" value="욕조">'
-				+ '<label class="form-check-label" for="tag'+(tagi+8)+'">욕조</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+9)+'" value="욕실용품">'
-				+ '<label class="form-check-label" for="tag'+(tagi+9)+'">욕실용품</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+10)+'" value="드라이기">'
-				+ '<label class="form-check-label" for="tag'+(tagi+10)+'">드라이기</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+11)+'" value="에어컨">'
-				+ '<label class="form-check-label" for="tag'+(tagi+11)+'">에어컨</label>'
-				+ '</div>'
-				+ '</div>'
 				
-				
-				+ '<div class="feature col">'
-				+ '<span>가격</span>'
-				+ '<input type="number" name="room['+index+'].price" id="price'+index+'"><br>'
-				+ '<input type="file" id="roomFile'+index+'" name="roomFile"><br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+12)+'" value="전자렌지">'
-				+ '<label class="form-check-label" for="tag'+(tagi+12)+'">전자렌지</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+13)+'" value="밥솥">'
-				+ '<label class="form-check-label" for="tag'+(tagi+13)+'">밥솥</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+14)+'" value="세탁기">'
-				+ '<label class="form-check-label" for="tag'+(tagi+14)+'">세탁기</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+15)+'" value="건조기">'
-				+ '<label class="form-check-label" for="tag'+(tagi+15)+'">건조기</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+16)+'" value="반려동물가능">'
-				+ '<label class="form-check-label" for="tag'+(tagi+16)+'">반려동물가능</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+17)+'" value="주차장">'
-				+ '<label class="form-check-label" for="tag'+(tagi+17)+'">주차장</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+18)+'" value="와이파이">'
-				+ '<label class="form-check-label" for="tag'+(tagi+18)+'">와이파이</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+19)+'" value="무료주차장">'
-				+ '<label class="form-check-label" for="tag'+(tagi+19)+'">무료주차장</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+20)+'" value="BBQ">'
-				+ '<label class="form-check-label" for="tag'+(tagi+20)+'">BBQ</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+21)+'" value="라운지">'
-				+ '<label class="form-check-label" for="tag'+(tagi+21)+'">라운지</label>'
-				+ '</div>'
-				+ '<br>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+22)+'" value="엘레베이터">'
-				+ '<label class="form-check-label" for="tag'+(tagi+22)+'">엘레베이터</label>'
-				+ '</div>'
-				+ '<div class="form-check form-check-inline">'
-				+ '<input class="form-check-input" type="checkbox" name="room['+index+'].tag" id="tag'+(tagi+23)+'" value="수영장">'
-				+ '<label class="form-check-label" for="tag'+(tagi+23)+'">수영장</label>'
-				+ '</div>'
 				+ '</div>'
 				+ '</div>'
 				+ '</div>';
@@ -913,15 +909,19 @@ var tagi = 0;
 		//탭 눌렀을때 화면 변화
 		function tabToggleFn(type){
 			if(type == 'room'){
-				$("#roomTabBtn").css("color","green");
-				$("#stayTabBtn").css("color","black");
+				$("#roomTabBtn").css("color","#54ACA8");
+				$("#roomTabBtn").css("border-bottom","4px solid #DE8889");
+				$("#stayTabBtn").css("color","#9E9E9E");
+				$("#stayTabBtn").css("border-bottom","none");
 				$("#roomInfoBtn").show();
 				$("#roomArea").show();
 				$("#stayInfoTab").hide();
 			}
 			else if(type == 'stay'){
-				$("#roomTabBtn").css("color","black");
-				$("#stayTabBtn").css("color","green");
+				$("#roomTabBtn").css("color","#9E9E9E");
+				$("#roomTabBtn").css("border-bottom","none");
+				$("#stayTabBtn").css("color","#54ACA8");
+				$("#stayTabBtn").css("border-bottom","4px solid #DE8889");
 				$("#roomInfoBtn").hide();
 				$("#roomArea").hide();
 				$("#stayInfoTab").show();

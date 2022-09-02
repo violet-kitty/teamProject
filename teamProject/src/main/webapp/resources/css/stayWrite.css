@@ -1,1 +1,26 @@
 @charset "UTF-8";
+@import "reset.css";
+
+/* view setting */
+.boardWrite .container {max-width: 800px; margin: auto; padding: 40px 0px; padding-bottom: 90px; position:relative;}
+@media all and (max-width:900px) {
+	.boardWrite .container { width: 100%;margin: auto;padding: 5px 5%; padding-bottom:32px;}
+}
+
+/* input */
+.boardWrite input[type=text] { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .numberinput { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .textinput2 { border-radius:10px; border-top-left-radius: 0px!important; border-bottom-left-radius:0px!important; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite input[type=date] {cursor:pointer; padding: 16px; height: 100%;border-radius: 10px;}
+.boardWrite .form-select {height:100%; border-radius:10px;}
+.boardWrite .form-select3 {height:100%; border-radius:0px;}
+.boardWrite .form-select2 {height:100%; border-radius:10px; border-top-right-radius:0px; border-bottom-right-radius:0px;}
+.boardWrite .selection {padding-right:20px;}
+.boardWrite textarea { border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .form-control {position:relative; border-radius: 10px; width: 100%; box-shadow: inset 0px 2px 5px #00000029; background-color: white; border: none; padding: 16px; font-size: 16px;font-weight: 600;}
+.boardWrite .addfinder {position:absolute; top: 0px;right: 0px; border-bottom-right-radius: 10px;border-top-right-radius: 10px; height: 55px;}
+
+/* Tab */
+/* 탭 */
+.tabby {border-bottom:1px solid #E6E6E6; margin-bottom:48px; }
+.tabby button {font-size:21px; color:#9E9E9E; padding:12px; background:none; border:none;}
